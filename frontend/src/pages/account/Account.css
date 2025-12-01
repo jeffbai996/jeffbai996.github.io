@@ -415,6 +415,17 @@
   color: #10b981;
 }
 
+.section-icon.disabled {
+  opacity: 0.5;
+}
+
+.section-header .coming-soon-badge {
+  position: static;
+  background: #e5e7eb;
+  color: #6b7280;
+  border-radius: 1rem;
+}
+
 .section-info {
   flex: 1;
 }
