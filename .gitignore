@@ -8,6 +8,7 @@ dist/
 build/
 .next/
 out/
+# Note: docs/ is NOT ignored - it's used for GitHub Pages deployment
 
 # Environment files
 .env
