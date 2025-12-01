@@ -17,6 +17,7 @@ function App() {
             <Route path="doj/*" element={<DOJ />} />
             <Route path="interior/*" element={<Navigate to="/ID_fictional project.html" replace />} />
             <Route path="post/*" element={<Navigate to="/fictional project_Post.html" replace />} />
+            <Route path="cbca/*" element={<Navigate to="/CBCA_fictional project.html" replace />} />
             <Route path="*" element={<NotFound />} />
           </Route>
       </Routes>
