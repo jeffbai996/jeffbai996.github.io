@@ -1,0 +1,1645 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Department of Health | Republic of Praya</title>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    
+    :root {
+      --primary: #0d9488;
+      --primary-dark: #0f766e;
+      --primary-light: rgba(13, 148, 136, 0.1);
+      --primary-glow: rgba(13, 148, 136, 0.25);
+      --accent: #f43f5e;
+      --accent-light: rgba(244, 63, 94, 0.1);
+      --success: #10b981;
+      --danger: #ef4444;
+      --warning: #f59e0b;
+      --bg-dark: #09090b;
+      --bg-card: #141416;
+      --bg-elevated: #1a1a1e;
+      --border: #27272a;
+      --border-subtle: #1f1f23;
+      --text-primary: #fafafa;
+      --text-secondary: #a1a1aa;
+      --text-muted: #71717a;
+    }
+    
+    body.light {
+      --bg-dark: #fafafa;
+      --bg-card: #ffffff;
+      --bg-elevated: #f4f4f5;
+      --border: #e4e4e7;
+      --border-subtle: #f4f4f5;
+      --text-primary: #09090b;
+      --text-secondary: #52525b;
+      --text-muted: #71717a;
+    }
+    
+    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+    @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+    @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
+    @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
+    @keyframes shimmer { 0% { background-position: -200% 0; } 100% { background-position: 200% 0; } }
+    @keyframes heartbeat { 0%, 100% { transform: scale(1); } 14% { transform: scale(1.1); } 28% { transform: scale(1); } 42% { transform: scale(1.1); } 70% { transform: scale(1); } }
+    
+    body {
+      font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+      line-height: 1.6;
+      background: var(--bg-dark);
+      color: var(--text-primary);
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+      opacity: 0;
+      animation: fadeIn 0.4s ease-out 0.1s forwards;
+    }
+    
+    html { scroll-behavior: smooth; }
+    a { color: var(--primary); text-decoration: none; transition: all 0.2s ease; }
+    a:hover { filter: brightness(1.15); }
+    ::selection { background: var(--primary); color: white; }
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+    
+    /* Government Banner */
+    .gov-banner { background: #000; color: white; padding: 10px 0; font-size: 13px; border-bottom: 1px solid #222; }
+    body.light .gov-banner { background: #134e4a; border-color: #0f3d39; }
+    .gov-banner .container { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
+    .gov-banner-left { display: flex; align-items: center; gap: 10px; }
+    .gov-icon svg { width: 18px; height: 18px; }
+    .gov-banner-right { display: flex; align-items: center; gap: 16px; }
+    .gov-banner-right a { color: #9ca3af; font-size: 12px; }
+    .gov-how { color: #5eead4; background: none; border: none; font-size: 13px; cursor: pointer; padding: 0; font-family: inherit; display: inline-flex; align-items: center; gap: 4px; }
+    .gov-how:hover { color: #99f6e4; }
+    .gov-how svg { transition: transform 0.2s; }
+    .gov-how.open svg { transform: rotate(180deg); }
+    .gov-dropdown { display: none; background: #0a0a0a; border-top: 1px solid #222; padding: 16px 0; }
+    body.light .gov-dropdown { background: #0f3d39; }
+    .gov-dropdown.open { display: block; }
+    .gov-dropdown-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; max-width: 600px; }
+    .gov-dropdown-item { display: flex; gap: 12px; }
+    .gov-dropdown-icon { width: 36px; height: 36px; background: #1a1a1e; border-radius: 8px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    body.light .gov-dropdown-icon { background: #134e4a; }
+    .gov-dropdown-icon svg { color: #5eead4; }
+    .gov-dropdown-text h4 { font-size: 13px; font-weight: 600; margin-bottom: 4px; }
+    .gov-dropdown-text p { font-size: 12px; color: #9ca3af; line-height: 1.5; }
+    .theme-btn { background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.12); color: #9ca3af; padding: 6px 12px; border-radius: 6px; cursor: pointer; font-size: 12px; font-weight: 500; font-family: inherit; transition: all 0.2s; }
+    .theme-btn:hover { background: rgba(255,255,255,0.12); color: white; }
+    
+    /* Header */
+    .header { background: rgba(9, 9, 11, 0.9); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 100; }
+    body.light .header { background: rgba(255, 255, 255, 0.9); }
+    .header .container { display: flex; align-items: center; justify-content: space-between; height: 68px; }
+    .dept-logo { display: flex; align-items: center; gap: 12px; cursor: pointer; transition: opacity 0.2s; }
+    .dept-logo:hover { opacity: 0.85; }
+    .logo-mark { width: 42px; height: 42px; background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%); border-radius: 10px; display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden; }
+    .logo-mark::before { content: ''; position: absolute; width: 100%; height: 100%; background: linear-gradient(45deg, transparent 30%, rgba(255,255,255,0.15) 50%, transparent 70%); animation: shimmer 3s infinite; background-size: 200% 100%; }
+    .logo-mark svg { width: 22px; height: 22px; color: white; position: relative; z-index: 1; }
+    .logo-text h1 { font-size: 17px; font-weight: 700; color: var(--text-primary); letter-spacing: -0.02em; line-height: 1.2; }
+    .logo-text .tagline { font-size: 11px; font-weight: 500; color: var(--text-muted); }
+    .nav { display: flex; gap: 2px; }
+    .nav-link { padding: 8px 16px; color: var(--text-secondary); font-size: 14px; font-weight: 500; border-radius: 8px; cursor: pointer; border: none; background: none; font-family: inherit; transition: all 0.15s; }
+    .nav-link:hover { background: var(--bg-elevated); color: var(--text-primary); }
+    .nav-link.active { background: var(--primary-light); color: var(--primary); }
+    
+    /* Hero */
+    .hero { background: var(--bg-elevated); padding: 80px 0; border-bottom: 1px solid var(--border); position: relative; overflow: hidden; }
+    .hero-bg { position: absolute; inset: 0; overflow: hidden; opacity: 0.12; }
+    .hero-bg-shape { position: absolute; border-radius: 50%; filter: blur(80px); }
+    .hero-bg-shape:nth-child(1) { width: 500px; height: 500px; background: var(--primary); top: -150px; right: -100px; animation: float 10s ease-in-out infinite; }
+    .hero-bg-shape:nth-child(2) { width: 350px; height: 350px; background: var(--accent); bottom: -100px; left: 5%; animation: float 12s ease-in-out infinite 1s; }
+    .hero-bg-shape:nth-child(3) { width: 250px; height: 250px; background: var(--primary); top: 30%; left: 40%; animation: float 14s ease-in-out infinite 2s; }
+    .hero-pattern { position: absolute; inset: 0; background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M30 15v30M15 30h30' stroke='%230d9488' stroke-width='1' fill='none' opacity='0.08'/%3E%3Ccircle cx='30' cy='30' r='8' stroke='%230d9488' stroke-width='1' fill='none' opacity='0.06'/%3E%3C/svg%3E"); opacity: 0.6; }
+    .hero-content { max-width: 640px; position: relative; z-index: 1; }
+    .hero-badge { display: inline-flex; align-items: center; gap: 8px; background: var(--primary-light); color: var(--primary); font-size: 12px; font-weight: 600; padding: 8px 14px; border-radius: 100px; margin-bottom: 20px; border: 1px solid rgba(13, 148, 136, 0.2); }
+    .hero-badge svg { width: 14px; height: 14px; animation: heartbeat 2s ease-in-out infinite; }
+    .hero h2 { font-size: 52px; font-weight: 700; line-height: 1.08; margin-bottom: 20px; letter-spacing: -0.03em; }
+    .hero h2 span { color: var(--primary); }
+    .hero p { color: var(--text-secondary); font-size: 18px; margin-bottom: 32px; line-height: 1.7; }
+    .btn { display: inline-flex; align-items: center; gap: 8px; padding: 14px 24px; font-size: 14px; font-weight: 600; border-radius: 10px; cursor: pointer; border: none; font-family: inherit; transition: all 0.2s ease; }
+    .btn-primary { background: var(--primary); color: white; }
+    .btn-primary:hover { background: var(--primary-dark); transform: translateY(-1px); box-shadow: 0 4px 12px rgba(13, 148, 136, 0.3); }
+    .btn-secondary { background: var(--bg-card); color: var(--text-secondary); margin-left: 10px; border: 1px solid var(--border); }
+    .btn-secondary:hover { background: var(--bg-elevated); color: var(--text-primary); }
+    .btn-accent { background: var(--accent); color: white; }
+    .btn-accent:hover { background: #e11d48; transform: translateY(-1px); }
+    
+    /* Alert Banner */
+    .alert-banner { background: linear-gradient(90deg, rgba(244, 63, 94, 0.15) 0%, rgba(244, 63, 94, 0.05) 100%); border: 1px solid rgba(244, 63, 94, 0.3); padding: 14px 20px; border-radius: 12px; margin: 20px 0; display: flex; align-items: center; gap: 12px; }
+    .alert-banner svg { width: 20px; height: 20px; color: var(--accent); flex-shrink: 0; }
+    .alert-banner-content { flex: 1; }
+    .alert-banner-title { font-size: 14px; font-weight: 600; color: var(--accent); }
+    .alert-banner-text { font-size: 13px; color: var(--text-secondary); margin-top: 2px; }
+    
+    /* Stats */
+    .stats-bar { background: var(--bg-dark); border-bottom: 1px solid var(--border); padding: 24px 0; }
+    .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+    .stat-item { text-align: center; padding: 20px; background: var(--bg-card); border-radius: 12px; border: 1px solid var(--border-subtle); cursor: pointer; transition: all 0.2s; }
+    .stat-item:hover { border-color: var(--primary); transform: translateY(-2px); }
+    .stat-label { font-size: 11px; font-weight: 600; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em; }
+    .stat-value { font-size: 28px; font-weight: 700; color: var(--primary); margin: 8px 0; letter-spacing: -0.02em; }
+    .stat-change { font-size: 12px; font-weight: 600; padding: 3px 8px; border-radius: 100px; }
+    .stat-up { background: rgba(16, 185, 129, 0.15); color: var(--success); }
+    .stat-down { background: rgba(239, 68, 68, 0.15); color: var(--danger); }
+    .stat-neutral { background: var(--bg-elevated); color: var(--text-muted); }
+    
+    /* Main Content */
+    .main { padding: 40px 0; }
+    .content-grid { display: grid; grid-template-columns: 1fr 340px; gap: 24px; }
+    .card { background: var(--bg-card); border: 1px solid var(--border-subtle); border-radius: 16px; padding: 24px; margin-bottom: 24px; transition: border-color 0.2s; }
+    .card:hover { border-color: var(--border); }
+    .card-header { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; padding-bottom: 16px; border-bottom: 1px solid var(--border-subtle); }
+    .card-icon { width: 40px; height: 40px; background: var(--primary-light); border-radius: 10px; display: flex; align-items: center; justify-content: center; }
+    .card-icon svg { width: 20px; height: 20px; color: var(--primary); }
+    .card-title { font-size: 16px; font-weight: 600; }
+    .card-subtitle { font-size: 12px; color: var(--text-muted); margin-top: 2px; }
+    
+    /* Service Cards */
+    .services-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 24px; }
+    .service-card { background: var(--bg-card); border: 1px solid var(--border-subtle); border-radius: 14px; padding: 24px; cursor: pointer; transition: all 0.2s; position: relative; overflow: hidden; }
+    .service-card::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 3px; background: linear-gradient(90deg, var(--primary), var(--primary-dark)); opacity: 0; transition: opacity 0.2s; }
+    .service-card:hover { border-color: var(--primary); transform: translateY(-2px); }
+    .service-card:hover::before { opacity: 1; }
+    .service-icon { width: 48px; height: 48px; background: var(--primary-light); border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-bottom: 16px; }
+    .service-icon svg { width: 24px; height: 24px; color: var(--primary); }
+    .service-icon.urgent { background: var(--accent-light); }
+    .service-icon.urgent svg { color: var(--accent); }
+    .service-title { font-size: 15px; font-weight: 600; margin-bottom: 8px; }
+    .service-desc { font-size: 13px; color: var(--text-secondary); line-height: 1.6; }
+    .service-link { font-size: 13px; font-weight: 600; color: var(--primary); margin-top: 12px; display: inline-flex; align-items: center; gap: 4px; }
+    .service-link svg { width: 14px; height: 14px; transition: transform 0.2s; }
+    .service-card:hover .service-link svg { transform: translateX(4px); }
+    
+    /* Quick Links */
+    .quick-links { display: grid; gap: 8px; }
+    .quick-link { display: flex; align-items: center; gap: 12px; padding: 14px 16px; background: var(--bg-elevated); border-radius: 10px; cursor: pointer; transition: all 0.15s; border: 1px solid transparent; }
+    .quick-link:hover { background: var(--primary-light); border-color: rgba(13, 148, 136, 0.2); }
+    .quick-link-icon { width: 32px; height: 32px; background: var(--bg-card); border-radius: 8px; display: flex; align-items: center; justify-content: center; }
+    .quick-link-icon svg { width: 16px; height: 16px; color: var(--primary); }
+    .quick-link-text { font-size: 14px; font-weight: 500; flex: 1; }
+    .quick-link-arrow { color: var(--text-muted); }
+    .quick-link:hover .quick-link-arrow { color: var(--primary); }
+    
+    /* News Items */
+    .news-item { padding: 16px 0; border-bottom: 1px solid var(--border-subtle); cursor: pointer; transition: all 0.15s; }
+    .news-item:last-child { border-bottom: none; }
+    .news-item:hover { padding-left: 8px; }
+    .news-date { font-size: 11px; font-weight: 600; color: var(--primary); text-transform: uppercase; letter-spacing: 0.03em; }
+    .news-title { font-size: 14px; font-weight: 600; margin: 6px 0; line-height: 1.4; }
+    .news-excerpt { font-size: 13px; color: var(--text-secondary); line-height: 1.5; }
+    
+    /* Info Boxes */
+    .info-box { background: var(--primary-light); border: 1px solid rgba(13, 148, 136, 0.2); border-radius: 12px; padding: 16px; margin: 16px 0; }
+    .info-box h4 { font-size: 14px; font-weight: 600; color: var(--primary); margin-bottom: 6px; }
+    .info-box p { font-size: 13px; color: var(--text-secondary); line-height: 1.6; }
+    .success-box { background: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.2); border-radius: 12px; padding: 16px; margin: 16px 0; }
+    .success-box h4 { font-size: 14px; font-weight: 600; color: var(--success); margin-bottom: 6px; }
+    .success-box p { font-size: 13px; color: var(--text-secondary); line-height: 1.6; }
+    .warning-box { background: rgba(245, 158, 11, 0.1); border: 1px solid rgba(245, 158, 11, 0.2); border-radius: 12px; padding: 16px; margin: 16px 0; }
+    .warning-box h4 { font-size: 14px; font-weight: 600; color: var(--warning); margin-bottom: 6px; }
+    .warning-box p { font-size: 13px; color: var(--text-secondary); line-height: 1.6; }
+    .danger-box { background: rgba(239, 68, 68, 0.1); border: 1px solid rgba(239, 68, 68, 0.2); border-radius: 12px; padding: 16px; margin: 16px 0; }
+    .danger-box h4 { font-size: 14px; font-weight: 600; color: var(--danger); margin-bottom: 6px; display: flex; align-items: center; gap: 8px; }
+    .danger-box p { font-size: 13px; color: var(--text-secondary); line-height: 1.6; }
+    
+    /* Page Headers */
+    .page-header { background: var(--bg-elevated); padding: 48px 0; border-bottom: 1px solid var(--border); }
+    .page-header h1 { font-size: 36px; font-weight: 700; letter-spacing: -0.02em; margin-bottom: 8px; }
+    .page-header .subtitle { font-size: 16px; color: var(--text-secondary); }
+    .breadcrumb { font-size: 13px; color: var(--text-muted); margin-bottom: 16px; }
+    .breadcrumb a { color: var(--text-muted); cursor: pointer; }
+    .breadcrumb a:hover { color: var(--primary); }
+    
+    /* Content Text */
+    .content-text h3 { font-size: 18px; font-weight: 600; margin: 24px 0 12px; color: var(--text-primary); }
+    .content-text h3:first-child { margin-top: 0; }
+    .content-text p { font-size: 14px; color: var(--text-secondary); margin-bottom: 14px; line-height: 1.7; }
+    .content-text ul, .content-text ol { margin: 14px 0; padding-left: 20px; }
+    .content-text li { font-size: 14px; color: var(--text-secondary); margin-bottom: 8px; line-height: 1.6; }
+    .content-text strong { color: var(--text-primary); font-weight: 600; }
+    
+    /* Tables */
+    .data-table { width: 100%; border-collapse: collapse; margin: 16px 0; }
+    .data-table th { text-align: left; padding: 12px 10px; font-size: 11px; font-weight: 600; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em; border-bottom: 2px solid var(--border); }
+    .data-table td { padding: 12px 10px; font-size: 14px; border-bottom: 1px solid var(--border-subtle); }
+    .data-table tbody tr:hover { background: var(--bg-elevated); }
+    
+    /* Forms */
+    .form-section { margin: 24px 0; }
+    .form-group { margin-bottom: 20px; }
+    .form-label { display: block; font-size: 13px; font-weight: 600; margin-bottom: 8px; color: var(--text-primary); }
+    .form-input { width: 100%; padding: 12px 14px; font-size: 14px; font-family: inherit; background: var(--bg-elevated); border: 1px solid var(--border); border-radius: 10px; color: var(--text-primary); transition: all 0.15s; }
+    .form-input:focus { outline: none; border-color: var(--primary); box-shadow: 0 0 0 3px var(--primary-light); }
+    .form-input::placeholder { color: var(--text-muted); }
+    .form-select { appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%2371717a' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 12px center; padding-right: 40px; cursor: pointer; }
+    .form-hint { font-size: 12px; color: var(--text-muted); margin-top: 6px; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    
+    /* Hospital Cards */
+    .hospital-card { background: var(--bg-card); border: 1px solid var(--border-subtle); border-radius: 14px; padding: 20px; margin-bottom: 16px; transition: all 0.2s; }
+    .hospital-card:hover { border-color: var(--primary); }
+    .hospital-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px; }
+    .hospital-name { font-size: 16px; font-weight: 600; }
+    .hospital-type { font-size: 11px; font-weight: 600; color: var(--primary); text-transform: uppercase; letter-spacing: 0.03em; background: var(--primary-light); padding: 4px 8px; border-radius: 4px; }
+    .hospital-info { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 16px; }
+    .hospital-info-item { font-size: 13px; color: var(--text-secondary); }
+    .hospital-info-item strong { color: var(--text-primary); display: block; font-size: 12px; margin-bottom: 2px; }
+    .hospital-status { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 600; }
+    .hospital-status.open { color: var(--success); }
+    .hospital-status.limited { color: var(--warning); }
+    .hospital-status-dot { width: 8px; height: 8px; border-radius: 50%; background: currentColor; }
+    
+    /* Vaccine Card */
+    .vaccine-schedule { display: grid; gap: 12px; }
+    .vaccine-item { display: flex; align-items: center; gap: 16px; padding: 16px; background: var(--bg-elevated); border-radius: 10px; }
+    .vaccine-age { width: 60px; font-size: 13px; font-weight: 600; color: var(--primary); }
+    .vaccine-name { flex: 1; font-size: 14px; font-weight: 500; }
+    .vaccine-doses { font-size: 12px; color: var(--text-muted); }
+    
+    /* Footer */
+    .footer { background: var(--bg-card); border-top: 1px solid var(--border); padding: 48px 0 24px; margin-top: 48px; }
+    .footer-grid { display: grid; grid-template-columns: 1.5fr 1fr 1fr 1fr 1fr; gap: 32px; margin-bottom: 32px; }
+    .footer-brand h4 { font-size: 16px; font-weight: 700; margin-bottom: 12px; }
+    .footer-brand p { font-size: 13px; color: var(--text-secondary); line-height: 1.6; }
+    .footer-contact { margin-top: 16px; padding: 14px; background: var(--bg-elevated); border-radius: 10px; }
+    .footer-contact-label { font-size: 11px; font-weight: 600; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em; }
+    .footer-contact-value { font-size: 18px; font-weight: 700; color: var(--primary); margin: 4px 0; }
+    .footer-contact-note { font-size: 12px; color: var(--text-muted); }
+    .footer-section h5 { font-size: 13px; font-weight: 600; margin-bottom: 14px; text-transform: uppercase; letter-spacing: 0.03em; }
+    .footer-section ul { list-style: none; }
+    .footer-section li { margin-bottom: 10px; }
+    .footer-section a { font-size: 14px; color: var(--text-secondary); cursor: pointer; }
+    .footer-section a:hover { color: var(--primary); }
+    .footer-bottom { display: flex; justify-content: space-between; align-items: center; padding-top: 24px; border-top: 1px solid var(--border-subtle); font-size: 13px; color: var(--text-muted); }
+    .footer-legal { display: flex; gap: 20px; }
+    .footer-legal a { color: var(--text-muted); }
+    .footer-legal a:hover { color: var(--primary); }
+    
+    /* Emergency Banner */
+    .emergency-banner { background: linear-gradient(135deg, var(--accent) 0%, #be123c 100%); color: white; padding: 16px 20px; border-radius: 12px; display: flex; align-items: center; gap: 16px; margin-bottom: 24px; }
+    .emergency-icon { width: 48px; height: 48px; background: rgba(255,255,255,0.2); border-radius: 12px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .emergency-icon svg { width: 24px; height: 24px; }
+    .emergency-content h3 { font-size: 16px; font-weight: 700; margin-bottom: 4px; }
+    .emergency-content p { font-size: 13px; opacity: 0.9; }
+    .emergency-number { font-size: 28px; font-weight: 800; letter-spacing: -0.02em; margin-left: auto; }
+    
+    /* Pages */
+    .page { display: none; }
+    .page.active { display: block; }
+    
+    /* Status Badges */
+    .status-badge { display: inline-flex; align-items: center; gap: 6px; padding: 4px 10px; border-radius: 100px; font-size: 12px; font-weight: 600; }
+    .status-active { background: rgba(16, 185, 129, 0.15); color: var(--success); }
+    .status-pending { background: rgba(245, 158, 11, 0.15); color: var(--warning); }
+    .status-expired { background: rgba(239, 68, 68, 0.15); color: var(--danger); }
+    
+    /* License Types */
+    .license-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; margin-top: 16px; }
+    .license-card { background: var(--bg-elevated); border-radius: 12px; padding: 20px; border: 1px solid var(--border-subtle); }
+    .license-card h4 { font-size: 15px; font-weight: 600; margin-bottom: 8px; }
+    .license-card p { font-size: 13px; color: var(--text-secondary); line-height: 1.5; }
+    .license-fee { font-size: 18px; font-weight: 700; color: var(--primary); margin-top: 12px; }
+    
+    /* Responsive */
+    @media (max-width: 1024px) {
+      .content-grid { grid-template-columns: 1fr; }
+    }
+    
+    @media (max-width: 768px) {
+      .nav { display: none; }
+      .hero h2 { font-size: 36px; }
+      .services-grid { grid-template-columns: 1fr; }
+      .stats-grid { grid-template-columns: 1fr 1fr; }
+      .footer-grid { grid-template-columns: 1fr 1fr; }
+      .form-row { grid-template-columns: 1fr; }
+      .gov-dropdown-inner { grid-template-columns: 1fr; }
+      .emergency-banner { flex-direction: column; text-align: center; }
+      .emergency-number { margin: 16px 0 0 0; }
+      .license-grid { grid-template-columns: 1fr; }
+      .hospital-info { grid-template-columns: 1fr; }
+    }
+    
+    @media (max-width: 480px) {
+      .footer-grid { grid-template-columns: 1fr; }
+      .footer-bottom { flex-direction: column; gap: 12px; text-align: center; }
+      .stats-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Government Banner -->
+<div class="gov-banner">
+  <div class="container">
+    <div class="gov-banner-left">
+      <span class="gov-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M3 21h18"></path>
+          <path d="M5 21V7l8-4v18"></path>
+          <path d="M19 21V11l-6-4"></path>
+          <path d="M9 9v.01"></path>
+          <path d="M9 12v.01"></path>
+          <path d="M9 15v.01"></path>
+          <path d="M9 18v.01"></path>
+        </svg>
+      </span>
+      <span>An Official Government of Praya Website</span>
+      <button class="gov-how" onclick="toggleGovDropdown(this)">
+        Here's how you know
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
+      </button>
+    </div>
+    <div class="gov-banner-right">
+      <a href="https://www.govpraya.org">GOV.PRAYA</a>
+      <button class="theme-btn" onclick="toggleTheme()">Light</button>
+    </div>
+  </div>
+  <div class="gov-dropdown" id="govDropdown">
+    <div class="container">
+      <div class="gov-dropdown-inner">
+        <div class="gov-dropdown-item">
+          <div class="gov-dropdown-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+          </div>
+          <div class="gov-dropdown-text">
+            <h4>Official government websites use .gov.py</h4>
+            <p>A .gov.py website belongs to an official government organization in the Republic of Praya.</p>
+          </div>
+        </div>
+        <div class="gov-dropdown-item">
+          <div class="gov-dropdown-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+          </div>
+          <div class="gov-dropdown-text">
+            <h4>Secure .gov.py websites use HTTPS</h4>
+            <p>A lock icon or https:// means you've safely connected to the .gov.py website.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Header -->
+<header class="header">
+  <div class="container">
+    <div class="dept-logo" onclick="showPage('home')">
+      <div class="logo-mark">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M22 12h-4l-3 9L9 3l-3 9H2"></path>
+        </svg>
+      </div>
+      <div class="logo-text">
+        <h1>Department of Health</h1>
+        <div class="tagline">Republic of Praya</div>
+      </div>
+    </div>
+    <nav class="nav">
+      <button class="nav-link active" data-page="home" onclick="showPage('home')">Home</button>
+      <button class="nav-link" data-page="services" onclick="showPage('services')">Services</button>
+      <button class="nav-link" data-page="hospitals" onclick="showPage('hospitals')">Hospitals</button>
+      <button class="nav-link" data-page="licensing" onclick="showPage('licensing')">Licensing</button>
+      <button class="nav-link" data-page="public-health" onclick="showPage('public-health')">Public Health</button>
+      <button class="nav-link" data-page="about" onclick="showPage('about')">About</button>
+    </nav>
+  </div>
+</header>
+
+<!-- HOME PAGE -->
+<div id="page-home" class="page active">
+  <section class="hero">
+    <div class="hero-bg">
+      <div class="hero-bg-shape"></div>
+      <div class="hero-bg-shape"></div>
+      <div class="hero-bg-shape"></div>
+    </div>
+    <div class="hero-pattern"></div>
+    <div class="container">
+      <div class="hero-content">
+        <div class="hero-badge">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"></path></svg>
+          Protecting Praya's Health Since 2012
+        </div>
+        <h2>Your Health is Our <span>Priority</span></h2>
+        <p>The Department of Health oversees public health policy, healthcare facility regulation, professional licensing, disease prevention, and health promotion for all Praya citizens.</p>
+        <div>
+          <button class="btn btn-primary" onclick="showPage('services')">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
+            All Services
+          </button>
+          <button class="btn btn-secondary" onclick="showPage('hospitals')">Find Healthcare</button>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <section class="stats-bar">
+    <div class="container">
+      <div class="stats-grid">
+        <div class="stat-item" onclick="showPage('hospitals')">
+          <div class="stat-label">Hospitals</div>
+          <div class="stat-value">24</div>
+          <span class="stat-change stat-up">+2 this year</span>
+        </div>
+        <div class="stat-item" onclick="showPage('licensing')">
+          <div class="stat-label">Licensed Professionals</div>
+          <div class="stat-value">8,420</div>
+          <span class="stat-change stat-up">+5.2%</span>
+        </div>
+        <div class="stat-item" onclick="showPage('public-health')">
+          <div class="stat-label">Vaccination Rate</div>
+          <div class="stat-value">94.7%</div>
+          <span class="stat-change stat-up">+1.8%</span>
+        </div>
+        <div class="stat-item">
+          <div class="stat-label">Health Clinics</div>
+          <div class="stat-value">156</div>
+          <span class="stat-change stat-neutral">Nationwide</span>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <section class="main">
+    <div class="container">
+      <div class="emergency-banner">
+        <div class="emergency-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+        </div>
+        <div class="emergency-content">
+          <h3>Medical Emergency?</h3>
+          <p>For life-threatening emergencies, call immediately. Ambulance services available 24/7.</p>
+        </div>
+        <div class="emergency-number">995</div>
+      </div>
+      
+      <div class="content-grid">
+        <div class="main-content">
+          <h2 style="font-size: 24px; font-weight: 700; margin-bottom: 8px;">Health Services</h2>
+          <p style="color: var(--text-secondary); margin-bottom: 24px;">Access healthcare services, licensing, and public health information.</p>
+          
+          <div class="services-grid">
+            <div class="service-card" onclick="showPage('hospitals')">
+              <div class="service-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><path d="M9 14v8"></path><path d="M15 14v8"></path><path d="M9 18h6"></path></svg>
+              </div>
+              <div class="service-title">Find a Hospital</div>
+              <div class="service-desc">Locate registered hospitals and healthcare facilities near you.</div>
+              <div class="service-link">
+                Search facilities
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+              </div>
+            </div>
+            
+            <div class="service-card" onclick="showPage('licensing')">
+              <div class="service-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+              </div>
+              <div class="service-title">Professional Licensing</div>
+              <div class="service-desc">Apply for or renew your healthcare professional license.</div>
+              <div class="service-link">
+                Apply now
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+              </div>
+            </div>
+            
+            <div class="service-card" onclick="showPage('public-health')">
+              <div class="service-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path><path d="M9 12l2 2 4-4"></path></svg>
+              </div>
+              <div class="service-title">Immunizations</div>
+              <div class="service-desc">View recommended vaccines and immunization schedules.</div>
+              <div class="service-link">
+                View schedule
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+              </div>
+            </div>
+            
+            <div class="service-card" onclick="showPage('verify')">
+              <div class="service-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+              </div>
+              <div class="service-title">Verify a License</div>
+              <div class="service-desc">Check if a healthcare professional is properly licensed.</div>
+              <div class="service-link">
+                Verify now
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+              </div>
+            </div>
+            
+            <div class="service-card" onclick="showPage('facility-license')">
+              <div class="service-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="3" y1="9" x2="21" y2="9"></line><line x1="9" y1="21" x2="9" y2="9"></line></svg>
+              </div>
+              <div class="service-title">Facility Licensing</div>
+              <div class="service-desc">Register and license healthcare facilities and pharmacies.</div>
+              <div class="service-link">
+                Learn more
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+              </div>
+            </div>
+            
+            <div class="service-card" onclick="showPage('complaints')">
+              <div class="service-icon urgent">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+              </div>
+              <div class="service-title">File a Complaint</div>
+              <div class="service-desc">Report concerns about healthcare providers or facilities.</div>
+              <div class="service-link">
+                Submit complaint
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <aside class="sidebar">
+          <div class="card">
+            <div class="card-header">
+              <div class="card-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
+              </div>
+              <div>
+                <div class="card-title">Quick Links</div>
+                <div class="card-subtitle">Popular services</div>
+              </div>
+            </div>
+            <div class="quick-links">
+              <div class="quick-link" onclick="showPage('verify')">
+                <div class="quick-link-icon">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+                </div>
+                <span class="quick-link-text">Verify Healthcare Provider</span>
+                <svg class="quick-link-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
+              </div>
+              <div class="quick-link" onclick="showPage('licensing')">
+                <div class="quick-link-icon">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+                </div>
+                <span class="quick-link-text">Renew License</span>
+                <svg class="quick-link-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
+              </div>
+              <div class="quick-link" onclick="showPage('public-health')">
+                <div class="quick-link-icon">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"></path></svg>
+                </div>
+                <span class="quick-link-text">Vaccination Records</span>
+                <svg class="quick-link-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
+              </div>
+              <div class="quick-link" onclick="showPage('hospitals')">
+                <div class="quick-link-icon">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="10" r="3"></circle><path d="M12 21.7C17.3 17 20 13 20 10a8 8 0 1 0-16 0c0 3 2.7 6.9 8 11.7z"></path></svg>
+                </div>
+                <span class="quick-link-text">Find Nearest Clinic</span>
+                <svg class="quick-link-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
+              </div>
+            </div>
+          </div>
+          
+          <div class="card">
+            <div class="card-header">
+              <div class="card-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+              </div>
+              <div>
+                <div class="card-title">Latest Updates</div>
+                <div class="card-subtitle">News & announcements</div>
+              </div>
+            </div>
+            <div class="news-item">
+              <div class="news-date">November 28, 2025</div>
+              <div class="news-title">Seasonal Flu Vaccination Campaign Begins</div>
+              <div class="news-excerpt">Free flu vaccines now available at all community health centers for eligible residents.</div>
+            </div>
+            <div class="news-item">
+              <div class="news-date">November 15, 2025</div>
+              <div class="news-title">New Mental Health Hotline Launched</div>
+              <div class="news-excerpt">24/7 mental health support line now available. Call 1800-MIND-PY for confidential support.</div>
+            </div>
+            <div class="news-item">
+              <div class="news-date">November 1, 2025</div>
+              <div class="news-title">Healthcare Professional License Renewal Period</div>
+              <div class="news-excerpt">All healthcare licenses expiring December 31, 2025 must be renewed by November 30.</div>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- SERVICES PAGE -->
+<div id="page-services" class="page">
+  <div class="page-header">
+    <div class="container">
+      <div class="breadcrumb"><a onclick="showPage('home')">Home</a> / Services</div>
+      <h1>All Services</h1>
+      <div class="subtitle">Complete directory of Department of Health services</div>
+    </div>
+  </div>
+  <section class="main">
+    <div class="container">
+      <div class="content-grid">
+        <div class="main-content content-text">
+          <h3>For Praya Citizens</h3>
+          <div class="services-grid" style="grid-template-columns: repeat(2, 1fr);">
+            <div class="service-card" onclick="showPage('hospitals')">
+              <div class="service-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><path d="M9 14v8"></path><path d="M15 14v8"></path><path d="M9 18h6"></path></svg>
+              </div>
+              <div class="service-title">Find Healthcare Facilities</div>
+              <div class="service-desc">Search for hospitals, clinics, and pharmacies.</div>
+            </div>
+            <div class="service-card" onclick="showPage('verify')">
+              <div class="service-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+              </div>
+              <div class="service-title">Verify a Provider</div>
+              <div class="service-desc">Check healthcare professional credentials.</div>
+            </div>
+            <div class="service-card" onclick="showPage('public-health')">
+              <div class="service-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+              </div>
+              <div class="service-title">Immunization Services</div>
+              <div class="service-desc">Vaccine schedules and health screenings.</div>
+            </div>
+            <div class="service-card" onclick="showPage('complaints')">
+              <div class="service-icon urgent">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+              </div>
+              <div class="service-title">File a Complaint</div>
+              <div class="service-desc">Report healthcare provider concerns.</div>
+            </div>
+          </div>
+          
+          <h3>For Healthcare Professionals</h3>
+          <div class="services-grid" style="grid-template-columns: repeat(2, 1fr);">
+            <div class="service-card" onclick="showPage('licensing')">
+              <div class="service-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
+              </div>
+              <div class="service-title">License Application</div>
+              <div class="service-desc">Apply for healthcare professional license.</div>
+            </div>
+            <div class="service-card" onclick="showPage('licensing')">
+              <div class="service-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3m-3.5 3.5L19 4"></path></svg>
+              </div>
+              <div class="service-title">License Renewal</div>
+              <div class="service-desc">Renew your professional credentials.</div>
+            </div>
+            <div class="service-card" onclick="showPage('cme')">
+              <div class="service-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path></svg>
+              </div>
+              <div class="service-title">Continuing Education</div>
+              <div class="service-desc">CME requirements and approved programs.</div>
+            </div>
+            <div class="service-card" onclick="showPage('facility-license')">
+              <div class="service-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="3" y1="9" x2="21" y2="9"></line></svg>
+              </div>
+              <div class="service-title">Facility Registration</div>
+              <div class="service-desc">Register clinics and healthcare facilities.</div>
+            </div>
+          </div>
+        </div>
+        
+        <aside class="sidebar">
+          <div class="card">
+            <div class="card-header">
+              <div class="card-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+              </div>
+              <div>
+                <div class="card-title">Need Help?</div>
+                <div class="card-subtitle">Contact support</div>
+              </div>
+            </div>
+            <div class="content-text">
+              <p>Our service center is available to assist with any questions about Department of Health services.</p>
+              <p><strong>General Enquiries:</strong><br>1-800-HEALTH-PY</p>
+              <p><strong>Hours:</strong><br>Mon–Fri 8:00 AM – 6:00 PM</p>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- HOSPITALS PAGE -->
+<div id="page-hospitals" class="page">
+  <div class="page-header">
+    <div class="container">
+      <div class="breadcrumb"><a onclick="showPage('home')">Home</a> / Hospitals & Facilities</div>
+      <h1>Healthcare Facilities</h1>
+      <div class="subtitle">Find registered hospitals, clinics, and pharmacies in Praya</div>
+    </div>
+  </div>
+  <section class="main">
+    <div class="container">
+      <div class="content-grid">
+        <div class="main-content">
+          <div class="form-section">
+            <div class="form-row">
+              <div class="form-group">
+                <label class="form-label">Search by Name or Location</label>
+                <input type="text" class="form-input" placeholder="Enter hospital name or district...">
+              </div>
+              <div class="form-group">
+                <label class="form-label">Facility Type</label>
+                <select class="form-input form-select">
+                  <option>All Facilities</option>
+                  <option>Hospitals</option>
+                  <option>Clinics</option>
+                  <option>Pharmacies</option>
+                  <option>Specialist Centers</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          
+          <h3 style="font-size: 18px; font-weight: 600; margin-bottom: 16px;">Major Hospitals</h3>
+          
+          <div class="hospital-card">
+            <div class="hospital-header">
+              <div>
+                <div class="hospital-name">Praya General Hospital</div>
+                <div style="font-size: 13px; color: var(--text-secondary); margin-top: 4px;">123 Central Avenue, Downtown District</div>
+              </div>
+              <span class="hospital-type">Public</span>
+            </div>
+            <div class="hospital-info">
+              <div class="hospital-info-item">
+                <strong>Beds</strong>
+                850
+              </div>
+              <div class="hospital-info-item">
+                <strong>Emergency</strong>
+                <span class="hospital-status open"><span class="hospital-status-dot"></span> 24/7 Open</span>
+              </div>
+              <div class="hospital-info-item">
+                <strong>Specialties</strong>
+                General, Cardiology, Oncology, Pediatrics
+              </div>
+              <div class="hospital-info-item">
+                <strong>Contact</strong>
+                (02) 6555-0100
+              </div>
+            </div>
+          </div>
+          
+          <div class="hospital-card">
+            <div class="hospital-header">
+              <div>
+                <div class="hospital-name">St. Catherine Medical Center</div>
+                <div style="font-size: 13px; color: var(--text-secondary); margin-top: 4px;">45 Harbor Road, Marina Bay</div>
+              </div>
+              <span class="hospital-type">Private</span>
+            </div>
+            <div class="hospital-info">
+              <div class="hospital-info-item">
+                <strong>Beds</strong>
+                420
+              </div>
+              <div class="hospital-info-item">
+                <strong>Emergency</strong>
+                <span class="hospital-status open"><span class="hospital-status-dot"></span> 24/7 Open</span>
+              </div>
+              <div class="hospital-info-item">
+                <strong>Specialties</strong>
+                Cardiology, Orthopedics, Neurology
+              </div>
+              <div class="hospital-info-item">
+                <strong>Contact</strong>
+                (02) 6777-2000
+              </div>
+            </div>
+          </div>
+          
+          <div class="hospital-card">
+            <div class="hospital-header">
+              <div>
+                <div class="hospital-name">Praya Children's Hospital</div>
+                <div style="font-size: 13px; color: var(--text-secondary); margin-top: 4px;">88 Garden Street, Central District</div>
+              </div>
+              <span class="hospital-type">Public</span>
+            </div>
+            <div class="hospital-info">
+              <div class="hospital-info-item">
+                <strong>Beds</strong>
+                280
+              </div>
+              <div class="hospital-info-item">
+                <strong>Emergency</strong>
+                <span class="hospital-status open"><span class="hospital-status-dot"></span> 24/7 Open</span>
+              </div>
+              <div class="hospital-info-item">
+                <strong>Specialties</strong>
+                Pediatrics, Neonatal, Child Surgery
+              </div>
+              <div class="hospital-info-item">
+                <strong>Contact</strong>
+                (02) 6333-8888
+              </div>
+            </div>
+          </div>
+          
+          <div class="hospital-card">
+            <div class="hospital-header">
+              <div>
+                <div class="hospital-name">Eastern District Medical Centre</div>
+                <div style="font-size: 13px; color: var(--text-secondary); margin-top: 4px;">201 Sunrise Boulevard, East Praya</div>
+              </div>
+              <span class="hospital-type">Public</span>
+            </div>
+            <div class="hospital-info">
+              <div class="hospital-info-item">
+                <strong>Beds</strong>
+                380
+              </div>
+              <div class="hospital-info-item">
+                <strong>Emergency</strong>
+                <span class="hospital-status limited"><span class="hospital-status-dot"></span> Limited Hours</span>
+              </div>
+              <div class="hospital-info-item">
+                <strong>Specialties</strong>
+                General Medicine, Surgery, OB-GYN
+              </div>
+              <div class="hospital-info-item">
+                <strong>Contact</strong>
+                (02) 6444-1200
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <aside class="sidebar">
+          <div class="card">
+            <div class="card-header">
+              <div class="card-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="10" r="3"></circle><path d="M12 21.7C17.3 17 20 13 20 10a8 8 0 1 0-16 0c0 3 2.7 6.9 8 11.7z"></path></svg>
+              </div>
+              <div>
+                <div class="card-title">Facility Statistics</div>
+                <div class="card-subtitle">Nationwide data</div>
+              </div>
+            </div>
+            <div style="display: grid; gap: 12px;">
+              <div style="padding: 16px; background: var(--bg-elevated); border-radius: 10px;">
+                <div style="font-size: 24px; font-weight: 700; color: var(--primary);">24</div>
+                <div style="font-size: 13px; color: var(--text-muted);">Registered Hospitals</div>
+              </div>
+              <div style="padding: 16px; background: var(--bg-elevated); border-radius: 10px;">
+                <div style="font-size: 24px; font-weight: 700; color: var(--primary);">156</div>
+                <div style="font-size: 13px; color: var(--text-muted);">Community Clinics</div>
+              </div>
+              <div style="padding: 16px; background: var(--bg-elevated); border-radius: 10px;">
+                <div style="font-size: 24px; font-weight: 700; color: var(--primary);">342</div>
+                <div style="font-size: 13px; color: var(--text-muted);">Licensed Pharmacies</div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="info-box">
+            <h4>Report Facility Issues</h4>
+            <p>Concerns about unlicensed facilities or safety violations can be reported to the Healthcare Compliance Division.</p>
+            <button class="btn btn-primary" style="margin-top: 12px; padding: 10px 16px; font-size: 13px;" onclick="showPage('complaints')">File Report</button>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- LICENSING PAGE -->
+<div id="page-licensing" class="page">
+  <div class="page-header">
+    <div class="container">
+      <div class="breadcrumb"><a onclick="showPage('home')">Home</a> / Professional Licensing</div>
+      <h1>Professional Licensing</h1>
+      <div class="subtitle">Apply for, renew, or verify healthcare professional licenses</div>
+    </div>
+  </div>
+  <section class="main">
+    <div class="container">
+      <div class="content-grid">
+        <div class="main-content content-text">
+          <h3>License Types</h3>
+          <p>The Department of Health issues licenses for the following healthcare professions:</p>
+          
+          <div class="license-grid">
+            <div class="license-card">
+              <h4>Physician License</h4>
+              <p>For medical doctors (MD) and doctors of osteopathic medicine (DO).</p>
+              <div class="license-fee">P$850 / 2 years</div>
+            </div>
+            <div class="license-card">
+              <h4>Nursing License</h4>
+              <p>For registered nurses (RN) and licensed practical nurses (LPN).</p>
+              <div class="license-fee">P$250 / 2 years</div>
+            </div>
+            <div class="license-card">
+              <h4>Pharmacist License</h4>
+              <p>For registered pharmacists and pharmacy technicians.</p>
+              <div class="license-fee">P$400 / 2 years</div>
+            </div>
+            <div class="license-card">
+              <h4>Dental License</h4>
+              <p>For dentists, dental hygienists, and dental assistants.</p>
+              <div class="license-fee">P$550 / 2 years</div>
+            </div>
+            <div class="license-card">
+              <h4>Allied Health License</h4>
+              <p>Physical therapists, occupational therapists, and other allied professionals.</p>
+              <div class="license-fee">P$300 / 2 years</div>
+            </div>
+            <div class="license-card">
+              <h4>Mental Health License</h4>
+              <p>Psychologists, counselors, and clinical social workers.</p>
+              <div class="license-fee">P$450 / 2 years</div>
+            </div>
+          </div>
+          
+          <h3>Application Requirements</h3>
+          <p>All license applications require:</p>
+          <ul>
+            <li>Completed application form</li>
+            <li>Proof of education (certified transcripts)</li>
+            <li>Passing scores on required examinations</li>
+            <li>Background check clearance</li>
+            <li>Proof of identity (PrayaID or passport)</li>
+            <li>Application fee payment</li>
+          </ul>
+          
+          <div class="warning-box">
+            <h4>Renewal Deadline</h4>
+            <p>All licenses expiring December 31, 2025 must be renewed by November 30, 2025 to avoid late fees and potential practice interruption.</p>
+          </div>
+          
+          <h3>Continuing Education Requirements</h3>
+          <p>Licensed healthcare professionals must complete continuing education credits to maintain active licensure. Requirements vary by profession:</p>
+          
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Profession</th>
+                <th>CE Credits Required</th>
+                <th>Cycle</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Physicians</td>
+                <td>50 credits</td>
+                <td>Per 2-year cycle</td>
+              </tr>
+              <tr>
+                <td>Nurses</td>
+                <td>30 credits</td>
+                <td>Per 2-year cycle</td>
+              </tr>
+              <tr>
+                <td>Pharmacists</td>
+                <td>40 credits</td>
+                <td>Per 2-year cycle</td>
+              </tr>
+              <tr>
+                <td>Dentists</td>
+                <td>40 credits</td>
+                <td>Per 2-year cycle</td>
+              </tr>
+              <tr>
+                <td>Allied Health</td>
+                <td>24 credits</td>
+                <td>Per 2-year cycle</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        
+        <aside class="sidebar">
+          <div class="card">
+            <div class="card-header">
+              <div class="card-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3m-3.5 3.5L19 4"></path></svg>
+              </div>
+              <div>
+                <div class="card-title">Quick Actions</div>
+                <div class="card-subtitle">Online services</div>
+              </div>
+            </div>
+            <div class="quick-links">
+              <div class="quick-link">
+                <div class="quick-link-icon">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="12" y1="18" x2="12" y2="12"></line><line x1="9" y1="15" x2="15" y2="15"></line></svg>
+                </div>
+                <span class="quick-link-text">New Application</span>
+                <svg class="quick-link-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
+              </div>
+              <div class="quick-link">
+                <div class="quick-link-icon">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="17 1 21 5 17 9"></polyline><path d="M3 11V9a4 4 0 0 1 4-4h14"></path><polyline points="7 23 3 19 7 15"></polyline><path d="M21 13v2a4 4 0 0 1-4 4H3"></path></svg>
+                </div>
+                <span class="quick-link-text">Renew License</span>
+                <svg class="quick-link-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
+              </div>
+              <div class="quick-link" onclick="showPage('verify')">
+                <div class="quick-link-icon">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                </div>
+                <span class="quick-link-text">Verify License</span>
+                <svg class="quick-link-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
+              </div>
+              <div class="quick-link">
+                <div class="quick-link-icon">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+                </div>
+                <span class="quick-link-text">Update Contact Info</span>
+                <svg class="quick-link-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
+              </div>
+            </div>
+          </div>
+          
+          <div class="info-box">
+            <h4>Questions?</h4>
+            <p>Contact the Licensing Division at (02) 6555-0150 or email licensing@health.gov.py</p>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- VERIFY LICENSE PAGE -->
+<div id="page-verify" class="page">
+  <div class="page-header">
+    <div class="container">
+      <div class="breadcrumb"><a onclick="showPage('home')">Home</a> / <a onclick="showPage('licensing')">Licensing</a> / Verify</div>
+      <h1>Verify Healthcare Provider</h1>
+      <div class="subtitle">Check if a healthcare professional is properly licensed</div>
+    </div>
+  </div>
+  <section class="main">
+    <div class="container">
+      <div class="content-grid">
+        <div class="main-content content-text">
+          <div class="card">
+            <h3 style="margin-top: 0;">Search by License Number</h3>
+            <div class="form-section">
+              <div class="form-group">
+                <label class="form-label">License Number</label>
+                <input type="text" class="form-input" placeholder="Enter license number (e.g., PH-2024-12345)">
+                <div class="form-hint">Format: XX-YYYY-NNNNN (Profession code, year, number)</div>
+              </div>
+              <button class="btn btn-primary">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                Search
+              </button>
+            </div>
+          </div>
+          
+          <div class="card">
+            <h3 style="margin-top: 0;">Search by Name</h3>
+            <div class="form-section">
+              <div class="form-row">
+                <div class="form-group">
+                  <label class="form-label">First Name</label>
+                  <input type="text" class="form-input" placeholder="Enter first name">
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Last Name</label>
+                  <input type="text" class="form-input" placeholder="Enter last name">
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="form-label">Profession Type</label>
+                <select class="form-input form-select">
+                  <option>All Professions</option>
+                  <option>Physician</option>
+                  <option>Nurse</option>
+                  <option>Pharmacist</option>
+                  <option>Dentist</option>
+                  <option>Allied Health</option>
+                  <option>Mental Health</option>
+                </select>
+              </div>
+              <button class="btn btn-primary">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                Search
+              </button>
+            </div>
+          </div>
+          
+          <div class="info-box">
+            <h4>About License Verification</h4>
+            <p>This database contains all active and recently expired licenses issued by the Praya Department of Health. Verification confirms a provider's current license status, expiration date, and any disciplinary actions.</p>
+          </div>
+        </div>
+        
+        <aside class="sidebar">
+          <div class="card">
+            <div class="card-header">
+              <div class="card-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+              </div>
+              <div>
+                <div class="card-title">License Status Types</div>
+                <div class="card-subtitle">What they mean</div>
+              </div>
+            </div>
+            <div class="content-text">
+              <p><span class="status-badge status-active">Active</span><br>License is current and in good standing.</p>
+              <p><span class="status-badge status-pending">Pending</span><br>Application under review or awaiting renewal.</p>
+              <p><span class="status-badge status-expired">Expired</span><br>License has lapsed or been revoked.</p>
+            </div>
+          </div>
+          
+          <div class="danger-box">
+            <h4>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+              Report Unlicensed Practice
+            </h4>
+            <p>If you suspect someone is practicing without a valid license, report it immediately.</p>
+            <button class="btn btn-accent" style="margin-top: 12px; padding: 10px 16px; font-size: 13px;" onclick="showPage('complaints')">File Report</button>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- PUBLIC HEALTH PAGE -->
+<div id="page-public-health" class="page">
+  <div class="page-header">
+    <div class="container">
+      <div class="breadcrumb"><a onclick="showPage('home')">Home</a> / Public Health</div>
+      <h1>Public Health Services</h1>
+      <div class="subtitle">Immunizations, disease prevention, and health promotion programs</div>
+    </div>
+  </div>
+  <section class="main">
+    <div class="container">
+      <div class="content-grid">
+        <div class="main-content content-text">
+          <div class="success-box">
+            <h4>Flu Vaccination Campaign Active</h4>
+            <p>Free seasonal flu vaccines are now available at all community health centers for Praya citizens age 6 months and older. No appointment necessary.</p>
+          </div>
+          
+          <h3>National Immunization Schedule</h3>
+          <p>The following vaccines are recommended for all Praya citizens according to the National Immunization Program:</p>
+          
+          <div class="vaccine-schedule">
+            <div class="vaccine-item">
+              <div class="vaccine-age">Birth</div>
+              <div class="vaccine-name">Hepatitis B (HepB)</div>
+              <div class="vaccine-doses">1st dose</div>
+            </div>
+            <div class="vaccine-item">
+              <div class="vaccine-age">2 months</div>
+              <div class="vaccine-name">DTaP, IPV, Hib, PCV, RV, HepB</div>
+              <div class="vaccine-doses">1st dose series</div>
+            </div>
+            <div class="vaccine-item">
+              <div class="vaccine-age">4 months</div>
+              <div class="vaccine-name">DTaP, IPV, Hib, PCV, RV</div>
+              <div class="vaccine-doses">2nd dose series</div>
+            </div>
+            <div class="vaccine-item">
+              <div class="vaccine-age">6 months</div>
+              <div class="vaccine-name">DTaP, PCV, RV, HepB, Influenza</div>
+              <div class="vaccine-doses">3rd dose series</div>
+            </div>
+            <div class="vaccine-item">
+              <div class="vaccine-age">12 months</div>
+              <div class="vaccine-name">MMR, Varicella, HepA, PCV, Hib</div>
+              <div class="vaccine-doses">1st dose / boosters</div>
+            </div>
+            <div class="vaccine-item">
+              <div class="vaccine-age">4–6 years</div>
+              <div class="vaccine-name">DTaP, IPV, MMR, Varicella</div>
+              <div class="vaccine-doses">Boosters</div>
+            </div>
+            <div class="vaccine-item">
+              <div class="vaccine-age">11–12 years</div>
+              <div class="vaccine-name">Tdap, HPV, MenACWY</div>
+              <div class="vaccine-doses">Adolescent series</div>
+            </div>
+            <div class="vaccine-item">
+              <div class="vaccine-age">Adults</div>
+              <div class="vaccine-name">Influenza, Tdap, Shingles (50+)</div>
+              <div class="vaccine-doses">Annual / as needed</div>
+            </div>
+          </div>
+          
+          <h3>Disease Surveillance</h3>
+          <p>The Department of Health maintains active surveillance for notifiable diseases. Healthcare providers are required to report cases of:</p>
+          <ul>
+            <li>Tuberculosis</li>
+            <li>HIV/AIDS</li>
+            <li>Hepatitis (A, B, C)</li>
+            <li>Measles</li>
+            <li>Dengue fever</li>
+            <li>Food-borne illness outbreaks</li>
+            <li>Any unusual disease clusters</li>
+          </ul>
+          
+          <h3>Health Promotion Programs</h3>
+          <p>Current public health initiatives include:</p>
+          <ul>
+            <li><strong>Healthy Praya 2030</strong> – National health improvement strategy</li>
+            <li><strong>Smoke-Free Praya</strong> – Tobacco cessation support</li>
+            <li><strong>Move More Praya</strong> – Physical activity promotion</li>
+            <li><strong>Mental Wellness Initiative</strong> – Community mental health resources</li>
+          </ul>
+        </div>
+        
+        <aside class="sidebar">
+          <div class="card">
+            <div class="card-header">
+              <div class="card-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+              </div>
+              <div>
+                <div class="card-title">Health Hotlines</div>
+                <div class="card-subtitle">24/7 support lines</div>
+              </div>
+            </div>
+            <div class="content-text">
+              <p><strong>Health Info Line</strong><br>1800-HEALTH</p>
+              <p><strong>Mental Health Support</strong><br>1800-MIND-PY</p>
+              <p><strong>Poison Control</strong><br>1800-POISON</p>
+              <p><strong>HIV/AIDS Hotline</strong><br>1800-HIV-INFO</p>
+            </div>
+          </div>
+          
+          <div class="card">
+            <div class="card-header">
+              <div class="card-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+              </div>
+              <div>
+                <div class="card-title">Vaccination Clinics</div>
+                <div class="card-subtitle">Upcoming dates</div>
+              </div>
+            </div>
+            <div class="content-text">
+              <p><strong>Dec 5, 2025</strong><br>Central Community Center<br>9:00 AM – 4:00 PM</p>
+              <p><strong>Dec 12, 2025</strong><br>East Praya Health Clinic<br>10:00 AM – 6:00 PM</p>
+              <p><strong>Dec 19, 2025</strong><br>Marina Bay Medical<br>9:00 AM – 3:00 PM</p>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ABOUT PAGE -->
+<div id="page-about" class="page">
+  <div class="page-header">
+    <div class="container">
+      <div class="breadcrumb"><a onclick="showPage('home')">Home</a> / About</div>
+      <h1>About the Department</h1>
+      <div class="subtitle">Our mission, leadership, and organizational structure</div>
+    </div>
+  </div>
+  <section class="main">
+    <div class="container">
+      <div class="content-grid">
+        <div class="main-content content-text">
+          <h3>Our Mission</h3>
+          <p>The Department of Health is committed to protecting and promoting the health and well-being of all Praya citizens through evidence-based policies, quality healthcare regulation, and accessible public health services.</p>
+          
+          <h3>Vision</h3>
+          <p>A healthy Praya where every citizen has access to quality healthcare and the opportunity to achieve their full health potential.</p>
+          
+          <h3>Core Functions</h3>
+          <ul>
+            <li><strong>Healthcare Regulation</strong> – Licensing and oversight of healthcare facilities and professionals</li>
+            <li><strong>Public Health</strong> – Disease prevention, immunization programs, and health promotion</li>
+            <li><strong>Health Policy</strong> – Development of national health strategies and guidelines</li>
+            <li><strong>Emergency Preparedness</strong> – Pandemic planning and health emergency response</li>
+            <li><strong>Health Information</strong> – Collection and analysis of health statistics</li>
+          </ul>
+          
+          <h3>Leadership</h3>
+          <table class="data-table">
+            <tbody>
+              <tr>
+                <td><strong>Secretary of Health</strong></td>
+                <td>Dr. Maria Chen, MD, MPH</td>
+              </tr>
+              <tr>
+                <td><strong>Deputy Secretary</strong></td>
+                <td>Dr. James Wong, PhD</td>
+              </tr>
+              <tr>
+                <td><strong>Chief Medical Officer</strong></td>
+                <td>Dr. Sarah Lim, MD</td>
+              </tr>
+              <tr>
+                <td><strong>Director, Public Health</strong></td>
+                <td>Dr. Michael Torres, DrPH</td>
+              </tr>
+              <tr>
+                <td><strong>Director, Healthcare Licensing</strong></td>
+                <td>Patricia Huang, JD</td>
+              </tr>
+            </tbody>
+          </table>
+          
+          <h3>Divisions</h3>
+          <ul>
+            <li>Healthcare Facilities Licensing Division</li>
+            <li>Professional Licensing Division</li>
+            <li>Public Health Division</li>
+            <li>Epidemiology and Disease Control Division</li>
+            <li>Health Promotion Division</li>
+            <li>Emergency Preparedness Division</li>
+            <li>Health Information and Statistics Division</li>
+            <li>Pharmaceutical Services Division</li>
+          </ul>
+          
+          <h3>Legal Authority</h3>
+          <p>The Department of Health operates under the authority of the <strong>Public Health Act (2012)</strong>, the <strong>Healthcare Facilities Licensing Act (2013)</strong>, and the <strong>Health Professionals Regulation Act (2014)</strong>. All regulations are promulgated in accordance with the Administrative Procedure Act.</p>
+        </div>
+        
+        <aside class="sidebar">
+          <div class="card">
+            <div class="card-header">
+              <div class="card-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+              </div>
+              <div>
+                <div class="card-title">Contact Us</div>
+                <div class="card-subtitle">Main office</div>
+              </div>
+            </div>
+            <div class="content-text">
+              <p><strong>Address</strong><br>
+              Department of Health<br>
+              100 Health Boulevard<br>
+              Government District<br>
+              Praya City 10001</p>
+              
+              <p><strong>General Enquiries</strong><br>
+              1-800-HEALTH-PY<br>
+              (02) 6555-0100</p>
+              
+              <p><strong>Email</strong><br>
+              info@health.gov.py</p>
+              
+              <p><strong>Office Hours</strong><br>
+              Mon–Fri 8:00 AM – 6:00 PM</p>
+            </div>
+          </div>
+          
+          <div class="card">
+            <div class="card-header">
+              <div class="card-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
+              </div>
+              <div>
+                <div class="card-title">Publications</div>
+                <div class="card-subtitle">Reports & data</div>
+              </div>
+            </div>
+            <div class="quick-links">
+              <div class="quick-link">
+                <span class="quick-link-text">Annual Health Report 2024</span>
+                <svg class="quick-link-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
+              </div>
+              <div class="quick-link">
+                <span class="quick-link-text">Health Statistics Yearbook</span>
+                <svg class="quick-link-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
+              </div>
+              <div class="quick-link">
+                <span class="quick-link-text">Strategic Plan 2025-2030</span>
+                <svg class="quick-link-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
+              </div>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- COMPLAINTS PAGE -->
+<div id="page-complaints" class="page">
+  <div class="page-header">
+    <div class="container">
+      <div class="breadcrumb"><a onclick="showPage('home')">Home</a> / File a Complaint</div>
+      <h1>File a Complaint</h1>
+      <div class="subtitle">Report concerns about healthcare providers or facilities</div>
+    </div>
+  </div>
+  <section class="main">
+    <div class="container">
+      <div class="content-grid">
+        <div class="main-content content-text">
+          <div class="danger-box">
+            <h4>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+              Medical Emergency?
+            </h4>
+            <p>If you are experiencing a medical emergency, call 995 immediately. This form is not for emergency situations.</p>
+          </div>
+          
+          <h3>What You Can Report</h3>
+          <ul>
+            <li>Unprofessional conduct by healthcare providers</li>
+            <li>Unlicensed practice of medicine or healthcare</li>
+            <li>Unsafe conditions at healthcare facilities</li>
+            <li>Billing fraud or abuse</li>
+            <li>Violations of patient rights</li>
+            <li>Medication errors or pharmacy concerns</li>
+          </ul>
+          
+          <h3>Submit a Complaint</h3>
+          <div class="form-section">
+            <div class="form-group">
+              <label class="form-label">Complaint Type</label>
+              <select class="form-input form-select">
+                <option>Select complaint type...</option>
+                <option>Provider Misconduct</option>
+                <option>Unlicensed Practice</option>
+                <option>Facility Safety</option>
+                <option>Billing Issues</option>
+                <option>Patient Rights Violation</option>
+                <option>Pharmacy/Medication</option>
+                <option>Other</option>
+              </select>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label class="form-label">Your Name</label>
+                <input type="text" class="form-input" placeholder="Full name">
+              </div>
+              <div class="form-group">
+                <label class="form-label">Contact Email</label>
+                <input type="email" class="form-input" placeholder="email@example.com">
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Provider/Facility Name (if known)</label>
+              <input type="text" class="form-input" placeholder="Name of provider or facility">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Date of Incident</label>
+              <input type="date" class="form-input">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Description of Complaint</label>
+              <textarea class="form-input" rows="6" placeholder="Please describe the incident in detail..."></textarea>
+              <div class="form-hint">Include dates, locations, and any witnesses if applicable</div>
+            </div>
+            <button class="btn btn-primary">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+              Submit Complaint
+            </button>
+          </div>
+        </div>
+        
+        <aside class="sidebar">
+          <div class="card">
+            <div class="card-header">
+              <div class="card-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+              </div>
+              <div>
+                <div class="card-title">What Happens Next</div>
+                <div class="card-subtitle">Investigation process</div>
+              </div>
+            </div>
+            <div class="content-text">
+              <p><strong>1. Review</strong><br>Your complaint is reviewed within 5 business days.</p>
+              <p><strong>2. Investigation</strong><br>If warranted, a formal investigation is opened.</p>
+              <p><strong>3. Resolution</strong><br>You will be notified of the outcome.</p>
+              <p>Most investigations are completed within 90 days.</p>
+            </div>
+          </div>
+          
+          <div class="info-box">
+            <h4>Confidentiality</h4>
+            <p>Your identity is kept confidential to the extent permitted by law. Anonymous complaints are accepted but may limit investigation options.</p>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- Footer -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <h4>Department of Health</h4>
+        <p>The Department of Health protects and promotes the health of all Praya citizens through healthcare regulation, public health services, and professional licensing.</p>
+        <div class="footer-contact">
+          <div class="footer-contact-label">General Enquiries</div>
+          <div class="footer-contact-value">1-800-HEALTH-PY</div>
+          <div class="footer-contact-note">Mon–Fri 8:00 AM – 6:00 PM</div>
+        </div>
+      </div>
+      <div class="footer-section">
+        <h5>Services</h5>
+        <ul>
+          <li><a onclick="showPage('hospitals')">Find Healthcare</a></li>
+          <li><a onclick="showPage('licensing')">Licensing</a></li>
+          <li><a onclick="showPage('verify')">Verify Provider</a></li>
+          <li><a onclick="showPage('complaints')">File Complaint</a></li>
+        </ul>
+      </div>
+      <div class="footer-section">
+        <h5>Public Health</h5>
+        <ul>
+          <li><a onclick="showPage('public-health')">Immunizations</a></li>
+          <li><a onclick="showPage('public-health')">Disease Prevention</a></li>
+          <li><a onclick="showPage('public-health')">Health Programs</a></li>
+          <li><a onclick="showPage('public-health')">Statistics</a></li>
+        </ul>
+      </div>
+      <div class="footer-section">
+        <h5>For Professionals</h5>
+        <ul>
+          <li><a onclick="showPage('licensing')">Apply for License</a></li>
+          <li><a onclick="showPage('licensing')">Renew License</a></li>
+          <li><a onclick="showPage('cme')">Continuing Education</a></li>
+          <li><a onclick="showPage('facility-license')">Facility Registration</a></li>
+        </ul>
+      </div>
+      <div class="footer-section">
+        <h5>About</h5>
+        <ul>
+          <li><a onclick="showPage('about')">About Us</a></li>
+          <li><a onclick="showPage('about')">Leadership</a></li>
+          <li><a onclick="showPage('about')">Contact</a></li>
+          <li><a href="https://www.govpraya.org">GOV.PRAYA</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div>© 2025 Department of Health · Republic of Praya</div>
+      <div class="footer-legal">
+        <a href="https://www.govpraya.org">Privacy</a>
+        <a href="https://www.govpraya.org">Terms</a>
+        <a href="https://www.govpraya.org">Accessibility</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+function toggleTheme() {
+  document.body.classList.toggle('light');
+  var isLight = document.body.classList.contains('light');
+  localStorage.setItem('health-light', isLight);
+  document.querySelector('.theme-btn').textContent = isLight ? 'Dark' : 'Light';
+}
+
+function toggleGovDropdown(btn) {
+  btn.classList.toggle('open');
+  document.getElementById('govDropdown').classList.toggle('open');
+}
+
+if (localStorage.getItem('health-light') === 'true') {
+  document.body.classList.add('light');
+  document.querySelector('.theme-btn').textContent = 'Dark';
+}
+
+function showPage(pageId) {
+  var pages = document.querySelectorAll('.page');
+  for (var i = 0; i < pages.length; i++) {
+    pages[i].classList.remove('active');
+  }
+  var target = document.getElementById('page-' + pageId);
+  if (target) {
+    target.classList.add('active');
+  }
+  var navLinks = document.querySelectorAll('.nav-link');
+  for (var i = 0; i < navLinks.length; i++) {
+    navLinks[i].classList.remove('active');
+    var navPage = navLinks[i].getAttribute('data-page');
+    if (navPage === pageId) {
+      navLinks[i].classList.add('active');
+    }
+    // Handle sub-pages
+    if (pageId === 'verify' && navPage === 'licensing') navLinks[i].classList.add('active');
+    if (pageId === 'complaints' && navPage === 'services') navLinks[i].classList.add('active');
+    if (pageId === 'facility-license' && navPage === 'licensing') navLinks[i].classList.add('active');
+    if (pageId === 'cme' && navPage === 'licensing') navLinks[i].classList.add('active');
+  }
+  window.scrollTo(0, 0);
+}
+</script>
+
+</body>
+</html>
