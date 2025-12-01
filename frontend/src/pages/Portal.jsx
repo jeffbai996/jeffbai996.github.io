@@ -73,6 +73,15 @@ const departments = [
     description: 'Public health services, disease control, healthcare licensing, and health statistics.',
     color: '#dc2626',
     services: ['Public Health', 'Disease Control', 'Healthcare Licensing', 'Health Statistics']
+  },
+  {
+    id: 'housing',
+    name: 'Housing Authority',
+    abbrev: 'HA',
+    url: '/Housing_Authority_Praya.html',
+    description: 'Affordable public housing programs and subsidized rental assistance for eligible citizens.',
+    color: '#ea580c',
+    services: ['Housing Applications', 'Eligibility Check', 'Regional Availability', 'Tenant Resources']
   }
 ]
 
@@ -91,6 +100,21 @@ const priorities = [
     title: 'Business & Tax',
     detail: 'Licensing, tax filings, and compliance guidance for entrepreneurs and companies.',
     link: '/RD_Praya.html'
+  },
+  {
+    title: 'Public Health',
+    detail: 'Disease surveillance, healthcare licensing, and health statistics for all citizens.',
+    link: '/Health_Praya.html'
+  },
+  {
+    title: 'Financial Stability',
+    detail: 'Central banking, monetary policy, and economic research from the Bank of Praya.',
+    link: '/BOP_Praya.html'
+  },
+  {
+    title: 'Cannabis Regulation',
+    detail: 'Industry licensing, tax filing, and compliance for legal cannabis businesses.',
+    link: '/CTB_Praya.html'
   }
 ]
 
@@ -284,6 +308,27 @@ export default function Portal() {
                 </svg>
               </span>
             </a>
+            <a href="/Housing_Authority_Praya.html" className="featured-card">
+              <div className="featured-badge">Public Housing</div>
+              <div className="featured-icon featured-icon-sm">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                  <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                </svg>
+              </div>
+              <h3>Housing Authority</h3>
+              <p>Apply for affordable public housing. Heavily subsidized rental units for eligible Prayan citizens across all regions.</p>
+              <div className="featured-stat-row">
+                <div><strong>24,847</strong> active units</div>
+                <div><strong>¤385</strong> avg. rent</div>
+              </div>
+              <span className="featured-link">
+                Apply for Housing
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <path d="M5 12h14M12 5l7 7-7 7"/>
+                </svg>
+              </span>
+            </a>
             <a href="/NPA_Praya.html" className="featured-card">
               <div className="featured-badge">Public Safety</div>
               <div className="featured-icon featured-icon-sm">
@@ -387,7 +432,7 @@ export default function Portal() {
           <div className="footer-grid">
             <div className="footer-brand">
               <h4>Republic of Praya</h4>
-              <p>The official digital gateway to government services. Building a transparent, efficient, and accessible government for all citizens.</p>
+              <p>The official digital gateway to government services for the Republic of Praya's 2.4 million citizens. We're building a transparent, efficient, and accessible government through modern technology and comprehensive online services. From central banking and public housing to healthcare, justice, and postal services—access everything you need in one unified platform designed to serve you 24/7.</p>
             </div>
             <div className="footer-section">
               <h5>Quick Links</h5>
@@ -409,6 +454,7 @@ export default function Portal() {
                 <li><a href="/RD_Praya.html">Revenue Department</a></li>
                 <li><a href="/Praya_Post.html">Praya Post</a></li>
                 <li><a href="/Health_Praya.html">Health Department</a></li>
+                <li><a href="/Housing_Authority_Praya.html">Housing Authority</a></li>
               </ul>
             </div>
             <div className="footer-section">
