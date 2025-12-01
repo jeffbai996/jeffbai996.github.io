@@ -18,23 +18,156 @@ model User {
   password      String
   firstName     String
   lastName      String
+  phone         String?
   role          UserRole  @default(CITIZEN)
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt
+
+  // PrayaPass Identity Verification
+  nricNumber        String?   @unique  // National Registration ID
+  identityVerified  Boolean   @default(false)
+  verifiedAt        DateTime?
+
+  // Two-Factor Authentication
+  twoFactorMethod   TwoFactorMethod @default(SMS_OTP)
+  twoFactorEnabled  Boolean   @default(false)
+  phoneVerified     Boolean   @default(false)
+  emailVerified     Boolean   @default(false)
+
+  // Face Verification
+  faceEnrolled      Boolean   @default(false)
+  faceEnrolledAt    DateTime?
+  faceTemplateHash  String?   // Hashed biometric template reference
+
+  // Security
+  failedAttempts    Int       @default(0)
+  lockedUntil       DateTime?
+  lastLoginAt       DateTime?
+  passwordChangedAt DateTime?
+
+  // Profile
+  avatarUrl         String?
+  dateOfBirth       DateTime?
+  address           String?
 
   // Relations
   ctbLicenses   CtbLicense[]
   ctbTaxFilings CtbTaxFiling[]
   permits       Permit[]
   civilRequests CivilRecordRequest[]
+  devices       Device[]
+  sessions      Session[]
+  otpCodes      OtpCode[]
+  assistedUsers User[]    @relation("AssistedAccess")
+  assistedBy    User?     @relation("AssistedAccess", fields: [assistedById], references: [id])
+  assistedById  String?
 
   @@map("users")
+}
+
+model Device {
+  id            String     @id @default(uuid())
+  userId        String
+  user          User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  deviceName    String
+  deviceType    DeviceType
+  fingerprint   String     @unique  // Device fingerprint for identification
+  pushToken     String?    // FCM/APNs token for push notifications
+  publicKey     String?    // Public key for biometric auth
+  trusted       Boolean    @default(false)
+  lastUsedAt    DateTime   @default(now())
+  createdAt     DateTime   @default(now())
+
+  // Relations
+  sessions      Session[]
+
+  @@map("devices")
+}
+
+model Session {
+  id            String    @id @default(uuid())
+  userId        String
+  user          User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  token         String    @unique
+  refreshToken  String?   @unique
+  deviceId      String?
+  device        Device?   @relation(fields: [deviceId], references: [id])
+  ipAddress     String
+  userAgent     String
+  expiresAt     DateTime
+  lastActiveAt  DateTime  @default(now())
+  createdAt     DateTime  @default(now())
+  revokedAt     DateTime?
+
+  @@index([userId])
+  @@index([token])
+  @@map("sessions")
+}
+
+model OtpCode {
+  id          String    @id @default(uuid())
+  userId      String
+  user        User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  code        String    // Hashed OTP code
+  type        OtpType
+  purpose     OtpPurpose
+  expiresAt   DateTime
+  usedAt      DateTime?
+  attempts    Int       @default(0)
+  createdAt   DateTime  @default(now())
+
+  @@index([userId, type, purpose])
+  @@map("otp_codes")
+}
+
+model LoginAttempt {
+  id          String    @id @default(uuid())
+  email       String
+  ipAddress   String
+  userAgent   String
+  success     Boolean
+  failReason  String?
+  createdAt   DateTime  @default(now())
+
+  @@index([email])
+  @@index([ipAddress])
+  @@map("login_attempts")
 }
 
 enum UserRole {
   CITIZEN
   EMPLOYEE
   ADMIN
+}
+
+enum TwoFactorMethod {
+  SMS_OTP
+  EMAIL_OTP
+  APP_BIOMETRIC
+  FACE_VERIFICATION
+  PUSH_NOTIFICATION
+}
+
+enum DeviceType {
+  MOBILE_IOS
+  MOBILE_ANDROID
+  DESKTOP_BROWSER
+  TABLET
+}
+
+enum OtpType {
+  SMS
+  EMAIL
+  VOICE
+}
+
+enum OtpPurpose {
+  LOGIN
+  REGISTRATION
+  PASSWORD_RESET
+  PHONE_VERIFICATION
+  EMAIL_VERIFICATION
+  TRANSACTION
 }
 
 // ==================== CTB - CANNABIS TAX BUREAU ====================
