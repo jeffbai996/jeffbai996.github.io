@@ -239,7 +239,7 @@ export default function Portal() {
         </div>
         <div className="container">
           <div className="hero-content">
-            <h2>Welcome to the <span>Republic of Praya</span></h2>
+            <h2>Welcome to GOV.PRAYA</h2>
             <p>Your central gateway to government services, information, and resources. Access everything from banking and postal services to justice, policing, and tax administration—all from one unified platform serving 2.4 million citizens nationwide.</p>
             <div className="hero-features">
               <div className="hero-feature">
