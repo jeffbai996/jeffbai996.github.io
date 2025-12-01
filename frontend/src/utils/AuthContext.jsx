@@ -23,6 +23,12 @@ export function AuthProvider({ children }) {
 
   // Check authentication status on mount
   useEffect(() => {
+    // If Supabase is not configured, skip authentication
+    if (!supabase) {
+      setLoading(false)
+      return
+    }
+
     // Get initial session
     supabase.auth.getSession().then(({ data: { session } }) => {
       if (session?.user) {
@@ -54,6 +60,9 @@ export function AuthProvider({ children }) {
 
   // Register new user
   const register = async ({ firstName, lastName, email, phone, password }) => {
+    if (!supabase) {
+      throw new Error('Authentication is not configured')
+    }
     setError(null)
     try {
       const { data, error } = await supabase.auth.signUp({
@@ -99,6 +108,9 @@ export function AuthProvider({ children }) {
 
   // Resend verification email
   const resendVerification = async (email) => {
+    if (!supabase) {
+      throw new Error('Authentication is not configured')
+    }
     setError(null)
     try {
       const { error } = await supabase.auth.resend({
@@ -118,6 +130,9 @@ export function AuthProvider({ children }) {
 
   // Login with email and password
   const login = async (email, password) => {
+    if (!supabase) {
+      throw new Error('Authentication is not configured')
+    }
     setError(null)
     try {
       const { data, error } = await supabase.auth.signInWithPassword({
@@ -149,6 +164,9 @@ export function AuthProvider({ children }) {
 
   // Logout
   const logout = async () => {
+    if (!supabase) {
+      throw new Error('Authentication is not configured')
+    }
     setError(null)
     try {
       const { error } = await supabase.auth.signOut()
@@ -164,6 +182,9 @@ export function AuthProvider({ children }) {
 
   // Logout from all devices
   const logoutAll = async () => {
+    if (!supabase) {
+      throw new Error('Authentication is not configured')
+    }
     setError(null)
     try {
       // Supabase doesn't have built-in "logout all" - this logs out current session
@@ -181,6 +202,9 @@ export function AuthProvider({ children }) {
 
   // Forgot password
   const forgotPassword = async (email) => {
+    if (!supabase) {
+      throw new Error('Authentication is not configured')
+    }
     setError(null)
     try {
       const { error } = await supabase.auth.resetPasswordForEmail(email, {
@@ -199,6 +223,9 @@ export function AuthProvider({ children }) {
 
   // Reset password (called from reset link)
   const resetPassword = async (newPassword) => {
+    if (!supabase) {
+      throw new Error('Authentication is not configured')
+    }
     setError(null)
     try {
       const { error } = await supabase.auth.updateUser({
@@ -217,6 +244,9 @@ export function AuthProvider({ children }) {
 
   // Change password (when logged in)
   const changePassword = async (currentPassword, newPassword) => {
+    if (!supabase) {
+      throw new Error('Authentication is not configured')
+    }
     setError(null)
     try {
       // Re-authenticate by signing in with current password first
@@ -247,6 +277,9 @@ export function AuthProvider({ children }) {
 
   // Update user profile
   const updateProfile = async (updates) => {
+    if (!supabase) {
+      throw new Error('Authentication is not configured')
+    }
     setError(null)
     try {
       if (!user) throw new Error('Not authenticated')
