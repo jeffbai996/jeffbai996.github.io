@@ -202,7 +202,7 @@
 
 .checkbox-label {
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   gap: 0.5rem;
   font-size: 0.8125rem;
   color: #4b5563;
@@ -210,8 +210,12 @@
 }
 
 .checkbox-label input[type="checkbox"] {
-  margin-top: 0.125rem;
+  flex-shrink: 0;
+  margin: 0;
+  width: 16px;
+  height: 16px;
   accent-color: #f97316;
+  cursor: pointer;
 }
 
 .checkbox-label a {
@@ -316,6 +320,24 @@
 }
 
 .auth-error svg {
+  flex-shrink: 0;
+}
+
+/* Success */
+.auth-success {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1rem;
+  background: #f0fdf4;
+  border: 1px solid #bbf7d0;
+  border-radius: 0.5rem;
+  color: #16a34a;
+  font-size: 0.875rem;
+  line-height: 1.5;
+}
+
+.auth-success svg {
   flex-shrink: 0;
 }
 
