@@ -3,6 +3,14 @@ import './Portal.css'
 
 const departments = [
   {
+    id: 'npa',
+    name: 'National Police Agency',
+    abbrev: 'NPA',
+    description: 'National policing, emergency response, and community safety services across Praya.',
+    color: '#1d4ed8',
+    services: ['Emergency Response', 'Public Safety', 'Licensing', 'Community Programs']
+  },
+  {
     id: 'ctb',
     name: 'Cannabis Tax Bureau',
     abbrev: 'CTB',
