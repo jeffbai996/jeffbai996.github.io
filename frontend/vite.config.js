@@ -14,8 +14,8 @@ export default defineConfig({
     }
   },
   build: {
-    outDir: '../docs',
-    emptyOutDir: true,
+    outDir: '..',
+    emptyOutDir: false,
     sourcemap: true
   }
 })
