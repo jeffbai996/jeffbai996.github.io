@@ -140,6 +140,16 @@ const priorities = [
     title: 'Customs & Border',
     detail: 'Import duties, immigration visas, and border control for travelers and traders.',
     link: '/CBCA_Praya.html'
+  },
+  {
+    title: 'Postal Services',
+    detail: 'Domestic and international mail delivery, package shipping, and P.O. box services nationwide.',
+    link: '/Praya_Post.html'
+  },
+  {
+    title: 'Legislative Oversight',
+    detail: 'View bills, contact council members, and participate in the democratic process.',
+    link: '/LC_Praya.html'
   }
 ]
 
@@ -239,7 +249,7 @@ export default function Portal() {
         </div>
         <div className="container">
           <div className="hero-content">
-            <h2>Welcome to GOV.PRAYA</h2>
+            <h2>Welcome to <span style={{color: '#f97316'}}>GOV.PRAYA</span></h2>
             <p>Your central gateway to government services, information, and resources. Access everything from banking and postal services to justice, policing, and tax administration—all from one unified platform serving 2.4 million citizens nationwide.</p>
             <div className="hero-features">
               <div className="hero-feature">
@@ -395,6 +405,47 @@ export default function Portal() {
               </div>
               <span className="featured-link">
                 Police Services
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <path d="M5 12h14M12 5l7 7-7 7"/>
+                </svg>
+              </span>
+            </a>
+            <a href="/Health_Praya.html" className="featured-card">
+              <div className="featured-badge">Public Health</div>
+              <div className="featured-icon featured-icon-sm">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <path d="M22 12h-4l-3 9L9 3l-3 9H2"></path>
+                </svg>
+              </div>
+              <h3>Health Department</h3>
+              <p>Public health services, disease control, healthcare licensing, and vital statistics for all citizens.</p>
+              <div className="featured-stat-row">
+                <div><strong>127</strong> hospitals</div>
+                <div><strong>24/7</strong> emergency</div>
+              </div>
+              <span className="featured-link">
+                Health Services
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <path d="M5 12h14M12 5l7 7-7 7"/>
+                </svg>
+              </span>
+            </a>
+            <a href="/DOJ_Praya.html" className="featured-card">
+              <div className="featured-badge">Justice System</div>
+              <div className="featured-icon featured-icon-sm">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <circle cx="12" cy="12" r="10"></circle>
+                  <path d="M12 6v6l4 2"></path>
+                </svg>
+              </div>
+              <h3>Department of Justice</h3>
+              <p>Court services, case lookup, legal aid, and access to the criminal code and legal resources.</p>
+              <div className="featured-stat-row">
+                <div><strong>42</strong> court locations</div>
+                <div><strong>98.4%</strong> resolved</div>
+              </div>
+              <span className="featured-link">
+                Court Services
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                   <path d="M5 12h14M12 5l7 7-7 7"/>
                 </svg>
