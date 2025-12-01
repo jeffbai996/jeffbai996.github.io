@@ -154,11 +154,34 @@ export default function Portal() {
         </div>
         <div className="container">
           <div className="hero-content">
-            <h2>Welcome to the <span>Government Portal</span></h2>
-            <p>Access government services, information, and resources from one central location. Every ministry, bureau, and agency of the Republic of Praya is represented here with direct access to their official pages.</p>
+            <h2>Welcome to the <span>Republic of Praya</span></h2>
+            <p>Your central gateway to government services, information, and resources. Access everything from banking and postal services to justice, policing, and tax administration—all from one unified platform serving 2.4 million citizens nationwide.</p>
+            <div className="hero-features">
+              <div className="hero-feature">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                  <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                </svg>
+                <span>127 online services available 24/7</span>
+              </div>
+              <div className="hero-feature">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <rect x="3" y="11" width="18" height="11" rx="2"></rect>
+                  <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                </svg>
+                <span>Secure, encrypted government services</span>
+              </div>
+              <div className="hero-feature">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+                </svg>
+                <span>7 major departments & agencies</span>
+              </div>
+            </div>
             <div className="hero-actions">
-              <a href="/ID_Praya.html" className="btn btn-primary">Find Services</a>
-              <a href="#departments" className="btn btn-secondary">View Departments</a>
+              <a href="/BOP_Praya.html" className="btn btn-primary">Bank of Praya</a>
+              <a href="/Praya_Post.html" className="btn btn-primary">Praya Post</a>
+              <a href="#departments" className="btn btn-secondary">All Departments</a>
             </div>
           </div>
         </div>
@@ -191,10 +214,95 @@ export default function Portal() {
         </div>
       </section>
 
+      <section className="featured-services">
+        <div className="container">
+          <div className="featured-header">
+            <div>
+              <p className="eyebrow">Featured Services</p>
+              <h2 className="section-title">Essential Government Services</h2>
+              <p className="section-subtitle">Quick access to our most-used departments and services</p>
+            </div>
+          </div>
+          <div className="featured-grid">
+            <a href="/BOP_Praya.html" className="featured-card featured-large">
+              <div className="featured-badge">Central Banking</div>
+              <div className="featured-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <rect x="2" y="5" width="20" height="14" rx="2"></rect>
+                  <path d="M2 10h20"></path>
+                </svg>
+              </div>
+              <h3>Bank of Praya</h3>
+              <p>Monetary policy, banking supervision, and economic research. View interest rates, inflation data, and financial stability reports.</p>
+              <div className="featured-stats">
+                <div className="featured-stat">
+                  <span className="featured-stat-value">3.75%</span>
+                  <span className="featured-stat-label">Base Rate</span>
+                </div>
+                <div className="featured-stat">
+                  <span className="featured-stat-value">2.1%</span>
+                  <span className="featured-stat-label">Inflation</span>
+                </div>
+                <div className="featured-stat">
+                  <span className="featured-stat-value">¤82.4B</span>
+                  <span className="featured-stat-label">Reserves</span>
+                </div>
+              </div>
+              <span className="featured-link">
+                Visit Bank of Praya
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <path d="M5 12h14M12 5l7 7-7 7"/>
+                </svg>
+              </span>
+            </a>
+            <a href="/Praya_Post.html" className="featured-card">
+              <div className="featured-badge">Postal Services</div>
+              <div className="featured-icon featured-icon-sm">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
+                </svg>
+              </div>
+              <h3>Praya Post</h3>
+              <p>Ship packages nationwide and internationally. Request shipping labels, track deliveries, and find post offices.</p>
+              <div className="featured-stat-row">
+                <div><strong>4.2M</strong> packages delivered</div>
+                <div><strong>124</strong> post offices</div>
+              </div>
+              <span className="featured-link">
+                Request Shipping Label
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <path d="M5 12h14M12 5l7 7-7 7"/>
+                </svg>
+              </span>
+            </a>
+            <a href="/NPA_Praya.html" className="featured-card">
+              <div className="featured-badge">Public Safety</div>
+              <div className="featured-icon featured-icon-sm">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <path d="M12 2l7 4v6c0 5-4 9-7 10-3-1-7-5-7-10V6z"></path>
+                </svg>
+              </div>
+              <h3>National Police</h3>
+              <p>Emergency response, public safety services, background checks, and community programs across all districts.</p>
+              <div className="featured-stat-row">
+                <div><strong>7m 42s</strong> avg response</div>
+                <div><strong>18,240</strong> officers</div>
+              </div>
+              <span className="featured-link">
+                Police Services
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <path d="M5 12h14M12 5l7 7-7 7"/>
+                </svg>
+              </span>
+            </a>
+          </div>
+        </div>
+      </section>
+
       <main className="portal-main" id="departments">
         <div className="container">
-          <h2 className="section-title">Government Departments</h2>
-          <p className="section-subtitle">Select a department to access services and information</p>
+          <h2 className="section-title">All Government Departments</h2>
+          <p className="section-subtitle">Browse the complete directory of Praya government agencies and services</p>
 
           <div className="dept-grid">
             {departments.map(dept => (
