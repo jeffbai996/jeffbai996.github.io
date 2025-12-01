@@ -1,4 +1,4 @@
-import { Routes, Route } from 'react-router-dom'
+import { Routes, Route, Navigate } from 'react-router-dom'
 import { ThemeProvider } from './utils/ThemeContext'
 import Layout from './components/Layout'
 import Portal from './pages/Portal'
@@ -13,6 +13,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Layout />}>
           <Route index element={<Portal />} />
+          <Route path="npa/*" element={<Navigate to="/NPA_Praya.html" replace />} />
           <Route path="ctb/*" element={<CTB />} />
           <Route path="doj/*" element={<DOJ />} />
           <Route path="interior/*" element={<Interior />} />
