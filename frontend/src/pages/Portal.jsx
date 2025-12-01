@@ -162,21 +162,9 @@ export default function Portal() {
         <div className="container">
           <div className="portal-logo">
             <div className="logo-emblem">
-              <svg viewBox="0 0 24 24" fill="none" strokeWidth="2">
-                <defs>
-                  <clipPath id="leftHalf">
-                    <rect x="0" y="0" width="12" height="24" />
-                  </clipPath>
-                  <clipPath id="rightHalf">
-                    <rect x="12" y="0" width="12" height="24" />
-                  </clipPath>
-                </defs>
-                <g clipPath="url(#leftHalf)">
-                  <path stroke="#4b5563" d="M3 21h18M3 10h18M5 6l7-3 7 3M4 10v11M20 10v11M8 14v3M12 14v3M16 14v3"/>
-                </g>
-                <g clipPath="url(#rightHalf)">
-                  <path stroke="#f97316" d="M3 21h18M3 10h18M5 6l7-3 7 3M4 10v11M20 10v11M8 14v3M12 14v3M16 14v3"/>
-                </g>
+              <svg viewBox="0 0 24 24" fill="none">
+                <rect x="3" y="3" width="9" height="18" fill="#4b5563" rx="2" ry="2"/>
+                <rect x="12" y="3" width="9" height="18" fill="#f97316" rx="2" ry="2"/>
               </svg>
             </div>
             <div className="logo-text">
@@ -655,7 +643,7 @@ export default function Portal() {
             </div>
           </div>
           <div className="footer-bottom">
-            <span>&copy; 2024 Republic of Praya. All rights reserved.</span>
+            <span>&copy; 2011-2026 Republic of Praya. All rights reserved.</span>
             <div className="footer-legal">
               <a href="#">Terms of Service</a>
               <a href="#">Privacy</a>
