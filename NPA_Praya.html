@@ -1,0 +1,879 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>National Police Agency | Republic of Praya</title>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --primary: #1d4ed8;
+      --primary-dark: #1e3a8a;
+      --primary-light: rgba(29, 78, 216, 0.12);
+      --accent: #0ea5e9;
+      --accent-light: rgba(14, 165, 233, 0.12);
+      --success: #10b981;
+      --danger: #ef4444;
+      --warning: #f59e0b;
+      --bg-dark: #0b1020;
+      --bg-card: #101726;
+      --bg-elevated: #0f172a;
+      --border: #1f2937;
+      --border-subtle: #0f172a;
+      --text-primary: #f8fafc;
+      --text-secondary: #cbd5e1;
+      --text-muted: #94a3b8;
+    }
+
+    body.light {
+      --bg-dark: #f8fafc;
+      --bg-card: #ffffff;
+      --bg-elevated: #eff6ff;
+      --border: #e2e8f0;
+      --border-subtle: #e2e8f0;
+      --text-primary: #0b1020;
+      --text-secondary: #334155;
+      --text-muted: #64748b;
+    }
+
+    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+    @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
+    @keyframes shimmer { 0% { background-position: -200% 0; } 100% { background-position: 200% 0; } }
+
+    body {
+      font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+      line-height: 1.6;
+      background: var(--bg-dark);
+      color: var(--text-primary);
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+      opacity: 0;
+      animation: fadeIn 0.4s ease-out 0.1s forwards;
+    }
+
+    html { scroll-behavior: smooth; }
+    a { color: var(--primary); text-decoration: none; transition: all 0.2s ease; }
+    a:hover { filter: brightness(1.15); }
+    ::selection { background: var(--primary); color: white; }
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+
+    /* Government Banner */
+    .gov-banner { background: #000; color: white; padding: 10px 0; font-size: 13px; border-bottom: 1px solid #111827; }
+    body.light .gov-banner { background: #1e3a8a; border-color: #1e3a8a; }
+    .gov-banner .container { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
+    .gov-banner-left { display: flex; align-items: center; gap: 10px; }
+    .gov-icon svg { width: 18px; height: 18px; }
+    .gov-banner-right { display: flex; align-items: center; gap: 16px; }
+    .gov-banner-right a { color: #9ca3af; font-size: 12px; }
+    .gov-how { color: #60a5fa; background: none; border: none; font-size: 13px; cursor: pointer; padding: 0; font-family: inherit; display: inline-flex; align-items: center; gap: 4px; }
+    .gov-how:hover { color: #93c5fd; }
+    .gov-how svg { transition: transform 0.2s; }
+    .gov-how.open svg { transform: rotate(180deg); }
+    .gov-dropdown { display: none; background: #0b1020; border-top: 1px solid #111827; padding: 16px 0; }
+    body.light .gov-dropdown { background: #1e3a8a; }
+    .gov-dropdown.open { display: block; }
+    .gov-dropdown-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; max-width: 600px; }
+    .gov-dropdown-item { display: flex; gap: 12px; }
+    .gov-dropdown-icon { width: 36px; height: 36px; background: #111827; border-radius: 8px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    body.light .gov-dropdown-icon { background: #1d4ed8; }
+    .gov-dropdown-icon svg { color: #93c5fd; }
+    .gov-dropdown-text h4 { font-size: 13px; font-weight: 600; margin-bottom: 4px; }
+    .gov-dropdown-text p { font-size: 12px; color: #cbd5e1; line-height: 1.5; }
+    .theme-btn { background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.12); color: #9ca3af; padding: 6px 12px; border-radius: 6px; cursor: pointer; font-size: 12px; font-weight: 500; font-family: inherit; transition: all 0.2s; }
+    .theme-btn:hover { background: rgba(255,255,255,0.12); color: white; }
+
+    /* Header */
+    .header { background: rgba(15, 23, 42, 0.9); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 100; }
+    body.light .header { background: rgba(255, 255, 255, 0.9); }
+    .header .container { display: flex; align-items: center; justify-content: space-between; height: 68px; }
+    .logo { display: flex; align-items: center; gap: 12px; cursor: pointer; }
+    .logo:hover { opacity: 0.9; }
+    .logo-mark { width: 42px; height: 42px; background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%); border-radius: 10px; display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden; }
+    .logo-mark::before { content: ''; position: absolute; width: 100%; height: 100%; background: linear-gradient(45deg, transparent 30%, rgba(255,255,255,0.18) 50%, transparent 70%); animation: shimmer 3s infinite; background-size: 200% 100%; }
+    .logo-mark svg { width: 22px; height: 22px; color: white; position: relative; z-index: 1; }
+    .logo-text h1 { font-size: 17px; font-weight: 700; color: var(--text-primary); letter-spacing: -0.02em; line-height: 1.2; }
+    .logo-text .tagline { font-size: 11px; font-weight: 500; color: var(--text-muted); }
+    .nav { display: flex; gap: 2px; }
+    .nav-link { padding: 8px 16px; color: var(--text-secondary); font-size: 14px; font-weight: 500; border-radius: 8px; cursor: pointer; border: none; background: none; font-family: inherit; transition: all 0.15s; }
+    .nav-link:hover { background: var(--bg-elevated); color: var(--text-primary); }
+    .nav-link.active { background: var(--primary-light); color: var(--primary); }
+
+    /* Hero */
+    .hero { background: var(--bg-elevated); padding: 80px 0; border-bottom: 1px solid var(--border); position: relative; overflow: hidden; }
+    .hero-bg { position: absolute; inset: 0; overflow: hidden; opacity: 0.18; }
+    .hero-bg-shape { position: absolute; border-radius: 50%; filter: blur(80px); }
+    .hero-bg-shape:nth-child(1) { width: 520px; height: 520px; background: var(--primary); top: -150px; right: -140px; animation: float 10s ease-in-out infinite; }
+    .hero-bg-shape:nth-child(2) { width: 360px; height: 360px; background: var(--accent); bottom: -120px; left: 8%; animation: float 12s ease-in-out infinite 1s; }
+    .hero-bg-shape:nth-child(3) { width: 260px; height: 260px; background: var(--primary); top: 32%; left: 42%; animation: float 14s ease-in-out infinite 2s; }
+    .hero-pattern { position: absolute; inset: 0; background-image: url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M10 10h20v20H10zM50 10h20v20H50zM30 30h20v20H30zM10 50h20v20H10zM50 50h20v20H50z' fill='none' stroke='%231d4ed8' stroke-width='1' opacity='0.08'/%3E%3C/svg%3E"); }
+    .hero-content { max-width: 660px; position: relative; z-index: 1; }
+    .hero-badge { display: inline-flex; align-items: center; gap: 8px; background: var(--primary-light); color: var(--primary); font-size: 12px; font-weight: 700; padding: 8px 14px; border-radius: 100px; margin-bottom: 20px; border: 1px solid rgba(29, 78, 216, 0.25); letter-spacing: 0.02em; }
+    .hero h2 { font-size: 52px; font-weight: 800; line-height: 1.08; margin-bottom: 20px; letter-spacing: -0.03em; }
+    .hero h2 span { color: var(--primary); }
+    .hero p { color: var(--text-secondary); font-size: 18px; margin-bottom: 32px; line-height: 1.7; }
+    .btn { display: inline-flex; align-items: center; gap: 8px; padding: 14px 24px; font-size: 14px; font-weight: 700; border-radius: 10px; cursor: pointer; border: none; font-family: inherit; transition: all 0.2s ease; }
+    .btn-primary { background: var(--primary); color: white; }
+    .btn-primary:hover { background: var(--primary-dark); transform: translateY(-1px); box-shadow: 0 4px 12px rgba(37, 99, 235, 0.35); }
+    .btn-secondary { background: var(--bg-card); color: var(--text-secondary); margin-left: 10px; border: 1px solid var(--border); }
+    .btn-secondary:hover { background: var(--bg-elevated); color: var(--text-primary); }
+
+    /* Stats */
+    .stats-bar { background: var(--bg-dark); border-bottom: 1px solid var(--border); padding: 24px 0; }
+    .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+    .stat-item { text-align: center; padding: 20px; background: var(--bg-card); border-radius: 12px; border: 1px solid var(--border-subtle); cursor: pointer; transition: all 0.2s; }
+    .stat-item:hover { border-color: var(--primary); transform: translateY(-2px); }
+    .stat-label { font-size: 11px; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em; }
+    .stat-value { font-size: 28px; font-weight: 800; color: var(--primary); margin: 8px 0; letter-spacing: -0.02em; }
+    .stat-change { font-size: 12px; font-weight: 600; padding: 3px 8px; border-radius: 100px; color: var(--text-muted); background: var(--bg-elevated); }
+
+    /* Main Content */
+    .main { padding: 40px 0; }
+    .content-grid { display: grid; grid-template-columns: 1fr 340px; gap: 24px; }
+    .card { background: var(--bg-card); border: 1px solid var(--border-subtle); border-radius: 16px; padding: 24px; margin-bottom: 24px; transition: border-color 0.2s; }
+    .card:hover { border-color: var(--border); }
+    .card-header { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; padding-bottom: 16px; border-bottom: 1px solid var(--border-subtle); }
+    .card-icon { width: 40px; height: 40px; background: var(--primary-light); border-radius: 10px; display: flex; align-items: center; justify-content: center; }
+    .card-icon svg { width: 20px; height: 20px; color: var(--primary); }
+    .card-title { font-size: 16px; font-weight: 700; }
+    .card-subtitle { font-size: 12px; color: var(--text-muted); margin-top: 2px; }
+
+    /* Service Cards */
+    .services-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 24px; }
+    .service-card { background: var(--bg-card); border: 1px solid var(--border-subtle); border-radius: 14px; padding: 24px; cursor: pointer; transition: all 0.2s; position: relative; overflow: hidden; }
+    .service-card::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 3px; background: linear-gradient(90deg, var(--primary), var(--primary-dark)); opacity: 0; transition: opacity 0.2s; }
+    .service-card:hover { border-color: var(--primary); transform: translateY(-2px); }
+    .service-card:hover::before { opacity: 1; }
+    .service-icon { width: 48px; height: 48px; background: var(--primary-light); border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-bottom: 16px; }
+    .service-icon svg { width: 24px; height: 24px; color: var(--primary); }
+    .service-title { font-size: 15px; font-weight: 700; margin-bottom: 8px; }
+    .service-desc { font-size: 13px; color: var(--text-secondary); line-height: 1.6; }
+    .service-link { font-size: 13px; font-weight: 700; color: var(--primary); margin-top: 12px; display: inline-flex; align-items: center; gap: 4px; }
+    .service-link svg { width: 14px; height: 14px; transition: transform 0.2s; }
+    .service-card:hover .service-link svg { transform: translateX(4px); }
+
+    /* Quick Links */
+    .quick-links { display: grid; gap: 8px; }
+    .quick-link { display: flex; align-items: center; gap: 12px; padding: 14px 16px; background: var(--bg-elevated); border-radius: 10px; cursor: pointer; transition: all 0.15s; border: 1px solid transparent; }
+    .quick-link:hover { background: var(--primary-light); border-color: rgba(37, 99, 235, 0.25); }
+    .quick-link-icon { width: 32px; height: 32px; background: var(--bg-card); border-radius: 8px; display: flex; align-items: center; justify-content: center; }
+    .quick-link-icon svg { width: 16px; height: 16px; color: var(--primary); }
+    .quick-link-text { font-size: 14px; font-weight: 600; flex: 1; }
+    .quick-link-arrow { color: var(--text-muted); }
+    .quick-link:hover .quick-link-arrow { color: var(--primary); }
+
+    /* Info text */
+    .content-text h3 { font-size: 18px; font-weight: 700; margin: 24px 0 12px; color: var(--text-primary); }
+    .content-text p { font-size: 14px; color: var(--text-secondary); margin-bottom: 14px; line-height: 1.7; }
+    .content-text ul { padding-left: 18px; margin: 14px 0; }
+    .content-text li { color: var(--text-secondary); margin-bottom: 8px; font-size: 14px; }
+    .info-box { background: var(--primary-light); border: 1px solid rgba(37, 99, 235, 0.2); border-radius: 12px; padding: 16px; margin: 16px 0; }
+    .info-box h4 { font-size: 14px; font-weight: 700; color: var(--primary); margin-bottom: 6px; }
+
+    /* Footer */
+    .footer { background: var(--bg-card); border-top: 1px solid var(--border); padding: 48px 0 24px; margin-top: 48px; }
+    .footer-grid { display: grid; grid-template-columns: 1.5fr 1fr 1fr 1fr 1fr; gap: 32px; margin-bottom: 32px; }
+    .footer-brand h4 { font-size: 16px; font-weight: 800; margin-bottom: 12px; }
+    .footer-brand p { font-size: 13px; color: var(--text-secondary); line-height: 1.6; }
+    .footer-contact { margin-top: 16px; padding: 14px; background: var(--bg-elevated); border-radius: 10px; }
+    .footer-contact-label { font-size: 11px; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em; }
+    .footer-contact-value { font-size: 18px; font-weight: 800; color: var(--primary); margin: 4px 0; }
+    .footer-contact-note { font-size: 12px; color: var(--text-muted); }
+    .footer-section h5 { font-size: 13px; font-weight: 700; margin-bottom: 14px; text-transform: uppercase; letter-spacing: 0.03em; }
+    .footer-section ul { list-style: none; }
+    .footer-section li { margin-bottom: 10px; }
+    .footer-section a { font-size: 14px; color: var(--text-secondary); cursor: pointer; }
+    .footer-section a:hover { color: var(--primary); }
+    .footer-bottom { display: flex; justify-content: space-between; align-items: center; padding-top: 24px; border-top: 1px solid var(--border-subtle); font-size: 13px; color: var(--text-muted); }
+    .footer-legal { display: flex; gap: 20px; }
+    .footer-legal a { color: var(--text-muted); }
+    .footer-legal a:hover { color: var(--primary); }
+
+    /* Page containers */
+    .page { display: none; }
+    .page.active { display: block; }
+
+    @media (max-width: 1024px) {
+      .content-grid { grid-template-columns: 1fr; }
+      .services-grid { grid-template-columns: repeat(2, 1fr); }
+      .stats-grid { grid-template-columns: repeat(2, 1fr); }
+      .footer-grid { grid-template-columns: repeat(3, 1fr); }
+    }
+
+    @media (max-width: 768px) {
+      .nav { display: none; }
+      .hero h2 { font-size: 38px; }
+      .services-grid { grid-template-columns: 1fr; }
+      .stats-grid { grid-template-columns: 1fr 1fr; }
+      .footer-grid { grid-template-columns: 1fr 1fr; }
+    }
+
+    @media (max-width: 480px) {
+      .footer-grid { grid-template-columns: 1fr; }
+      .footer-bottom { flex-direction: column; gap: 12px; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+<div class="gov-banner">
+  <div class="container">
+    <div class="gov-banner-left">
+      <span class="gov-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M3 21h18"></path>
+          <path d="M5 21V7l8-4v18"></path>
+          <path d="M19 21V11l-6-4"></path>
+          <path d="M9 9v.01"></path>
+          <path d="M9 12v.01"></path>
+          <path d="M9 15v.01"></path>
+          <path d="M9 18v.01"></path>
+        </svg>
+      </span>
+      <span>A Republic of Praya Government Website</span>
+      <button class="gov-how" onclick="toggleGovDropdown(this)">
+        How to identify
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
+      </button>
+    </div>
+    <div class="gov-banner-right">
+      <a href="https://www.govpraya.org">GOV.PRAYA</a>
+      <button class="theme-btn" onclick="toggleTheme()">Light</button>
+    </div>
+  </div>
+  <div class="gov-dropdown" id="govDropdown">
+    <div class="container">
+      <div class="gov-dropdown-inner">
+        <div class="gov-dropdown-item">
+          <div class="gov-dropdown-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+          </div>
+          <div class="gov-dropdown-text">
+            <h4>Official government websites use .gov.py</h4>
+            <p>A .gov.py website belongs to an official government organization in the Republic of Praya.</p>
+          </div>
+        </div>
+        <div class="gov-dropdown-item">
+          <div class="gov-dropdown-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+          </div>
+          <div class="gov-dropdown-text">
+            <h4>Secure .gov.py websites use HTTPS</h4>
+            <p>A lock icon or https:// means you've safely connected to the .gov.py website.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<header class="header">
+  <div class="container">
+    <div class="logo" onclick="showPage('home')">
+      <div class="logo-mark">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 2l7 4v6c0 5-4 9-7 10-3-1-7-5-7-10V6z"></path>
+          <path d="M9 12h6"></path>
+          <path d="M12 9v6"></path>
+        </svg>
+      </div>
+      <div class="logo-text">
+        <h1>National Police Agency</h1>
+        <div class="tagline">Republic of Praya</div>
+      </div>
+    </div>
+    <nav class="nav">
+      <button class="nav-link active" data-page="home" onclick="showPage('home')">Home</button>
+      <button class="nav-link" data-page="operations" onclick="showPage('operations')">Operations</button>
+      <button class="nav-link" data-page="records" onclick="showPage('records')">Records & Licensing</button>
+      <button class="nav-link" data-page="community" onclick="showPage('community')">Community</button>
+      <button class="nav-link" data-page="recruitment" onclick="showPage('recruitment')">Careers</button>
+      <button class="nav-link" data-page="about" onclick="showPage('about')">About</button>
+    </nav>
+  </div>
+</header>
+
+<div id="page-home" class="page active">
+  <section class="hero">
+    <div class="hero-bg">
+      <div class="hero-bg-shape"></div>
+      <div class="hero-bg-shape"></div>
+      <div class="hero-bg-shape"></div>
+    </div>
+    <div class="hero-pattern"></div>
+    <div class="container">
+      <div class="hero-content">
+        <div class="hero-badge">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 5l9-3 9 3v6c0 7-9 11-9 11S3 18 3 11z"></path></svg>
+          Trust. Safety. Service.
+        </div>
+        <h2>Protecting Every <span>Community</span> in Praya</h2>
+        <p>The National Police Agency safeguards lives, property, and constitutional rights. We coordinate public safety, emergency response, and modern policing so every resident can live without fear.</p>
+        <div>
+          <button class="btn btn-primary" onclick="showPage('operations')">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h18"></path><path d="M3 6h18"></path><path d="M3 18h18"></path></svg>
+            Operational Priorities
+          </button>
+          <button class="btn btn-secondary" onclick="showPage('community')">Community Programs</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="stats-bar">
+    <div class="container">
+      <div class="stats-grid">
+        <div class="stat-item" onclick="showPage('operations')">
+          <div class="stat-label">Average Response</div>
+          <div class="stat-value">7m 42s</div>
+          <div class="stat-change">Priority 1 calls</div>
+        </div>
+        <div class="stat-item" onclick="showPage('records')">
+          <div class="stat-label">Background Checks</div>
+          <div class="stat-value">124,380</div>
+          <div class="stat-change">Year to date</div>
+        </div>
+        <div class="stat-item" onclick="showPage('community')">
+          <div class="stat-label">Community Partners</div>
+          <div class="stat-value">612</div>
+          <div class="stat-change">Neighborhood groups</div>
+        </div>
+        <div class="stat-item" onclick="showPage('recruitment')">
+          <div class="stat-label">Officers in Service</div>
+          <div class="stat-value">18,240</div>
+          <div class="stat-change">Across 11 districts</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="main">
+    <div class="container">
+      <div class="content-grid">
+        <div>
+          <div class="card">
+            <div class="card-header">
+              <div class="card-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 5l9-3 9 3v6c0 7-9 11-9 11S3 18 3 11z"></path></svg>
+              </div>
+              <div>
+                <div class="card-title">Public Safety Services</div>
+                <div class="card-subtitle">Find the right service in minutes</div>
+              </div>
+            </div>
+            <div class="services-grid">
+              <div class="service-card" onclick="showPage('operations')">
+                <div class="service-icon">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 12h-6l-3 9-3-18-3 9H2"></path></svg>
+                </div>
+                <div class="service-title">Report a Crime</div>
+                <div class="service-desc">Submit non-emergency reports online or learn when to dial 911 for immediate assistance.</div>
+                <div class="service-link">Start report <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg></div>
+              </div>
+              <div class="service-card" onclick="showPage('records')">
+                <div class="service-icon">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16v16H4z"></path><path d="M9 4v16"></path><path d="M4 9h16"></path></svg>
+                </div>
+                <div class="service-title">Police Clearance</div>
+                <div class="service-desc">Request certified background checks for employment, visas, and public contracts.</div>
+                <div class="service-link">Apply online <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg></div>
+              </div>
+              <div class="service-card" onclick="showPage('community')">
+                <div class="service-icon">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09a1.65 1.65 0 0 0-1-1.51 1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09a1.65 1.65 0 0 0 1.51-1 1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9c0 .69.4 1.3 1.02 1.58.19.09.4.14.61.14H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+                </div>
+                <div class="service-title">Neighborhood Safety</div>
+                <div class="service-desc">Organize watch programs, schedule patrol briefings, and request school safety visits.</div>
+                <div class="service-link">Connect locally <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg></div>
+              </div>
+              <div class="service-card" onclick="showPage('records')">
+                <div class="service-icon">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 1l3 5 5 1-3.5 4 1 5-5-2.5L7 16l1-5L4.5 7 9 6z"></path></svg>
+                </div>
+                <div class="service-title">Firearm Licensing</div>
+                <div class="service-desc">Apply for personal or commercial firearm permits with training and storage requirements.</div>
+                <div class="service-link">Review criteria <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg></div>
+              </div>
+              <div class="service-card" onclick="showPage('operations')">
+                <div class="service-icon">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19l2-13h12l2 13H4z"></path><path d="M9 22h6"></path><path d="M10 6V4a2 2 0 1 1 4 0v2"></path></svg>
+                </div>
+                <div class="service-title">Traffic & Road Safety</div>
+                <div class="service-desc">Request collision records, pay citations, and schedule commercial vehicle inspections.</div>
+                <div class="service-link">Traffic services <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg></div>
+              </div>
+              <div class="service-card" onclick="showPage('community')">
+                <div class="service-icon">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M22 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+                </div>
+                <div class="service-title">Victim Assistance</div>
+                <div class="service-desc">Connect with counselors, restitution advocates, and protective order coordinators.</div>
+                <div class="service-link">Find support <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="card" style="background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%); border: none;">
+            <div style="color: white;">
+              <div style="font-size: 13px; font-weight: 700; opacity: 0.9; margin-bottom: 4px; letter-spacing: 0.03em;">NATIONAL POLICE EMERGENCY</div>
+              <div style="font-size: 28px; font-weight: 800; margin-bottom: 8px;">Dial 911</div>
+              <div style="font-size: 13px; opacity: 0.85;">24/7 dispatch for emergencies, crimes in progress, and life safety.</div>
+              <div style="font-size: 13px; opacity: 0.85; margin-top: 6px;">Non-emergency line: 311 • Online reports available for select incidents.</div>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <div class="card">
+            <div class="card-header">
+              <div class="card-icon" style="background: rgba(16, 185, 129, 0.12);">
+                <svg viewBox="0 0 24 24" fill="none" stroke="var(--success)" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+              </div>
+              <div>
+                <div class="card-title">Systems Status</div>
+                <div class="card-subtitle">Online public portals</div>
+              </div>
+            </div>
+            <div style="font-size:13px;color:var(--text-secondary);">
+              <div style="display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--border-subtle);">
+                <span>eReport Non-Emergency</span>
+                <span class="card-subtitle" style="color: var(--success); font-weight: 700;">● Online</span>
+              </div>
+              <div style="display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--border-subtle);">
+                <span>Background Check Portal</span>
+                <span class="card-subtitle" style="color: var(--success); font-weight: 700;">● Online</span>
+              </div>
+              <div style="display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--border-subtle);">
+                <span>Traffic Citation Payments</span>
+                <span class="card-subtitle" style="color: var(--success); font-weight: 700;">● Online</span>
+              </div>
+              <div style="display:flex;justify-content:space-between;padding:10px 0;">
+                <span>Firearm Permit Scheduler</span>
+                <span class="card-subtitle" style="color: var(--success); font-weight: 700;">● Online</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-header">
+              <div class="card-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
+              </div>
+              <div>
+                <div class="card-title">Popular Requests</div>
+                <div class="card-subtitle">One-click access</div>
+              </div>
+            </div>
+            <div class="quick-links">
+              <div class="quick-link" onclick="showPage('records')">
+                <div class="quick-link-icon">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16v16H4z"></path><path d="M4 9h16"></path><path d="M9 4v16"></path></svg>
+                </div>
+                <div class="quick-link-text">Request Police Clearance</div>
+                <svg class="quick-link-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
+              </div>
+              <div class="quick-link" onclick="showPage('operations')">
+                <div class="quick-link-icon">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><path d="M12 6v6l3 3"></path></svg>
+                </div>
+                <div class="quick-link-text">Check response priorities</div>
+                <svg class="quick-link-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
+              </div>
+              <div class="quick-link" onclick="showPage('community')">
+                <div class="quick-link-icon">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16v-5a2 2 0 0 0-1-1.73L13 6.27a2 2 0 0 0-2 0L4 9.27A2 2 0 0 0 3 11v5a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4a2 2 0 0 0 1-1.73z"></path><path d="M3.3 7l8.7 5 8.7-5"></path></svg>
+                </div>
+                <div class="quick-link-text">Schedule a community officer</div>
+                <svg class="quick-link-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
+              </div>
+              <div class="quick-link" onclick="showPage('recruitment')">
+                <div class="quick-link-icon">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M22 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+                </div>
+                <div class="quick-link-text">Join the academy</div>
+                <svg class="quick-link-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<div id="page-operations" class="page">
+  <div class="hero" style="padding:48px 0;">
+    <div class="container">
+      <div class="hero-content">
+        <div class="hero-badge">Operations Division</div>
+        <h2>Mission-Driven Policing</h2>
+        <p>We balance swift response with community trust. From dispatch to on-scene command, our priority system ensures resources are assigned based on threat to life, vulnerability, and public order.</p>
+      </div>
+    </div>
+  </div>
+  <section class="main">
+    <div class="container">
+      <div class="content-grid">
+        <div class="card">
+          <div class="content-text">
+            <h3>Response Priorities</h3>
+            <ul>
+              <li><strong>Priority 1:</strong> Life-threatening incidents, violent crimes in progress, missing children.</li>
+              <li><strong>Priority 2:</strong> Serious property crimes, active traffic hazards, urgent welfare checks.</li>
+              <li><strong>Priority 3:</strong> Non-injury collisions, delayed reports, quality-of-life complaints.</li>
+            </ul>
+
+            <div class="info-box">
+              <h4>Real-Time Command Center</h4>
+              <p>District commanders monitor live incident queues, AVL vehicle locations, and drone-assisted views to deploy the closest available unit.</p>
+            </div>
+
+            <h3>What to report online</h3>
+            <p>Use eReport for thefts under ¤2,500, vandalism, lost property, identity fraud, and supplemental witness statements. Emergencies must be reported by dialing 911.</p>
+
+            <h3>Traffic Safety</h3>
+            <p>Uniformed traffic units conduct sobriety checkpoints, commercial vehicle inspections, and school zone enforcement. Collision reconstruction teams publish findings within 10 business days.</p>
+          </div>
+        </div>
+
+        <div>
+          <div class="card">
+            <div class="card-header">
+              <div class="card-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16v4H4z"></path><path d="M6 8v10a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V8"></path></svg>
+              </div>
+              <div>
+                <div class="card-title">Command Snapshot</div>
+                <div class="card-subtitle">Last 24 hours</div>
+              </div>
+            </div>
+            <ul style="list-style:none; color: var(--text-secondary); font-size:14px; display:grid; gap:10px;">
+              <li>• 4,820 calls for service dispatched</li>
+              <li>• 92% Priority 1 calls reached in under 10 minutes</li>
+              <li>• 318 DUI screenings completed</li>
+              <li>• 12 joint operations with transit and border units</li>
+            </ul>
+          </div>
+
+          <div class="card">
+            <div class="card-header">
+              <div class="card-icon" style="background: var(--accent-light);">
+                <svg viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2"><path d="M20 21V7a2 2 0 0 0-2-2h-3l-2-2h-4L7 5H4a2 2 0 0 0-2 2v14"></path><circle cx="12" cy="13" r="4"></circle><path d="M12 9v4l2 2"></path></svg>
+              </div>
+              <div>
+                <div class="card-title">Patrol Districts</div>
+                <div class="card-subtitle">Find your station</div>
+              </div>
+            </div>
+            <div class="info-box" style="margin-top:0;">
+              <h4>District Locator</h4>
+              <p>Enter your address on the locator map to see patrol district boundaries, watch commander contacts, and the closest walk-in station.</p>
+            </div>
+            <p style="color:var(--text-secondary);font-size:13px;">Patrol districts operate 24/7 with bilingual dispatchers, embedded mental health clinicians, and victim liaison officers.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<div id="page-records" class="page">
+  <div class="hero" style="padding:48px 0;">
+    <div class="container">
+      <div class="hero-content">
+        <div class="hero-badge">Records & Licensing</div>
+        <h2>Secure Records. Clear Standards.</h2>
+        <p>Request certified documents, verify eligibility, and schedule licensing appointments without visiting a station.</p>
+      </div>
+    </div>
+  </div>
+  <section class="main">
+    <div class="container">
+      <div class="content-grid">
+        <div class="card">
+          <div class="content-text">
+            <h3>Police Clearance Certificates</h3>
+            <p>Certificates cover national criminal history, open warrants, and verification of identity. Average processing time is three business days.</p>
+            <ul>
+              <li>Standard clearance for employment and visas</li>
+              <li>Vendor vetting for public contracts</li>
+              <li>Expedited service for court orders and humanitarian travel</li>
+            </ul>
+
+            <h3>Firearm Licensing</h3>
+            <p>Applicants must complete accredited safety training, provide secure storage proof, and pass biometric background checks. Commercial licenses require annual compliance audits.</p>
+
+            <h3>Traffic Records</h3>
+            <p>Request certified collision reports, citation histories, and commercial vehicle inspection outcomes. Digital signatures are verifiable through the QR seal on each PDF.</p>
+          </div>
+        </div>
+        <div>
+          <div class="card">
+            <div class="card-header">
+              <div class="card-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="16" rx="2" ry="2"></rect><path d="M7 4v4"></path><path d="M17 4v4"></path><path d="M3 10h18"></path></svg>
+              </div>
+              <div>
+                <div class="card-title">Appointment windows</div>
+                <div class="card-subtitle">All districts</div>
+              </div>
+            </div>
+            <div style="display:grid;gap:10px;color:var(--text-secondary);font-size:14px;">
+              <div style="display:flex;justify-content:space-between;">
+                <span>Background checks</span>
+                <strong style="color:var(--primary);">Walk-in • 8:00-16:00</strong>
+              </div>
+              <div style="display:flex;justify-content:space-between;">
+                <span>Firearm licensing</span>
+                <strong style="color:var(--primary);">By appointment</strong>
+              </div>
+              <div style="display:flex;justify-content:space-between;">
+                <span>Collision records</span>
+                <strong style="color:var(--primary);">Ready in 10 days</strong>
+              </div>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-header">
+              <div class="card-icon" style="background: rgba(245, 158, 11, 0.12);">
+                <svg viewBox="0 0 24 24" fill="none" stroke="var(--warning)" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><path d="M12 8v4"></path><path d="M12 16h.01"></path></svg>
+              </div>
+              <div>
+                <div class="card-title">Identity Verification</div>
+                <div class="card-subtitle">Protecting your data</div>
+              </div>
+            </div>
+            <p style="color:var(--text-secondary); font-size:13px;">Applicants must present a national ID or passport and two proofs of address. Digital submissions use one-time passcodes and face match checks to prevent impersonation.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<div id="page-community" class="page">
+  <div class="hero" style="padding:48px 0;">
+    <div class="container">
+      <div class="hero-content">
+        <div class="hero-badge">Community Safety</div>
+        <h2>Prevention Through Partnership</h2>
+        <p>We invest in trust-based policing, youth mentorship, and data-informed prevention to reduce crime before it happens.</p>
+      </div>
+    </div>
+  </div>
+  <section class="main">
+    <div class="container">
+      <div class="content-grid">
+        <div class="card">
+          <div class="content-text">
+            <h3>Programs</h3>
+            <ul>
+              <li>School safety officers delivering anti-bullying curriculum and safe passage patrols.</li>
+              <li>Neighborhood watch onboarding with rapid alert channels and patrol ride-alongs.</li>
+              <li>Victim services providing counseling, relocation support, and court accompaniment.</li>
+            </ul>
+
+            <h3>Transparency</h3>
+            <p>Quarterly dashboards publish use-of-force statistics, bias audit results, and complaint resolutions. Community advisory boards review policies and body-worn camera deployment plans.</p>
+          </div>
+        </div>
+        <div>
+          <div class="card">
+            <div class="card-header">
+              <div class="card-icon" style="background: var(--accent-light);">
+                <svg viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2h-4l-4 4v-4H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+              </div>
+              <div>
+                <div class="card-title">Engage</div>
+                <div class="card-subtitle">Contact your liaison</div>
+              </div>
+            </div>
+            <div style="display:grid;gap:12px;font-size:13px;color:var(--text-secondary);">
+              <div><strong style="color:var(--text-primary);">Community mail:</strong> outreach@npa.gov.py</div>
+              <div><strong style="color:var(--text-primary);">Youth desk:</strong> +599 201 2234</div>
+              <div><strong style="color:var(--text-primary);">Victim advocate:</strong> +599 201 9900</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<div id="page-recruitment" class="page">
+  <div class="hero" style="padding:48px 0;">
+    <div class="container">
+      <div class="hero-content">
+        <div class="hero-badge">Careers</div>
+        <h2>Join the National Police</h2>
+        <p>Serve with integrity, empathy, and professionalism. The Academy trains officers, dispatchers, analysts, and civilian specialists.</p>
+      </div>
+    </div>
+  </div>
+  <section class="main">
+    <div class="container">
+      <div class="content-grid">
+        <div class="card">
+          <div class="content-text">
+            <h3>Academy Pathways</h3>
+            <ul>
+              <li>Patrol officer — 24-week academy, crisis intervention, and defensive tactics.</li>
+              <li>Communications officer — emergency call-taking, triage, and stress management.</li>
+              <li>Digital forensics — cyber evidence handling, malware response, and courtroom testimony.</li>
+            </ul>
+
+            <h3>Eligibility</h3>
+            <p>Candidates must be 21+, complete a background investigation, pass medical and fitness standards, and commit to the Code of Ethics.</p>
+          </div>
+        </div>
+        <div>
+          <div class="card">
+            <div class="card-header">
+              <div class="card-icon" style="background: rgba(16, 185, 129, 0.12);">
+                <svg viewBox="0 0 24 24" fill="none" stroke="var(--success)" stroke-width="2"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4z"></path><path d="M6 22v-2a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v2"></path></svg>
+              </div>
+              <div>
+                <div class="card-title">Application windows</div>
+                <div class="card-subtitle">Updated weekly</div>
+              </div>
+            </div>
+            <p style="color:var(--text-secondary); font-size:13px;">Spring and autumn academy classes accept rolling applications. Lateral transfers receive credit for prior service and compressed field training.</p>
+          </div>
+
+          <div class="card">
+            <div class="card-header">
+              <div class="card-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 19v-7l-9-4-9 4v7l9 4 9-4z"></path><path d="M6 10.6l6 2.4 6-2.4"></path></svg>
+              </div>
+              <div>
+                <div class="card-title">Scholarships</div>
+                <div class="card-subtitle">Serve your community</div>
+              </div>
+            </div>
+            <p style="color:var(--text-secondary); font-size:13px;">Tuition assistance is available for applicants from underrepresented communities, veterans, and STEM graduates entering digital investigations.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<div id="page-about" class="page">
+  <div class="hero" style="padding:48px 0;">
+    <div class="container">
+      <div class="hero-content">
+        <div class="hero-badge">About the Agency</div>
+        <h2>Accountable, Transparent, Ready</h2>
+        <p>Founded in 2010, the National Police Agency coordinates municipal and regional police bodies under one professional standard.</p>
+      </div>
+    </div>
+  </div>
+  <section class="main">
+    <div class="container">
+      <div class="content-grid">
+        <div class="card">
+          <div class="content-text">
+            <h3>Leadership</h3>
+            <p>Director-General Lía Cabrera leads the Agency with a focus on procedural justice, technology-driven policing, and officer wellness.</p>
+
+            <h3>Accountability</h3>
+            <p>An independent Inspectorate audits use-of-force, evidence handling, and procurement. Annual reports are published for public review.</p>
+          </div>
+        </div>
+        <div>
+          <div class="card">
+            <div class="card-header">
+              <div class="card-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+              </div>
+              <div>
+                <div class="card-title">Contact</div>
+                <div class="card-subtitle">Headquarters</div>
+              </div>
+            </div>
+            <p style="color:var(--text-secondary); font-size:13px;">1 Justice Plaza, Nueva Praya • +599 201 0000 • info@npa.gov.py</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <h4>National Police Agency</h4>
+        <p>Preventing crime, protecting rights, and partnering with every community across Praya.</p>
+        <div class="footer-contact">
+          <div class="footer-contact-label">Emergency</div>
+          <div class="footer-contact-value">Dial 911</div>
+          <div class="footer-contact-note">Dispatch available 24/7</div>
+        </div>
+      </div>
+      <div class="footer-section">
+        <h5>Services</h5>
+        <ul>
+          <li><a onclick="showPage('operations')">Report a crime</a></li>
+          <li><a onclick="showPage('records')">Background checks</a></li>
+          <li><a onclick="showPage('records')">Firearm licensing</a></li>
+        </ul>
+      </div>
+      <div class="footer-section">
+        <h5>Community</h5>
+        <ul>
+          <li><a onclick="showPage('community')">Neighborhood watch</a></li>
+          <li><a onclick="showPage('community')">Victim support</a></li>
+          <li><a onclick="showPage('operations')">Traffic safety</a></li>
+        </ul>
+      </div>
+      <div class="footer-section">
+        <h5>Careers</h5>
+        <ul>
+          <li><a onclick="showPage('recruitment')">Apply to the academy</a></li>
+          <li><a onclick="showPage('recruitment')">Lateral entry</a></li>
+        </ul>
+      </div>
+      <div class="footer-section">
+        <h5>About</h5>
+        <ul>
+          <li><a onclick="showPage('about')">Leadership</a></li>
+          <li><a onclick="showPage('about')">Inspectorate</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div>© 2025 Republic of Praya National Police Agency</div>
+      <div class="footer-legal">
+        <a>Accessibility</a>
+        <a>Privacy</a>
+        <a>Security</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  function showPage(page) {
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    document.getElementById('page-' + page).classList.add('active');
+    document.querySelectorAll('.nav-link').forEach(link => link.classList.remove('active'));
+    const active = document.querySelector(`.nav-link[data-page="${page}"]`);
+    if (active) active.classList.add('active');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  function toggleTheme() {
+    document.body.classList.toggle('light');
+    const btn = document.querySelector('.theme-btn');
+    btn.textContent = document.body.classList.contains('light') ? 'Dark' : 'Light';
+  }
+
+  function toggleGovDropdown(btn) {
+    btn.classList.toggle('open');
+    document.getElementById('govDropdown').classList.toggle('open');
+  }
+</script>
+</body>
+</html>
