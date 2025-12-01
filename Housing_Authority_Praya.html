@@ -210,12 +210,16 @@
 
     /* Responsive */
     @media (max-width: 768px) {
+      .nav { display: none; }
+      .logo-text h1 { font-size: 14px; }
+      .logo-text .tagline { display: none; }
       .content-grid { grid-template-columns: 1fr; }
       .stats-grid { grid-template-columns: 1fr 1fr; }
       .services-grid { grid-template-columns: 1fr; }
       .footer-grid { grid-template-columns: 1fr; gap: 32px; }
       .hero h2 { font-size: 36px; }
       .form-row { grid-template-columns: 1fr; }
+      .gov-dropdown-inner { grid-template-columns: 1fr; }
     }
   </style>
 </head>
@@ -289,16 +293,16 @@
         </div>
       </div>
       <nav class="nav">
-        <button class="nav-link active">Home</button>
-        <button class="nav-link">Apply</button>
-        <button class="nav-link">Eligibility</button>
-        <button class="nav-link">Resources</button>
+        <button class="nav-link active" onclick="scrollToSection('hero')">Home</button>
+        <button class="nav-link" onclick="scrollToSection('services')">Apply</button>
+        <button class="nav-link" onclick="scrollToSection('eligibility')">Eligibility</button>
+        <button class="nav-link" onclick="scrollToSection('resources')">Resources</button>
       </nav>
     </div>
   </header>
 
   <!-- Hero -->
-  <section class="hero">
+  <section id="hero" class="hero">
     <div class="hero-bg">
       <div class="hero-bg-shape"></div>
       <div class="hero-bg-shape"></div>
@@ -360,7 +364,7 @@
       <div class="content-grid">
         <div>
           <!-- Services -->
-          <div class="card">
+          <div id="services" class="card">
             <div class="card-header">
               <div class="card-icon">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -373,7 +377,7 @@
               </div>
             </div>
             <div class="services-grid">
-              <div class="service-card">
+              <div class="service-card" onclick="scrollToSection('services')" style="cursor: pointer;">
                 <div class="service-icon">
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                     <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
@@ -405,7 +409,7 @@
                   </svg>
                 </span>
               </div>
-              <div class="service-card">
+              <div class="service-card" onclick="scrollToSection('eligibility')" style="cursor: pointer;">
                 <div class="service-icon">
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                     <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
@@ -455,7 +459,7 @@
                   </svg>
                 </span>
               </div>
-              <div class="service-card">
+              <div class="service-card" onclick="scrollToSection('resources')" style="cursor: pointer;">
                 <div class="service-icon">
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                     <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
@@ -474,7 +478,7 @@
           </div>
 
           <!-- Eligibility -->
-          <div class="card">
+          <div id="eligibility" class="card">
             <div class="card-header">
               <div class="card-icon">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -522,6 +526,55 @@
               <div class="info-box">
                 <h4>Download Eligibility Guidelines</h4>
                 <p>For complete income and asset thresholds, download document <strong>HD273-A: Public Housing Eligibility Standards</strong> from our forms section.</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Resources -->
+          <div id="resources" class="card">
+            <div class="card-header">
+              <div class="card-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+                  <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+                </svg>
+              </div>
+              <div>
+                <h3 class="card-title">Tenant Resources</h3>
+                <p class="card-subtitle">Support and information for residents</p>
+              </div>
+            </div>
+            <div class="content-text">
+              <h3>Rights and Responsibilities</h3>
+              <p>As a public housing tenant, you have specific rights and responsibilities under the Prayan Housing Act (2012):</p>
+
+              <h3>Tenant Rights</h3>
+              <ul>
+                <li><strong>Safe and Habitable Housing:</strong> Units must meet minimum health and safety standards</li>
+                <li><strong>Privacy:</strong> 48-hour advance notice required for non-emergency inspections</li>
+                <li><strong>Fair Treatment:</strong> Protection from discrimination based on race, religion, or family status</li>
+                <li><strong>Reasonable Accommodations:</strong> Modifications for tenants with disabilities</li>
+                <li><strong>Grievance Process:</strong> Right to appeal housing authority decisions</li>
+              </ul>
+
+              <h3>Tenant Responsibilities</h3>
+              <ul>
+                <li>Pay rent on time (by the 5th of each month)</li>
+                <li>Maintain unit in clean and sanitary condition</li>
+                <li>Report maintenance issues promptly</li>
+                <li>Comply with lease terms and house rules</li>
+                <li>Notify authority of changes in household composition or income</li>
+              </ul>
+
+              <h3>Maintenance Requests</h3>
+              <p>Submit maintenance requests through the tenant portal or by calling 1-800-HOUSING. Emergency repairs (no heat, water leaks, electrical hazards) are addressed within 24 hours. Non-emergency requests are typically completed within 5-7 business days.</p>
+
+              <h3>Rent Calculation</h3>
+              <p>Public housing rent is set at 25% of adjusted monthly income, recalculated annually based on income verification. Residents must report changes in employment or household income within 30 days.</p>
+
+              <div class="info-box">
+                <h4>Tenant Assistance Hotline</h4>
+                <p>Need help or have questions? Call our dedicated support line at <strong>1-800-HOUSING (1-800-468-7464)</strong> or visit your local housing office during business hours.</p>
               </div>
             </div>
           </div>
@@ -581,7 +634,7 @@
               </div>
             </div>
             <div class="quick-links">
-              <a href="#" class="quick-link">
+              <a href="#services" class="quick-link" onclick="scrollToSection('services'); return false;">
                 <div class="quick-link-icon">
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                     <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
@@ -592,7 +645,7 @@
                   <path d="M5 12h14M12 5l7 7-7 7"/>
                 </svg>
               </a>
-              <a href="#" class="quick-link">
+              <a href="#services" class="quick-link" onclick="scrollToSection('services'); return false;">
                 <div class="quick-link-icon">
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                     <circle cx="12" cy="12" r="10"></circle>
@@ -604,7 +657,7 @@
                   <path d="M5 12h14M12 5l7 7-7 7"/>
                 </svg>
               </a>
-              <a href="#" class="quick-link">
+              <a href="#eligibility" class="quick-link" onclick="scrollToSection('eligibility'); return false;">
                 <div class="quick-link-icon">
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                     <path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"></path>
@@ -615,7 +668,7 @@
                   <path d="M5 12h14M12 5l7 7-7 7"/>
                 </svg>
               </a>
-              <a href="#" class="quick-link">
+              <a href="#hero" class="quick-link" onclick="scrollToSection('hero'); return false;">
                 <div class="quick-link-icon">
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                     <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
@@ -626,7 +679,7 @@
                   <path d="M5 12h14M12 5l7 7-7 7"/>
                 </svg>
               </a>
-              <a href="#" class="quick-link">
+              <a href="#resources" class="quick-link" onclick="scrollToSection('resources'); return false;">
                 <div class="quick-link-icon">
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                     <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
@@ -715,5 +768,20 @@
       </div>
     </div>
   </footer>
+
+  <script>
+    function scrollToSection(sectionId) {
+      const element = document.getElementById(sectionId);
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+        // Update active nav link
+        document.querySelectorAll('.nav-link').forEach(link => {
+          link.classList.remove('active');
+        });
+        event.target.classList.add('active');
+      }
+    }
+  </script>
 </body>
 </html>
