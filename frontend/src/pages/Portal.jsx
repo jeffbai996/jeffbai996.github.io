@@ -1,4 +1,3 @@
-import { Link } from 'react-router-dom'
 import './Portal.css'
 
 const departments = [
@@ -6,6 +5,7 @@ const departments = [
     id: 'npa',
     name: 'National Police Agency',
     abbrev: 'NPA',
+    url: '/NPA_Praya.html',
     description: 'National policing, emergency response, and community safety services across Praya.',
     color: '#1d4ed8',
     services: ['Emergency Response', 'Public Safety', 'Licensing', 'Community Programs']
@@ -14,6 +14,7 @@ const departments = [
     id: 'ctb',
     name: 'Cannabis Tax Bureau',
     abbrev: 'CTB',
+    url: '/CTB_Praya.html',
     description: 'Licensing, taxation, and regulation of cannabis industry in the Republic of Praya.',
     color: '#2d8659',
     services: ['Business Licensing', 'Tax Filing', 'Compliance', 'Research']
@@ -22,6 +23,7 @@ const departments = [
     id: 'doj',
     name: 'Department of Justice',
     abbrev: 'DOJ',
+    url: '/DOJ_Praya.html',
     description: 'Court system, prosecution services, and legal resources for citizens of Praya.',
     color: '#7c3aed',
     services: ['Court Services', 'Case Lookup', 'Legal Aid', 'Criminal Code']
@@ -30,10 +32,47 @@ const departments = [
     id: 'interior',
     name: 'Interior Department',
     abbrev: 'ID',
+    url: '/ID_Praya.html',
     description: 'Land registry, building permits, civil records, and parks management.',
     color: '#7c3aed',
     services: ['Land Registry', 'Building Permits', 'Civil Records', 'Parks & Reserves']
+  },
+  {
+    id: 'revenue',
+    name: 'Revenue Department',
+    abbrev: 'RD',
+    url: '/RD_Praya.html',
+    description: 'Tax collection, benefits, and financial services for individuals and businesses.',
+    color: '#0ea5e9',
+    services: ['Tax Filing', 'Business Accounts', 'Benefits', 'Compliance']
   }
+]
+
+const priorities = [
+  {
+    title: 'Safety & Justice',
+    detail: 'Fast access to courts, case lookup, and policing resources for every district.',
+    link: '/DOJ_Praya.html'
+  },
+  {
+    title: 'Land, Housing & Parks',
+    detail: 'Land registry searches, building permits, and protected areas managed by Interior.',
+    link: '/ID_Praya.html'
+  },
+  {
+    title: 'Business & Tax',
+    detail: 'Licensing, tax filings, and compliance guidance for entrepreneurs and companies.',
+    link: '/RD_Praya.html'
+  }
+]
+
+const quickLinks = [
+  { label: 'Report an incident', href: '/NPA_Praya.html#report' },
+  { label: 'File cannabis taxes', href: '/CTB_Praya.html#taxes' },
+  { label: 'Book a court date', href: '/DOJ_Praya.html#courts' },
+  { label: 'Check land records', href: '/ID_Praya.html#land' },
+  { label: 'Submit business returns', href: '/RD_Praya.html#business' },
+  { label: 'View government notices', href: '/DOJ_Praya.html#news' }
 ]
 
 export default function Portal() {
@@ -64,9 +103,9 @@ export default function Portal() {
         <div className="container">
           <div className="hero-content">
             <h2>Welcome to the <span>Government Portal</span></h2>
-            <p>Access government services, information, and resources from one central location. Serving the citizens of the Republic of Praya.</p>
+            <p>Access government services, information, and resources from one central location. Every ministry, bureau, and agency of the Republic of Praya is represented here with direct access to their official pages.</p>
             <div className="hero-actions">
-              <Link to="/interior" className="btn btn-primary">Find Services</Link>
+              <a href="/ID_Praya.html" className="btn btn-primary">Find Services</a>
               <a href="#departments" className="btn btn-secondary">View Departments</a>
             </div>
           </div>
@@ -107,7 +146,7 @@ export default function Portal() {
 
           <div className="dept-grid">
             {departments.map(dept => (
-              <Link to={`/${dept.id}`} key={dept.id} className="dept-card" style={{'--dept-color': dept.color}}>
+              <a href={dept.url} key={dept.id} className="dept-card" style={{'--dept-color': dept.color}}>
                 <div className="dept-icon">
                   <span>{dept.abbrev}</span>
                 </div>
@@ -124,11 +163,55 @@ export default function Portal() {
                     <path d="M5 12h14M12 5l7 7-7 7"/>
                   </svg>
                 </span>
-              </Link>
+              </a>
             ))}
           </div>
         </div>
       </main>
+
+      <section className="portal-priorities">
+        <div className="container">
+          <div className="priorities-header">
+            <div>
+              <p className="eyebrow">Nationwide priorities</p>
+              <h3>Canon programs every citizen relies on</h3>
+              <p className="section-subtitle">Explore the fully built department sites for detailed policies, forms, and up-to-date announcements.</p>
+            </div>
+            <a href="/DOJ_Praya.html" className="btn btn-accent">View justice updates</a>
+          </div>
+          <div className="priorities-grid">
+            {priorities.map(priority => (
+              <a key={priority.title} href={priority.link} className="priority-card">
+                <div className="priority-dot" />
+                <div>
+                  <h4>{priority.title}</h4>
+                  <p>{priority.detail}</p>
+                </div>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <path d="M5 12h14M12 5l7 7-7 7"/>
+                </svg>
+              </a>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="portal-quicklinks">
+        <div className="container">
+          <h3 className="section-title">Popular actions</h3>
+          <p className="section-subtitle">Jump straight into the completed department pages for the most requested services.</p>
+          <div className="quicklink-grid">
+            {quickLinks.map(link => (
+              <a key={link.label} href={link.href} className="quicklink-card">
+                <span>{link.label}</span>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <path d="M5 12h14M12 5l7 7-7 7"/>
+                </svg>
+              </a>
+            ))}
+          </div>
+        </div>
+      </section>
 
       <footer className="portal-footer">
         <div className="container">
@@ -149,9 +232,10 @@ export default function Portal() {
             <div className="footer-section">
               <h5>Departments</h5>
               <ul>
-                <li><Link to="/ctb">Cannabis Tax Bureau</Link></li>
-                <li><Link to="/doj">Department of Justice</Link></li>
-                <li><Link to="/interior">Interior Department</Link></li>
+                <li><a href="/CTB_Praya.html">Cannabis Tax Bureau</a></li>
+                <li><a href="/DOJ_Praya.html">Department of Justice</a></li>
+                <li><a href="/ID_Praya.html">Interior Department</a></li>
+                <li><a href="/RD_Praya.html">Revenue Department</a></li>
               </ul>
             </div>
             <div className="footer-section">
