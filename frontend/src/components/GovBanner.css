@@ -1,0 +1,133 @@
+/* Government Banner */
+.gov-banner {
+  background: #000;
+  color: white;
+  padding: 10px 0;
+  font-size: 13px;
+  border-bottom: 1px solid #222;
+}
+
+body.light .gov-banner {
+  background: #1e3a5f;
+  border-color: #152a45;
+}
+
+.gov-banner .container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.gov-banner-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.gov-icon svg {
+  width: 18px;
+  height: 18px;
+  color: var(--primary);
+}
+
+.gov-banner-right {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.gov-how {
+  color: #60a5fa;
+  background: none;
+  border: none;
+  font-size: 13px;
+  cursor: pointer;
+  padding: 0;
+  font-family: inherit;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.gov-how:hover { color: #93c5fd; }
+.gov-how svg { transition: transform 0.2s; }
+.gov-how.open svg { transform: rotate(180deg); }
+
+.theme-btn {
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.12);
+  color: #9ca3af;
+  padding: 6px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 500;
+  font-family: inherit;
+}
+
+.theme-btn:hover {
+  background: rgba(255,255,255,0.12);
+  color: white;
+}
+
+/* Dropdown */
+.gov-dropdown {
+  display: none;
+  background: #0a0a0a;
+  border-top: 1px solid #222;
+  padding: 16px 0;
+}
+
+body.light .gov-dropdown {
+  background: #152a45;
+}
+
+.gov-dropdown.open { display: block; }
+
+.gov-dropdown-inner {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  max-width: 600px;
+}
+
+.gov-dropdown-item {
+  display: flex;
+  gap: 12px;
+}
+
+.gov-dropdown-icon {
+  width: 36px;
+  height: 36px;
+  background: #1a1a1e;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+body.light .gov-dropdown-icon {
+  background: #1e3a5f;
+}
+
+.gov-dropdown-icon svg { color: #60a5fa; }
+
+.gov-dropdown-text h4 {
+  font-size: 13px;
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+.gov-dropdown-text p {
+  font-size: 12px;
+  color: #9ca3af;
+  line-height: 1.5;
+}
+
+@media (max-width: 768px) {
+  .gov-banner .container { justify-content: center; }
+  .gov-dropdown-inner { grid-template-columns: 1fr; }
+}
