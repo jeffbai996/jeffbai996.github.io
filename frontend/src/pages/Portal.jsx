@@ -11,6 +11,15 @@ const departments = [
     services: ['Emergency Response', 'Public Safety', 'Licensing', 'Community Programs']
   },
   {
+    id: 'bop',
+    name: 'Bank of Praya',
+    abbrev: 'BOP',
+    url: '/BOP_Praya.html',
+    description: 'Central bank responsible for monetary policy, financial stability, and banking supervision.',
+    color: '#0ea5e9',
+    services: ['Monetary Policy', 'Banking Supervision', 'Currency Services', 'Economic Research']
+  },
+  {
     id: 'ctb',
     name: 'Cannabis Tax Bureau',
     abbrev: 'CTB',
@@ -116,6 +125,16 @@ export default function Portal() {
         <div className="container">
           <div className="stats-grid">
             <div className="stat-item">
+              <span className="stat-label">Air Quality Index</span>
+              <span className="stat-value" style={{color: '#10b981'}}>42</span>
+              <span className="stat-change">Good • Updated 1hr ago</span>
+            </div>
+            <div className="stat-item">
+              <span className="stat-label">National Security Level</span>
+              <span className="stat-value" style={{color: '#0ea5e9'}}>2</span>
+              <span className="stat-change">Elevated • Routine vigilance</span>
+            </div>
+            <div className="stat-item">
               <span className="stat-label">Citizens Served</span>
               <span className="stat-value">2.4M</span>
               <span className="stat-change">Population</span>
@@ -123,17 +142,7 @@ export default function Portal() {
             <div className="stat-item">
               <span className="stat-label">Online Services</span>
               <span className="stat-value">127</span>
-              <span className="stat-change">Available</span>
-            </div>
-            <div className="stat-item">
-              <span className="stat-label">Departments</span>
-              <span className="stat-value">12</span>
-              <span className="stat-change">Active</span>
-            </div>
-            <div className="stat-item">
-              <span className="stat-label">Response Time</span>
-              <span className="stat-value">2.5</span>
-              <span className="stat-change">Avg Days</span>
+              <span className="stat-change">Available 24/7</span>
             </div>
           </div>
         </div>
@@ -232,6 +241,8 @@ export default function Portal() {
             <div className="footer-section">
               <h5>Departments</h5>
               <ul>
+                <li><a href="/NPA_Praya.html">National Police Agency</a></li>
+                <li><a href="/BOP_Praya.html">Bank of Praya</a></li>
                 <li><a href="/CTB_Praya.html">Cannabis Tax Bureau</a></li>
                 <li><a href="/DOJ_Praya.html">Department of Justice</a></li>
                 <li><a href="/ID_Praya.html">Interior Department</a></li>
