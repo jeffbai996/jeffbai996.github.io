@@ -1020,6 +1020,7 @@ body.light .portal-header {
 }
 
 @media (max-width: 768px) {
+  .portal-nav .nav-dropdown { display: none; }
   .portal-hero { padding: 48px 0; }
   .portal-hero h2 { font-size: 32px; }
   .hero-features { grid-template-columns: 1fr; }
@@ -1039,4 +1040,39 @@ body.light .portal-header {
   .dropdown-grid { grid-template-columns: 1fr; }
   .digital-grid { grid-template-columns: 1fr; }
   .announcements-grid { grid-template-columns: 1fr; }
+  .portal-logo .logo-text h1 { font-size: 15px; }
+  .portal-logo .logo-text .tagline { font-size: 10px; }
+  .nav-login-btn { padding: 6px 10px 6px 8px; font-size: 12px; }
+  .nav-account-btn { padding: 4px 10px 4px 4px; font-size: 12px; }
+  .nav-avatar { width: 24px; height: 24px; font-size: 10px; }
+}
+
+@media (max-width: 480px) {
+  .portal-hero h2 { font-size: 28px; }
+  .portal-hero > .container > .hero-content > p { font-size: 15px; }
+  .stats-grid { grid-template-columns: 1fr 1fr; }
+  .stat-item { padding: 14px 10px; }
+  .stat-value { font-size: 22px; }
+  .stat-label { font-size: 10px; }
+  .section-title { font-size: 22px; }
+  .featured-card h3 { font-size: 18px; }
+  .featured-stats { grid-template-columns: repeat(3, 1fr); gap: 8px; }
+  .featured-stat-value { font-size: 16px; }
+  .digital-card { padding: 20px; }
+  .digital-card h3 { font-size: 17px; }
+  .announcement-card { padding: 20px; }
+  .announcement-card h3 { font-size: 16px; }
+  .dept-card { padding: 20px; }
+  .dept-card h3 { font-size: 16px; }
+  .priority-card { padding: 14px; }
+  .priority-card h4 { font-size: 14px; }
+  .quicklink-card { padding: 12px 14px; }
+  .quicklink-card span { font-size: 13px; }
+  .portal-footer { padding: 32px 0 16px; }
+  .footer-brand h4 { font-size: 15px; }
+  .footer-brand p { font-size: 12px; }
+  .footer-section h5 { font-size: 10px; }
+  .footer-section a { font-size: 12px; }
+  .footer-bottom { font-size: 11px; }
+  .footer-legal { gap: 12px; }
 }
