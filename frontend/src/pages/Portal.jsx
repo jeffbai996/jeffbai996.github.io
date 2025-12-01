@@ -1,4 +1,6 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
+import { useAuth } from '../utils/AuthContext'
 import './Portal.css'
 
 const departments = [
@@ -143,6 +145,7 @@ const quickLinks = [
 
 export default function Portal() {
   const [servicesOpen, setServicesOpen] = React.useState(false);
+  const { user, isAuthenticated, loading } = useAuth();
 
   return (
     <>
@@ -202,6 +205,31 @@ export default function Portal() {
                 </div>
               )}
             </div>
+            {!loading && (
+              isAuthenticated ? (
+                <Link to="/account" className="nav-account-btn">
+                  <div className="nav-avatar">
+                    {user?.firstName?.[0]}{user?.lastName?.[0]}
+                  </div>
+                  <span>{user?.firstName}</span>
+                </Link>
+              ) : (
+                <Link to="/login" className="nav-login-btn">
+                  <svg width="18" height="18" viewBox="0 0 40 40" fill="none">
+                    <rect width="40" height="40" rx="8" fill="url(#nav-logo-gradient)" />
+                    <path d="M12 20c0-4.4 3.6-8 8-8s8 3.6 8 8-3.6 8-8 8" stroke="#fff" strokeWidth="2.5" strokeLinecap="round" />
+                    <path d="M20 16v8M16 20h8" stroke="#fff" strokeWidth="2" strokeLinecap="round" />
+                    <defs>
+                      <linearGradient id="nav-logo-gradient" x1="0" y1="0" x2="40" y2="40">
+                        <stop stopColor="#f97316" />
+                        <stop offset="1" stopColor="#ea580c" />
+                      </linearGradient>
+                    </defs>
+                  </svg>
+                  Login with PrayaPass
+                </Link>
+              )
+            )}
           </nav>
         </div>
       </header>
