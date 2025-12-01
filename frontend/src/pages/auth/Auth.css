@@ -1,0 +1,631 @@
+/* Auth Pages Styles */
+
+.auth-page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+}
+
+.auth-container {
+  display: flex;
+  gap: 3rem;
+  align-items: flex-start;
+  max-width: 900px;
+  width: 100%;
+}
+
+.auth-card {
+  background: #fff;
+  border-radius: 1rem;
+  padding: 2.5rem;
+  width: 100%;
+  max-width: 420px;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+}
+
+.auth-card-wide {
+  max-width: 500px;
+}
+
+/* Logo */
+.auth-logo {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 2rem;
+}
+
+.prayapass-logo {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.prayapass-logo .logo-icon {
+  width: 40px;
+  height: 40px;
+}
+
+.prayapass-logo .logo-text {
+  display: flex;
+  flex-direction: column;
+}
+
+.prayapass-logo .logo-name {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #1f2937;
+  line-height: 1.2;
+}
+
+.prayapass-logo .logo-tagline {
+  font-size: 0.75rem;
+  color: #6b7280;
+  letter-spacing: 0.02em;
+}
+
+/* Header */
+.auth-header {
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+.auth-header h1 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #1f2937;
+  margin: 0 0 0.5rem;
+}
+
+.auth-header p {
+  color: #6b7280;
+  margin: 0;
+  font-size: 0.9375rem;
+}
+
+.auth-header strong {
+  color: #374151;
+}
+
+/* Form */
+.auth-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.375rem;
+}
+
+.form-group label {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #374151;
+}
+
+.label-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.forgot-link {
+  font-size: 0.8125rem;
+  color: #f97316;
+  text-decoration: none;
+}
+
+.forgot-link:hover {
+  text-decoration: underline;
+}
+
+.form-group input[type="text"],
+.form-group input[type="email"],
+.form-group input[type="password"],
+.form-group input[type="tel"] {
+  padding: 0.75rem 1rem;
+  border: 1px solid #d1d5db;
+  border-radius: 0.5rem;
+  font-size: 0.9375rem;
+  color: #1f2937;
+  transition: border-color 0.15s, box-shadow 0.15s;
+  background: #fff;
+}
+
+.form-group input:focus {
+  outline: none;
+  border-color: #f97316;
+  box-shadow: 0 0 0 3px rgba(249, 115, 22, 0.15);
+}
+
+.form-group input:disabled {
+  background: #f3f4f6;
+  cursor: not-allowed;
+}
+
+.form-group input::placeholder {
+  color: #9ca3af;
+}
+
+.form-hint {
+  font-size: 0.75rem;
+  color: #6b7280;
+  margin: 0.25rem 0 0;
+}
+
+.optional {
+  font-weight: 400;
+  color: #9ca3af;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+/* Password Requirements */
+.password-requirements {
+  list-style: none;
+  padding: 0;
+  margin: 0.5rem 0 0;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.25rem 1rem;
+  font-size: 0.75rem;
+}
+
+.password-requirements li {
+  display: flex;
+  align-items: center;
+  gap: 0.375rem;
+  color: #6b7280;
+}
+
+.password-requirements li.met {
+  color: #10b981;
+}
+
+.password-requirements svg {
+  flex-shrink: 0;
+}
+
+/* Terms checkbox */
+.terms {
+  margin-top: 0.5rem;
+}
+
+.checkbox-label {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+  font-size: 0.8125rem;
+  color: #4b5563;
+  cursor: pointer;
+}
+
+.checkbox-label input[type="checkbox"] {
+  margin-top: 0.125rem;
+  accent-color: #f97316;
+}
+
+.checkbox-label a {
+  color: #f97316;
+  text-decoration: none;
+}
+
+.checkbox-label a:hover {
+  text-decoration: underline;
+}
+
+/* Button */
+.auth-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.875rem 1.5rem;
+  background: linear-gradient(135deg, #f97316 0%, #ea580c 100%);
+  color: #fff;
+  font-size: 0.9375rem;
+  font-weight: 600;
+  border: none;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  transition: transform 0.15s, box-shadow 0.15s;
+  margin-top: 0.5rem;
+}
+
+.auth-button:hover:not(:disabled) {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(249, 115, 22, 0.35);
+}
+
+.auth-button:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.spinner {
+  width: 16px;
+  height: 16px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-top-color: #fff;
+  border-radius: 50%;
+  animation: spin 0.6s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* Error */
+.auth-error {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1rem;
+  background: #fef2f2;
+  border: 1px solid #fecaca;
+  border-radius: 0.5rem;
+  color: #dc2626;
+  font-size: 0.875rem;
+}
+
+.auth-error svg {
+  flex-shrink: 0;
+}
+
+/* Divider */
+.auth-divider {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin: 1.25rem 0;
+}
+
+.auth-divider::before,
+.auth-divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: #e5e7eb;
+}
+
+.auth-divider span {
+  font-size: 0.8125rem;
+  color: #9ca3af;
+}
+
+/* Alternative Methods */
+.auth-alt-methods {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.alt-method-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1rem;
+  background: #f3f4f6;
+  border: 1px solid #e5e7eb;
+  border-radius: 0.5rem;
+  font-size: 0.875rem;
+  color: #374151;
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s;
+}
+
+.alt-method-btn:hover:not(:disabled) {
+  background: #e5e7eb;
+  border-color: #d1d5db;
+}
+
+.alt-method-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.coming-soon {
+  font-size: 0.6875rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  padding: 0.125rem 0.375rem;
+  background: #f97316;
+  color: #fff;
+  border-radius: 0.25rem;
+  margin-left: auto;
+}
+
+/* OTP Actions */
+.otp-actions {
+  display: flex;
+  justify-content: center;
+  margin-top: 0.5rem;
+}
+
+.resend-btn {
+  background: none;
+  border: none;
+  color: #f97316;
+  font-size: 0.875rem;
+  cursor: pointer;
+  padding: 0.5rem;
+}
+
+.resend-btn:hover:not(:disabled) {
+  text-decoration: underline;
+}
+
+.resend-btn:disabled {
+  color: #9ca3af;
+  cursor: not-allowed;
+}
+
+.back-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.375rem;
+  background: none;
+  border: none;
+  color: #6b7280;
+  font-size: 0.875rem;
+  cursor: pointer;
+  padding: 0.5rem;
+  margin-top: 0.5rem;
+}
+
+.back-btn:hover {
+  color: #374151;
+}
+
+/* Footer */
+.auth-footer {
+  text-align: center;
+  margin-top: 1.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid #e5e7eb;
+}
+
+.auth-footer p {
+  margin: 0;
+  font-size: 0.875rem;
+  color: #6b7280;
+}
+
+.auth-footer a {
+  color: #f97316;
+  font-weight: 500;
+  text-decoration: none;
+}
+
+.auth-footer a:hover {
+  text-decoration: underline;
+}
+
+/* Register Progress */
+.register-progress {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0;
+  margin-bottom: 1.5rem;
+}
+
+.progress-step {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 0.75rem;
+}
+
+.step-number {
+  width: 1.5rem;
+  height: 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #e5e7eb;
+  color: #6b7280;
+  border-radius: 50%;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.progress-step.active .step-number {
+  background: #f97316;
+  color: #fff;
+}
+
+.progress-step.completed {
+  color: #10b981;
+}
+
+.progress-step.completed svg {
+  background: #10b981;
+  color: #fff;
+  border-radius: 50%;
+  padding: 0.25rem;
+}
+
+.step-label {
+  font-size: 0.8125rem;
+  color: #6b7280;
+}
+
+.progress-step.active .step-label {
+  color: #374151;
+  font-weight: 500;
+}
+
+.progress-line {
+  width: 2rem;
+  height: 2px;
+  background: #e5e7eb;
+}
+
+.progress-line.active {
+  background: #10b981;
+}
+
+/* Info Cards */
+.auth-info {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  max-width: 280px;
+}
+
+.info-card {
+  display: flex;
+  gap: 0.75rem;
+  padding: 1rem;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 0.5rem;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.info-card svg {
+  flex-shrink: 0;
+  color: #f97316;
+}
+
+.info-card h4 {
+  font-size: 0.9375rem;
+  font-weight: 600;
+  color: #fff;
+  margin: 0 0 0.25rem;
+}
+
+.info-card p {
+  font-size: 0.8125rem;
+  color: #9ca3af;
+  margin: 0;
+  line-height: 1.5;
+}
+
+/* Dark mode */
+body:not(.light) .auth-card {
+  background: #1f2937;
+}
+
+body:not(.light) .prayapass-logo .logo-name,
+body:not(.light) .auth-header h1 {
+  color: #f9fafb;
+}
+
+body:not(.light) .prayapass-logo .logo-tagline,
+body:not(.light) .auth-header p,
+body:not(.light) .form-hint {
+  color: #9ca3af;
+}
+
+body:not(.light) .form-group label {
+  color: #e5e7eb;
+}
+
+body:not(.light) .form-group input {
+  background: #111827;
+  border-color: #374151;
+  color: #f9fafb;
+}
+
+body:not(.light) .form-group input:focus {
+  border-color: #f97316;
+}
+
+body:not(.light) .form-group input::placeholder {
+  color: #6b7280;
+}
+
+body:not(.light) .auth-footer {
+  border-top-color: #374151;
+}
+
+body:not(.light) .auth-footer p {
+  color: #9ca3af;
+}
+
+body:not(.light) .auth-divider::before,
+body:not(.light) .auth-divider::after {
+  background: #374151;
+}
+
+body:not(.light) .alt-method-btn {
+  background: #111827;
+  border-color: #374151;
+  color: #e5e7eb;
+}
+
+body:not(.light) .alt-method-btn:hover:not(:disabled) {
+  background: #1f2937;
+  border-color: #4b5563;
+}
+
+body:not(.light) .auth-error {
+  background: rgba(220, 38, 38, 0.1);
+  border-color: rgba(220, 38, 38, 0.3);
+}
+
+body:not(.light) .checkbox-label {
+  color: #9ca3af;
+}
+
+body:not(.light) .password-requirements li {
+  color: #9ca3af;
+}
+
+body:not(.light) .step-label {
+  color: #9ca3af;
+}
+
+body:not(.light) .progress-step.active .step-label {
+  color: #f9fafb;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .auth-page {
+    padding: 1rem;
+    align-items: flex-start;
+    padding-top: 2rem;
+  }
+
+  .auth-container {
+    flex-direction: column;
+    gap: 2rem;
+  }
+
+  .auth-card,
+  .auth-card-wide {
+    max-width: 100%;
+    padding: 1.5rem;
+  }
+
+  .auth-info {
+    max-width: 100%;
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+
+  .info-card {
+    flex: 1 1 200px;
+  }
+
+  .form-row {
+    grid-template-columns: 1fr;
+  }
+
+  .password-requirements {
+    grid-template-columns: 1fr;
+  }
+}
