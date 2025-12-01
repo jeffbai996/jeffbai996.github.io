@@ -89,6 +89,33 @@
   color: #374151;
 }
 
+.success-icon {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 1rem;
+}
+
+.email-note {
+  text-align: center;
+  font-size: 0.875rem;
+  color: #6b7280;
+  margin: 0;
+}
+
+.link-button {
+  background: none;
+  border: none;
+  color: #f97316;
+  font-size: inherit;
+  font-weight: 500;
+  cursor: pointer;
+  padding: 0;
+}
+
+.link-button:hover {
+  text-decoration: underline;
+}
+
 /* Form */
 .auth-form {
   display: flex;
