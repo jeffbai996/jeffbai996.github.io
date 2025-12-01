@@ -168,6 +168,18 @@ export default function Login() {
                   />
                 </div>
 
+                <div className="form-group disclaimer">
+                  <label className="radio-disclaimer-label">
+                    <input type="radio" name="disclaimer" required />
+                    <span>
+                      By signing in, I agree to the{' '}
+                      <a href="#terms" target="_blank" rel="noopener noreferrer">Terms of Use</a>
+                      {' '}and acknowledge the{' '}
+                      <a href="#privacy" target="_blank" rel="noopener noreferrer">Privacy Statement</a>
+                    </span>
+                  </label>
+                </div>
+
                 <button type="submit" className="auth-button" disabled={loading}>
                   {loading ? (
                     <>
@@ -264,25 +276,98 @@ export default function Login() {
         </div>
 
         <div className="auth-info">
-          <div className="info-card">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
-              <path d="M9 12l2 2 4-4" />
-            </svg>
-            <div>
-              <h4>Secure & Verified</h4>
-              <p>Your identity is protected with bank-level encryption and two-factor authentication.</p>
+          <div className="info-header">
+            <h3>What is PrayaPass?</h3>
+            <p>Your trusted digital identity for seamless access to government services</p>
+          </div>
+
+          <div className="info-features">
+            <div className="info-feature">
+              <div className="feature-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+                  <path d="M9 12l2 2 4-4" />
+                </svg>
+              </div>
+              <div className="feature-content">
+                <h4>Bank-Level Security</h4>
+                <p>Multi-factor authentication and advanced encryption protect your data</p>
+              </div>
+            </div>
+
+            <div className="info-feature">
+              <div className="feature-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <rect x="2" y="3" width="20" height="14" rx="2" />
+                  <line x1="8" y1="21" x2="16" y2="21" />
+                  <line x1="12" y1="17" x2="12" y2="21" />
+                </svg>
+              </div>
+              <div className="feature-content">
+                <h4>One Login, All Services</h4>
+                <p>Access 20+ government agencies with a single secure account</p>
+              </div>
+            </div>
+
+            <div className="info-feature">
+              <div className="feature-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <rect x="5" y="2" width="14" height="20" rx="2" />
+                  <line x1="12" y1="18" x2="12.01" y2="18" />
+                </svg>
+              </div>
+              <div className="feature-content">
+                <h4>Mobile App Available</h4>
+                <p>Quick and convenient login with biometrics via PrayaPass app</p>
+              </div>
+            </div>
+
+            <div className="info-feature">
+              <div className="feature-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
+                  <polyline points="22,6 12,13 2,6" />
+                </svg>
+              </div>
+              <div className="feature-content">
+                <h4>Digital Services</h4>
+                <p>File taxes, apply for permits, and manage documents digitally</p>
+              </div>
+            </div>
+
+            <div className="info-feature">
+              <div className="feature-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <circle cx="12" cy="12" r="10" />
+                  <path d="M12 16v-4M12 8h.01" />
+                </svg>
+              </div>
+              <div className="feature-content">
+                <h4>24/7 Support</h4>
+                <p>Get help anytime with our dedicated support team</p>
+              </div>
             </div>
           </div>
-          <div className="info-card">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-              <rect x="2" y="3" width="20" height="14" rx="2" />
-              <line x1="8" y1="21" x2="16" y2="21" />
-              <line x1="12" y1="17" x2="12" y2="21" />
-            </svg>
-            <div>
-              <h4>One Account, All Services</h4>
-              <p>Access all government services with a single PrayaPass login.</p>
+
+          <div className="info-help">
+            <div className="help-links">
+              <a href="#help" className="help-link">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <circle cx="12" cy="12" r="10" />
+                  <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3M12 17h.01" />
+                </svg>
+                Need help?
+              </a>
+              <a href="#faq" className="help-link">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+                  <polyline points="14 2 14 8 20 8" />
+                  <line x1="16" y1="13" x2="8" y2="13" />
+                  <line x1="16" y1="17" x2="8" y2="17" />
+                  <line x1="10" y1="9" x2="8" y2="9" />
+                </svg>
+                View FAQ
+              </a>
             </div>
           </div>
         </div>
