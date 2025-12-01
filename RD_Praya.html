@@ -1,0 +1,1041 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Revenue Department | Republic of Praya</title>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --primary: #2563eb;
+      --primary-dark: #1d4ed8;
+      --primary-light: rgba(37, 99, 235, 0.1);
+      --primary-glow: rgba(37, 99, 235, 0.25);
+      --accent: #0ea5e9;
+      --accent-light: rgba(14, 165, 233, 0.1);
+      --revenue-gold: #f59e0b;
+      --revenue-gold-light: rgba(245, 158, 11, 0.1);
+      --success: #10b981;
+      --danger: #ef4444;
+      --warning: #f59e0b;
+      --bg-dark: #09090b;
+      --bg-card: #141416;
+      --bg-elevated: #1a1a1e;
+      --border: #27272a;
+      --border-subtle: #1f1f23;
+      --text-primary: #fafafa;
+      --text-secondary: #a1a1aa;
+      --text-muted: #71717a;
+    }
+
+    body.light {
+      --bg-dark: #fafafa;
+      --bg-card: #ffffff;
+      --bg-elevated: #f4f4f5;
+      --border: #e4e4e7;
+      --border-subtle: #f4f4f5;
+      --text-primary: #09090b;
+      --text-secondary: #52525b;
+      --text-muted: #71717a;
+    }
+
+    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+    @keyframes ripple { 0% { transform: scale(0.8); opacity: 1; } 100% { transform: scale(2); opacity: 0; } }
+    @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
+    @keyframes float { 0%, 100% { transform: translateY(0) rotate(0deg); } 50% { transform: translateY(-10px) rotate(2deg); } }
+    @keyframes shimmer { 0% { background-position: -200% 0; } 100% { background-position: 200% 0; } }
+    @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+    body {
+      font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+      line-height: 1.6;
+      background: var(--bg-dark);
+      color: var(--text-primary);
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+      opacity: 0;
+      animation: fadeIn 0.4s ease-out 0.1s forwards;
+    }
+
+    html { scroll-behavior: smooth; }
+    a { color: var(--primary); text-decoration: none; transition: all 0.2s ease; }
+    a:hover { filter: brightness(1.1); }
+    ::selection { background: var(--primary); color: white; }
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+
+    /* Government Banner */
+    .gov-banner { background: #000; color: white; padding: 10px 0; font-size: 13px; border-bottom: 1px solid #222; }
+    body.light .gov-banner { background: #1e3a5f; border-color: #152a45; }
+    .gov-banner .container { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
+    .gov-banner-left { display: flex; align-items: center; gap: 10px; }
+    .gov-icon svg { width: 18px; height: 18px; }
+    .gov-banner-right { display: flex; align-items: center; gap: 16px; }
+    .gov-banner-right a { color: #9ca3af; font-size: 12px; }
+    .gov-how { color: #60a5fa; background: none; border: none; font-size: 13px; cursor: pointer; padding: 0; font-family: inherit; display: inline-flex; align-items: center; gap: 4px; }
+    .gov-how:hover { color: #93c5fd; }
+    .gov-how svg { transition: transform 0.2s; }
+    .gov-how.open svg { transform: rotate(180deg); }
+    .gov-dropdown { display: none; background: #0a0a0a; border-top: 1px solid #222; padding: 16px 0; }
+    body.light .gov-dropdown { background: #152a45; }
+    .gov-dropdown.open { display: block; }
+    .gov-dropdown-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; max-width: 600px; }
+    .gov-dropdown-item { display: flex; gap: 12px; }
+    .gov-dropdown-icon { width: 36px; height: 36px; background: #1a1a1e; border-radius: 8px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    body.light .gov-dropdown-icon { background: #1e3a5f; }
+    .gov-dropdown-icon svg { color: #60a5fa; }
+    .gov-dropdown-text h4 { font-size: 13px; font-weight: 600; margin-bottom: 4px; }
+    .gov-dropdown-text p { font-size: 12px; color: #9ca3af; line-height: 1.5; }
+    .theme-btn { background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.12); color: #9ca3af; padding: 6px 12px; border-radius: 6px; cursor: pointer; font-size: 12px; font-weight: 500; font-family: inherit; }
+    .theme-btn:hover { background: rgba(255,255,255,0.12); color: white; }
+
+    /* Header */
+    .header { background: rgba(9, 9, 11, 0.9); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 100; }
+    body.light .header { background: rgba(255, 255, 255, 0.9); }
+    .header .container { display: flex; align-items: center; justify-content: space-between; height: 68px; }
+    .rd-logo { display: flex; align-items: center; gap: 12px; cursor: pointer; }
+    .rd-logo:hover { opacity: 0.85; }
+    .logo-mark { width: 42px; height: 42px; background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%); border-radius: 10px; display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden; }
+    .logo-mark::before { content: ''; position: absolute; width: 100%; height: 100%; background: linear-gradient(45deg, transparent 30%, rgba(255,255,255,0.15) 50%, transparent 70%); animation: shimmer 3s infinite; background-size: 200% 100%; }
+    .logo-mark svg { width: 22px; height: 22px; color: white; position: relative; z-index: 1; }
+    .logo-text h1 { font-size: 17px; font-weight: 700; color: var(--text-primary); letter-spacing: -0.02em; line-height: 1.2; }
+    .logo-text .tagline { font-size: 11px; font-weight: 500; color: var(--text-muted); }
+    .nav { display: flex; gap: 2px; }
+    .nav-link { padding: 8px 16px; color: var(--text-secondary); font-size: 14px; font-weight: 500; border-radius: 8px; cursor: pointer; border: none; background: none; font-family: inherit; }
+    .nav-link:hover { background: var(--bg-elevated); color: var(--text-primary); }
+    .nav-link.active { background: var(--primary-light); color: var(--primary); }
+
+    /* Hero */
+    .hero {
+      background: var(--bg-elevated);
+      padding: 80px 0;
+      border-bottom: 1px solid var(--border);
+      position: relative;
+      overflow: hidden;
+    }
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+      opacity: 0.15;
+    }
+    .hero-bg-shape {
+      position: absolute;
+      border-radius: 50%;
+      background: var(--primary);
+      filter: blur(60px);
+    }
+    .hero-bg-shape:nth-child(1) { width: 400px; height: 400px; top: -100px; right: -50px; animation: float 8s ease-in-out infinite; }
+    .hero-bg-shape:nth-child(2) { width: 300px; height: 300px; bottom: -50px; left: 10%; background: var(--accent); animation: float 10s ease-in-out infinite 1s; }
+    .hero-bg-shape:nth-child(3) { width: 200px; height: 200px; top: 20%; left: 50%; animation: float 12s ease-in-out infinite 2s; }
+    .hero-pattern {
+      position: absolute;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M30 5 L30 55 M5 30 L55 30 M15 15 L45 15 M15 45 L45 45 M15 15 L15 45 M45 15 L45 45' stroke='%232563eb' stroke-width='1' fill='none' opacity='0.1'/%3E%3C/svg%3E");
+      opacity: 0.5;
+    }
+    .hero-content { max-width: 620px; position: relative; z-index: 1; }
+    .hero h2 { font-size: 52px; font-weight: 700; line-height: 1.08; margin-bottom: 20px; letter-spacing: -0.03em; }
+    .hero h2 span { color: var(--primary); }
+    .hero p { color: var(--text-secondary); font-size: 18px; margin-bottom: 32px; line-height: 1.7; }
+    .btn { display: inline-flex; align-items: center; gap: 8px; padding: 14px 24px; font-size: 14px; font-weight: 600; border-radius: 10px; cursor: pointer; border: none; font-family: inherit; transition: all 0.2s ease; }
+    .btn-primary { background: var(--primary); color: white; }
+    .btn-primary:hover { background: var(--primary-dark); transform: translateY(-1px); }
+    .btn-secondary { background: var(--bg-card); color: var(--text-secondary); margin-left: 10px; border: 1px solid var(--border); }
+    .btn-secondary:hover { background: var(--bg-elevated); color: var(--text-primary); }
+
+    /* Stats */
+    .stats-bar { background: var(--bg-dark); border-bottom: 1px solid var(--border); padding: 24px 0; }
+    .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+    .stat-item { text-align: center; padding: 20px; background: var(--bg-card); border-radius: 12px; border: 1px solid var(--border-subtle); cursor: pointer; transition: all 0.2s; }
+    .stat-item:hover { border-color: var(--primary); transform: translateY(-2px); }
+    .stat-label { font-size: 11px; font-weight: 600; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em; }
+    .stat-value { font-size: 28px; font-weight: 700; color: var(--primary); margin: 8px 0; letter-spacing: -0.02em; }
+    .stat-change { font-size: 12px; font-weight: 600; padding: 3px 8px; border-radius: 100px; color: var(--text-muted); background: var(--bg-elevated); }
+
+    /* Main Content */
+    .main { padding: 40px 0; }
+    .content-grid { display: grid; grid-template-columns: 1fr 340px; gap: 24px; }
+    .card { background: var(--bg-card); border: 1px solid var(--border-subtle); border-radius: 16px; padding: 24px; margin-bottom: 24px; transition: border-color 0.2s; }
+    .card:hover { border-color: var(--border); }
+    .card-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; padding-bottom: 16px; border-bottom: 1px solid var(--border-subtle); }
+    .card-title { font-size: 15px; font-weight: 600; }
+    .card-link { font-size: 13px; color: var(--primary); cursor: pointer; }
+    .card-link:hover { text-decoration: underline; }
+
+    /* Service Cards */
+    .service-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
+    .service-card { background: var(--bg-elevated); border: 1px solid var(--border-subtle); border-radius: 12px; padding: 20px; cursor: pointer; transition: all 0.2s; }
+    .service-card:hover { border-color: var(--primary); transform: translateY(-2px); }
+    .service-icon { width: 48px; height: 48px; background: var(--primary-light); border-radius: 10px; display: flex; align-items: center; justify-content: center; color: var(--primary); margin-bottom: 12px; }
+    .service-card h4 { font-size: 14px; font-weight: 600; margin-bottom: 6px; }
+    .service-card p { font-size: 12px; color: var(--text-muted); line-height: 1.5; }
+
+    /* Tables */
+    .rates-table { width: 100%; border-collapse: collapse; }
+    .rates-table th { text-align: left; font-size: 11px; font-weight: 600; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.04em; padding: 10px 0; border-bottom: 1px solid var(--border-subtle); }
+    .rates-table td { padding: 12px 0; border-bottom: 1px solid var(--border-subtle); font-size: 14px; }
+    .rates-table tr:last-child td { border: none; }
+    .rate-info { display: flex; align-items: center; gap: 10px; }
+    .rate-icon { width: 32px; height: 32px; background: var(--primary-light); border-radius: 8px; display: flex; align-items: center; justify-content: center; color: var(--primary); }
+    .rate-name { font-weight: 600; }
+    .rate-desc { font-size: 11px; color: var(--text-muted); }
+    .rate-value { font-weight: 600; }
+    .rate-badge { font-size: 11px; font-weight: 600; padding: 3px 8px; border-radius: 100px; }
+    .rate-badge.income { background: rgba(37, 99, 235, 0.1); color: var(--primary); }
+    .rate-badge.corporate { background: rgba(14, 165, 233, 0.1); color: var(--accent); }
+    .rate-badge.vat { background: rgba(245, 158, 11, 0.1); color: var(--warning); }
+
+    /* News */
+    .news-item { padding: 16px; background: var(--bg-elevated); border-radius: 10px; margin-bottom: 10px; cursor: pointer; border: 1px solid transparent; transition: all 0.2s; }
+    .news-item:hover { border-color: var(--border); }
+    .news-date { font-size: 11px; color: var(--primary); font-weight: 600; margin-bottom: 4px; }
+    .news-title { font-size: 14px; font-weight: 600; margin-bottom: 4px; line-height: 1.4; }
+    .news-excerpt { font-size: 13px; color: var(--text-muted); line-height: 1.5; }
+
+    /* Sidebar */
+    .tax-box { background: var(--primary-light); border: 1px solid rgba(37, 99, 235, 0.2); border-radius: 14px; padding: 24px; text-align: center; margin-bottom: 20px; }
+    .tax-label { font-size: 11px; font-weight: 600; color: var(--primary); text-transform: uppercase; letter-spacing: 0.08em; display: flex; align-items: center; justify-content: center; gap: 8px; }
+    .live-indicator { display: inline-flex; align-items: center; gap: 5px; background: rgba(16, 185, 129, 0.15); color: var(--success); padding: 3px 8px; border-radius: 100px; font-size: 10px; font-weight: 600; }
+    .live-indicator::before { content: ''; width: 5px; height: 5px; background: var(--success); border-radius: 50%; animation: pulse 2s ease-in-out infinite; }
+    .tax-rate { font-size: 48px; font-weight: 700; color: var(--primary); letter-spacing: -0.02em; line-height: 1.1; margin: 10px 0; }
+    .tax-rate .percent { font-size: 28px; opacity: 0.8; }
+    .tax-date { font-size: 12px; color: var(--text-muted); }
+    .tax-meta { display: flex; justify-content: center; gap: 16px; margin-top: 14px; padding-top: 14px; border-top: 1px solid rgba(37, 99, 235, 0.15); }
+    .tax-meta-item { text-align: center; }
+    .tax-meta-item .label { font-size: 10px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.04em; }
+    .tax-meta-item .value { font-size: 13px; font-weight: 600; color: var(--text-primary); margin-top: 2px; }
+    .quick-link { display: flex; align-items: center; gap: 10px; padding: 12px 14px; background: var(--bg-elevated); border: 1px solid var(--border-subtle); border-radius: 10px; margin-bottom: 8px; font-size: 13px; font-weight: 500; color: var(--text-secondary); cursor: pointer; transition: all 0.2s; }
+    .quick-link .icon { width: 28px; height: 28px; background: var(--primary-light); border-radius: 6px; display: flex; align-items: center; justify-content: center; color: var(--primary); flex-shrink: 0; }
+    .quick-link:hover { color: var(--primary); border-color: var(--border); }
+
+    /* Page Content */
+    .page-header { background: var(--bg-elevated); border-bottom: 1px solid var(--border); padding: 36px 0; }
+    .breadcrumb { font-size: 13px; color: var(--text-muted); margin-bottom: 8px; }
+    .breadcrumb a { color: var(--text-muted); cursor: pointer; }
+    .breadcrumb a:hover { color: var(--primary); }
+    .page-header h1 { font-size: 28px; font-weight: 700; letter-spacing: -0.02em; }
+    .page-header .subtitle { color: var(--text-muted); margin-top: 4px; font-size: 14px; }
+    .content-text { font-size: 14px; line-height: 1.8; color: var(--text-secondary); }
+    .content-text h3 { font-size: 18px; font-weight: 700; color: var(--text-primary); margin: 28px 0 14px; }
+    .content-text h3:first-child { margin-top: 0; }
+    .content-text p { margin-bottom: 14px; }
+    .content-text ul { margin: 10px 0 14px 18px; }
+    .content-text li { margin-bottom: 8px; }
+    .info-box { background: var(--primary-light); border-left: 3px solid var(--primary); padding: 16px 20px; border-radius: 0 10px 10px 0; margin: 20px 0; }
+    .info-box h4 { font-size: 13px; font-weight: 700; color: var(--primary); margin-bottom: 4px; }
+    .info-box p { margin: 0; font-size: 13px; }
+    .warning-box { background: rgba(245, 158, 11, 0.1); border-left: 3px solid var(--warning); padding: 16px 20px; border-radius: 0 10px 10px 0; margin: 20px 0; }
+    .warning-box h4 { font-size: 13px; font-weight: 700; color: var(--warning); margin-bottom: 4px; }
+    .warning-box p { margin: 0; font-size: 13px; }
+
+    /* Footer */
+    .footer { background: var(--bg-card); border-top: 1px solid var(--border); padding: 48px 0 20px; margin-top: 48px; }
+    .footer-grid { display: grid; grid-template-columns: 1.5fr 1fr 1fr 1fr 1fr; gap: 32px; margin-bottom: 32px; }
+    .footer-brand h4 { font-size: 16px; font-weight: 700; margin-bottom: 12px; }
+    .footer-brand p { font-size: 13px; color: var(--text-muted); margin-bottom: 16px; line-height: 1.6; }
+    .footer-section h5 { font-size: 11px; font-weight: 700; color: var(--primary); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 14px; }
+    .footer-section ul { list-style: none; }
+    .footer-section li { margin-bottom: 8px; }
+    .footer-section a { color: var(--text-muted); font-size: 13px; cursor: pointer; }
+    .footer-section a:hover { color: var(--primary); }
+    .footer-bottom { border-top: 1px solid var(--border-subtle); padding-top: 20px; display: flex; justify-content: space-between; align-items: center; font-size: 12px; color: var(--text-muted); }
+    .footer-legal { display: flex; gap: 20px; }
+    .footer-legal a { color: var(--text-muted); cursor: pointer; }
+    .footer-legal a:hover { color: var(--primary); }
+
+    /* Page visibility */
+    .page { display: none; }
+    .page.active { display: block; }
+
+    /* Responsive */
+    @media (max-width: 1024px) {
+      .content-grid { grid-template-columns: 1fr; }
+      .footer-grid { grid-template-columns: 1fr 1fr; }
+      .footer-brand { grid-column: span 2; }
+      .stats-grid { grid-template-columns: repeat(2, 1fr); }
+      .hero h2 { font-size: 42px; }
+      .service-grid { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 768px) {
+      .header .container { flex-direction: column; height: auto; padding: 12px 24px; gap: 12px; }
+      .nav { flex-wrap: wrap; justify-content: center; }
+      .hero { padding: 48px 0; }
+      .hero h2 { font-size: 32px; }
+      .tax-rate { font-size: 40px; }
+      .stat-value { font-size: 24px; }
+      .footer-grid { grid-template-columns: 1fr; }
+      .footer-brand { grid-column: span 1; }
+      .footer-bottom { flex-direction: column; gap: 12px; text-align: center; }
+      .gov-banner .container { justify-content: center; }
+      .gov-dropdown-inner { grid-template-columns: 1fr; }
+      .service-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="gov-banner">
+  <div class="container">
+    <div class="gov-banner-left">
+      <div class="gov-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="2"><path d="M3 21h18M3 10h18M5 6l7-3 7 3M4 10v11M20 10v11M8 14v3M12 14v3M16 14v3"/></svg>
+      </div>
+      <span>An Official Government of Praya Website</span>
+      <button class="gov-how" onclick="toggleGovDropdown(this)">
+        Here's how you know
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+      </button>
+    </div>
+    <div class="gov-banner-right">
+      <a href="https://www.govpraya.org">GOV.PRAYA</a>
+      <button class="theme-btn" onclick="toggleTheme()">Light</button>
+    </div>
+  </div>
+  <div class="gov-dropdown" id="govDropdown">
+    <div class="container">
+      <div class="gov-dropdown-inner">
+        <div class="gov-dropdown-item">
+          <div class="gov-dropdown-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 21h18M3 10h18M5 6l7-3 7 3M4 10v11M20 10v11M8 14v3M12 14v3M16 14v3"/></svg>
+          </div>
+          <div class="gov-dropdown-text">
+            <h4>Official websites use .gov.py</h4>
+            <p>A <strong>.gov.py</strong> website belongs to an official government organization in the Republic of Praya.</p>
+          </div>
+        </div>
+        <div class="gov-dropdown-item">
+          <div class="gov-dropdown-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+          </div>
+          <div class="gov-dropdown-text">
+            <h4>Secure .gov.py websites use HTTPS</h4>
+            <p>A <strong>lock</strong> or <strong>https://</strong> means you've safely connected to the .gov.py website.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<header class="header">
+  <div class="container">
+    <div class="rd-logo" onclick="showPage('home')">
+      <div class="logo-mark">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M16 8h-6a2 2 0 1 0 0 4h4a2 2 0 1 1 0 4H8M12 18V6"/></svg>
+      </div>
+      <div class="logo-text">
+        <h1>Revenue Department</h1>
+        <span class="tagline">Republic of Praya</span>
+      </div>
+    </div>
+    <nav class="nav">
+      <button class="nav-link active" data-page="home" onclick="showPage('home')">Home</button>
+      <button class="nav-link" data-page="taxation" onclick="showPage('taxation')">Taxation</button>
+      <button class="nav-link" data-page="filing" onclick="showPage('filing')">File & Pay</button>
+      <button class="nav-link" data-page="business" onclick="showPage('business')">Business</button>
+      <button class="nav-link" data-page="refunds" onclick="showPage('refunds')">Refunds</button>
+      <button class="nav-link" data-page="contact" onclick="showPage('contact')">Contact</button>
+    </nav>
+  </div>
+</header>
+
+<!-- HOME PAGE -->
+<div id="page-home" class="page active">
+  <section class="hero">
+    <div class="hero-bg">
+      <div class="hero-bg-shape"></div>
+      <div class="hero-bg-shape"></div>
+      <div class="hero-bg-shape"></div>
+    </div>
+    <div class="hero-pattern"></div>
+    <div class="container">
+      <div class="hero-content">
+        <h2>Supporting Praya Through <span>Fair Taxation</span></h2>
+        <p>The Revenue Department collects and administers taxes that fund essential public services across the Republic of Praya. We're committed to making tax compliance simple, transparent, and accessible for all citizens and businesses.</p>
+        <button class="btn btn-primary" onclick="showPage('filing')">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="12" y1="18" x2="12" y2="12"/><line x1="9" y1="15" x2="15" y2="15"/></svg>
+          File Tax Return
+        </button>
+        <button class="btn btn-secondary" onclick="showPage('taxation')">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M16 8h-6a2 2 0 1 0 0 4h4a2 2 0 1 1 0 4H8M12 18V6"/></svg>
+          Tax Information
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <section class="stats-bar">
+    <div class="container">
+      <div class="stats-grid">
+        <div class="stat-item" onclick="showPage('taxation')">
+          <div class="stat-label">Revenue Collected (YTD)</div>
+          <div class="stat-value">₱4.2B</div>
+          <div class="stat-change">+8.7% vs 2024</div>
+        </div>
+        <div class="stat-item" onclick="showPage('filing')">
+          <div class="stat-label">Tax Filing Rate</div>
+          <div class="stat-value">94.3%</div>
+          <div class="stat-change">On-time filings</div>
+        </div>
+        <div class="stat-item" onclick="showPage('business')">
+          <div class="stat-label">Registered Businesses</div>
+          <div class="stat-value">18,642</div>
+          <div class="stat-change">+412 this month</div>
+        </div>
+        <div class="stat-item" onclick="showPage('refunds')">
+          <div class="stat-label">Avg. Refund Time</div>
+          <div class="stat-value">12d</div>
+          <div class="stat-change">Processing time</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="main">
+    <div class="container">
+      <div class="content-grid">
+        <div>
+          <div class="card">
+            <div class="card-header">
+              <span class="card-title">Tax Rates (FY 2025)</span>
+              <span class="card-link" onclick="showPage('taxation')">View Details →</span>
+            </div>
+            <table class="rates-table">
+              <thead><tr><th>Tax Type</th><th>Rate</th><th>Category</th></tr></thead>
+              <tbody>
+                <tr>
+                  <td><div class="rate-info"><div class="rate-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div><div><div class="rate-name">Personal Income Tax</div><div class="rate-desc">Progressive rates 0-35%</div></div></div></td>
+                  <td class="rate-value">0-35%</td>
+                  <td><span class="rate-badge income">Income</span></td>
+                </tr>
+                <tr>
+                  <td><div class="rate-info"><div class="rate-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></div><div><div class="rate-name">Corporate Tax</div><div class="rate-desc">Standard business rate</div></div></div></td>
+                  <td class="rate-value">21%</td>
+                  <td><span class="rate-badge corporate">Corporate</span></td>
+                </tr>
+                <tr>
+                  <td><div class="rate-info"><div class="rate-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg></div><div><div class="rate-name">Small Business Tax</div><div class="rate-desc">Revenue under ₱250,000</div></div></div></td>
+                  <td class="rate-value">15%</td>
+                  <td><span class="rate-badge corporate">Corporate</span></td>
+                </tr>
+                <tr>
+                  <td><div class="rate-info"><div class="rate-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="8.5" cy="7" r="4"/><polyline points="17 11 19 13 23 9"/></svg></div><div><div class="rate-name">Value Added Tax (VAT)</div><div class="rate-desc">Goods and services</div></div></div></td>
+                  <td class="rate-value">12%</td>
+                  <td><span class="rate-badge vat">VAT</span></td>
+                </tr>
+                <tr>
+                  <td><div class="rate-info"><div class="rate-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div><div><div class="rate-name">Capital Gains Tax</div><div class="rate-desc">Investment income</div></div></div></td>
+                  <td class="rate-value">20%</td>
+                  <td><span class="rate-badge income">Income</span></td>
+                </tr>
+              </tbody>
+            </table>
+            <p style="font-size:11px;color:var(--text-muted);margin-top:12px;">Tax rates effective January 1, 2025. Rates subject to legislative changes.</p>
+          </div>
+
+          <div class="card">
+            <div class="card-header">
+              <span class="card-title">Quick Services</span>
+            </div>
+            <div class="service-grid">
+              <div class="service-card" onclick="showPage('filing')">
+                <div class="service-icon">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+                </div>
+                <h4>File Tax Return</h4>
+                <p>Submit your annual or quarterly tax returns online</p>
+              </div>
+              <div class="service-card" onclick="showPage('filing')">
+                <div class="service-icon">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
+                </div>
+                <h4>Make Payment</h4>
+                <p>Pay taxes, fees, or installments securely</p>
+              </div>
+              <div class="service-card" onclick="showPage('business')">
+                <div class="service-icon">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+                </div>
+                <h4>Register Business</h4>
+                <p>Get your Tax Identification Number (TIN)</p>
+              </div>
+              <div class="service-card" onclick="showPage('refunds')">
+                <div class="service-icon">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+                </div>
+                <h4>Check Refund Status</h4>
+                <p>Track your tax refund application</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-header">
+              <span class="card-title">News & Updates</span>
+            </div>
+            <div class="news-item" onclick="showPage('taxation')">
+              <div class="news-date">November 15, 2025</div>
+              <div class="news-title">Tax Filing Deadline Extended to April 30</div>
+              <div class="news-excerpt">Due to system upgrades, the Revenue Department has extended the 2025 tax filing deadline by two weeks to April 30, 2025.</div>
+            </div>
+            <div class="news-item" onclick="showPage('business')">
+              <div class="news-date">October 28, 2025</div>
+              <div class="news-title">New Business Tax Incentives Announced</div>
+              <div class="news-excerpt">Small businesses with annual revenue under ₱250,000 now qualify for a reduced tax rate of 15% under the new Small Business Support Act.</div>
+            </div>
+            <div class="news-item" onclick="showPage('filing')">
+              <div class="news-date">September 12, 2025</div>
+              <div class="news-title">Mobile Tax App Now Available</div>
+              <div class="news-excerpt">Download the new Revenue Department mobile app to file returns, make payments, and check refund status from your phone.</div>
+            </div>
+          </div>
+        </div>
+
+        <aside>
+          <div class="card">
+            <div class="tax-box">
+              <div class="tax-label">Standard VAT Rate<span class="live-indicator">CURRENT</span></div>
+              <div class="tax-rate">12<span class="percent">%</span></div>
+              <div class="tax-date">Effective Jan 1, 2020</div>
+              <div class="tax-meta">
+                <div class="tax-meta-item"><div class="label">Type</div><div class="value">VAT</div></div>
+                <div class="tax-meta-item"><div class="label">Applies</div><div class="value">Most Goods</div></div>
+              </div>
+            </div>
+            <div style="margin-top:18px;">
+              <a class="quick-link" onclick="showPage('filing')">
+                <span class="icon"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></span>
+                Online Tax Portal
+              </a>
+              <a class="quick-link" onclick="showPage('taxation')">
+                <span class="icon"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></span>
+                Tax Code & Regulations
+              </a>
+              <a class="quick-link" onclick="showPage('business')">
+                <span class="icon"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg></span>
+                Business Tax Guide
+              </a>
+              <a class="quick-link" onclick="showPage('refunds')">
+                <span class="icon"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg></span>
+                Refund Tracker
+              </a>
+              <a class="quick-link" onclick="showPage('contact')">
+                <span class="icon"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></span>
+                Contact Support
+              </a>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- TAXATION PAGE -->
+<div id="page-taxation" class="page">
+  <div class="page-header">
+    <div class="container">
+      <div class="breadcrumb"><a onclick="showPage('home')">Home</a> / Taxation</div>
+      <h1>Tax Information</h1>
+      <div class="subtitle">Understanding your tax obligations in the Republic of Praya</div>
+    </div>
+  </div>
+  <section class="main">
+    <div class="container">
+      <div class="content-grid">
+        <div>
+          <div class="card">
+            <div class="content-text">
+              <h3>Personal Income Tax</h3>
+              <p>The Republic of Praya uses a progressive income tax system. Tax rates range from 0% to 35% based on your annual income:</p>
+              <ul>
+                <li>₱0 - ₱50,000: 0% (Tax-free threshold)</li>
+                <li>₱50,001 - ₱150,000: 15%</li>
+                <li>₱150,001 - ₱300,000: 20%</li>
+                <li>₱300,001 - ₱500,000: 25%</li>
+                <li>₱500,001 - ₱1,000,000: 30%</li>
+                <li>Above ₱1,000,000: 35%</li>
+              </ul>
+
+              <h3>Corporate Tax</h3>
+              <p>Businesses operating in Praya are subject to corporate income tax on their profits. The standard corporate tax rate is 21% for most businesses. Small businesses with annual revenue under ₱250,000 qualify for a reduced rate of 15%.</p>
+
+              <h3>Value Added Tax (VAT)</h3>
+              <p>A 12% VAT applies to most goods and services sold in Praya. Certain essential items including basic food staples, medical supplies, and educational materials are VAT-exempt.</p>
+
+              <div class="info-box">
+                <h4>Important Deadlines</h4>
+                <p>Annual tax returns are due by April 15 each year. Quarterly estimated tax payments are due on the 15th of April, July, October, and January.</p>
+              </div>
+
+              <h3>Tax Credits & Deductions</h3>
+              <p>Eligible taxpayers can claim various deductions and credits including:</p>
+              <ul>
+                <li>Dependent deductions (₱15,000 per dependent)</li>
+                <li>Education expenses (up to ₱25,000 annually)</li>
+                <li>Medical expenses (up to ₱30,000 annually)</li>
+                <li>Retirement savings contributions (up to ₱50,000 annually)</li>
+                <li>Charitable donations (up to 20% of taxable income)</li>
+              </ul>
+
+              <div class="warning-box">
+                <h4>Penalty Information</h4>
+                <p>Late filing incurs a penalty of 5% of unpaid tax per month, up to a maximum of 25%. Interest on unpaid taxes accrues at 1.5% per month.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <aside>
+          <div class="card">
+            <h4 style="font-size: 14px; font-weight: 600; margin-bottom: 16px;">Tax Resources</h4>
+            <a class="quick-link" onclick="showPage('filing')">
+              <span class="icon"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/></svg></span>
+              Tax Forms Library
+            </a>
+            <a class="quick-link" onclick="showPage('filing')">
+              <span class="icon"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21.21 15.89A10 10 0 1 1 8 2.83"/><path d="M22 12A10 10 0 0 0 12 2v10z"/></svg></span>
+              Tax Calculator
+            </a>
+            <a class="quick-link" onclick="showPage('business')">
+              <span class="icon"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></span>
+              Business Tax Guide
+            </a>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- FILING PAGE -->
+<div id="page-filing" class="page">
+  <div class="page-header">
+    <div class="container">
+      <div class="breadcrumb"><a onclick="showPage('home')">Home</a> / File & Pay</div>
+      <h1>File & Pay Taxes</h1>
+      <div class="subtitle">Submit your tax returns and make payments online</div>
+    </div>
+  </div>
+  <section class="main">
+    <div class="container">
+      <div class="content-grid">
+        <div>
+          <div class="card">
+            <div class="content-text">
+              <h3>Online Tax Portal</h3>
+              <p>The Revenue Department's online portal allows you to file your tax returns, make payments, and manage your tax account 24/7. To get started, you'll need your Tax Identification Number (TIN) and a secure password.</p>
+
+              <div class="info-box">
+                <h4>First Time User?</h4>
+                <p>Register for an account at revenue.gov.py/register using your TIN and government-issued ID. Activation takes 1-2 business days.</p>
+              </div>
+
+              <h3>Filing Your Return</h3>
+              <p>Follow these steps to file your tax return online:</p>
+              <ul>
+                <li>Log in to the tax portal with your TIN and password</li>
+                <li>Select the appropriate tax form (Form 1040 for individuals, Form 1120 for corporations)</li>
+                <li>Enter your income, deductions, and credits information</li>
+                <li>Review your calculated tax liability or refund</li>
+                <li>Submit electronically and receive instant confirmation</li>
+              </ul>
+
+              <h3>Payment Options</h3>
+              <p>The Revenue Department accepts the following payment methods:</p>
+              <ul>
+                <li><strong>Direct Debit:</strong> Authorize automatic withdrawal from your bank account</li>
+                <li><strong>Credit/Debit Card:</strong> Pay securely online (2.5% convenience fee applies)</li>
+                <li><strong>Bank Transfer:</strong> Transfer funds to Revenue Department account #RD-2025-TAX</li>
+                <li><strong>In-Person:</strong> Visit any Revenue Department office or authorized bank</li>
+              </ul>
+
+              <div class="warning-box">
+                <h4>Payment Deadline</h4>
+                <p>All tax payments are due by April 15. Payments received after this date will incur penalties and interest charges.</p>
+              </div>
+
+              <h3>Installment Plans</h3>
+              <p>If you owe more than ₱10,000 in taxes, you may be eligible for an installment payment plan. Contact our office at (555) 0123-TAX to discuss payment arrangements.</p>
+            </div>
+          </div>
+        </div>
+        <aside>
+          <div class="card">
+            <h4 style="font-size: 14px; font-weight: 600; margin-bottom: 16px;">Quick Actions</h4>
+            <button class="btn btn-primary" style="width: 100%; justify-content: center; margin-bottom: 12px;">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/></svg>
+              File Tax Return
+            </button>
+            <button class="btn btn-secondary" style="width: 100%; justify-content: center; margin-bottom: 12px;">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
+              Make Payment
+            </button>
+          </div>
+          <div class="card">
+            <h4 style="font-size: 14px; font-weight: 600; margin-bottom: 16px;">Support Hours</h4>
+            <p style="font-size: 13px; color: var(--text-muted); line-height: 1.6;">
+              <strong style="color: var(--text-primary);">Monday - Friday</strong><br>
+              8:00 AM - 6:00 PM<br><br>
+              <strong style="color: var(--text-primary);">Phone Support</strong><br>
+              (555) 0123-TAX<br><br>
+              <strong style="color: var(--text-primary);">Email</strong><br>
+              support@revenue.gov.py
+            </p>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- BUSINESS PAGE -->
+<div id="page-business" class="page">
+  <div class="page-header">
+    <div class="container">
+      <div class="breadcrumb"><a onclick="showPage('home')">Home</a> / Business Services</div>
+      <h1>Business Tax Services</h1>
+      <div class="subtitle">Registration, compliance, and resources for Praya businesses</div>
+    </div>
+  </div>
+  <section class="main">
+    <div class="container">
+      <div class="content-grid">
+        <div>
+          <div class="card">
+            <div class="content-text">
+              <h3>Business Registration</h3>
+              <p>All businesses operating in the Republic of Praya must register with the Revenue Department to obtain a Tax Identification Number (TIN). This applies to sole proprietorships, partnerships, corporations, and non-profit organizations.</p>
+
+              <h3>Required Documents</h3>
+              <ul>
+                <li>Completed Business Registration Form (Form BR-100)</li>
+                <li>Proof of business address (lease agreement or property deed)</li>
+                <li>Owner/director identification documents</li>
+                <li>Business license from local municipality</li>
+                <li>Articles of incorporation (for corporations)</li>
+              </ul>
+
+              <div class="info-box">
+                <h4>Registration Fee</h4>
+                <p>The one-time business registration fee is ₱5,000 for most businesses. Small businesses with projected annual revenue under ₱100,000 pay a reduced fee of ₱2,000.</p>
+              </div>
+
+              <h3>Ongoing Compliance</h3>
+              <p>Registered businesses must fulfill the following obligations:</p>
+              <ul>
+                <li>File quarterly estimated tax payments by the 15th of April, July, October, and January</li>
+                <li>Submit annual corporate tax return by April 15</li>
+                <li>Remit employee withholding taxes monthly</li>
+                <li>File monthly VAT returns if applicable</li>
+                <li>Maintain accurate financial records for at least 7 years</li>
+              </ul>
+
+              <h3>Tax Incentives</h3>
+              <p>The Revenue Department administers several tax incentive programs:</p>
+              <ul>
+                <li><strong>Small Business Rate:</strong> 15% tax rate for businesses with revenue under ₱250,000</li>
+                <li><strong>R&D Tax Credit:</strong> 20% credit for qualified research and development expenses</li>
+                <li><strong>Green Business Deduction:</strong> Enhanced deductions for renewable energy investments</li>
+                <li><strong>Export Incentive:</strong> Reduced rate of 18% on export revenues</li>
+              </ul>
+
+              <div class="warning-box">
+                <h4>Audit Information</h4>
+                <p>Businesses may be selected for audit. If selected, you will receive written notice at least 30 days in advance. Maintain organized records to facilitate the audit process.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <aside>
+          <div class="card">
+            <h4 style="font-size: 14px; font-weight: 600; margin-bottom: 16px;">Business Resources</h4>
+            <a class="quick-link">
+              <span class="icon"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/></svg></span>
+              Business Registration Form
+            </a>
+            <a class="quick-link" onclick="showPage('taxation')">
+              <span class="icon"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21.21 15.89A10 10 0 1 1 8 2.83"/><path d="M22 12A10 10 0 0 0 12 2v10z"/></svg></span>
+              Business Tax Calculator
+            </a>
+            <a class="quick-link">
+              <span class="icon"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></span>
+              Employer's Tax Guide
+            </a>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- REFUNDS PAGE -->
+<div id="page-refunds" class="page">
+  <div class="page-header">
+    <div class="container">
+      <div class="breadcrumb"><a onclick="showPage('home')">Home</a> / Refunds</div>
+      <h1>Tax Refunds</h1>
+      <div class="subtitle">Track and manage your tax refund</div>
+    </div>
+  </div>
+  <section class="main">
+    <div class="container">
+      <div class="content-grid">
+        <div>
+          <div class="card">
+            <div class="content-text">
+              <h3>Refund Processing</h3>
+              <p>If you overpaid your taxes or are eligible for refundable tax credits, the Revenue Department will issue a refund. Most refunds are processed within 12-21 days of filing your return.</p>
+
+              <h3>Check Refund Status</h3>
+              <p>To check the status of your refund, you'll need:</p>
+              <ul>
+                <li>Your Tax Identification Number (TIN)</li>
+                <li>The tax year of your return</li>
+                <li>The exact refund amount shown on your return</li>
+              </ul>
+
+              <div class="info-box">
+                <h4>Where's My Refund?</h4>
+                <p>Use our online refund tracker at revenue.gov.py/refund or call our automated refund hotline at (555) 0123-REF for 24/7 status updates.</p>
+              </div>
+
+              <h3>Refund Payment Methods</h3>
+              <p>Choose how you'd like to receive your refund:</p>
+              <ul>
+                <li><strong>Direct Deposit:</strong> Fastest option - funds arrive in 7-14 days. Provide your bank account and routing numbers on your tax return.</li>
+                <li><strong>Paper Check:</strong> Mailed to the address on your return. Delivery takes 3-4 weeks from processing date.</li>
+                <li><strong>Prepaid Debit Card:</strong> Available for taxpayers without bank accounts. Card arrives by mail in 2-3 weeks.</li>
+              </ul>
+
+              <h3>Refund Delays</h3>
+              <p>Your refund may be delayed if:</p>
+              <ul>
+                <li>Your return contains errors or missing information</li>
+                <li>You're claiming certain tax credits that require additional verification</li>
+                <li>Your return has been selected for review</li>
+                <li>You owe back taxes or other government debts</li>
+              </ul>
+
+              <div class="warning-box">
+                <h4>Refund Offset</h4>
+                <p>Your refund may be reduced or offset to pay outstanding tax debts, child support obligations, or other government debts. You will receive written notice if this occurs.</p>
+              </div>
+
+              <h3>Amending Your Return</h3>
+              <p>If you discover an error after filing that would increase your refund, you can file an amended return using Form 1040-X within 3 years of the original filing date.</p>
+            </div>
+          </div>
+        </div>
+        <aside>
+          <div class="card">
+            <h4 style="font-size: 14px; font-weight: 600; margin-bottom: 16px;">Refund Tracker</h4>
+            <button class="btn btn-primary" style="width: 100%; justify-content: center; margin-bottom: 12px;">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+              Track My Refund
+            </button>
+          </div>
+          <div class="card">
+            <h4 style="font-size: 14px; font-weight: 600; margin-bottom: 12px;">Processing Times</h4>
+            <div style="font-size: 13px; color: var(--text-secondary); line-height: 1.6;">
+              <div style="margin-bottom: 12px;">
+                <div style="font-weight: 600; color: var(--text-primary);">E-Filed with Direct Deposit</div>
+                <div style="color: var(--primary); font-size: 18px; font-weight: 700; margin-top: 4px;">7-14 days</div>
+              </div>
+              <div style="margin-bottom: 12px;">
+                <div style="font-weight: 600; color: var(--text-primary);">E-Filed with Paper Check</div>
+                <div style="color: var(--primary); font-size: 18px; font-weight: 700; margin-top: 4px;">3-4 weeks</div>
+              </div>
+              <div>
+                <div style="font-weight: 600; color: var(--text-primary);">Paper Filed</div>
+                <div style="color: var(--primary); font-size: 18px; font-weight: 700; margin-top: 4px;">6-8 weeks</div>
+              </div>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- CONTACT PAGE -->
+<div id="page-contact" class="page">
+  <div class="page-header">
+    <div class="container">
+      <div class="breadcrumb"><a onclick="showPage('home')">Home</a> / Contact</div>
+      <h1>Contact Us</h1>
+      <div class="subtitle">Get in touch with the Revenue Department</div>
+    </div>
+  </div>
+  <section class="main">
+    <div class="container">
+      <div class="content-grid">
+        <div>
+          <div class="card">
+            <div class="content-text">
+              <h3>Revenue Department Offices</h3>
+              <p>The Revenue Department operates regional offices throughout the Republic of Praya to serve taxpayers:</p>
+
+              <h4>Central Office - Praya City</h4>
+              <p>
+                1250 Revenue Avenue<br>
+                Praya City, PC 10001<br>
+                <strong>Phone:</strong> (555) 0123-TAX<br>
+                <strong>Hours:</strong> Monday-Friday, 8:00 AM - 6:00 PM
+              </p>
+
+              <h4>Northern Regional Office</h4>
+              <p>
+                442 Commerce Boulevard<br>
+                Northport, NP 20145<br>
+                <strong>Phone:</strong> (555) 0145-TAX<br>
+                <strong>Hours:</strong> Monday-Friday, 8:30 AM - 5:00 PM
+              </p>
+
+              <h4>Southern Regional Office</h4>
+              <p>
+                789 Fiscal Street<br>
+                Southhaven, SH 30292<br>
+                <strong>Phone:</strong> (555) 0292-TAX<br>
+                <strong>Hours:</strong> Monday-Friday, 8:30 AM - 5:00 PM
+              </p>
+
+              <div class="info-box">
+                <h4>Appointment Recommended</h4>
+                <p>While walk-ins are welcome, scheduling an appointment ensures shorter wait times. Book online at revenue.gov.py/appointments or call your nearest office.</p>
+              </div>
+
+              <h3>Phone Support</h3>
+              <ul>
+                <li><strong>General Tax Questions:</strong> (555) 0123-TAX</li>
+                <li><strong>Refund Status:</strong> (555) 0123-REF (automated 24/7)</li>
+                <li><strong>Business Tax Line:</strong> (555) 0123-BIZ</li>
+                <li><strong>Report Tax Fraud:</strong> (555) 0123-FRAUD</li>
+              </ul>
+
+              <h3>Online Support</h3>
+              <ul>
+                <li><strong>Email:</strong> support@revenue.gov.py (responses within 2 business days)</li>
+                <li><strong>Live Chat:</strong> Available Monday-Friday, 9:00 AM - 5:00 PM at revenue.gov.py</li>
+                <li><strong>Social Media:</strong> @PrayaRevenue on Twitter and Facebook</li>
+              </ul>
+
+              <div class="warning-box">
+                <h4>Beware of Scams</h4>
+                <p>The Revenue Department will never call demanding immediate payment or threaten arrest. Report suspicious calls to our fraud hotline at (555) 0123-FRAUD.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <aside>
+          <div class="card">
+            <h4 style="font-size: 14px; font-weight: 600; margin-bottom: 16px;">Quick Contact</h4>
+            <div style="font-size: 13px; color: var(--text-secondary); line-height: 1.8;">
+              <p><strong style="color: var(--text-primary);">Main Line</strong><br>(555) 0123-TAX</p>
+              <p><strong style="color: var(--text-primary);">Email</strong><br>support@revenue.gov.py</p>
+              <p><strong style="color: var(--text-primary);">Fax</strong><br>(555) 0123-9999</p>
+              <p><strong style="color: var(--text-primary);">Mailing Address</strong><br>
+                Revenue Department<br>
+                PO Box 10000<br>
+                Praya City, PC 10001
+              </p>
+            </div>
+          </div>
+          <div class="card">
+            <h4 style="font-size: 14px; font-weight: 600; margin-bottom: 16px;">Office Hours</h4>
+            <div style="font-size: 13px; color: var(--text-secondary); line-height: 1.8;">
+              <p><strong style="color: var(--text-primary);">Monday - Friday</strong><br>8:00 AM - 6:00 PM</p>
+              <p><strong style="color: var(--text-primary);">Saturday</strong><br>Closed</p>
+              <p><strong style="color: var(--text-primary);">Sunday</strong><br>Closed</p>
+              <p style="font-size: 12px; color: var(--text-muted); margin-top: 12px;">Closed on official Praya public holidays</p>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </section>
+</div>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <h4>Revenue Department</h4>
+        <p>The Revenue Department is responsible for collecting taxes and administering the tax system that funds essential public services for all citizens of the Republic of Praya.</p>
+      </div>
+      <div class="footer-section">
+        <h5>Services</h5>
+        <ul>
+          <li><a onclick="showPage('filing')">File Tax Return</a></li>
+          <li><a onclick="showPage('filing')">Make Payment</a></li>
+          <li><a onclick="showPage('refunds')">Track Refund</a></li>
+          <li><a onclick="showPage('business')">Register Business</a></li>
+        </ul>
+      </div>
+      <div class="footer-section">
+        <h5>Information</h5>
+        <ul>
+          <li><a onclick="showPage('taxation')">Tax Rates</a></li>
+          <li><a onclick="showPage('taxation')">Deductions & Credits</a></li>
+          <li><a onclick="showPage('filing')">Forms & Publications</a></li>
+          <li><a onclick="showPage('taxation')">Tax Code</a></li>
+        </ul>
+      </div>
+      <div class="footer-section">
+        <h5>Resources</h5>
+        <ul>
+          <li><a onclick="showPage('business')">Business Guide</a></li>
+          <li><a onclick="showPage('filing')">Filing Assistance</a></li>
+          <li><a onclick="showPage('contact')">FAQ</a></li>
+          <li><a onclick="showPage('contact')">Contact Support</a></li>
+        </ul>
+      </div>
+      <div class="footer-section">
+        <h5>About</h5>
+        <ul>
+          <li><a>Mission & Vision</a></li>
+          <li><a>Leadership</a></li>
+          <li><a>Careers</a></li>
+          <li><a onclick="showPage('contact')">Offices</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div>&copy; 2025 Revenue Department, Republic of Praya. All rights reserved.</div>
+      <div class="footer-legal">
+        <a>Privacy Policy</a>
+        <a>Terms of Use</a>
+        <a>Accessibility</a>
+        <a>Site Map</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  function showPage(pageId) {
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    document.getElementById('page-' + pageId).classList.add('active');
+    document.querySelectorAll('.nav-link').forEach(link => {
+      link.classList.remove('active');
+      if (link.dataset.page === pageId) link.classList.add('active');
+    });
+    window.scrollTo(0, 0);
+  }
+
+  function toggleGovDropdown(btn) {
+    const dropdown = document.getElementById('govDropdown');
+    dropdown.classList.toggle('open');
+    btn.classList.toggle('open');
+  }
+
+  function toggleTheme() {
+    document.body.classList.toggle('light');
+    const btn = document.querySelector('.theme-btn');
+    btn.textContent = document.body.classList.contains('light') ? 'Dark' : 'Light';
+  }
+</script>
+
+</body>
+</html>
