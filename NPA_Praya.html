@@ -60,7 +60,7 @@
     .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
 
     /* Government Banner */
-    .gov-banner { background: #000; color: white; padding: 10px 0; font-size: 13px; border-bottom: 1px solid #111827; }
+    .gov-banner { background: var(--bg-card); color: white; padding: 10px 0; font-size: 13px; border-bottom: 1px solid #111827; }
     body.light .gov-banner { background: #1e3a8a; border-color: #1e3a8a; }
     .gov-banner .container { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
     .gov-banner-left { display: flex; align-items: center; gap: 10px; }
@@ -71,7 +71,7 @@
     .gov-how:hover { color: #93c5fd; }
     .gov-how svg { transition: transform 0.2s; }
     .gov-how.open svg { transform: rotate(180deg); }
-    .gov-dropdown { display: none; background: #0b1020; border-top: 1px solid #111827; padding: 16px 0; }
+    .gov-dropdown { display: none; background: var(--bg-card); border-top: 1px solid #111827; padding: 16px 0; }
     body.light .gov-dropdown { background: #1e3a8a; }
     .gov-dropdown.open { display: block; }
     .gov-dropdown-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; max-width: 600px; }
@@ -93,7 +93,7 @@
     .logo-mark { width: 42px; height: 42px; background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%); border-radius: 10px; display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden; }
     .logo-mark::before { content: ''; position: absolute; width: 100%; height: 100%; background: linear-gradient(45deg, transparent 30%, rgba(255,255,255,0.18) 50%, transparent 70%); animation: shimmer 3s infinite; background-size: 200% 100%; }
     .logo-mark svg { width: 22px; height: 22px; color: white; position: relative; z-index: 1; }
-    .logo-text h1 { font-size: 17px; font-weight: 700; color: var(--text-primary); letter-spacing: -0.02em; line-height: 1.2; }
+    .logo-text h1 { font-size: 16px; font-weight: 800; color: var(--text-primary); letter-spacing: -0.02em; line-height: 1.2; white-space: nowrap; }
     .logo-text .tagline { font-size: 11px; font-weight: 500; color: var(--text-muted); }
     .nav { display: flex; gap: 2px; }
     .nav-link { padding: 8px 16px; color: var(--text-secondary); font-size: 14px; font-weight: 500; border-radius: 8px; cursor: pointer; border: none; background: none; font-family: inherit; transition: all 0.15s; }
@@ -230,7 +230,7 @@
           <path d="M9 18v.01"></path>
         </svg>
       </span>
-      <span>A Republic of Praya Government Website</span>
+      <span>An Official Government of Praya Website</span>
       <button class="gov-how" onclick="toggleGovDropdown(this)">
         How to identify
         <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
@@ -465,34 +465,34 @@
               </div>
             </div>
             <div class="quick-links">
-              <div class="quick-link" onclick="showPage('records')">
+              <a class="quick-link" href="#page-records" onclick="showPage('records'); return false;">
                 <div class="quick-link-icon">
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16v16H4z"></path><path d="M4 9h16"></path><path d="M9 4v16"></path></svg>
                 </div>
                 <div class="quick-link-text">Request Police Clearance</div>
                 <svg class="quick-link-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
-              </div>
-              <div class="quick-link" onclick="showPage('operations')">
+              </a>
+              <a class="quick-link" href="#page-operations" onclick="showPage('operations'); return false;">
                 <div class="quick-link-icon">
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><path d="M12 6v6l3 3"></path></svg>
                 </div>
                 <div class="quick-link-text">Check response priorities</div>
                 <svg class="quick-link-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
-              </div>
-              <div class="quick-link" onclick="showPage('community')">
+              </a>
+              <a class="quick-link" href="#page-community" onclick="showPage('community'); return false;">
                 <div class="quick-link-icon">
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16v-5a2 2 0 0 0-1-1.73L13 6.27a2 2 0 0 0-2 0L4 9.27A2 2 0 0 0 3 11v5a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4a2 2 0 0 0 1-1.73z"></path><path d="M3.3 7l8.7 5 8.7-5"></path></svg>
                 </div>
                 <div class="quick-link-text">Schedule a community officer</div>
                 <svg class="quick-link-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
-              </div>
-              <div class="quick-link" onclick="showPage('recruitment')">
+              </a>
+              <a class="quick-link" href="#page-recruitment" onclick="showPage('recruitment'); return false;">
                 <div class="quick-link-icon">
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M22 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
                 </div>
                 <div class="quick-link-text">Join the academy</div>
                 <svg class="quick-link-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
-              </div>
+              </a>
             </div>
           </div>
         </div>
@@ -533,6 +533,9 @@
 
             <h3>Traffic Safety</h3>
             <p>Uniformed traffic units conduct sobriety checkpoints, commercial vehicle inspections, and school zone enforcement. Collision reconstruction teams publish findings within 10 business days.</p>
+
+            <h3>Specialized Support</h3>
+            <p>Canine teams, crisis negotiators, and air support are on-call for high-risk warrants, missing persons searches, and mass-casualty coordination. Behavioral health co-responders accompany patrol officers on welfare checks.</p>
           </div>
         </div>
 
@@ -598,10 +601,14 @@
               <li>Standard clearance for employment and visas</li>
               <li>Vendor vetting for public contracts</li>
               <li>Expedited service for court orders and humanitarian travel</li>
+              <li>Mobile fingerprinting teams for residents with limited mobility</li>
             </ul>
 
             <h3>Firearm Licensing</h3>
-            <p>Applicants must complete accredited safety training, provide secure storage proof, and pass biometric background checks. Commercial licenses require annual compliance audits.</p>
+            <p>Applicants must complete accredited safety training, provide secure storage proof, and pass biometric background checks. Commercial licenses require annual compliance audits and proof of liability insurance.</p>
+
+            <h3>Records Release Standards</h3>
+            <p>All public records are reviewed for statutory redactions. Certified digital copies include tamper-evident seals and can be validated online by employers, insurers, and courts.</p>
 
             <h3>Traffic Records</h3>
             <p>Request certified collision reports, citation histories, and commercial vehicle inspection outcomes. Digital signatures are verifiable through the QR seal on each PDF.</p>
@@ -672,10 +679,11 @@
               <li>School safety officers delivering anti-bullying curriculum and safe passage patrols.</li>
               <li>Neighborhood watch onboarding with rapid alert channels and patrol ride-alongs.</li>
               <li>Victim services providing counseling, relocation support, and court accompaniment.</li>
+              <li>Business liaison program offering security surveys, alarm registration, and robbery prevention coaching.</li>
             </ul>
 
             <h3>Transparency</h3>
-            <p>Quarterly dashboards publish use-of-force statistics, bias audit results, and complaint resolutions. Community advisory boards review policies and body-worn camera deployment plans.</p>
+            <p>Quarterly dashboards publish use-of-force statistics, bias audit results, and complaint resolutions. Community advisory boards review policies, body-worn camera deployment plans, and surveillance technology proposals.</p>
           </div>
         </div>
         <div>
@@ -690,9 +698,9 @@
               </div>
             </div>
             <div style="display:grid;gap:12px;font-size:13px;color:var(--text-secondary);">
-              <div><strong style="color:var(--text-primary);">Community mail:</strong> outreach@npa.gov.py</div>
-              <div><strong style="color:var(--text-primary);">Youth desk:</strong> +599 201 2234</div>
-              <div><strong style="color:var(--text-primary);">Victim advocate:</strong> +599 201 9900</div>
+              <div><strong style="color:var(--text-primary);">Community mail:</strong> <a href="mailto:outreach@npa.gov.py">outreach@npa.gov.py</a></div>
+              <div><strong style="color:var(--text-primary);">Youth desk:</strong> <a href="tel:+8542012234">+854 201 2234</a></div>
+              <div><strong style="color:var(--text-primary);">Victim advocate:</strong> <a href="tel:+8542019900">+854 201 9900</a></div>
             </div>
           </div>
         </div>
@@ -725,6 +733,9 @@
 
             <h3>Eligibility</h3>
             <p>Candidates must be 21+, complete a background investigation, pass medical and fitness standards, and commit to the Code of Ethics.</p>
+
+            <h3>Employee Support</h3>
+            <p>Officers receive wellness counseling, tuition reimbursement, and quarterly resiliency training. Equipment stipends cover body armor, duty gear, and technology allowances.</p>
           </div>
         </div>
         <div>
@@ -777,8 +788,11 @@
             <h3>Leadership</h3>
             <p>Director-General Lía Cabrera leads the Agency with a focus on procedural justice, technology-driven policing, and officer wellness.</p>
 
+            <h3>Inspectorate & Oversight</h3>
+            <p>An independent Inspectorate audits use-of-force, evidence handling, procurement, and whistleblower protections. Annual reports and discipline summaries are published for public review.</p>
+
             <h3>Accountability</h3>
-            <p>An independent Inspectorate audits use-of-force, evidence handling, and procurement. Annual reports are published for public review.</p>
+            <p>Every critical incident is reviewed by a civilian-majority board, with timelines for public release of body-worn camera footage and investigative findings.</p>
           </div>
         </div>
         <div>
@@ -792,7 +806,24 @@
                 <div class="card-subtitle">Headquarters</div>
               </div>
             </div>
-            <p style="color:var(--text-secondary); font-size:13px;">1 Justice Plaza, Nueva Praya • +599 201 0000 • info@npa.gov.py</p>
+            <p style="color:var(--text-secondary); font-size:13px;">NPA - General Headquarters<br>101 Reiben St., Praya 10-999<br><a href="tel:+8542000000">+854 200 0000</a> • <a href="mailto:info@npa.gov.py">info@npa.gov.py</a></p>
+          </div>
+          <div class="card">
+            <div class="card-header">
+              <div class="card-icon" style="background: var(--accent-light);">
+                <svg viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2"><path d="M3 12l2-2 4 4 10-10"></path><path d="M21 8v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path></svg>
+              </div>
+              <div>
+                <div class="card-title">Stations & Walk-in Hours</div>
+                <div class="card-subtitle">All locations 08:00-18:00</div>
+              </div>
+            </div>
+            <div style="display:grid;gap:10px;color:var(--text-secondary);font-size:13px;">
+              <div><strong>NPA - Station 1</strong><br>228 Clemens St., Praya 10-376<br><a href="tel:+8542011376">+854 201 1376</a></div>
+              <div><strong>NPA - Station 2</strong><br>81 Murmansk Av., Braemar 81-524<br><a href="tel:+8548115240">+854 811 5240</a></div>
+              <div><strong>NPA - Station 3</strong><br>5190 Point Robson Pkwy., Point Robson 68-115<br><a href="tel:+8546811150">+854 681 1150</a></div>
+              <div><strong>NPA - Station 4</strong><br>3363 10th St. W., Envalira 91-103<br><a href="tel:+8549110300">+854 911 0300</a></div>
+            </div>
           </div>
         </div>
       </div>
@@ -815,40 +846,40 @@
       <div class="footer-section">
         <h5>Services</h5>
         <ul>
-          <li><a onclick="showPage('operations')">Report a crime</a></li>
-          <li><a onclick="showPage('records')">Background checks</a></li>
-          <li><a onclick="showPage('records')">Firearm licensing</a></li>
+          <li><a href="#page-operations" onclick="showPage('operations'); return false;">Report a crime</a></li>
+          <li><a href="#page-records" onclick="showPage('records'); return false;">Background checks</a></li>
+          <li><a href="#page-records" onclick="showPage('records'); return false;">Firearm licensing</a></li>
         </ul>
       </div>
       <div class="footer-section">
         <h5>Community</h5>
         <ul>
-          <li><a onclick="showPage('community')">Neighborhood watch</a></li>
-          <li><a onclick="showPage('community')">Victim support</a></li>
-          <li><a onclick="showPage('operations')">Traffic safety</a></li>
+          <li><a href="#page-community" onclick="showPage('community'); return false;">Neighborhood watch</a></li>
+          <li><a href="#page-community" onclick="showPage('community'); return false;">Victim support</a></li>
+          <li><a href="#page-operations" onclick="showPage('operations'); return false;">Traffic safety</a></li>
         </ul>
       </div>
       <div class="footer-section">
         <h5>Careers</h5>
         <ul>
-          <li><a onclick="showPage('recruitment')">Apply to the academy</a></li>
-          <li><a onclick="showPage('recruitment')">Lateral entry</a></li>
+          <li><a href="#page-recruitment" onclick="showPage('recruitment'); return false;">Apply to the academy</a></li>
+          <li><a href="#page-recruitment" onclick="showPage('recruitment'); return false;">Lateral entry</a></li>
         </ul>
       </div>
       <div class="footer-section">
         <h5>About</h5>
         <ul>
-          <li><a onclick="showPage('about')">Leadership</a></li>
-          <li><a onclick="showPage('about')">Inspectorate</a></li>
+          <li><a href="#page-about" onclick="showPage('about'); return false;">Leadership</a></li>
+          <li><a href="#page-about" onclick="showPage('about'); return false;">Inspectorate</a></li>
         </ul>
       </div>
     </div>
     <div class="footer-bottom">
       <div>© 2025 Republic of Praya National Police Agency</div>
       <div class="footer-legal">
-        <a>Accessibility</a>
-        <a>Privacy</a>
-        <a>Security</a>
+        <a href="#page-about" onclick="showPage('about'); return false;">Accessibility</a>
+        <a href="#page-about" onclick="showPage('about'); return false;">Privacy</a>
+        <a href="#page-about" onclick="showPage('about'); return false;">Security</a>
       </div>
     </div>
   </div>
