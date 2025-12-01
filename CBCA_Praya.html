@@ -1,0 +1,1023 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Customs and Border Control Agency | Republic of Praya</title>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --primary: #0891b2;
+      --primary-dark: #0e7490;
+      --primary-light: rgba(8, 145, 178, 0.12);
+      --accent: #06b6d4;
+      --accent-light: rgba(6, 182, 212, 0.12);
+      --success: #10b981;
+      --danger: #ef4444;
+      --warning: #f59e0b;
+      --bg-dark: #0b1020;
+      --bg-card: #101726;
+      --bg-elevated: #0f172a;
+      --border: #1f2937;
+      --border-subtle: #0f172a;
+      --text-primary: #f8fafc;
+      --text-secondary: #cbd5e1;
+      --text-muted: #94a3b8;
+    }
+
+    body.light {
+      --bg-dark: #f8fafc;
+      --bg-card: #ffffff;
+      --bg-elevated: #eff6ff;
+      --border: #e2e8f0;
+      --border-subtle: #e2e8f0;
+      --text-primary: #0b1020;
+      --text-secondary: #334155;
+      --text-muted: #64748b;
+    }
+
+    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+    @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
+    @keyframes shimmer { 0% { background-position: -200% 0; } 100% { background-position: 200% 0; } }
+
+    body {
+      font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+      line-height: 1.6;
+      background: var(--bg-dark);
+      color: var(--text-primary);
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+      opacity: 0;
+      animation: fadeIn 0.4s ease-out 0.1s forwards;
+    }
+
+    html { scroll-behavior: smooth; }
+    a { color: var(--primary); text-decoration: none; transition: all 0.2s ease; }
+    a:hover { filter: brightness(1.15); }
+    ::selection { background: var(--primary); color: white; }
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+
+    /* Government Banner */
+    .gov-banner { background: var(--bg-card); color: white; padding: 10px 0; font-size: 13px; border-bottom: 1px solid #111827; }
+    body.light .gov-banner { background: #0e7490; border-color: #0e7490; }
+    .gov-banner .container { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
+    .gov-banner-left { display: flex; align-items: center; gap: 10px; }
+    .gov-icon svg { width: 18px; height: 18px; }
+    .gov-banner-right { display: flex; align-items: center; gap: 16px; }
+    .gov-banner-right a { color: #9ca3af; font-size: 12px; }
+    .gov-how { color: #67e8f9; background: none; border: none; font-size: 13px; cursor: pointer; padding: 0; font-family: inherit; display: inline-flex; align-items: center; gap: 4px; }
+    .gov-how:hover { color: #a5f3fc; }
+    .gov-how svg { transition: transform 0.2s; }
+    .gov-how.open svg { transform: rotate(180deg); }
+    .gov-dropdown { display: none; background: var(--bg-card); border-top: 1px solid #111827; padding: 16px 0; }
+    body.light .gov-dropdown { background: #0e7490; }
+    .gov-dropdown.open { display: block; }
+    .gov-dropdown-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; max-width: 600px; }
+    .gov-dropdown-item { display: flex; gap: 12px; }
+    .gov-dropdown-icon { width: 36px; height: 36px; background: #111827; border-radius: 8px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    body.light .gov-dropdown-icon { background: #0891b2; }
+    .gov-dropdown-icon svg { color: #a5f3fc; }
+    .gov-dropdown-text h4 { font-size: 13px; font-weight: 600; margin-bottom: 4px; }
+    .gov-dropdown-text p { font-size: 12px; color: #cbd5e1; line-height: 1.5; }
+    .theme-btn { background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.12); color: #9ca3af; padding: 6px 12px; border-radius: 6px; cursor: pointer; font-size: 12px; font-weight: 500; font-family: inherit; transition: all 0.2s; }
+    .theme-btn:hover { background: rgba(255,255,255,0.12); color: white; }
+
+    /* Header */
+    .header { background: rgba(15, 23, 42, 0.9); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 100; }
+    body.light .header { background: rgba(255, 255, 255, 0.9); }
+    .header .container { display: flex; align-items: center; justify-content: space-between; height: 68px; }
+    .logo { display: flex; align-items: center; gap: 12px; cursor: pointer; }
+    .logo:hover { opacity: 0.9; }
+    .logo-mark { width: 42px; height: 42px; background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%); border-radius: 10px; display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden; }
+    .logo-mark::before { content: ''; position: absolute; width: 100%; height: 100%; background: linear-gradient(45deg, transparent 30%, rgba(255,255,255,0.18) 50%, transparent 70%); animation: shimmer 3s infinite; background-size: 200% 100%; }
+    .logo-mark svg { width: 22px; height: 22px; color: white; position: relative; z-index: 1; }
+    .logo-text h1 { font-size: 15px; font-weight: 800; color: var(--text-primary); letter-spacing: -0.02em; line-height: 1.2; white-space: nowrap; }
+    .logo-text .tagline { font-size: 11px; font-weight: 500; color: var(--text-muted); }
+    .nav { display: flex; gap: 2px; }
+    .nav-link { padding: 8px 16px; color: var(--text-secondary); font-size: 14px; font-weight: 500; border-radius: 8px; cursor: pointer; border: none; background: none; font-family: inherit; transition: all 0.15s; }
+    .nav-link:hover { background: var(--bg-elevated); color: var(--text-primary); }
+    .nav-link.active { background: var(--primary-light); color: var(--primary); }
+
+    /* Hero */
+    .hero { background: var(--bg-elevated); padding: 80px 0; border-bottom: 1px solid var(--border); position: relative; overflow: hidden; }
+    .hero-bg { position: absolute; inset: 0; overflow: hidden; opacity: 0.18; }
+    .hero-bg-shape { position: absolute; border-radius: 50%; filter: blur(80px); }
+    .hero-bg-shape:nth-child(1) { width: 520px; height: 520px; background: var(--primary); top: -150px; right: -140px; animation: float 10s ease-in-out infinite; }
+    .hero-bg-shape:nth-child(2) { width: 360px; height: 360px; background: var(--accent); bottom: -120px; left: 8%; animation: float 12s ease-in-out infinite 1s; }
+    .hero-bg-shape:nth-child(3) { width: 260px; height: 260px; background: var(--primary); top: 32%; left: 42%; animation: float 14s ease-in-out infinite 2s; }
+    .hero-pattern { position: absolute; inset: 0; background-image: url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M10 10h20v20H10zM50 10h20v20H50zM30 30h20v20H30zM10 50h20v20H10zM50 50h20v20H50z' fill='none' stroke='%230891b2' stroke-width='1' opacity='0.08'/%3E%3C/svg%3E"); }
+    .hero-content { max-width: 660px; position: relative; z-index: 1; }
+    .hero-badge { display: inline-flex; align-items: center; gap: 8px; background: var(--primary-light); color: var(--primary); font-size: 12px; font-weight: 700; padding: 8px 14px; border-radius: 100px; margin-bottom: 20px; border: 1px solid rgba(8, 145, 178, 0.25); letter-spacing: 0.02em; }
+    .hero h2 { font-size: 52px; font-weight: 800; line-height: 1.08; margin-bottom: 20px; letter-spacing: -0.03em; }
+    .hero h2 span { color: var(--primary); }
+    .hero p { color: var(--text-secondary); font-size: 18px; margin-bottom: 32px; line-height: 1.7; }
+    .btn { display: inline-flex; align-items: center; gap: 8px; padding: 14px 24px; font-size: 14px; font-weight: 700; border-radius: 10px; cursor: pointer; border: none; font-family: inherit; transition: all 0.2s ease; }
+    .btn-primary { background: var(--primary); color: white; }
+    .btn-primary:hover { background: var(--primary-dark); transform: translateY(-1px); box-shadow: 0 4px 12px rgba(8, 145, 178, 0.35); }
+    .btn-secondary { background: var(--bg-card); color: var(--text-secondary); margin-left: 10px; border: 1px solid var(--border); }
+    .btn-secondary:hover { background: var(--bg-elevated); color: var(--text-primary); }
+
+    /* Stats */
+    .stats-bar { background: var(--bg-dark); border-bottom: 1px solid var(--border); padding: 24px 0; }
+    .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+    .stat-item { text-align: center; padding: 20px; background: var(--bg-card); border-radius: 12px; border: 1px solid var(--border-subtle); cursor: pointer; transition: all 0.2s; }
+    .stat-item:hover { border-color: var(--primary); transform: translateY(-2px); }
+    .stat-label { font-size: 11px; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em; }
+    .stat-value { font-size: 28px; font-weight: 800; color: var(--primary); margin: 8px 0; letter-spacing: -0.02em; }
+    .stat-change { font-size: 12px; font-weight: 600; padding: 3px 8px; border-radius: 100px; color: var(--text-muted); background: var(--bg-elevated); }
+
+    /* Main Content */
+    .main { padding: 40px 0; }
+    .content-grid { display: grid; grid-template-columns: 1fr 340px; gap: 24px; }
+    .card { background: var(--bg-card); border: 1px solid var(--border-subtle); border-radius: 16px; padding: 24px; margin-bottom: 24px; transition: border-color 0.2s; }
+    .card:hover { border-color: var(--border); }
+    .card-header { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; padding-bottom: 16px; border-bottom: 1px solid var(--border-subtle); }
+    .card-icon { width: 40px; height: 40px; background: var(--primary-light); border-radius: 10px; display: flex; align-items: center; justify-content: center; }
+    .card-icon svg { width: 20px; height: 20px; color: var(--primary); }
+    .card-title { font-size: 16px; font-weight: 700; }
+    .card-subtitle { font-size: 12px; color: var(--text-muted); margin-top: 2px; }
+
+    /* Service Cards */
+    .services-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 24px; }
+    .service-card { background: var(--bg-card); border: 1px solid var(--border-subtle); border-radius: 14px; padding: 24px; cursor: pointer; transition: all 0.2s; position: relative; overflow: hidden; }
+    .service-card::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 3px; background: linear-gradient(90deg, var(--primary), var(--primary-dark)); opacity: 0; transition: opacity 0.2s; }
+    .service-card:hover { border-color: var(--primary); transform: translateY(-2px); }
+    .service-card:hover::before { opacity: 1; }
+    .service-icon { width: 48px; height: 48px; background: var(--primary-light); border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-bottom: 16px; }
+    .service-icon svg { width: 24px; height: 24px; color: var(--primary); }
+    .service-title { font-size: 15px; font-weight: 700; margin-bottom: 8px; }
+    .service-desc { font-size: 13px; color: var(--text-secondary); line-height: 1.6; }
+    .service-link { font-size: 13px; font-weight: 700; color: var(--primary); margin-top: 12px; display: inline-flex; align-items: center; gap: 4px; }
+    .service-link svg { width: 14px; height: 14px; transition: transform 0.2s; }
+    .service-card:hover .service-link svg { transform: translateX(4px); }
+
+    /* Quick Links */
+    .quick-links { display: grid; gap: 8px; }
+    .quick-link { display: flex; align-items: center; gap: 12px; padding: 14px 16px; background: var(--bg-elevated); border-radius: 10px; cursor: pointer; transition: all 0.15s; border: 1px solid transparent; }
+    .quick-link:hover { background: var(--primary-light); border-color: rgba(8, 145, 178, 0.25); }
+    .quick-link-icon { width: 32px; height: 32px; background: var(--bg-card); border-radius: 8px; display: flex; align-items: center; justify-content: center; }
+    .quick-link-icon svg { width: 16px; height: 16px; color: var(--primary); }
+    .quick-link-text { font-size: 14px; font-weight: 600; flex: 1; }
+    .quick-link-arrow { color: var(--text-muted); }
+    .quick-link:hover .quick-link-arrow { color: var(--primary); }
+
+    /* Info text */
+    .content-text h3 { font-size: 18px; font-weight: 700; margin: 24px 0 12px; color: var(--text-primary); }
+    .content-text p { font-size: 14px; color: var(--text-secondary); margin-bottom: 14px; line-height: 1.7; }
+    .content-text ul { padding-left: 18px; margin: 14px 0; }
+    .content-text li { color: var(--text-secondary); margin-bottom: 8px; font-size: 14px; }
+    .info-box { background: var(--primary-light); border: 1px solid rgba(8, 145, 178, 0.2); border-radius: 12px; padding: 16px; margin: 16px 0; }
+    .info-box h4 { font-size: 14px; font-weight: 700; color: var(--primary); margin-bottom: 6px; }
+
+    /* Footer */
+    .footer { background: var(--bg-card); border-top: 1px solid var(--border); padding: 48px 0 24px; margin-top: 48px; }
+    .footer-grid { display: grid; grid-template-columns: 1.5fr 1fr 1fr 1fr 1fr; gap: 32px; margin-bottom: 32px; }
+    .footer-brand h4 { font-size: 16px; font-weight: 800; margin-bottom: 12px; }
+    .footer-brand p { font-size: 13px; color: var(--text-secondary); line-height: 1.6; }
+    .footer-contact { margin-top: 16px; padding: 14px; background: var(--bg-elevated); border-radius: 10px; }
+    .footer-contact-label { font-size: 11px; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em; }
+    .footer-contact-value { font-size: 18px; font-weight: 800; color: var(--primary); margin: 4px 0; }
+    .footer-contact-note { font-size: 12px; color: var(--text-muted); }
+    .footer-section h5 { font-size: 13px; font-weight: 700; margin-bottom: 14px; text-transform: uppercase; letter-spacing: 0.03em; }
+    .footer-section ul { list-style: none; }
+    .footer-section li { margin-bottom: 10px; }
+    .footer-section a { font-size: 14px; color: var(--text-secondary); cursor: pointer; }
+    .footer-section a:hover { color: var(--primary); }
+    .footer-bottom { display: flex; justify-content: space-between; align-items: center; padding-top: 24px; border-top: 1px solid var(--border-subtle); font-size: 13px; color: var(--text-muted); }
+    .footer-legal { display: flex; gap: 20px; }
+    .footer-legal a { color: var(--text-muted); }
+    .footer-legal a:hover { color: var(--primary); }
+
+    /* Page containers */
+    .page { display: none; }
+    .page.active { display: block; }
+
+    @media (max-width: 1024px) {
+      .content-grid { grid-template-columns: 1fr; }
+      .services-grid { grid-template-columns: repeat(2, 1fr); }
+      .stats-grid { grid-template-columns: repeat(2, 1fr); }
+      .footer-grid { grid-template-columns: repeat(3, 1fr); }
+    }
+
+    @media (max-width: 768px) {
+      .nav { display: none; }
+      .hero h2 { font-size: 38px; }
+      .services-grid { grid-template-columns: 1fr; }
+      .stats-grid { grid-template-columns: 1fr 1fr; }
+      .footer-grid { grid-template-columns: 1fr 1fr; }
+    }
+
+    @media (max-width: 480px) {
+      .footer-grid { grid-template-columns: 1fr; }
+      .footer-bottom { flex-direction: column; gap: 12px; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+<div class="gov-banner">
+  <div class="container">
+    <div class="gov-banner-left">
+      <span class="gov-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M3 21h18"></path>
+          <path d="M5 21V7l8-4v18"></path>
+          <path d="M19 21V11l-6-4"></path>
+          <path d="M9 9v.01"></path>
+          <path d="M9 12v.01"></path>
+          <path d="M9 15v.01"></path>
+          <path d="M9 18v.01"></path>
+        </svg>
+      </span>
+      <span>An Official Government of Praya Website</span>
+      <button class="gov-how" onclick="toggleGovDropdown(this)">
+        Here's how you know
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
+      </button>
+    </div>
+    <div class="gov-banner-right">
+      <a href="/index.html">GOV.PRAYA</a>
+      <button class="theme-btn" onclick="toggleTheme()">Light</button>
+    </div>
+  </div>
+  <div class="gov-dropdown" id="govDropdown">
+    <div class="container">
+      <div class="gov-dropdown-inner">
+        <div class="gov-dropdown-item">
+          <div class="gov-dropdown-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+          </div>
+          <div class="gov-dropdown-text">
+            <h4>Official government websites use .gov.py</h4>
+            <p>A .gov.py website belongs to an official government organization in the Republic of Praya.</p>
+          </div>
+        </div>
+        <div class="gov-dropdown-item">
+          <div class="gov-dropdown-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+          </div>
+          <div class="gov-dropdown-text">
+            <h4>Secure .gov.py websites use HTTPS</h4>
+            <p>A lock icon or https:// means you've safely connected to the .gov.py website.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<header class="header">
+  <div class="container">
+    <div class="logo" onclick="showPage('home')">
+      <div class="logo-mark">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+          <polyline points="9 22 9 12 15 12 15 22"></polyline>
+        </svg>
+      </div>
+      <div class="logo-text">
+        <h1>Customs & Border Control</h1>
+        <div class="tagline">Republic of Praya</div>
+      </div>
+    </div>
+    <nav class="nav">
+      <button class="nav-link active" data-page="home" onclick="showPage('home')">Home</button>
+      <button class="nav-link" data-page="customs" onclick="showPage('customs')">Customs & Trade</button>
+      <button class="nav-link" data-page="immigration" onclick="showPage('immigration')">Immigration</button>
+      <button class="nav-link" data-page="enforcement" onclick="showPage('enforcement')">Border Enforcement</button>
+      <button class="nav-link" data-page="travelers" onclick="showPage('travelers')">For Travelers</button>
+      <button class="nav-link" data-page="about" onclick="showPage('about')">About</button>
+    </nav>
+  </div>
+</header>
+
+<div id="page-home" class="page active">
+  <section class="hero">
+    <div class="hero-bg">
+      <div class="hero-bg-shape"></div>
+      <div class="hero-bg-shape"></div>
+      <div class="hero-bg-shape"></div>
+    </div>
+    <div class="hero-pattern"></div>
+    <div class="container">
+      <div class="hero-content">
+        <div class="hero-badge">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+          Secure borders. Fair trade. Efficient movement.
+        </div>
+        <h2>Safeguarding Praya's <span>Prosperity</span></h2>
+        <p>The Customs and Border Control Agency protects our borders, facilitates legitimate trade, and ensures the secure and efficient movement of people and goods through all entry and exit points of the Republic of Praya.</p>
+        <div>
+          <button class="btn btn-primary" onclick="showPage('customs')">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="5" width="20" height="14" rx="2"></rect><path d="M2 10h20"></path></svg>
+            Customs Services
+          </button>
+          <button class="btn btn-secondary" onclick="showPage('immigration')">Immigration Services</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="stats-bar">
+    <div class="container">
+      <div class="stats-grid">
+        <div class="stat-item" onclick="showPage('customs')">
+          <div class="stat-label">Daily Clearances</div>
+          <div class="stat-value">8,420</div>
+          <div class="stat-change">Import declarations</div>
+        </div>
+        <div class="stat-item" onclick="showPage('immigration')">
+          <div class="stat-label">Border Crossings</div>
+          <div class="stat-value">42,600</div>
+          <div class="stat-change">Daily average</div>
+        </div>
+        <div class="stat-item" onclick="showPage('travelers')">
+          <div class="stat-label">De Minimis Threshold</div>
+          <div class="stat-value">¤200</div>
+          <div class="stat-change">Personal imports</div>
+        </div>
+        <div class="stat-item" onclick="showPage('enforcement')">
+          <div class="stat-label">Entry Points</div>
+          <div class="stat-value">5</div>
+          <div class="stat-change">Airports, ports, terminals</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="main">
+    <div class="container">
+      <div class="content-grid">
+        <div>
+          <div class="card">
+            <div class="card-header">
+              <div class="card-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="5" width="20" height="14" rx="2"></rect><path d="M2 10h20"></path></svg>
+              </div>
+              <div>
+                <div class="card-title">Core Services</div>
+                <div class="card-subtitle">Customs, immigration & enforcement</div>
+              </div>
+            </div>
+            <div class="services-grid">
+              <div class="service-card" onclick="showPage('customs')">
+                <div class="service-icon">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path></svg>
+                </div>
+                <div class="service-title">Commercial Imports</div>
+                <div class="service-desc">File declarations, calculate tariffs based on CIF values, and clear shipments through our harmonized schedule.</div>
+                <div class="service-link">Start declaration <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg></div>
+              </div>
+              <div class="service-card" onclick="showPage('immigration')">
+                <div class="service-icon">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"></rect><path d="M9 4v4"></path><path d="M15 4v4"></path><path d="M9 12h6"></path><path d="M9 16h6"></path></svg>
+                </div>
+                <div class="service-title">Visa Services</div>
+                <div class="service-desc">Apply for tourist, business, or work visas online. Check eligibility and track application status.</div>
+                <div class="service-link">Apply for visa <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg></div>
+              </div>
+              <div class="service-card" onclick="showPage('travelers')">
+                <div class="service-icon">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><path d="M12 2a7 7 0 1 0 7 7"></path></svg>
+                </div>
+                <div class="service-title">Traveler Information</div>
+                <div class="service-desc">Learn about personal duty-free allowances, prohibited items, and passenger rights at border crossings.</div>
+                <div class="service-link">Traveler guide <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg></div>
+              </div>
+              <div class="service-card" onclick="showPage('customs')">
+                <div class="service-icon">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
+                </div>
+                <div class="service-title">Tariff Relief</div>
+                <div class="service-desc">Request case-by-case exemptions, temporary admissions, or duty drawbacks for qualifying shipments.</div>
+                <div class="service-link">Request relief <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg></div>
+              </div>
+              <div class="service-card" onclick="showPage('enforcement')">
+                <div class="service-icon">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+                </div>
+                <div class="service-title">Border Enforcement</div>
+                <div class="service-desc">Report smuggling, counterfeit goods, or customs fraud. Confidential tipline available 24/7.</div>
+                <div class="service-link">Report violation <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg></div>
+              </div>
+              <div class="service-card" onclick="showPage('immigration')">
+                <div class="service-icon">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+                </div>
+                <div class="service-title">Citizenship Services</div>
+                <div class="service-desc">Naturalization applications, citizenship tests, and permanent residence pathways for long-term residents.</div>
+                <div class="service-link">Citizenship portal <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="card" style="background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%); border: none;">
+            <div style="color: white;">
+              <div style="font-size: 13px; font-weight: 700; opacity: 0.9; margin-bottom: 4px; letter-spacing: 0.03em;">ENTRY POINTS UNDER CBCA CONTROL</div>
+              <div style="font-size: 22px; font-weight: 800; margin-bottom: 12px;">5 Facilities Nationwide</div>
+              <div style="font-size: 13px; opacity: 0.85; line-height: 1.6;">
+                • Praya International Airport<br>
+                • Braemar Bus Terminal<br>
+                • Port of South Praya<br>
+                • Port of Braemar<br>
+                • Port of Point Robson
+              </div>
+              <div style="font-size: 13px; opacity: 0.85; margin-top: 12px;">All facilities operate 24/7 with full customs and immigration services.</div>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <div class="card">
+            <div class="card-header">
+              <div class="card-icon" style="background: rgba(16, 185, 129, 0.12);">
+                <svg viewBox="0 0 24 24" fill="none" stroke="var(--success)" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+              </div>
+              <div>
+                <div class="card-title">Systems Status</div>
+                <div class="card-subtitle">Online portals</div>
+              </div>
+            </div>
+            <div style="font-size:13px;color:var(--text-secondary);">
+              <div style="display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--border-subtle);">
+                <span>Customs Declaration Portal</span>
+                <span class="card-subtitle" style="color: var(--success); font-weight: 700;">● Online</span>
+              </div>
+              <div style="display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--border-subtle);">
+                <span>Visa Application System</span>
+                <span class="card-subtitle" style="color: var(--success); font-weight: 700;">● Online</span>
+              </div>
+              <div style="display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--border-subtle);">
+                <span>Tariff Calculator</span>
+                <span class="card-subtitle" style="color: var(--success); font-weight: 700;">● Online</span>
+              </div>
+              <div style="display:flex;justify-content:space-between;padding:10px 0;">
+                <span>Immigration Status Tracker</span>
+                <span class="card-subtitle" style="color: var(--success); font-weight: 700;">● Online</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-header">
+              <div class="card-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
+              </div>
+              <div>
+                <div class="card-title">Quick Actions</div>
+                <div class="card-subtitle">One-click access</div>
+              </div>
+            </div>
+            <div class="quick-links">
+              <a class="quick-link" href="#page-customs" onclick="showPage('customs'); return false;">
+                <div class="quick-link-icon">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><path d="M12 8v4"></path><path d="M12 16h.01"></path></svg>
+                </div>
+                <div class="quick-link-text">Calculate duty & taxes</div>
+                <svg class="quick-link-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
+              </a>
+              <a class="quick-link" href="#page-immigration" onclick="showPage('immigration'); return false;">
+                <div class="quick-link-icon">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"></rect></svg>
+                </div>
+                <div class="quick-link-text">Check visa status</div>
+                <svg class="quick-link-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
+              </a>
+              <a class="quick-link" href="#page-travelers" onclick="showPage('travelers'); return false;">
+                <div class="quick-link-icon">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle></svg>
+                </div>
+                <div class="quick-link-text">Traveler information</div>
+                <svg class="quick-link-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
+              </a>
+              <a class="quick-link" href="#page-enforcement" onclick="showPage('enforcement'); return false;">
+                <div class="quick-link-icon">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+                </div>
+                <div class="quick-link-text">Report customs violation</div>
+                <svg class="quick-link-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<div id="page-customs" class="page">
+  <div class="hero" style="padding:48px 0;">
+    <div class="container">
+      <div class="hero-content">
+        <div class="hero-badge">Customs & Trade</div>
+        <h2>Tariffs, Trade & Compliance</h2>
+        <p>Our harmonized tariff schedule ensures predictable duty collection on all commercial imports based on transparent CIF valuations.</p>
+      </div>
+    </div>
+  </div>
+  <section class="main">
+    <div class="container">
+      <div class="content-grid">
+        <div class="card">
+          <div class="content-text">
+            <h3>Customs Declaration Process</h3>
+            <p>All commercial importers must file electronic declarations through our Customs Portal before goods arrive at any entry point. Declarations require:</p>
+            <ul>
+              <li>Complete description of goods and HS classification codes</li>
+              <li>Commercial invoice showing CIF value (Cost, Insurance, Freight)</li>
+              <li>Bill of lading or air waybill</li>
+              <li>Certificates of origin for preferential tariff treatment</li>
+            </ul>
+
+            <h3>Tariff Calculation</h3>
+            <p>Duties are calculated based on the CIF value using rates from the Customs and Tariff Act (2018). The harmonized schedule covers over 5,000 product classifications with rates ranging from 0% to 30%.</p>
+
+            <div class="info-box">
+              <h4>De Minimis Threshold</h4>
+              <p>Personal imports valued under ¤200 Praya Dollars are exempt from duty and do not require formal declarations. This exemption applies to mail shipments and accompanied baggage.</p>
+            </div>
+
+            <h3>Tariff Relief Programs</h3>
+            <p>Eligible importers can request exemptions or duty drawbacks for:</p>
+            <ul>
+              <li>Goods for re-export or temporary admission</li>
+              <li>Humanitarian and disaster relief supplies</li>
+              <li>Educational materials for accredited institutions</li>
+              <li>Raw materials for domestic manufacturing (duty drawback)</li>
+            </ul>
+
+            <h3>Compliance & Audits</h3>
+            <p>The CBCA conducts post-clearance audits to verify declared values, classifications, and origin claims. Penalties for misclassification, undervaluation, or fraud range from fines to criminal prosecution.</p>
+          </div>
+        </div>
+
+        <div>
+          <div class="card">
+            <div class="card-header">
+              <div class="card-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+              </div>
+              <div>
+                <div class="card-title">Standard Rates</div>
+                <div class="card-subtitle">Common categories</div>
+              </div>
+            </div>
+            <div style="display:grid;gap:10px;color:var(--text-secondary);font-size:14px;">
+              <div style="display:flex;justify-content:space-between;">
+                <span>Raw materials</span>
+                <strong style="color:var(--primary);">0-5%</strong>
+              </div>
+              <div style="display:flex;justify-content:space-between;">
+                <span>Industrial equipment</span>
+                <strong style="color:var(--primary);">5-10%</strong>
+              </div>
+              <div style="display:flex;justify-content:space-between;">
+                <span>Consumer goods</span>
+                <strong style="color:var(--primary);">10-15%</strong>
+              </div>
+              <div style="display:flex;justify-content:space-between;">
+                <span>Luxury goods</span>
+                <strong style="color:var(--primary);">20-30%</strong>
+              </div>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-header">
+              <div class="card-icon" style="background: var(--accent-light);">
+                <svg viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><path d="M12 6v6l3 3"></path></svg>
+              </div>
+              <div>
+                <div class="card-title">Clearance Times</div>
+                <div class="card-subtitle">Average processing</div>
+              </div>
+            </div>
+            <p style="color:var(--text-secondary); font-size:13px;">Pre-filed declarations with complete documentation typically clear within 2-4 hours of arrival. Complex shipments requiring inspection may take 1-2 business days.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<div id="page-immigration" class="page">
+  <div class="hero" style="padding:48px 0;">
+    <div class="container">
+      <div class="hero-content">
+        <div class="hero-badge">Immigration Services</div>
+        <h2>Visas, Citizenship & Status</h2>
+        <p>We facilitate the lawful entry and residence of foreign nationals while protecting national security and public health.</p>
+      </div>
+    </div>
+  </div>
+  <section class="main">
+    <div class="container">
+      <div class="content-grid">
+        <div class="card">
+          <div class="content-text">
+            <h3>Visa Categories</h3>
+            <ul>
+              <li><strong>Tourist Visa (T):</strong> Up to 90 days for leisure travel. Requires proof of onward travel and sufficient funds.</li>
+              <li><strong>Business Visa (B):</strong> For meetings, conferences, and contract negotiations. Cannot be used for employment.</li>
+              <li><strong>Work Visa (W):</strong> Requires employer sponsorship and labor market certification. Valid for 1-3 years, renewable.</li>
+              <li><strong>Student Visa (S):</strong> Full-time enrollment at accredited institutions. Part-time work allowed up to 20 hours/week.</li>
+              <li><strong>Family Reunification (F):</strong> For spouses, children, and dependent parents of citizens or permanent residents.</li>
+            </ul>
+
+            <h3>Permanent Residence</h3>
+            <p>Foreign nationals may apply for permanent residence after 5 years of continuous lawful residence on a work visa, or 3 years if married to a Prayan citizen. Requirements include:</p>
+            <ul>
+              <li>Clean criminal record and tax compliance</li>
+              <li>Basic Prayan language proficiency (B1 level)</li>
+              <li>Proof of stable income or employment</li>
+              <li>Medical examination and health insurance</li>
+            </ul>
+
+            <h3>Citizenship & Naturalization</h3>
+            <p>Permanent residents may apply for citizenship after 5 years. The naturalization process includes a civics test, oath of allegiance, and background security checks.</p>
+
+            <div class="info-box">
+              <h4>Visa-Free Entry</h4>
+              <p>Citizens of 42 countries can enter Praya visa-free for stays up to 90 days. Check the visa-free country list on our portal.</p>
+            </div>
+          </div>
+        </div>
+        <div>
+          <div class="card">
+            <div class="card-header">
+              <div class="card-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="16" rx="2"></rect><path d="M7 4v4"></path><path d="M17 4v4"></path><path d="M3 10h18"></path></svg>
+              </div>
+              <div>
+                <div class="card-title">Processing Times</div>
+                <div class="card-subtitle">Current averages</div>
+              </div>
+            </div>
+            <div style="display:grid;gap:10px;color:var(--text-secondary);font-size:14px;">
+              <div style="display:flex;justify-content:space-between;">
+                <span>Tourist visa</span>
+                <strong style="color:var(--primary);">3-5 business days</strong>
+              </div>
+              <div style="display:flex;justify-content:space-between;">
+                <span>Work visa</span>
+                <strong style="color:var(--primary);">2-4 weeks</strong>
+              </div>
+              <div style="display:flex;justify-content:space-between;">
+                <span>Permanent residence</span>
+                <strong style="color:var(--primary);">4-6 months</strong>
+              </div>
+              <div style="display:flex;justify-content:space-between;">
+                <span>Citizenship</span>
+                <strong style="color:var(--primary);">8-12 months</strong>
+              </div>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-header">
+              <div class="card-icon" style="background: rgba(245, 158, 11, 0.12);">
+                <svg viewBox="0 0 24 24" fill="none" stroke="var(--warning)" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><path d="M12 8v4"></path><path d="M12 16h.01"></path></svg>
+              </div>
+              <div>
+                <div class="card-title">Application Requirements</div>
+                <div class="card-subtitle">Documents needed</div>
+              </div>
+            </div>
+            <p style="color:var(--text-secondary); font-size:13px;">All visa applications require a valid passport (minimum 6 months validity), biometric photo, application fee payment, and category-specific supporting documents.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<div id="page-enforcement" class="page">
+  <div class="hero" style="padding:48px 0;">
+    <div class="container">
+      <div class="hero-content">
+        <div class="hero-badge">Border Enforcement</div>
+        <h2>Preventing Smuggling & Fraud</h2>
+        <p>Our enforcement division combats smuggling, counterfeit goods, and customs fraud through intelligence-led operations and technology.</p>
+      </div>
+    </div>
+  </div>
+  <section class="main">
+    <div class="container">
+      <div class="content-grid">
+        <div class="card">
+          <div class="content-text">
+            <h3>Enforcement Priorities</h3>
+            <ul>
+              <li>Narcotics and controlled substances</li>
+              <li>Weapons, ammunition, and explosives</li>
+              <li>Counterfeit goods and intellectual property violations</li>
+              <li>Undeclared currency over ¤10,000</li>
+              <li>Prohibited wildlife and endangered species products</li>
+              <li>Human trafficking and smuggling networks</li>
+            </ul>
+
+            <h3>Inspection & Screening</h3>
+            <p>The CBCA uses risk-based targeting to identify high-risk shipments and passengers. Inspection methods include:</p>
+            <ul>
+              <li>X-ray and CT scanning for cargo and baggage</li>
+              <li>Canine detection teams for narcotics and explosives</li>
+              <li>Biometric identification and document verification</li>
+              <li>Trade data analytics and intelligence sharing with international partners</li>
+            </ul>
+
+            <div class="info-box">
+              <h4>Report Suspicious Activity</h4>
+              <p>The public can report smuggling, customs fraud, or document forgery through our confidential tipline at +854 300 TIPS (8477) or via the online form.</p>
+            </div>
+
+            <h3>Penalties & Prosecutions</h3>
+            <p>Customs violations carry civil fines up to 3x the duty owed, plus criminal penalties for fraud, smuggling, or trafficking. Seized goods are forfeited and destroyed or auctioned.</p>
+          </div>
+        </div>
+        <div>
+          <div class="card">
+            <div class="card-header">
+              <div class="card-icon" style="background: rgba(239, 68, 68, 0.12);">
+                <svg viewBox="0 0 24 24" fill="none" stroke="var(--danger)" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><path d="M15 9l-6 6"></path><path d="M9 9l6 6"></path></svg>
+              </div>
+              <div>
+                <div class="card-title">Prohibited Items</div>
+                <div class="card-subtitle">Cannot be imported</div>
+              </div>
+            </div>
+            <ul style="list-style:none; color: var(--text-secondary); font-size:14px; display:grid; gap:10px;">
+              <li>• Narcotics and psychotropic substances</li>
+              <li>• Unlicensed firearms and ammunition</li>
+              <li>• Counterfeit currency and documents</li>
+              <li>• Obscene or seditious materials</li>
+              <li>• Endangered species products (ivory, rhino horn, etc.)</li>
+            </ul>
+          </div>
+
+          <div class="card">
+            <div class="card-header">
+              <div class="card-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+              </div>
+              <div>
+                <div class="card-title">Confidential Tipline</div>
+                <div class="card-subtitle">Available 24/7</div>
+              </div>
+            </div>
+            <div style="color:var(--text-secondary); font-size:13px;">
+              <div><strong style="color:var(--text-primary);">Phone:</strong> +854 300 8477 (TIPS)</div>
+              <div><strong style="color:var(--text-primary);">Email:</strong> <a href="mailto:tips@cbca.gov.py">tips@cbca.gov.py</a></div>
+              <p style="margin-top:12px;">All tips are reviewed by enforcement agents. Informants may be eligible for rewards up to ¤50,000 for actionable intelligence.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<div id="page-travelers" class="page">
+  <div class="hero" style="padding:48px 0;">
+    <div class="container">
+      <div class="hero-content">
+        <div class="hero-badge">For Travelers</div>
+        <h2>Know Before You Go</h2>
+        <p>Essential information for passengers entering or leaving Praya, including duty-free allowances and declaration requirements.</p>
+      </div>
+    </div>
+  </div>
+  <section class="main">
+    <div class="container">
+      <div class="content-grid">
+        <div class="card">
+          <div class="content-text">
+            <h3>Personal Duty-Free Allowances</h3>
+            <p>Passengers age 18+ may bring the following without paying duty:</p>
+            <ul>
+              <li>Personal goods and souvenirs up to ¤200 value</li>
+              <li>1 liter of alcohol (beer, wine, or spirits)</li>
+              <li>200 cigarettes or 50 cigars</li>
+              <li>Personal electronics (1 phone, 1 laptop, 1 camera)</li>
+            </ul>
+            <p>Goods exceeding these limits must be declared and are subject to duty based on the excess value.</p>
+
+            <h3>Declaration Requirements</h3>
+            <p>All passengers must declare:</p>
+            <ul>
+              <li>Cash or monetary instruments over ¤10,000</li>
+              <li>Commercial goods intended for resale</li>
+              <li>Prohibited or restricted items (firearms, medications, food products)</li>
+              <li>Goods acquired abroad exceeding the duty-free allowance</li>
+            </ul>
+
+            <div class="info-box">
+              <h4>Digital Declaration Form</h4>
+              <p>Complete your customs declaration online before arrival to speed up processing. QR code confirmations are scanned at the border.</p>
+            </div>
+
+            <h3>Restricted Items Requiring Permits</h3>
+            <ul>
+              <li>Prescription medications (carry original prescription)</li>
+              <li>Fresh food, plants, and seeds (agricultural inspection required)</li>
+              <li>Drones and radio transmitters</li>
+              <li>Cultural artifacts and antiques</li>
+            </ul>
+
+            <h3>Departure Procedures</h3>
+            <p>Departing passengers should allow 2 hours for international flights and 1 hour for regional bus services. Exit immigration includes biometric verification and departure card collection.</p>
+          </div>
+        </div>
+        <div>
+          <div class="card">
+            <div class="card-header">
+              <div class="card-icon" style="background: rgba(16, 185, 129, 0.12);">
+                <svg viewBox="0 0 24 24" fill="none" stroke="var(--success)" stroke-width="2"><path d="M5 12h14"></path><path d="M12 5l7 7-7 7"></path></svg>
+              </div>
+              <div>
+                <div class="card-title">Express Lanes</div>
+                <div class="card-subtitle">Trusted travelers</div>
+              </div>
+            </div>
+            <p style="color:var(--text-secondary); font-size:13px;">Frequent travelers can apply for the Praya Trusted Traveler program, offering expedited immigration and customs processing at all entry points.</p>
+          </div>
+
+          <div class="card">
+            <div class="card-header">
+              <div class="card-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><path d="M12 16v-4"></path><path d="M12 8h.01"></path></svg>
+              </div>
+              <div>
+                <div class="card-title">Passenger Rights</div>
+                <div class="card-subtitle">Fair treatment</div>
+              </div>
+            </div>
+            <p style="color:var(--text-secondary); font-size:13px;">All passengers have the right to courteous treatment, clear explanations of inspection procedures, and privacy during searches. File complaints through our passenger rights office.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<div id="page-about" class="page">
+  <div class="hero" style="padding:48px 0;">
+    <div class="container">
+      <div class="hero-content">
+        <div class="hero-badge">About CBCA</div>
+        <h2>Mission, Leadership & Contact</h2>
+        <p>Established in 2018 through the Border Security and Trade Facilitation Act, consolidating immigration and customs services.</p>
+      </div>
+    </div>
+  </div>
+  <section class="main">
+    <div class="container">
+      <div class="content-grid">
+        <div class="card">
+          <div class="content-text">
+            <h3>Our Mission</h3>
+            <p>The Customs and Border Control Agency safeguards Praya's prosperity through secure borders, fair trade practices, and the efficient movement of people and goods.</p>
+
+            <h3>Organizational Structure</h3>
+            <p>The CBCA is led by Commissioner Elia Voss and operates through three core divisions:</p>
+            <ul>
+              <li><strong>Customs Operations:</strong> Tariff administration, trade compliance, and revenue collection</li>
+              <li><strong>Immigration Services:</strong> Visa processing, citizenship, and entry/exit control</li>
+              <li><strong>Border Enforcement:</strong> Contraband interdiction, investigations, and intelligence</li>
+            </ul>
+
+            <h3>Entry Points Under CBCA Control</h3>
+            <p>As of February 23, 2025, the CBCA assumed control of all entry-exit points:</p>
+            <ul>
+              <li>Praya International Airport (air cargo and passengers)</li>
+              <li>Braemar Bus Terminal (regional land border)</li>
+              <li>Port of South Praya (commercial maritime)</li>
+              <li>Port of Braemar (commercial and ferry services)</li>
+              <li>Port of Point Robson (fishing and recreational maritime)</li>
+            </ul>
+
+            <h3>Transparency & Accountability</h3>
+            <p>The CBCA publishes quarterly reports on duty collections, enforcement actions, and processing times. An independent ombudsman reviews traveler and importer complaints.</p>
+          </div>
+        </div>
+        <div>
+          <div class="card">
+            <div class="card-header">
+              <div class="card-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+              </div>
+              <div>
+                <div class="card-title">Headquarters</div>
+                <div class="card-subtitle">Main office</div>
+              </div>
+            </div>
+            <p style="color:var(--text-secondary); font-size:13px;">
+              Customs & Border Control Agency<br>
+              800 Harbor Boulevard<br>
+              Praya 10-888<br>
+              <a href="tel:+8543000888">+854 300 0888</a><br>
+              <a href="mailto:info@cbca.gov.py">info@cbca.gov.py</a>
+            </p>
+          </div>
+          <div class="card">
+            <div class="card-header">
+              <div class="card-icon" style="background: var(--accent-light);">
+                <svg viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><path d="M12 6v6l3 3"></path></svg>
+              </div>
+              <div>
+                <div class="card-title">Public Service Hours</div>
+                <div class="card-subtitle">Headquarters walk-in</div>
+              </div>
+            </div>
+            <div style="color:var(--text-secondary); font-size:13px;">
+              <div><strong style="color:var(--text-primary);">Monday-Friday:</strong> 08:00-17:00</div>
+              <div><strong style="color:var(--text-primary);">Saturday:</strong> 09:00-13:00</div>
+              <div><strong style="color:var(--text-primary);">Sunday:</strong> Closed</div>
+              <p style="margin-top:12px;">Entry points operate 24/7 for clearances and inspections.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <h4>Customs & Border Control Agency</h4>
+        <p>Safeguarding Praya's prosperity through secure borders, fair trade practices, and efficient movement of people and goods.</p>
+        <div class="footer-contact">
+          <div class="footer-contact-label">General Inquiries</div>
+          <div class="footer-contact-value">+854 300 0888</div>
+          <div class="footer-contact-note">info@cbca.gov.py</div>
+        </div>
+      </div>
+      <div class="footer-section">
+        <h5>Customs</h5>
+        <ul>
+          <li><a href="#page-customs" onclick="showPage('customs'); return false;">Tariff calculator</a></li>
+          <li><a href="#page-customs" onclick="showPage('customs'); return false;">Import declarations</a></li>
+          <li><a href="#page-customs" onclick="showPage('customs'); return false;">Duty relief</a></li>
+        </ul>
+      </div>
+      <div class="footer-section">
+        <h5>Immigration</h5>
+        <ul>
+          <li><a href="#page-immigration" onclick="showPage('immigration'); return false;">Visa applications</a></li>
+          <li><a href="#page-immigration" onclick="showPage('immigration'); return false;">Citizenship</a></li>
+          <li><a href="#page-immigration" onclick="showPage('immigration'); return false;">Status check</a></li>
+        </ul>
+      </div>
+      <div class="footer-section">
+        <h5>Travelers</h5>
+        <ul>
+          <li><a href="#page-travelers" onclick="showPage('travelers'); return false;">Duty-free allowances</a></li>
+          <li><a href="#page-travelers" onclick="showPage('travelers'); return false;">Prohibited items</a></li>
+          <li><a href="#page-travelers" onclick="showPage('travelers'); return false;">Digital declarations</a></li>
+        </ul>
+      </div>
+      <div class="footer-section">
+        <h5>About</h5>
+        <ul>
+          <li><a href="#page-about" onclick="showPage('about'); return false;">Mission & leadership</a></li>
+          <li><a href="#page-about" onclick="showPage('about'); return false;">Entry points</a></li>
+          <li><a href="#page-enforcement" onclick="showPage('enforcement'); return false;">Report violations</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div>© 2025 Republic of Praya Customs and Border Control Agency</div>
+      <div class="footer-legal">
+        <a href="#page-about" onclick="showPage('about'); return false;">Accessibility</a>
+        <a href="#page-about" onclick="showPage('about'); return false;">Privacy</a>
+        <a href="#page-about" onclick="showPage('about'); return false;">Security</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  function showPage(page) {
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    document.getElementById('page-' + page).classList.add('active');
+    document.querySelectorAll('.nav-link').forEach(link => link.classList.remove('active'));
+    const active = document.querySelector(`.nav-link[data-page="${page}"]`);
+    if (active) active.classList.add('active');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  function toggleTheme() {
+    document.body.classList.toggle('light');
+    const btn = document.querySelector('.theme-btn');
+    btn.textContent = document.body.classList.contains('light') ? 'Dark' : 'Light';
+  }
+
+  function toggleGovDropdown(btn) {
+    btn.classList.toggle('open');
+    document.getElementById('govDropdown').classList.toggle('open');
+  }
+</script>
+</body>
+</html>

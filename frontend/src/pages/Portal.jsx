@@ -82,6 +82,15 @@ const departments = [
     description: 'Affordable public housing programs and subsidized rental assistance for eligible citizens.',
     color: '#ea580c',
     services: ['Housing Applications', 'Eligibility Check', 'Regional Availability', 'Tenant Resources']
+  },
+  {
+    id: 'cbca',
+    name: 'Customs & Border Control',
+    abbrev: 'CBCA',
+    url: '/CBCA_Praya.html',
+    description: 'Border security, customs duties, immigration services, and trade facilitation for the Republic.',
+    color: '#0891b2',
+    services: ['Customs Declarations', 'Immigration & Visas', 'Border Enforcement', 'Traveler Information']
   }
 ]
 
@@ -115,6 +124,11 @@ const priorities = [
     title: 'Cannabis Regulation',
     detail: 'Industry licensing, tax filing, and compliance for legal cannabis businesses.',
     link: '/CTB_Praya.html'
+  },
+  {
+    title: 'Customs & Border',
+    detail: 'Import duties, immigration visas, and border control for travelers and traders.',
+    link: '/CBCA_Praya.html'
   }
 ]
 
@@ -208,7 +222,7 @@ export default function Portal() {
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                   <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
                 </svg>
-                <span>8 major departments & agencies</span>
+                <span>10 major departments & agencies</span>
               </div>
             </div>
             <div className="hero-actions">
@@ -455,6 +469,7 @@ export default function Portal() {
                 <li><a href="/Praya_Post.html">Praya Post</a></li>
                 <li><a href="/Health_Praya.html">Health Department</a></li>
                 <li><a href="/Housing_Authority_Praya.html">Housing Authority</a></li>
+                <li><a href="/CBCA_Praya.html">Customs & Border Control</a></li>
               </ul>
             </div>
             <div className="footer-section">
