@@ -4,31 +4,36 @@ import { createClient } from '@supabase/supabase-js'
 const supabaseUrl = import.meta.env.VITE_SUPABASE_URL
 const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY
 
-// Validate environment variables
-if (!supabaseUrl || !supabaseAnonKey) {
-  console.error('Missing Supabase environment variables!')
-  console.error('Please create a .env file with:')
-  console.error('VITE_SUPABASE_URL=your_supabase_url')
-  console.error('VITE_SUPABASE_ANON_KEY=your_anon_key')
-  throw new Error('Missing Supabase configuration. See console for details.')
+// Check if Supabase is configured
+const isSupabaseConfigured = !!(supabaseUrl && supabaseAnonKey)
+
+// Log warning if Supabase is not configured (but don't throw)
+if (!isSupabaseConfigured) {
+  console.warn('Supabase is not configured. Authentication features will be disabled.')
+  console.warn('To enable authentication, set VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY environment variables.')
 }
 
-// Create Supabase client
-export const supabase = createClient(supabaseUrl, supabaseAnonKey, {
-  auth: {
-    // Store session in localStorage (default)
-    storage: window.localStorage,
-    // Automatically refresh session before expiry
-    autoRefreshToken: true,
-    // Persist session across browser sessions
-    persistSession: true,
-    // Detect session changes across tabs
-    detectSessionInUrl: true,
-  },
-})
+// Create Supabase client (or null if not configured)
+export const supabase = isSupabaseConfigured
+  ? createClient(supabaseUrl, supabaseAnonKey, {
+      auth: {
+        // Store session in localStorage (default)
+        storage: window.localStorage,
+        // Automatically refresh session before expiry
+        autoRefreshToken: true,
+        // Persist session across browser sessions
+        persistSession: true,
+        // Detect session changes across tabs
+        detectSessionInUrl: true,
+      },
+    })
+  : null
+
+export { isSupabaseConfigured }
 
 // Helper function to get current user
 export const getCurrentUser = async () => {
+  if (!supabase) return null
   const { data: { user }, error } = await supabase.auth.getUser()
   if (error) throw error
   return user
@@ -36,6 +41,7 @@ export const getCurrentUser = async () => {
 
 // Helper function to get user profile
 export const getUserProfile = async (userId) => {
+  if (!supabase) return null
   const { data, error } = await supabase
     .from('user_profiles')
     .select('*')
@@ -48,6 +54,7 @@ export const getUserProfile = async (userId) => {
 
 // Helper function to update user profile
 export const updateUserProfile = async (userId, updates) => {
+  if (!supabase) throw new Error('Authentication not configured')
   const { data, error } = await supabase
     .from('user_profiles')
     .update({
@@ -64,6 +71,7 @@ export const updateUserProfile = async (userId, updates) => {
 
 // Helper function to record login
 export const recordLogin = async (userId, metadata = {}) => {
+  if (!supabase) return
   try {
     // Update last login time
     await supabase
@@ -92,6 +100,7 @@ export const recordLogin = async (userId, metadata = {}) => {
 
 // Helper function to get full user data (auth user + profile)
 export const getFullUserData = async () => {
+  if (!supabase) return null
   const { data: { user }, error: authError } = await supabase.auth.getUser()
   if (authError) throw authError
   if (!user) return null
