@@ -3,25 +3,25 @@
 * { margin: 0; padding: 0; box-sizing: border-box; }
 
 :root {
-  /* Default theme colors (can be overridden per department) */
-  --primary: #7c3aed;
-  --primary-dark: #6d28d9;
-  --primary-light: rgba(124, 58, 237, 0.1);
-  --primary-glow: rgba(124, 58, 237, 0.25);
-  --accent: #da7756;
+  /* Default theme colors - Orange and Dark Gray */
+  --primary: #f97316;
+  --primary-dark: #ea580c;
+  --primary-light: rgba(249, 115, 22, 0.12);
+  --primary-glow: rgba(249, 115, 22, 0.25);
+  --accent: #fb923c;
   --success: #10b981;
   --danger: #ef4444;
   --warning: #f59e0b;
 
-  /* Dark mode (default) */
-  --bg-dark: #09090b;
-  --bg-card: #141416;
-  --bg-elevated: #1a1a1e;
-  --border: #27272a;
-  --border-subtle: #1f1f23;
+  /* Dark mode (default) - Darker grays */
+  --bg-dark: #0f0f0f;
+  --bg-card: #1a1a1a;
+  --bg-elevated: #252525;
+  --border: #2a2a2a;
+  --border-subtle: #1f1f1f;
   --text-primary: #fafafa;
-  --text-secondary: #a1a1aa;
-  --text-muted: #71717a;
+  --text-secondary: #a8a8a8;
+  --text-muted: #737373;
 }
 
 /* Light mode */
