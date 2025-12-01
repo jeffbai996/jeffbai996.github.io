@@ -342,11 +342,11 @@ export default function Portal() {
         <div className="container">
           <div className="priorities-header">
             <div>
-              <p className="eyebrow">Nationwide priorities</p>
-              <h3>Canon programs every citizen relies on</h3>
-              <p className="section-subtitle">Explore the fully built department sites for detailed policies, forms, and up-to-date announcements.</p>
+              <p className="eyebrow">Key Service Areas</p>
+              <h3>Core programs serving every citizen</h3>
+              <p className="section-subtitle">Explore our department sites for detailed policies, forms, and up-to-date announcements.</p>
             </div>
-            <a href="/DOJ_Praya.html" className="btn btn-accent">View justice updates</a>
+            <a href="#departments" className="btn btn-accent">View all departments</a>
           </div>
           <div className="priorities-grid">
             {priorities.map(priority => (
