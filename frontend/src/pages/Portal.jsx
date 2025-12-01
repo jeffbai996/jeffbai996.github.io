@@ -93,6 +93,15 @@ const departments = [
     description: 'Border security, customs duties, immigration services, and trade facilitation for the Republic.',
     color: '#0891b2',
     services: ['Customs Declarations', 'Immigration & Visas', 'Border Enforcement', 'Traveler Information']
+  },
+  {
+    id: 'legislative',
+    name: 'Legislative Council',
+    abbrev: 'LC',
+    url: '/LC_Praya.html',
+    description: 'The unicameral legislature of Praya, responsible for enacting laws and providing oversight.',
+    color: '#7c3aed',
+    services: ['View Legislation', 'Council Members', 'Session Calendar', 'Public Comment']
   }
 ]
 
@@ -263,7 +272,7 @@ export default function Portal() {
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                   <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
                 </svg>
-                <span>10 major departments & agencies</span>
+                <span>11 major departments & agencies</span>
               </div>
             </div>
             <div className="hero-actions">
@@ -633,6 +642,7 @@ export default function Portal() {
                 <li><a href="/Health_Praya.html">Health Department</a></li>
                 <li><a href="/Housing_Authority_Praya.html">Housing Authority</a></li>
                 <li><a href="/CBCA_Praya.html">Customs & Border Control</a></li>
+                <li><a href="/LC_Praya.html">Legislative Council</a></li>
               </ul>
             </div>
             <div className="footer-section">
