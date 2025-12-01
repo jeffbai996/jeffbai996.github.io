@@ -150,8 +150,21 @@ export default function Portal() {
         <div className="container">
           <div className="portal-logo">
             <div className="logo-emblem">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                <path d="M3 21h18M3 10h18M5 6l7-3 7 3M4 10v11M20 10v11M8 14v3M12 14v3M16 14v3"/>
+              <svg viewBox="0 0 24 24" fill="none" strokeWidth="2">
+                <defs>
+                  <clipPath id="leftHalf">
+                    <rect x="0" y="0" width="12" height="24" />
+                  </clipPath>
+                  <clipPath id="rightHalf">
+                    <rect x="12" y="0" width="12" height="24" />
+                  </clipPath>
+                </defs>
+                <g clipPath="url(#leftHalf)">
+                  <path stroke="#4b5563" d="M3 21h18M3 10h18M5 6l7-3 7 3M4 10v11M20 10v11M8 14v3M12 14v3M16 14v3"/>
+                </g>
+                <g clipPath="url(#rightHalf)">
+                  <path stroke="#f97316" d="M3 21h18M3 10h18M5 6l7-3 7 3M4 10v11M20 10v11M8 14v3M12 14v3M16 14v3"/>
+                </g>
               </svg>
             </div>
             <div className="logo-text">
@@ -226,9 +239,8 @@ export default function Portal() {
               </div>
             </div>
             <div className="hero-actions">
-              <a href="/BOP_Praya.html" className="btn btn-primary">Bank of Praya</a>
-              <a href="/Praya_Post.html" className="btn btn-primary">Praya Post</a>
-              <a href="#departments" className="btn btn-secondary">All Departments</a>
+              <a href="#departments" className="btn btn-primary">Browse Departments</a>
+              <a href="#services" className="btn btn-secondary">Featured Services</a>
             </div>
           </div>
         </div>
@@ -261,7 +273,7 @@ export default function Portal() {
         </div>
       </section>
 
-      <section className="featured-services">
+      <section className="featured-services" id="services">
         <div className="container">
           <div className="featured-header">
             <div>
@@ -363,6 +375,129 @@ export default function Portal() {
                 </svg>
               </span>
             </a>
+          </div>
+        </div>
+      </section>
+
+      <section className="digital-services">
+        <div className="container">
+          <div className="digital-header">
+            <div>
+              <p className="eyebrow">Digital Government</p>
+              <h2 className="section-title">Modern Services for Modern Citizens</h2>
+              <p className="section-subtitle">Access government services anytime, anywhere with our secure digital platform</p>
+            </div>
+          </div>
+          <div className="digital-grid">
+            <div className="digital-card">
+              <div className="digital-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <rect x="2" y="3" width="20" height="14" rx="2"></rect>
+                  <line x1="8" y1="21" x2="16" y2="21"></line>
+                  <line x1="12" y1="17" x2="12" y2="21"></line>
+                </svg>
+              </div>
+              <h3>Online Portal Access</h3>
+              <p>Manage all your government interactions through one unified account. Apply for permits, pay taxes, and access services 24/7.</p>
+              <div className="digital-stat">
+                <span className="digital-stat-number">98.7%</span>
+                <span className="digital-stat-label">Uptime reliability</span>
+              </div>
+            </div>
+            <div className="digital-card">
+              <div className="digital-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <rect x="5" y="2" width="14" height="20" rx="2"></rect>
+                  <line x1="12" y1="18" x2="12.01" y2="18"></line>
+                </svg>
+              </div>
+              <h3>Mobile Government</h3>
+              <p>Access critical services on the go with our mobile-optimized platform. Report issues, check applications, and receive real-time updates.</p>
+              <div className="digital-stat">
+                <span className="digital-stat-number">847K</span>
+                <span className="digital-stat-label">Monthly active users</span>
+              </div>
+            </div>
+            <div className="digital-card">
+              <div className="digital-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                  <path d="M9 12l2 2 4-4"></path>
+                </svg>
+              </div>
+              <h3>Bank-Level Security</h3>
+              <p>Your data is protected with end-to-end encryption, multi-factor authentication, and regular security audits following international standards.</p>
+              <div className="digital-stat">
+                <span className="digital-stat-number">ISO 27001</span>
+                <span className="digital-stat-label">Security certified</span>
+              </div>
+            </div>
+            <div className="digital-card">
+              <div className="digital-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                  <polyline points="7 10 12 15 17 10"></polyline>
+                  <line x1="12" y1="15" x2="12" y2="3"></line>
+                </svg>
+              </div>
+              <h3>Instant Document Access</h3>
+              <p>Download official certificates, tax records, and legal documents instantly. Digital signatures accepted for most government transactions.</p>
+              <div className="digital-stat">
+                <span className="digital-stat-number">2.3M</span>
+                <span className="digital-stat-label">Documents issued last year</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="announcements">
+        <div className="container">
+          <div className="announcements-header">
+            <div>
+              <p className="eyebrow">Latest Updates</p>
+              <h2 className="section-title">Government Announcements</h2>
+              <p className="section-subtitle">Stay informed about new policies, services, and important notices</p>
+            </div>
+            <a href="#news" className="btn btn-accent">View All News</a>
+          </div>
+          <div className="announcements-grid">
+            <div className="announcement-card announcement-featured">
+              <div className="announcement-badge">Policy Update</div>
+              <span className="announcement-date">November 28, 2024</span>
+              <h3>New Housing Subsidy Program Expanded</h3>
+              <p>The Housing Authority announces expansion of rental assistance programs to include middle-income families. Applications now open for eligible households earning up to ¤65,000 annually.</p>
+              <a href="/Housing_Authority_Praya.html" className="announcement-link">
+                Read full announcement
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <path d="M5 12h14M12 5l7 7-7 7"/>
+                </svg>
+              </a>
+            </div>
+            <div className="announcement-card">
+              <div className="announcement-badge">Service Launch</div>
+              <span className="announcement-date">November 25, 2024</span>
+              <h3>Digital ID Cards Now Available</h3>
+              <p>Apply for your digital government ID through the Interior Department portal. Accepted at all government facilities and participating businesses.</p>
+              <a href="/ID_Praya.html" className="announcement-link">
+                Learn more
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <path d="M5 12h14M12 5l7 7-7 7"/>
+                </svg>
+              </a>
+            </div>
+            <div className="announcement-card">
+              <div className="announcement-badge">Tax Notice</div>
+              <span className="announcement-date">November 20, 2024</span>
+              <h3>2025 Tax Filing Season Opens January 15</h3>
+              <p>Revenue Department reminds citizens that tax returns for 2024 are due by April 15, 2025. Early filers may receive refunds within 10 business days.</p>
+              <a href="/RD_Praya.html" className="announcement-link">
+                Tax information
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <path d="M5 12h14M12 5l7 7-7 7"/>
+                </svg>
+              </a>
+            </div>
           </div>
         </div>
       </section>
