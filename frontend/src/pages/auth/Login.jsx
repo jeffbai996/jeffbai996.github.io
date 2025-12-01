@@ -1,83 +1,32 @@
 import { useState } from 'react'
 import { Link, useNavigate, useLocation } from 'react-router-dom'
 import { useAuth } from '../../utils/AuthContext'
-import OTPInput from '../../components/auth/OTPInput'
 import './Auth.css'
 
 export default function Login() {
   const navigate = useNavigate()
   const location = useLocation()
-  const { login, verify2FA, resend2FA } = useAuth()
+  const { login } = useAuth()
 
-  const [step, setStep] = useState('credentials') // 'credentials' | '2fa'
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState(null)
-  const [otpError, setOtpError] = useState(null)
-
-  // 2FA state
-  const [userId, setUserId] = useState(null)
-  const [twoFactorMethod, setTwoFactorMethod] = useState(null)
-  const [maskedContact, setMaskedContact] = useState('')
-  const [resendCooldown, setResendCooldown] = useState(0)
 
   const from = location.state?.from?.pathname || '/'
 
-  const handleCredentialsSubmit = async (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
     setError(null)
     setLoading(true)
 
     try {
-      const result = await login(email, password)
-
-      if (result.requires2FA) {
-        setUserId(result.userId)
-        setTwoFactorMethod(result.method)
-        setMaskedContact(result.method === 'EMAIL_OTP' ? result.maskedEmail : result.maskedPhone)
-        setStep('2fa')
-      } else {
-        navigate(from, { replace: true })
-      }
-    } catch (err) {
-      setError(err.message)
-    } finally {
-      setLoading(false)
-    }
-  }
-
-  const handleOTPComplete = async (code) => {
-    setOtpError(null)
-    setLoading(true)
-
-    try {
-      await verify2FA(userId, code)
+      await login(email, password)
       navigate(from, { replace: true })
     } catch (err) {
-      setOtpError(err.message)
+      setError(err.message)
     } finally {
       setLoading(false)
-    }
-  }
-
-  const handleResend2FA = async () => {
-    if (resendCooldown > 0) return
-
-    try {
-      await resend2FA(userId)
-      setResendCooldown(60)
-      const interval = setInterval(() => {
-        setResendCooldown((prev) => {
-          if (prev <= 1) {
-            clearInterval(interval)
-            return 0
-          }
-          return prev - 1
-        })
-      }, 1000)
-    } catch (err) {
-      setError(err.message)
     }
   }
 
@@ -116,156 +65,94 @@ export default function Login() {
             </div>
           </div>
 
-          {step === 'credentials' ? (
-            <>
-              <div className="auth-header">
-                <h1>Welcome back</h1>
-                <p>Sign in to access government services</p>
+          <div className="auth-header">
+            <h1>Welcome back</h1>
+            <p>Sign in to access government services</p>
+          </div>
+
+          <form onSubmit={handleSubmit} className="auth-form">
+            {error && (
+              <div className="auth-error">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <circle cx="12" cy="12" r="10" />
+                  <line x1="12" y1="8" x2="12" y2="12" />
+                  <line x1="12" y1="16" x2="12.01" y2="16" />
+                </svg>
+                {error}
               </div>
+            )}
 
-              <form onSubmit={handleCredentialsSubmit} className="auth-form">
-                {error && (
-                  <div className="auth-error">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                      <circle cx="12" cy="12" r="10" />
-                      <line x1="12" y1="8" x2="12" y2="12" />
-                      <line x1="12" y1="16" x2="12.01" y2="16" />
-                    </svg>
-                    {error}
-                  </div>
-                )}
+            <div className="form-group">
+              <label htmlFor="email">Email address</label>
+              <input
+                type="email"
+                id="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="you@example.com"
+                required
+                autoComplete="email"
+                disabled={loading}
+              />
+            </div>
 
-                <div className="form-group">
-                  <label htmlFor="email">Email address</label>
-                  <input
-                    type="email"
-                    id="email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    placeholder="you@example.com"
-                    required
-                    autoComplete="email"
-                    disabled={loading}
-                  />
-                </div>
-
-                <div className="form-group">
-                  <div className="label-row">
-                    <label htmlFor="password">Password</label>
-                    <Link to="/forgot-password" className="forgot-link">
-                      Forgot password?
-                    </Link>
-                  </div>
-                  <input
-                    type="password"
-                    id="password"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    placeholder="Enter your password"
-                    required
-                    autoComplete="current-password"
-                    disabled={loading}
-                  />
-                </div>
-
-                <div className="form-group disclaimer">
-                  <label className="radio-disclaimer-label">
-                    <input type="radio" name="disclaimer" required />
-                    <span>
-                      By signing in, I agree to the{' '}
-                      <a href="#terms" target="_blank" rel="noopener noreferrer">Terms of Use</a>
-                      {' '}and acknowledge the{' '}
-                      <a href="#privacy" target="_blank" rel="noopener noreferrer">Privacy Statement</a>
-                    </span>
-                  </label>
-                </div>
-
-                <button type="submit" className="auth-button" disabled={loading}>
-                  {loading ? (
-                    <>
-                      <span className="spinner" />
-                      Signing in...
-                    </>
-                  ) : (
-                    'Sign in'
-                  )}
-                </button>
-              </form>
-
-              <div className="auth-divider">
-                <span>or</span>
+            <div className="form-group">
+              <div className="label-row">
+                <label htmlFor="password">Password</label>
+                <Link to="/forgot-password" className="forgot-link">
+                  Forgot password?
+                </Link>
               </div>
+              <input
+                type="password"
+                id="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                placeholder="Enter your password"
+                required
+                autoComplete="current-password"
+                disabled={loading}
+              />
+            </div>
 
-              <div className="auth-alt-methods">
-                <button className="alt-method-btn" disabled>
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                    <rect x="5" y="2" width="14" height="20" rx="2" />
-                    <line x1="12" y1="18" x2="12.01" y2="18" />
-                  </svg>
-                  Login with PrayaPass App
-                  <span className="coming-soon">Coming soon</span>
-                </button>
-              </div>
-            </>
-          ) : (
-            <>
-              <div className="auth-header">
-                <h1>Verify your identity</h1>
-                <p>
-                  Enter the 6-digit code sent to{' '}
-                  <strong>{maskedContact}</strong>
-                </p>
-              </div>
+            <div className="form-group disclaimer">
+              <label className="radio-disclaimer-label">
+                <input type="radio" name="disclaimer" required disabled={loading} />
+                <span>
+                  By signing in, I agree to the{' '}
+                  <a href="#terms" target="_blank" rel="noopener noreferrer">Terms of Use</a>
+                  {' '}and acknowledge the{' '}
+                  <a href="#privacy" target="_blank" rel="noopener noreferrer">Privacy Statement</a>
+                </span>
+              </label>
+            </div>
 
-              <div className="auth-form">
-                {error && (
-                  <div className="auth-error">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                      <circle cx="12" cy="12" r="10" />
-                      <line x1="12" y1="8" x2="12" y2="12" />
-                      <line x1="12" y1="16" x2="12.01" y2="16" />
-                    </svg>
-                    {error}
-                  </div>
-                )}
+            <button type="submit" className="auth-button" disabled={loading}>
+              {loading ? (
+                <>
+                  <span className="spinner" />
+                  Signing in...
+                </>
+              ) : (
+                'Sign in'
+              )}
+            </button>
+          </form>
 
-                <OTPInput
-                  length={6}
-                  onComplete={handleOTPComplete}
-                  disabled={loading}
-                  error={otpError}
-                />
+          <div className="auth-divider">
+            <span>or</span>
+          </div>
 
-                <div className="otp-actions">
-                  <button
-                    type="button"
-                    className="resend-btn"
-                    onClick={handleResend2FA}
-                    disabled={resendCooldown > 0}
-                  >
-                    {resendCooldown > 0
-                      ? `Resend code in ${resendCooldown}s`
-                      : 'Resend code'}
-                  </button>
-                </div>
-
-                <button
-                  type="button"
-                  className="back-btn"
-                  onClick={() => {
-                    setStep('credentials')
-                    setError(null)
-                    setOtpError(null)
-                  }}
-                >
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                    <path d="M19 12H5M12 19l-7-7 7-7" />
-                  </svg>
-                  Back to login
-                </button>
-              </div>
-            </>
-          )}
+          <div className="auth-alt-methods">
+            <button className="alt-method-btn" disabled>
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <rect x="5" y="2" width="14" height="20" rx="2" />
+                <line x1="12" y1="18" x2="12.01" y2="18" />
+              </svg>
+              Login with PrayaPass App
+              <span className="coming-soon">Coming soon</span>
+            </button>
+          </div>
 
           <div className="auth-footer">
             <p>
