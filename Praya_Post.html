@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Praya Post | Republic of Praya</title>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --primary: #f97316;
+      --primary-dark: #ea580c;
+      --primary-light: rgba(249, 115, 22, 0.12);
+      --accent: #fb923c;
+      --success: #10b981;
+      --danger: #ef4444;
+      --warning: #f59e0b;
+      --bg-dark: #0f0f0f;
+      --bg-card: #1a1a1a;
+      --bg-elevated: #252525;
+      --border: #2a2a2a;
+      --border-subtle: #1f1f1f;
+      --text-primary: #fafafa;
+      --text-secondary: #a8a8a8;
+      --text-muted: #737373;
+    }
+
+    body.light {
+      --bg-dark: #fafafa;
+      --bg-card: #ffffff;
+      --bg-elevated: #f4f4f5;
+      --border: #e4e4e7;
+      --border-subtle: #f4f4f5;
+      --text-primary: #09090b;
+      --text-secondary: #52525b;
+      --text-muted: #71717a;
+    }
+
+    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+    @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
+    @keyframes shimmer { 0% { background-position: -200% 0; } 100% { background-position: 200% 0; } }
+
+    body {
+      font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+      line-height: 1.6;
+      background: var(--bg-dark);
+      color: var(--text-primary);
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+      opacity: 0;
+      animation: fadeIn 0.4s ease-out 0.1s forwards;
+    }
+
+    html { scroll-behavior: smooth; }
+    a { color: var(--primary); text-decoration: none; transition: all 0.2s ease; }
+    a:hover { filter: brightness(1.15); }
+    ::selection { background: var(--primary); color: white; }
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+
+    /* Government Banner */
+    .gov-banner { background: var(--bg-card); color: white; padding: 10px 0; font-size: 13px; border-bottom: 1px solid var(--border); }
+    body.light .gov-banner { background: #1e3a8a; border-color: #1e3a8a; }
+    .gov-banner .container { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
+    .gov-banner-left { display: flex; align-items: center; gap: 10px; }
+    .gov-icon svg { width: 18px; height: 18px; }
+    .gov-banner-right { display: flex; align-items: center; gap: 16px; }
+    .gov-banner-right a { color: #9ca3af; font-size: 12px; }
+    .gov-how { color: #60a5fa; background: none; border: none; font-size: 13px; cursor: pointer; padding: 0; font-family: inherit; display: inline-flex; align-items: center; gap: 4px; }
+    .gov-how:hover { color: #93c5fd; }
+    .gov-how svg { transition: transform 0.2s; }
+    .gov-how.open svg { transform: rotate(180deg); }
+    .gov-dropdown { display: none; background: var(--bg-card); border-top: 1px solid var(--border); padding: 16px 0; }
+    body.light .gov-dropdown { background: #1e3a8a; }
+    .gov-dropdown.open { display: block; }
+    .gov-dropdown-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; max-width: 600px; }
+    .gov-dropdown-item { display: flex; gap: 12px; }
+    .gov-dropdown-icon { width: 36px; height: 36px; background: var(--border); border-radius: 8px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    body.light .gov-dropdown-icon { background: #1d4ed8; }
+    .gov-dropdown-icon svg { color: #93c5fd; }
+    .gov-dropdown-text h4 { font-size: 13px; font-weight: 600; margin-bottom: 4px; }
+    .gov-dropdown-text p { font-size: 12px; color: #cbd5e1; line-height: 1.5; }
+    .theme-btn { background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.12); color: #9ca3af; padding: 6px 12px; border-radius: 6px; cursor: pointer; font-size: 12px; font-weight: 500; font-family: inherit; transition: all 0.2s; }
+    .theme-btn:hover { background: rgba(255,255,255,0.12); color: white; }
+
+    /* Header */
+    .header { background: rgba(15, 15, 15, 0.9); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 100; }
+    body.light .header { background: rgba(255, 255, 255, 0.9); }
+    .header .container { display: flex; align-items: center; justify-content: space-between; height: 68px; }
+    .logo { display: flex; align-items: center; gap: 12px; cursor: pointer; }
+    .logo:hover { opacity: 0.9; }
+    .logo-mark { width: 42px; height: 42px; background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%); border-radius: 10px; display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden; }
+    .logo-mark::before { content: ''; position: absolute; width: 100%; height: 100%; background: linear-gradient(45deg, transparent 30%, rgba(255,255,255,0.18) 50%, transparent 70%); animation: shimmer 3s infinite; background-size: 200% 100%; }
+    .logo-mark svg { width: 22px; height: 22px; color: white; position: relative; z-index: 1; }
+    .logo-text h1 { font-size: 15px; font-weight: 800; color: var(--text-primary); letter-spacing: -0.02em; line-height: 1.2; white-space: nowrap; }
+    .logo-text .tagline { font-size: 11px; font-weight: 500; color: var(--text-muted); }
+    .nav { display: flex; gap: 2px; }
+    .nav-link { padding: 8px 16px; color: var(--text-secondary); font-size: 14px; font-weight: 500; border-radius: 8px; cursor: pointer; border: none; background: none; font-family: inherit; transition: all 0.15s; }
+    .nav-link:hover { background: var(--bg-elevated); color: var(--text-primary); }
+    .nav-link.active { background: var(--primary-light); color: var(--primary); }
+
+    /* Hero */
+    .hero { background: var(--bg-elevated); padding: 80px 0; border-bottom: 1px solid var(--border); position: relative; overflow: hidden; }
+    .hero-bg { position: absolute; inset: 0; overflow: hidden; opacity: 0.18; }
+    .hero-bg-shape { position: absolute; border-radius: 50%; filter: blur(80px); }
+    .hero-bg-shape:nth-child(1) { width: 520px; height: 520px; background: var(--primary); top: -150px; right: -140px; animation: float 10s ease-in-out infinite; }
+    .hero-bg-shape:nth-child(2) { width: 360px; height: 360px; background: var(--accent); bottom: -120px; left: 8%; animation: float 12s ease-in-out infinite 1s; }
+    .hero-bg-shape:nth-child(3) { width: 260px; height: 260px; background: var(--primary); top: 32%; left: 42%; animation: float 14s ease-in-out infinite 2s; }
+    .hero-content { max-width: 660px; position: relative; z-index: 1; }
+    .hero-badge { display: inline-flex; align-items: center; gap: 8px; background: var(--primary-light); color: var(--primary); font-size: 12px; font-weight: 700; padding: 8px 14px; border-radius: 100px; margin-bottom: 20px; border: 1px solid rgba(249, 115, 22, 0.25); letter-spacing: 0.02em; }
+    .hero h2 { font-size: 52px; font-weight: 800; line-height: 1.08; margin-bottom: 20px; letter-spacing: -0.03em; }
+    .hero h2 span { color: var(--primary); }
+    .hero p { color: var(--text-secondary); font-size: 18px; margin-bottom: 32px; line-height: 1.7; }
+    .btn { display: inline-flex; align-items: center; gap: 8px; padding: 14px 24px; font-size: 14px; font-weight: 700; border-radius: 10px; cursor: pointer; border: none; font-family: inherit; transition: all 0.2s ease; }
+    .btn-primary { background: var(--primary); color: white; }
+    .btn-primary:hover { background: var(--primary-dark); transform: translateY(-1px); box-shadow: 0 4px 12px rgba(249, 115, 22, 0.35); }
+    .btn-secondary { background: var(--bg-card); color: var(--text-secondary); margin-left: 10px; border: 1px solid var(--border); }
+    .btn-secondary:hover { background: var(--bg-elevated); color: var(--text-primary); }
+
+    /* Stats */
+    .stats-bar { background: var(--bg-dark); border-bottom: 1px solid var(--border); padding: 24px 0; }
+    .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+    .stat-item { text-align: center; padding: 20px; background: var(--bg-card); border-radius: 12px; border: 1px solid var(--border-subtle); cursor: pointer; transition: all 0.2s; }
+    .stat-item:hover { border-color: var(--primary); transform: translateY(-2px); }
+    .stat-label { font-size: 11px; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em; }
+    .stat-value { font-size: 28px; font-weight: 800; color: var(--primary); margin: 8px 0; letter-spacing: -0.02em; }
+    .stat-change { font-size: 12px; font-weight: 600; padding: 3px 8px; border-radius: 100px; color: var(--text-muted); background: var(--bg-elevated); }
+
+    /* Main Content */
+    .main { padding: 40px 0; }
+    .content-grid { display: grid; grid-template-columns: 2fr 1fr; gap: 24px; }
+    .card { background: var(--bg-card); border: 1px solid var(--border-subtle); border-radius: 16px; padding: 24px; margin-bottom: 24px; transition: border-color 0.2s; }
+    .card:hover { border-color: var(--border); }
+    .card-header { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; padding-bottom: 16px; border-bottom: 1px solid var(--border-subtle); }
+    .card-icon { width: 40px; height: 40px; background: var(--primary-light); border-radius: 10px; display: flex; align-items: center; justify-content: center; }
+    .card-icon svg { width: 20px; height: 20px; color: var(--primary); }
+    .card-title { font-size: 16px; font-weight: 700; }
+    .card-subtitle { font-size: 12px; color: var(--text-muted); margin-top: 2px; }
+
+    /* Form */
+    .form-group { margin-bottom: 16px; }
+    .form-group label { display: block; font-size: 13px; font-weight: 600; color: var(--text-primary); margin-bottom: 6px; }
+    .form-group input,
+    .form-group select { width: 100%; padding: 12px 14px; background: var(--bg-elevated); border: 1px solid var(--border); border-radius: 8px; font-size: 14px; color: var(--text-primary); font-family: inherit; transition: border-color 0.2s; }
+    .form-group input:focus,
+    .form-group select:focus { outline: none; border-color: var(--primary); }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .radio-group { display: grid; gap: 8px; }
+    .radio-item { display: flex; align-items: center; gap: 10px; padding: 12px; background: var(--bg-elevated); border: 1px solid var(--border-subtle); border-radius: 8px; cursor: pointer; transition: all 0.2s; }
+    .radio-item:hover { border-color: var(--border); }
+    .radio-item input[type="radio"] { accent-color: var(--primary); }
+    .radio-item-label { font-size: 14px; font-weight: 500; flex: 1; }
+    .radio-item-desc { font-size: 12px; color: var(--text-muted); }
+
+    /* Content text */
+    .content-text h3 { font-size: 18px; font-weight: 700; margin: 24px 0 12px; color: var(--text-primary); }
+    .content-text p { font-size: 14px; color: var(--text-secondary); margin-bottom: 14px; line-height: 1.7; }
+    .content-text ul { padding-left: 18px; margin: 14px 0; }
+    .content-text li { color: var(--text-secondary); margin-bottom: 8px; font-size: 14px; }
+
+    /* Info Box */
+    .info-box { background: var(--primary-light); border: 1px solid rgba(249, 115, 22, 0.2); border-radius: 12px; padding: 16px; margin: 16px 0; }
+    .info-box h4 { font-size: 14px; font-weight: 700; color: var(--primary); margin-bottom: 6px; }
+    .info-box p { font-size: 13px; color: var(--text-secondary); margin: 0; }
+
+    /* Footer */
+    .footer { background: var(--bg-card); border-top: 1px solid var(--border); padding: 48px 0 24px; margin-top: 48px; }
+    .footer-grid { display: grid; grid-template-columns: 1.5fr 1fr 1fr 1fr 1fr; gap: 32px; margin-bottom: 32px; }
+    .footer-brand h4 { font-size: 16px; font-weight: 800; margin-bottom: 12px; }
+    .footer-brand p { font-size: 13px; color: var(--text-secondary); line-height: 1.6; }
+    .footer-section h5 { font-size: 13px; font-weight: 700; margin-bottom: 14px; text-transform: uppercase; letter-spacing: 0.03em; }
+    .footer-section ul { list-style: none; }
+    .footer-section li { margin-bottom: 10px; }
+    .footer-section a { font-size: 14px; color: var(--text-secondary); cursor: pointer; }
+    .footer-section a:hover { color: var(--primary); }
+    .footer-bottom { display: flex; justify-content: space-between; align-items: center; padding-top: 24px; border-top: 1px solid var(--border-subtle); font-size: 13px; color: var(--text-muted); }
+    .footer-legal { display: flex; gap: 20px; }
+    .footer-legal a { color: var(--text-muted); }
+    .footer-legal a:hover { color: var(--primary); }
+
+    @media (max-width: 1024px) {
+      .content-grid { grid-template-columns: 1fr; }
+      .stats-grid { grid-template-columns: repeat(2, 1fr); }
+      .footer-grid { grid-template-columns: repeat(3, 1fr); }
+    }
+
+    @media (max-width: 768px) {
+      .nav { display: none; }
+      .hero h2 { font-size: 38px; }
+      .stats-grid { grid-template-columns: 1fr 1fr; }
+      .footer-grid { grid-template-columns: 1fr 1fr; }
+      .form-row { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 480px) {
+      .footer-grid { grid-template-columns: 1fr; }
+      .footer-bottom { flex-direction: column; gap: 12px; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+<div class="gov-banner">
+  <div class="container">
+    <div class="gov-banner-left">
+      <span class="gov-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M3 21h18"></path>
+          <path d="M5 21V7l8-4v18"></path>
+          <path d="M19 21V11l-6-4"></path>
+          <path d="M9 9v.01"></path>
+          <path d="M9 12v.01"></path>
+          <path d="M9 15v.01"></path>
+          <path d="M9 18v.01"></path>
+        </svg>
+      </span>
+      <span>An Official Government of Praya Website</span>
+      <button class="gov-how" onclick="toggleGovDropdown(this)">
+        Here's how you know
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
+      </button>
+    </div>
+    <div class="gov-banner-right">
+      <a href="/index.html">GOV.PRAYA</a>
+      <button class="theme-btn" onclick="toggleTheme()">Light</button>
+    </div>
+  </div>
+  <div class="gov-dropdown" id="govDropdown">
+    <div class="container">
+      <div class="gov-dropdown-inner">
+        <div class="gov-dropdown-item">
+          <div class="gov-dropdown-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+          </div>
+          <div class="gov-dropdown-text">
+            <h4>Official government websites use .gov.py</h4>
+            <p>A .gov.py website belongs to an official government organization in the Republic of Praya.</p>
+          </div>
+        </div>
+        <div class="gov-dropdown-item">
+          <div class="gov-dropdown-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+          </div>
+          <div class="gov-dropdown-text">
+            <h4>Secure .gov.py websites use HTTPS</h4>
+            <p>A lock icon or https:// means you've safely connected to the .gov.py website.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<header class="header">
+  <div class="container">
+    <div class="logo" onclick="window.location.href='/index.html'">
+      <div class="logo-mark">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
+          <polyline points="7.5 4.21 12 6.81 16.5 4.21"></polyline>
+          <polyline points="7.5 19.79 7.5 14.6 3 12"></polyline>
+          <polyline points="21 12 16.5 14.6 16.5 19.79"></polyline>
+          <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
+          <line x1="12" y1="22.08" x2="12" y2="12"></line>
+        </svg>
+      </div>
+      <div class="logo-text">
+        <h1>Praya Post</h1>
+        <div class="tagline">National Postal Service • 海旁郵政局</div>
+      </div>
+    </div>
+    <nav class="nav">
+      <button class="nav-link active">Home</button>
+      <button class="nav-link">Services</button>
+      <button class="nav-link">Tracking</button>
+      <button class="nav-link">Locations</button>
+    </nav>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="hero-bg">
+    <div class="hero-bg-shape"></div>
+    <div class="hero-bg-shape"></div>
+    <div class="hero-bg-shape"></div>
+  </div>
+  <div class="container">
+    <div class="hero-content">
+      <div class="hero-badge">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path></svg>
+        Connecting Every Community
+      </div>
+      <h2>Fast, Reliable <span>Postal Services</span></h2>
+      <p>Praya Post delivers parcels, packages, and documents throughout the Republic and beyond. From overnight delivery to international shipping, we're dedicated to creating an efficient way to ship in our territories.</p>
+      <div>
+        <button class="btn btn-primary" onclick="document.getElementById('shipping-form').scrollIntoView({behavior: 'smooth'})">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path></svg>
+          Request Shipping Label
+        </button>
+        <button class="btn btn-secondary">Track Package</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="stats-bar">
+  <div class="container">
+    <div class="stats-grid">
+      <div class="stat-item">
+        <div class="stat-label">Packages Delivered</div>
+        <div class="stat-value">4.2M</div>
+        <div class="stat-change">This year</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-label">Post Offices</div>
+        <div class="stat-value">124</div>
+        <div class="stat-change">Nationwide</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-label">Avg. Delivery Time</div>
+        <div class="stat-value">2.8</div>
+        <div class="stat-change">Days (domestic)</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-label">Customer Satisfaction</div>
+        <div class="stat-value">96%</div>
+        <div class="stat-change">5-star ratings</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="main">
+  <div class="container">
+    <div class="content-grid">
+      <div>
+        <div class="card" id="shipping-form">
+          <div class="card-header">
+            <div class="card-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path></svg>
+            </div>
+            <div>
+              <div class="card-title">Request Shipping Label</div>
+              <div class="card-subtitle">Complete the form to generate your prepaid shipping label</div>
+            </div>
+          </div>
+
+          <form>
+            <div class="form-row">
+              <div class="form-group">
+                <label>First Name</label>
+                <input type="text" placeholder="Enter first name" required>
+              </div>
+              <div class="form-group">
+                <label>Last Name</label>
+                <input type="text" placeholder="Enter last name" required>
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label>Phone Number</label>
+                <input type="tel" placeholder="+852 0000 0000" required>
+              </div>
+              <div class="form-group">
+                <label>Praya ID</label>
+                <input type="text" placeholder="Enter national ID number" required>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label>Email Address</label>
+              <input type="email" placeholder="your.email@example.com" required>
+            </div>
+
+            <div class="form-group">
+              <label>Drop-off Location</label>
+              <select required>
+                <option value="">Select a post office</option>
+                <option value="braemar">Braemar Post Office</option>
+                <option value="oakville">Oakville Post Office</option>
+                <option value="metro">Metropolitan Post Office</option>
+                <option value="central">Central Praya Post Office</option>
+                <option value="harbor">Harbor District Post Office</option>
+                <option value="uptown">Uptown Post Office</option>
+                <option value="westside">Westside Post Office</option>
+                <option value="eastport">Eastport Post Office</option>
+                <option value="northgate">Northgate Post Office</option>
+                <option value="southbay">South Bay Post Office</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label>Parcel Type</label>
+              <select required>
+                <option value="">Select parcel size</option>
+                <option value="box">PPS Standard Box (30x30x30 cm)</option>
+                <option value="large">Large Package (60x60x60 cm)</option>
+                <option value="custom">Custom Size (contact for quote)</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label>Shipping Service</label>
+              <div class="radio-group">
+                <label class="radio-item">
+                  <input type="radio" name="service" value="ground" checked>
+                  <div>
+                    <div class="radio-item-label">Ground Shipping</div>
+                    <div class="radio-item-desc">7-14 business days • ¤8.50</div>
+                  </div>
+                </label>
+                <label class="radio-item">
+                  <input type="radio" name="service" value="first-class">
+                  <div>
+                    <div class="radio-item-label">First-Class</div>
+                    <div class="radio-item-desc">3-5 business days • ¤16.00</div>
+                  </div>
+                </label>
+                <label class="radio-item">
+                  <input type="radio" name="service" value="express">
+                  <div>
+                    <div class="radio-item-label">Express</div>
+                    <div class="radio-item-desc">1-3 business days • ¤28.00</div>
+                  </div>
+                </label>
+                <label class="radio-item">
+                  <input type="radio" name="service" value="overnight">
+                  <div>
+                    <div class="radio-item-label">Guarantee Overnight</div>
+                    <div class="radio-item-desc">Next business day by 10:30 AM • ¤45.00</div>
+                  </div>
+                </label>
+              </div>
+            </div>
+
+            <button type="submit" class="btn btn-primary" style="width: 100%; justify-content: center;">Generate Shipping Label</button>
+          </form>
+        </div>
+
+        <div class="card">
+          <div class="content-text">
+            <h3>About Praya Post</h3>
+            <p>Established in 2011, Praya Post is the national postal service of the Republic of Praya, operating as a government agency funded by the Treasury. We're committed to providing reliable, affordable postal services to every community across our nation.</p>
+
+            <h3>Services We Offer</h3>
+            <ul>
+              <li>Domestic parcel and package delivery</li>
+              <li>International shipping to 180+ countries</li>
+              <li>Post office box rentals at all locations</li>
+              <li>Registered mail with signature confirmation</li>
+              <li>Express and overnight delivery options</li>
+              <li>Business bulk mailing services</li>
+              <li>Packaging supplies and shipping materials</li>
+            </ul>
+
+            <h3>Coverage Area</h3>
+            <p>Praya Post operates 124 post offices throughout the Republic, with service to every district including Braemar, Oakville, Metropolitan, Harbor District, and rural communities. International shipping available through partnerships with global postal unions.</p>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <div class="card">
+          <div class="card-header">
+            <div class="card-icon" style="background: rgba(16, 185, 129, 0.12);">
+              <svg viewBox="0 0 24 24" fill="none" stroke="var(--success)" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+            </div>
+            <div>
+              <div class="card-title">Service Status</div>
+              <div class="card-subtitle">All systems operational</div>
+            </div>
+          </div>
+          <div style="font-size:13px;color:var(--text-secondary);">
+            <div style="display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--border-subtle);">
+              <span>Domestic Shipping</span>
+              <span class="card-subtitle" style="color: var(--success); font-weight: 700;">● Normal</span>
+            </div>
+            <div style="display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--border-subtle);">
+              <span>International Shipping</span>
+              <span class="card-subtitle" style="color: var(--success); font-weight: 700;">● Normal</span>
+            </div>
+            <div style="display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--border-subtle);">
+              <span>Package Tracking</span>
+              <span class="card-subtitle" style="color: var(--success); font-weight: 700;">● Online</span>
+            </div>
+            <div style="display:flex;justify-content:space-between;padding:10px 0;">
+              <span>Post Office Operations</span>
+              <span class="card-subtitle" style="color: var(--success); font-weight: 700;">● Normal</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <div class="card-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><path d="M12 6v6l4 2"></path></svg>
+            </div>
+            <div>
+              <div class="card-title">Post Office Hours</div>
+              <div class="card-subtitle">Standard operating hours</div>
+            </div>
+          </div>
+          <div style="display:grid;gap:10px;color:var(--text-secondary);font-size:14px;">
+            <div style="display:flex;justify-content:space-between;">
+              <span>Monday - Friday</span>
+              <strong style="color:var(--primary);">08:00 - 18:00</strong>
+            </div>
+            <div style="display:flex;justify-content:space-between;">
+              <span>Saturday</span>
+              <strong style="color:var(--primary);">09:00 - 13:00</strong>
+            </div>
+            <div style="display:flex;justify-content:space-between;">
+              <span>Sunday</span>
+              <strong style="color:var(--text-muted);">Closed</strong>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <div class="card-icon" style="background: var(--accent-light);">
+              <svg viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+            </div>
+            <div>
+              <div class="card-title">Quick Links</div>
+              <div class="card-subtitle">Popular services</div>
+            </div>
+          </div>
+          <ul style="list-style:none; color: var(--text-secondary); font-size:14px; display:grid; gap:10px;">
+            <li style="cursor:pointer;">→ Track a package</li>
+            <li style="cursor:pointer;">→ Find nearest post office</li>
+            <li style="cursor:pointer;">→ Calculate shipping costs</li>
+            <li style="cursor:pointer;">→ Prohibited items list</li>
+            <li style="cursor:pointer;">→ File a claim</li>
+          </ul>
+        </div>
+
+        <div class="info-box">
+          <h4>Need Help?</h4>
+          <p>Contact our customer service: <a href="tel:+8543100000">+854 310 0000</a><br>Email: <a href="mailto:help@prayapost.gov.py">help@prayapost.gov.py</a></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <h4>Praya Post</h4>
+        <p>The national postal service of the Republic of Praya, dedicated to connecting communities through reliable, affordable mail and package delivery since 2011.</p>
+      </div>
+      <div class="footer-section">
+        <h5>Services</h5>
+        <ul>
+          <li><a>Domestic Shipping</a></li>
+          <li><a>International Mail</a></li>
+          <li><a>Express Delivery</a></li>
+          <li><a>Business Services</a></li>
+        </ul>
+      </div>
+      <div class="footer-section">
+        <h5>Tools</h5>
+        <ul>
+          <li><a>Track Package</a></li>
+          <li><a>Find Post Office</a></li>
+          <li><a>Shipping Calculator</a></li>
+          <li><a>Request Pickup</a></li>
+        </ul>
+      </div>
+      <div class="footer-section">
+        <h5>Resources</h5>
+        <ul>
+          <li><a>Shipping Guidelines</a></li>
+          <li><a>Prohibited Items</a></li>
+          <li><a>FAQs</a></li>
+          <li><a>File a Claim</a></li>
+        </ul>
+      </div>
+      <div class="footer-section">
+        <h5>About</h5>
+        <ul>
+          <li><a href="/index.html">Government Portal</a></li>
+          <li><a>Careers</a></li>
+          <li><a>Contact Us</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div>© 2025 Praya Post, Republic of Praya</div>
+      <div class="footer-legal">
+        <a>Accessibility</a>
+        <a>Privacy</a>
+        <a>Terms</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  function toggleTheme() {
+    document.body.classList.toggle('light');
+    const btn = document.querySelector('.theme-btn');
+    btn.textContent = document.body.classList.contains('light') ? 'Dark' : 'Light';
+  }
+
+  function toggleGovDropdown(btn) {
+    btn.classList.toggle('open');
+    document.getElementById('govDropdown').classList.toggle('open');
+  }
+</script>
+</body>
+</html>

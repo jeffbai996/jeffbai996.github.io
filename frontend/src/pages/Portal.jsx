@@ -1,3 +1,4 @@
+import React from 'react'
 import './Portal.css'
 
 const departments = [
@@ -54,6 +55,15 @@ const departments = [
     description: 'Tax collection, benefits, and financial services for individuals and businesses.',
     color: '#0ea5e9',
     services: ['Tax Filing', 'Business Accounts', 'Benefits', 'Compliance']
+  },
+  {
+    id: 'post',
+    name: 'Praya Post',
+    abbrev: 'PP',
+    url: '/Praya_Post.html',
+    description: 'National postal service providing domestic and international mail and package delivery.',
+    color: '#f97316',
+    services: ['Package Delivery', 'International Mail', 'Express Shipping', 'P.O. Boxes']
   }
 ]
 
@@ -85,6 +95,8 @@ const quickLinks = [
 ]
 
 export default function Portal() {
+  const [servicesOpen, setServicesOpen] = React.useState(false);
+
   return (
     <>
       <header className="portal-header">
@@ -100,6 +112,37 @@ export default function Portal() {
               <span className="tagline">Official Government Portal</span>
             </div>
           </div>
+          <nav className="portal-nav">
+            <div
+              className="nav-dropdown"
+              onMouseEnter={() => setServicesOpen(true)}
+              onMouseLeave={() => setServicesOpen(false)}
+            >
+              <button className="nav-link">
+                Services
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <path d="M6 9l6 6 6-6"/>
+                </svg>
+              </button>
+              {servicesOpen && (
+                <div className="dropdown-menu">
+                  <div className="dropdown-grid">
+                    {departments.map(dept => (
+                      <a key={dept.id} href={dept.url} className="dropdown-item">
+                        <div className="dropdown-item-icon" style={{background: `color-mix(in srgb, ${dept.color} 15%, transparent)`, color: dept.color}}>
+                          {dept.abbrev}
+                        </div>
+                        <div>
+                          <div className="dropdown-item-title">{dept.name}</div>
+                          <div className="dropdown-item-desc">{dept.description.substring(0, 60)}...</div>
+                        </div>
+                      </a>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
+          </nav>
         </div>
       </header>
 
@@ -247,6 +290,7 @@ export default function Portal() {
                 <li><a href="/DOJ_Praya.html">Department of Justice</a></li>
                 <li><a href="/ID_Praya.html">Interior Department</a></li>
                 <li><a href="/RD_Praya.html">Revenue Department</a></li>
+                <li><a href="/Praya_Post.html">Praya Post</a></li>
               </ul>
             </div>
             <div className="footer-section">
