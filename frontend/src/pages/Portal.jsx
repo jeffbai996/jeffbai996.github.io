@@ -64,6 +64,15 @@ const departments = [
     description: 'National postal service providing domestic and international mail and package delivery.',
     color: '#f97316',
     services: ['Package Delivery', 'International Mail', 'Express Shipping', 'P.O. Boxes']
+  },
+  {
+    id: 'health',
+    name: 'Health Department',
+    abbrev: 'HD',
+    url: '/Health_Praya.html',
+    description: 'Public health services, disease control, healthcare licensing, and health statistics.',
+    color: '#dc2626',
+    services: ['Public Health', 'Disease Control', 'Healthcare Licensing', 'Health Statistics']
   }
 ]
 
@@ -175,7 +184,7 @@ export default function Portal() {
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                   <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
                 </svg>
-                <span>7 major departments & agencies</span>
+                <span>8 major departments & agencies</span>
               </div>
             </div>
             <div className="hero-actions">
@@ -399,6 +408,7 @@ export default function Portal() {
                 <li><a href="/ID_Praya.html">Interior Department</a></li>
                 <li><a href="/RD_Praya.html">Revenue Department</a></li>
                 <li><a href="/Praya_Post.html">Praya Post</a></li>
+                <li><a href="/Health_Praya.html">Health Department</a></li>
               </ul>
             </div>
             <div className="footer-section">
