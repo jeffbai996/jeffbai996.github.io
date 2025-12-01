@@ -92,10 +92,10 @@
     .ctb-logo { display: flex; align-items: center; gap: 12px; cursor: pointer; }
     .ctb-logo:hover { opacity: 0.85; }
     .logo-mark { width: 42px; height: 42px; background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%); border-radius: 10px; display: flex; align-items: center; justify-content: center; position: relative; }
-    .logo-mark::before { content: ''; position: absolute; width: 20px; height: 20px; background: rgba(255,255,255,0.2); border-radius: 50%; }
+    .logo-mark::before { content: ''; position: absolute; width: 26px; height: 26px; background: rgba(255,255,255,0.16); border-radius: 8px; transform: rotate(12deg); }
     .logo-mark svg { width: 22px; height: 22px; color: white; position: relative; z-index: 1; }
     .logo-text h1 { font-size: 17px; font-weight: 700; color: var(--text-primary); letter-spacing: -0.02em; line-height: 1.2; }
-    .logo-text .tagline { font-size: 11px; font-weight: 500; color: var(--text-muted); }
+    .logo-text .tagline { font-size: 10px; font-weight: 500; color: var(--text-muted); white-space: nowrap; letter-spacing: -0.01em; }
     .nav { display: flex; gap: 2px; }
     .nav-link { padding: 8px 16px; color: var(--text-secondary); font-size: 14px; font-weight: 500; border-radius: 8px; cursor: pointer; border: none; background: none; font-family: inherit; }
     .nav-link:hover { background: var(--bg-elevated); color: var(--text-primary); }
@@ -337,7 +337,13 @@
   <div class="container">
     <div class="ctb-logo" onclick="showPage('home')">
       <div class="logo-mark">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L12 6M12 18L12 22M6.34 6.34L4.93 4.93M19.07 19.07L17.66 17.66M2 12L6 12M18 12L22 12M6.34 17.66L4.93 19.07M19.07 4.93L17.66 6.34"/><circle cx="12" cy="12" r="4"/></svg>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round">
+          <path d="M12 3.5 6 6.75v3.6c0 3.12 2.52 6.25 6 7.9 3.48-1.65 6-4.78 6-7.9v-3.6z"/>
+          <path d="M12 6.5c-.8 1.45-1.26 3.11-1.26 4.74 0 .53.03 1.05.1 1.56"/>
+          <path d="M12 6.5c.8 1.45 1.26 3.11 1.26 4.74 0 .53-.03 1.05-.1 1.56"/>
+          <path d="M9.75 12.4c.7.34 1.46.53 2.25.53.79 0 1.55-.19 2.25-.53"/>
+          <path d="M10.75 15.5h2.5"/>
+        </svg>
       </div>
       <div class="logo-text">
         <h1>Cannabis Tax Bureau</h1>
@@ -583,6 +589,17 @@
               <h4>Note: Medical Cannabis</h4>
               <p>The CTB is <strong>not</strong> responsible for the medical cannabis system. For inquiries about Praya's MCAP system, please visit the appropriate department page on <a href="https://www.govpraya.org">GOV.PRAYA</a>.</p>
             </div>
+            <h3>Mission Pillars</h3>
+            <ul>
+              <li><strong>Safety &amp; Health:</strong> Every legal product is tested, tracked, and labeled to protect consumers and communities.</li>
+              <li><strong>Equity &amp; Access:</strong> Policies ensure responsible adults can participate in the market while marginalized operators have a clear path to licensing.</li>
+              <li><strong>Transparency &amp; Trust:</strong> Taxes, licensing, and enforcement are published openly to sustain confidence in the legal system.</li>
+              <li><strong>Innovation &amp; Research:</strong> Partnerships with academic institutions advance science-based policy and product standards.</li>
+            </ul>
+            <div class="info-box">
+              <h4>Mission Statement</h4>
+              <p>Guided by the Inland Revenue Department, the Cannabis Tax Bureau builds and defends a legal, strong, equitable, and free cannabis market for adults over 18—grounded in sensible taxation, responsible licensing, and rigorous consumer protections.</p>
+            </div>
             <h3>History</h3>
             <p>The Cannabis Tax Bureau was established in March 2015 following the passage of the Cannabis Taxation and Regulation Act. Under the leadership of the Inland Revenue Department, the CTB has overseen the growth of a regulated cannabis industry that prioritizes public safety, consumer protection, and economic opportunity.</p>
             <p>Since legalization, Praya has seen a significant reduction in illicit cannabis markets, with tax revenues supporting public health initiatives, education programs, and community development projects.</p>
@@ -678,6 +695,19 @@
             <div class="info-box">
               <h4>Processing Time</h4>
               <p>Standard applications are processed within <strong>45–60 business days</strong>. Expedited processing (30 days) is available for an additional fee.</p>
+            </div>
+
+            <h3>Application Readiness</h3>
+            <ul>
+              <li><strong>Entity credentials:</strong> Include your PRY business number and primary contact for compliance notices.</li>
+              <li><strong>Zoning confirmation:</strong> Upload municipal or county authorization for the proposed site.</li>
+              <li><strong>Security and safety plan:</strong> Summarize surveillance, access control, and secure storage measures.</li>
+              <li><strong>Financial disclosures:</strong> Provide ownership structure and capital sources for all principals.</li>
+              <li><strong>Community engagement:</strong> Outline how your operation supports local jobs and equitable participation.</li>
+            </ul>
+            <div class="info-box">
+              <h4>Quarterly Intake Windows</h4>
+              <p>Complete submissions received by March 15, June 15, September 15, and December 15 enter the next review cycle. Incomplete applications roll to the following window once all required materials are submitted.</p>
             </div>
           </div>
         </div>
@@ -1115,7 +1145,12 @@
               <li><strong>Annual reconciliation:</strong> Due by March 31</li>
               <li><strong>Payment:</strong> Electronic payment required for amounts over $500</li>
             </ul>
-            
+
+            <div class="info-box">
+              <h4>Example Tax Calculation</h4>
+              <p>A vertically integrated operator selling a $100 product would pay a 4.0% production tax ($4.00), a 2.5% processing tax ($2.50), and collect an 8.25% sales tax ($8.25) from the customer at checkout.</p>
+            </div>
+
             <div class="warning-box">
               <h4>Late Filing Penalties</h4>
               <p>Late returns incur a penalty of 5% of tax owed plus 1% per month (maximum 25%). Interest accrues at the prime rate plus 4%.</p>
@@ -1164,7 +1199,12 @@
               <li><strong>Step 4:</strong> Submit CTB research license application with University approval</li>
               <li><strong>Step 5:</strong> Receive CTB license and coordinate sample acquisition</li>
             </ul>
-            
+
+            <div class="info-box">
+              <h4>Ethics &amp; Data Access</h4>
+              <p>Projects that involve human subjects or data collection must include an institutional ethics approval. Research findings that inform public policy should be shared with CTB within 90 days of publication to support evidence-based regulation.</p>
+            </div>
+
             <h3>Current Research Areas</h3>
             <p>The University of Praya is currently conducting research in the following areas:</p>
             <ul>
@@ -1224,7 +1264,12 @@
               <li>Display their license prominently</li>
               <li>Issue receipts for all purchases</li>
             </ul>
-            
+
+            <div class="info-box">
+              <h4>Transport &amp; Travel</h4>
+              <p>Keep cannabis in sealed, labeled packaging when traveling between licensed sites and your residence. Do not transport cannabis across national borders or outside Praya jurisdiction.</p>
+            </div>
+
             <h3>Product Safety</h3>
             <p>All legal cannabis products in Praya must be tested for:</p>
             <ul>
