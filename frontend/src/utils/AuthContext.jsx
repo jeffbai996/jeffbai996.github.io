@@ -14,8 +14,8 @@ export function AuthProvider({ children }) {
       const userData = await getFullUserData()
       setUser(userData)
       return userData
-    } catch (error) {
-      console.error('Error fetching user:', error)
+    } catch (err) {
+      console.error('Error fetching user:', err)
       setUser(null)
       return null
     }
@@ -184,7 +184,7 @@ export function AuthProvider({ children }) {
     setError(null)
     try {
       const { error } = await supabase.auth.resetPasswordForEmail(email, {
-        redirectTo: `${window.location.origin}/reset-password`,
+        redirectTo: `${window.location.origin}/forgot-password?type=recovery`,
       })
 
       if (error) throw error
@@ -216,9 +216,21 @@ export function AuthProvider({ children }) {
   }
 
   // Change password (when logged in)
-  const changePassword = async (newPassword) => {
+  const changePassword = async (currentPassword, newPassword) => {
     setError(null)
     try {
+      // Re-authenticate by signing in with current password first
+      const { data: { user: currentUser } } = await supabase.auth.getUser()
+      if (!currentUser?.email) throw new Error('Not authenticated')
+
+      const { error: signInError } = await supabase.auth.signInWithPassword({
+        email: currentUser.email,
+        password: currentPassword,
+      })
+
+      if (signInError) throw new Error('Current password is incorrect')
+
+      // Now update to new password
       const { error } = await supabase.auth.updateUser({
         password: newPassword,
       })
@@ -265,164 +277,44 @@ export function AuthProvider({ children }) {
     }
   }
 
-  // Get 2FA settings
+  // Placeholder 2FA settings (feature not implemented)
   const get2FASettings = async () => {
-    if (!user) throw new Error('Not authenticated')
-
-    const { data, error } = await supabase
-      .from('user_profiles')
-      .select('two_factor_enabled, two_factor_method, phone_verified')
-      .eq('id', user.id)
-      .single()
-
-    if (error) throw error
-
     return {
-      enabled: data.two_factor_enabled,
-      method: data.two_factor_method,
-      phoneVerified: data.phone_verified,
-      availableMethods: [
-        { id: 'EMAIL_OTP', name: 'Email', available: true },
-        { id: 'SMS_OTP', name: 'SMS', available: data.phone_verified },
-        { id: 'TOTP', name: 'Authenticator App', available: false },
-      ],
+      enabled: false,
+      method: null,
+      phoneVerified: false,
+      availableMethods: [],
     }
   }
 
-  // Enable 2FA
-  const enable2FA = async (method) => {
-    setError(null)
-    try {
-      if (!user) throw new Error('Not authenticated')
-
-      // Update 2FA settings in profile
-      const { error } = await supabase
-        .from('user_profiles')
-        .update({
-          two_factor_enabled: true,
-          two_factor_method: method,
-          updated_at: new Date().toISOString(),
-        })
-        .eq('id', user.id)
-
-      if (error) throw error
-
-      // Refresh user data
-      await fetchUser()
-
-      return { message: '2FA enabled successfully' }
-    } catch (err) {
-      const errorMessage = err.message || 'Failed to enable 2FA'
-      setError(errorMessage)
-      throw new Error(errorMessage)
-    }
+  // Placeholder functions for features coming soon
+  const enable2FA = async () => {
+    throw new Error('Two-factor authentication coming soon')
   }
 
-  // Disable 2FA
+  const confirm2FA = async () => {
+    throw new Error('Two-factor authentication coming soon')
+  }
+
   const disable2FA = async () => {
-    setError(null)
-    try {
-      if (!user) throw new Error('Not authenticated')
-
-      const { error } = await supabase
-        .from('user_profiles')
-        .update({
-          two_factor_enabled: false,
-          updated_at: new Date().toISOString(),
-        })
-        .eq('id', user.id)
-
-      if (error) throw error
-
-      // Refresh user data
-      await fetchUser()
-
-      return { message: '2FA disabled successfully' }
-    } catch (err) {
-      const errorMessage = err.message || 'Failed to disable 2FA'
-      setError(errorMessage)
-      throw new Error(errorMessage)
-    }
+    throw new Error('Two-factor authentication coming soon')
   }
 
-  // Request phone verification
-  const requestPhoneVerification = async (phone) => {
-    setError(null)
-    try {
-      if (!user) throw new Error('Not authenticated')
-
-      // Update phone number
-      const { error: updateError } = await supabase
-        .from('user_profiles')
-        .update({
-          phone: phone,
-          phone_verified: false,
-          updated_at: new Date().toISOString(),
-        })
-        .eq('id', user.id)
-
-      if (updateError) throw updateError
-
-      // Note: Supabase doesn't have built-in SMS verification in free tier
-      // You would need to integrate Twilio or similar service
-      // For now, we'll mark it as verified immediately (development only)
-      console.warn('SMS verification not implemented - marking as verified')
-
-      const { error: verifyError } = await supabase
-        .from('user_profiles')
-        .update({
-          phone_verified: true,
-        })
-        .eq('id', user.id)
-
-      if (verifyError) throw verifyError
-
-      await fetchUser()
-
-      return { message: 'Phone number added' }
-    } catch (err) {
-      const errorMessage = err.message || 'Failed to verify phone'
-      setError(errorMessage)
-      throw new Error(errorMessage)
-    }
+  const requestPhoneVerification = async () => {
+    throw new Error('Phone verification coming soon')
   }
 
-  // Get sessions
+  const confirmPhoneVerification = async () => {
+    throw new Error('Phone verification coming soon')
+  }
+
+  // Placeholder session management
   const getSessions = async () => {
-    if (!user) throw new Error('Not authenticated')
-
-    const { data, error } = await supabase
-      .from('user_sessions')
-      .select('*')
-      .eq('user_id', user.id)
-      .is('revoked_at', null)
-      .order('created_at', { ascending: false })
-
-    if (error) throw error
-
-    return data || []
+    return []
   }
 
-  // Revoke session
-  const revokeSession = async (sessionId) => {
-    setError(null)
-    try {
-      if (!user) throw new Error('Not authenticated')
-
-      const { error } = await supabase
-        .from('user_sessions')
-        .update({ revoked_at: new Date().toISOString() })
-        .eq('id', sessionId)
-        .eq('user_id', user.id)
-
-      if (error) throw error
-
-      return { message: 'Session revoked successfully' }
-    } catch (err) {
-      const errorMessage = err.message || 'Failed to revoke session'
-      setError(errorMessage)
-      throw new Error(errorMessage)
-    }
+  const revokeSession = async () => {
+    throw new Error('Session management coming soon')
   }
 
   // Context value
@@ -442,13 +334,15 @@ export function AuthProvider({ children }) {
     updateProfile,
     get2FASettings,
     enable2FA,
+    confirm2FA,
     disable2FA,
     requestPhoneVerification,
+    confirmPhoneVerification,
     getSessions,
     revokeSession,
     fetchUser,
     clearError: () => setError(null),
-    supabase, // Export supabase client for advanced usage
+    supabase,
   }
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>
