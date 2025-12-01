@@ -1,22 +1,22 @@
 import { useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, useNavigate, useSearchParams } from 'react-router-dom'
 import { useAuth } from '../../utils/AuthContext'
-import OTPInput from '../../components/auth/OTPInput'
 import './Auth.css'
 
 export default function ForgotPassword() {
   const navigate = useNavigate()
+  const [searchParams] = useSearchParams()
   const { forgotPassword, resetPassword } = useAuth()
 
-  const [step, setStep] = useState('email') // 'email' | 'code' | 'newPassword'
+  // Check if we're in reset mode (came from email link)
+  const isResetMode = searchParams.get('type') === 'recovery'
+
   const [email, setEmail] = useState('')
-  const [code, setCode] = useState('')
   const [newPassword, setNewPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState(null)
-  const [otpError, setOtpError] = useState(null)
-  const [resendCooldown, setResendCooldown] = useState(0)
+  const [emailSent, setEmailSent] = useState(false)
 
   const passwordRequirements = [
     { regex: /.{8,}/, label: 'At least 8 characters' },
@@ -40,47 +40,11 @@ export default function ForgotPassword() {
 
     try {
       await forgotPassword(email)
-      setStep('code')
-      setResendCooldown(60)
-      const interval = setInterval(() => {
-        setResendCooldown((prev) => {
-          if (prev <= 1) {
-            clearInterval(interval)
-            return 0
-          }
-          return prev - 1
-        })
-      }, 1000)
+      setEmailSent(true)
     } catch (err) {
       setError(err.message)
     } finally {
       setLoading(false)
-    }
-  }
-
-  const handleOTPComplete = async (inputCode) => {
-    setCode(inputCode)
-    setOtpError(null)
-    setStep('newPassword')
-  }
-
-  const handleResend = async () => {
-    if (resendCooldown > 0) return
-
-    try {
-      await forgotPassword(email)
-      setResendCooldown(60)
-      const interval = setInterval(() => {
-        setResendCooldown((prev) => {
-          if (prev <= 1) {
-            clearInterval(interval)
-            return 0
-          }
-          return prev - 1
-        })
-      }, 1000)
-    } catch (err) {
-      setError(err.message)
     }
   }
 
@@ -102,16 +66,12 @@ export default function ForgotPassword() {
     setLoading(true)
 
     try {
-      await resetPassword(email, code, newPassword)
+      await resetPassword(newPassword)
       navigate('/login', {
         state: { message: 'Password reset successfully. Please login with your new password.' }
       })
     } catch (err) {
       setError(err.message)
-      if (err.message.includes('code')) {
-        setStep('code')
-        setOtpError(err.message)
-      }
     } finally {
       setLoading(false)
     }
@@ -154,113 +114,8 @@ export default function ForgotPassword() {
             </div>
           </div>
 
-          {step === 'email' && (
-            <>
-              <div className="auth-header">
-                <h1>Reset your password</h1>
-                <p>Enter your email and we'll send you a code to reset your password</p>
-              </div>
-
-              <form onSubmit={handleEmailSubmit} className="auth-form">
-                {error && (
-                  <div className="auth-error">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                      <circle cx="12" cy="12" r="10" />
-                      <line x1="12" y1="8" x2="12" y2="12" />
-                      <line x1="12" y1="16" x2="12.01" y2="16" />
-                    </svg>
-                    {error}
-                  </div>
-                )}
-
-                <div className="form-group">
-                  <label htmlFor="email">Email address</label>
-                  <input
-                    type="email"
-                    id="email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    placeholder="you@example.com"
-                    required
-                    autoComplete="email"
-                    disabled={loading}
-                  />
-                </div>
-
-                <button type="submit" className="auth-button" disabled={loading}>
-                  {loading ? (
-                    <>
-                      <span className="spinner" />
-                      Sending code...
-                    </>
-                  ) : (
-                    'Send reset code'
-                  )}
-                </button>
-              </form>
-            </>
-          )}
-
-          {step === 'code' && (
-            <>
-              <div className="auth-header">
-                <h1>Enter verification code</h1>
-                <p>
-                  We've sent a 6-digit code to <strong>{email}</strong>
-                </p>
-              </div>
-
-              <div className="auth-form">
-                {error && (
-                  <div className="auth-error">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                      <circle cx="12" cy="12" r="10" />
-                      <line x1="12" y1="8" x2="12" y2="12" />
-                      <line x1="12" y1="16" x2="12.01" y2="16" />
-                    </svg>
-                    {error}
-                  </div>
-                )}
-
-                <OTPInput
-                  length={6}
-                  onComplete={handleOTPComplete}
-                  disabled={loading}
-                  error={otpError}
-                />
-
-                <div className="otp-actions">
-                  <button
-                    type="button"
-                    className="resend-btn"
-                    onClick={handleResend}
-                    disabled={resendCooldown > 0}
-                  >
-                    {resendCooldown > 0
-                      ? `Resend code in ${resendCooldown}s`
-                      : "Didn't receive the code? Resend"}
-                  </button>
-                </div>
-
-                <button
-                  type="button"
-                  className="back-btn"
-                  onClick={() => {
-                    setStep('email')
-                    setError(null)
-                    setOtpError(null)
-                  }}
-                >
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                    <path d="M19 12H5M12 19l-7-7 7-7" />
-                  </svg>
-                  Change email
-                </button>
-              </div>
-            </>
-          )}
-
-          {step === 'newPassword' && (
+          {/* Reset Mode - User clicked email link */}
+          {isResetMode && (
             <>
               <div className="auth-header">
                 <h1>Create new password</h1>
@@ -331,6 +186,86 @@ export default function ForgotPassword() {
                     </>
                   ) : (
                     'Reset password'
+                  )}
+                </button>
+              </form>
+            </>
+          )}
+
+          {/* Email Sent Success */}
+          {!isResetMode && emailSent && (
+            <>
+              <div className="auth-header">
+                <div className="success-icon">
+                  <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#10b981" strokeWidth="2">
+                    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
+                    <polyline points="22 4 12 14.01 9 11.01" />
+                  </svg>
+                </div>
+                <h1>Check your email</h1>
+                <p>
+                  We've sent a password reset link to <strong>{email}</strong>.
+                  Click the link in the email to reset your password.
+                </p>
+              </div>
+
+              <div className="auth-form">
+                <p className="email-note">
+                  Didn't receive the email? Check your spam folder or{' '}
+                  <button
+                    type="button"
+                    className="link-button"
+                    onClick={() => setEmailSent(false)}
+                  >
+                    try again
+                  </button>
+                </p>
+              </div>
+            </>
+          )}
+
+          {/* Request Reset Form */}
+          {!isResetMode && !emailSent && (
+            <>
+              <div className="auth-header">
+                <h1>Reset your password</h1>
+                <p>Enter your email and we'll send you a link to reset your password</p>
+              </div>
+
+              <form onSubmit={handleEmailSubmit} className="auth-form">
+                {error && (
+                  <div className="auth-error">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                      <circle cx="12" cy="12" r="10" />
+                      <line x1="12" y1="8" x2="12" y2="12" />
+                      <line x1="12" y1="16" x2="12.01" y2="16" />
+                    </svg>
+                    {error}
+                  </div>
+                )}
+
+                <div className="form-group">
+                  <label htmlFor="email">Email address</label>
+                  <input
+                    type="email"
+                    id="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    placeholder="you@example.com"
+                    required
+                    autoComplete="email"
+                    disabled={loading}
+                  />
+                </div>
+
+                <button type="submit" className="auth-button" disabled={loading}>
+                  {loading ? (
+                    <>
+                      <span className="spinner" />
+                      Sending link...
+                    </>
+                  ) : (
+                    'Send reset link'
                   )}
                 </button>
               </form>
