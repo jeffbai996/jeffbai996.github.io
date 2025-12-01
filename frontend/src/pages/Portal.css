@@ -1020,6 +1020,69 @@ body.light .portal-header {
 }
 
 @media (max-width: 768px) {
+  .portal-header .container {
+    height: auto;
+    padding-top: 12px;
+    padding-bottom: 12px;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  .portal-logo {
+    gap: 10px;
+  }
+
+  .logo-emblem {
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
+  }
+
+  .logo-emblem svg {
+    width: 18px;
+    height: 18px;
+  }
+
+  .logo-text h1 {
+    font-size: 14px;
+  }
+
+  .logo-text .tagline {
+    font-size: 10px;
+  }
+
+  .portal-nav {
+    gap: 6px;
+  }
+
+  .nav-login-btn {
+    padding: 6px 10px 6px 6px;
+    font-size: 11px;
+    gap: 6px;
+  }
+
+  .nav-login-btn svg {
+    width: 14px;
+    height: 14px;
+  }
+
+  .nav-account-btn {
+    padding: 4px 8px 4px 4px;
+    font-size: 11px;
+    gap: 6px;
+  }
+
+  .nav-avatar {
+    width: 24px;
+    height: 24px;
+    font-size: 10px;
+  }
+
+  .nav-link {
+    padding: 6px 10px;
+    font-size: 12px;
+  }
+
   .portal-hero { padding: 48px 0; }
   .portal-hero h2 { font-size: 32px; }
   .hero-features { grid-template-columns: 1fr; }

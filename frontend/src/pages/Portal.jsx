@@ -645,12 +645,7 @@ export default function Portal() {
             </div>
           </div>
           <div className="footer-bottom">
-            <span>&copy; 2024 Republic of Praya. All rights reserved.</span>
-            <div className="footer-legal">
-              <a href="#">Terms of Service</a>
-              <a href="#">Privacy</a>
-              <a href="#">Cookies</a>
-            </div>
+            <span>&copy; 2011-2026 Republic of Praya</span>
           </div>
         </div>
       </footer>
