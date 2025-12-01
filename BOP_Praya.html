@@ -1,0 +1,967 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bank of Praya | Republic of Praya</title>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --primary: #0ea5e9;
+      --primary-dark: #0284c7;
+      --primary-light: rgba(14, 165, 233, 0.12);
+      --accent: #06b6d4;
+      --accent-light: rgba(6, 182, 212, 0.12);
+      --success: #10b981;
+      --danger: #ef4444;
+      --warning: #f59e0b;
+      --bg-dark: #0b1020;
+      --bg-card: #101726;
+      --bg-elevated: #0f172a;
+      --border: #1f2937;
+      --border-subtle: #0f172a;
+      --text-primary: #f8fafc;
+      --text-secondary: #cbd5e1;
+      --text-muted: #94a3b8;
+    }
+
+    body.light {
+      --bg-dark: #f8fafc;
+      --bg-card: #ffffff;
+      --bg-elevated: #eff6ff;
+      --border: #e2e8f0;
+      --border-subtle: #e2e8f0;
+      --text-primary: #0b1020;
+      --text-secondary: #334155;
+      --text-muted: #64748b;
+    }
+
+    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+    @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
+    @keyframes shimmer { 0% { background-position: -200% 0; } 100% { background-position: 200% 0; } }
+
+    body {
+      font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+      line-height: 1.6;
+      background: var(--bg-dark);
+      color: var(--text-primary);
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+      opacity: 0;
+      animation: fadeIn 0.4s ease-out 0.1s forwards;
+    }
+
+    html { scroll-behavior: smooth; }
+    a { color: var(--primary); text-decoration: none; transition: all 0.2s ease; }
+    a:hover { filter: brightness(1.15); }
+    ::selection { background: var(--primary); color: white; }
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+
+    /* Government Banner */
+    .gov-banner { background: var(--bg-card); color: white; padding: 10px 0; font-size: 13px; border-bottom: 1px solid #111827; }
+    body.light .gov-banner { background: #1e3a8a; border-color: #1e3a8a; }
+    .gov-banner .container { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
+    .gov-banner-left { display: flex; align-items: center; gap: 10px; }
+    .gov-icon svg { width: 18px; height: 18px; }
+    .gov-banner-right { display: flex; align-items: center; gap: 16px; }
+    .gov-banner-right a { color: #9ca3af; font-size: 12px; }
+    .gov-how { color: #60a5fa; background: none; border: none; font-size: 13px; cursor: pointer; padding: 0; font-family: inherit; display: inline-flex; align-items: center; gap: 4px; }
+    .gov-how:hover { color: #93c5fd; }
+    .gov-how svg { transition: transform 0.2s; }
+    .gov-how.open svg { transform: rotate(180deg); }
+    .gov-dropdown { display: none; background: var(--bg-card); border-top: 1px solid #111827; padding: 16px 0; }
+    body.light .gov-dropdown { background: #1e3a8a; }
+    .gov-dropdown.open { display: block; }
+    .gov-dropdown-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; max-width: 600px; }
+    .gov-dropdown-item { display: flex; gap: 12px; }
+    .gov-dropdown-icon { width: 36px; height: 36px; background: #111827; border-radius: 8px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    body.light .gov-dropdown-icon { background: #1d4ed8; }
+    .gov-dropdown-icon svg { color: #93c5fd; }
+    .gov-dropdown-text h4 { font-size: 13px; font-weight: 600; margin-bottom: 4px; }
+    .gov-dropdown-text p { font-size: 12px; color: #cbd5e1; line-height: 1.5; }
+    .theme-btn { background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.12); color: #9ca3af; padding: 6px 12px; border-radius: 6px; cursor: pointer; font-size: 12px; font-weight: 500; font-family: inherit; transition: all 0.2s; }
+    .theme-btn:hover { background: rgba(255,255,255,0.12); color: white; }
+
+    /* Header */
+    .header { background: rgba(15, 23, 42, 0.9); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 100; }
+    body.light .header { background: rgba(255, 255, 255, 0.9); }
+    .header .container { display: flex; align-items: center; justify-content: space-between; height: 68px; }
+    .logo { display: flex; align-items: center; gap: 12px; cursor: pointer; }
+    .logo:hover { opacity: 0.9; }
+    .logo-mark { width: 42px; height: 42px; background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%); border-radius: 10px; display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden; }
+    .logo-mark::before { content: ''; position: absolute; width: 100%; height: 100%; background: linear-gradient(45deg, transparent 30%, rgba(255,255,255,0.18) 50%, transparent 70%); animation: shimmer 3s infinite; background-size: 200% 100%; }
+    .logo-mark svg { width: 22px; height: 22px; color: white; position: relative; z-index: 1; }
+    .logo-text h1 { font-size: 15px; font-weight: 800; color: var(--text-primary); letter-spacing: -0.02em; line-height: 1.2; white-space: nowrap; }
+    .logo-text .tagline { font-size: 11px; font-weight: 500; color: var(--text-muted); }
+    .nav { display: flex; gap: 2px; }
+    .nav-link { padding: 8px 16px; color: var(--text-secondary); font-size: 14px; font-weight: 500; border-radius: 8px; cursor: pointer; border: none; background: none; font-family: inherit; transition: all 0.15s; }
+    .nav-link:hover { background: var(--bg-elevated); color: var(--text-primary); }
+    .nav-link.active { background: var(--primary-light); color: var(--primary); }
+
+    /* Hero */
+    .hero { background: var(--bg-elevated); padding: 80px 0; border-bottom: 1px solid var(--border); position: relative; overflow: hidden; }
+    .hero-bg { position: absolute; inset: 0; overflow: hidden; opacity: 0.18; }
+    .hero-bg-shape { position: absolute; border-radius: 50%; filter: blur(80px); }
+    .hero-bg-shape:nth-child(1) { width: 520px; height: 520px; background: var(--primary); top: -150px; right: -140px; animation: float 10s ease-in-out infinite; }
+    .hero-bg-shape:nth-child(2) { width: 360px; height: 360px; background: var(--accent); bottom: -120px; left: 8%; animation: float 12s ease-in-out infinite 1s; }
+    .hero-bg-shape:nth-child(3) { width: 260px; height: 260px; background: var(--primary); top: 32%; left: 42%; animation: float 14s ease-in-out infinite 2s; }
+    .hero-pattern { position: absolute; inset: 0; background-image: url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M10 10h20v20H10zM50 10h20v20H50zM30 30h20v20H30zM10 50h20v20H10zM50 50h20v20H50z' fill='none' stroke='%230ea5e9' stroke-width='1' opacity='0.08'/%3E%3C/svg%3E"); }
+    .hero-content { max-width: 660px; position: relative; z-index: 1; }
+    .hero-badge { display: inline-flex; align-items: center; gap: 8px; background: var(--primary-light); color: var(--primary); font-size: 12px; font-weight: 700; padding: 8px 14px; border-radius: 100px; margin-bottom: 20px; border: 1px solid rgba(14, 165, 233, 0.25); letter-spacing: 0.02em; }
+    .hero h2 { font-size: 52px; font-weight: 800; line-height: 1.08; margin-bottom: 20px; letter-spacing: -0.03em; }
+    .hero h2 span { color: var(--primary); }
+    .hero p { color: var(--text-secondary); font-size: 18px; margin-bottom: 32px; line-height: 1.7; }
+    .btn { display: inline-flex; align-items: center; gap: 8px; padding: 14px 24px; font-size: 14px; font-weight: 700; border-radius: 10px; cursor: pointer; border: none; font-family: inherit; transition: all 0.2s ease; }
+    .btn-primary { background: var(--primary); color: white; }
+    .btn-primary:hover { background: var(--primary-dark); transform: translateY(-1px); box-shadow: 0 4px 12px rgba(14, 165, 233, 0.35); }
+    .btn-secondary { background: var(--bg-card); color: var(--text-secondary); margin-left: 10px; border: 1px solid var(--border); }
+    .btn-secondary:hover { background: var(--bg-elevated); color: var(--text-primary); }
+
+    /* Stats */
+    .stats-bar { background: var(--bg-dark); border-bottom: 1px solid var(--border); padding: 24px 0; }
+    .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+    .stat-item { text-align: center; padding: 20px; background: var(--bg-card); border-radius: 12px; border: 1px solid var(--border-subtle); cursor: pointer; transition: all 0.2s; }
+    .stat-item:hover { border-color: var(--primary); transform: translateY(-2px); }
+    .stat-label { font-size: 11px; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em; }
+    .stat-value { font-size: 28px; font-weight: 800; color: var(--primary); margin: 8px 0; letter-spacing: -0.02em; }
+    .stat-change { font-size: 12px; font-weight: 600; padding: 3px 8px; border-radius: 100px; color: var(--text-muted); background: var(--bg-elevated); }
+
+    /* Main Content */
+    .main { padding: 40px 0; }
+    .content-grid { display: grid; grid-template-columns: 1fr 340px; gap: 24px; }
+    .card { background: var(--bg-card); border: 1px solid var(--border-subtle); border-radius: 16px; padding: 24px; margin-bottom: 24px; transition: border-color 0.2s; }
+    .card:hover { border-color: var(--border); }
+    .card-header { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; padding-bottom: 16px; border-bottom: 1px solid var(--border-subtle); }
+    .card-icon { width: 40px; height: 40px; background: var(--primary-light); border-radius: 10px; display: flex; align-items: center; justify-content: center; }
+    .card-icon svg { width: 20px; height: 20px; color: var(--primary); }
+    .card-title { font-size: 16px; font-weight: 700; }
+    .card-subtitle { font-size: 12px; color: var(--text-muted); margin-top: 2px; }
+
+    /* Service Cards */
+    .services-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 24px; }
+    .service-card { background: var(--bg-card); border: 1px solid var(--border-subtle); border-radius: 14px; padding: 24px; cursor: pointer; transition: all 0.2s; position: relative; overflow: hidden; }
+    .service-card::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 3px; background: linear-gradient(90deg, var(--primary), var(--primary-dark)); opacity: 0; transition: opacity 0.2s; }
+    .service-card:hover { border-color: var(--primary); transform: translateY(-2px); }
+    .service-card:hover::before { opacity: 1; }
+    .service-icon { width: 48px; height: 48px; background: var(--primary-light); border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-bottom: 16px; }
+    .service-icon svg { width: 24px; height: 24px; color: var(--primary); }
+    .service-title { font-size: 15px; font-weight: 700; margin-bottom: 8px; }
+    .service-desc { font-size: 13px; color: var(--text-secondary); line-height: 1.6; }
+    .service-link { font-size: 13px; font-weight: 700; color: var(--primary); margin-top: 12px; display: inline-flex; align-items: center; gap: 4px; }
+    .service-link svg { width: 14px; height: 14px; transition: transform 0.2s; }
+    .service-card:hover .service-link svg { transform: translateX(4px); }
+
+    /* Quick Links */
+    .quick-links { display: grid; gap: 8px; }
+    .quick-link { display: flex; align-items: center; gap: 12px; padding: 14px 16px; background: var(--bg-elevated); border-radius: 10px; cursor: pointer; transition: all 0.15s; border: 1px solid transparent; }
+    .quick-link:hover { background: var(--primary-light); border-color: rgba(14, 165, 233, 0.25); }
+    .quick-link-icon { width: 32px; height: 32px; background: var(--bg-card); border-radius: 8px; display: flex; align-items: center; justify-content: center; }
+    .quick-link-icon svg { width: 16px; height: 16px; color: var(--primary); }
+    .quick-link-text { font-size: 14px; font-weight: 600; flex: 1; }
+    .quick-link-arrow { color: var(--text-muted); }
+    .quick-link:hover .quick-link-arrow { color: var(--primary); }
+
+    /* Info text */
+    .content-text h3 { font-size: 18px; font-weight: 700; margin: 24px 0 12px; color: var(--text-primary); }
+    .content-text p { font-size: 14px; color: var(--text-secondary); margin-bottom: 14px; line-height: 1.7; }
+    .content-text ul { padding-left: 18px; margin: 14px 0; }
+    .content-text li { color: var(--text-secondary); margin-bottom: 8px; font-size: 14px; }
+    .info-box { background: var(--primary-light); border: 1px solid rgba(14, 165, 233, 0.2); border-radius: 12px; padding: 16px; margin: 16px 0; }
+    .info-box h4 { font-size: 14px; font-weight: 700; color: var(--primary); margin-bottom: 6px; }
+
+    /* Footer */
+    .footer { background: var(--bg-card); border-top: 1px solid var(--border); padding: 48px 0 24px; margin-top: 48px; }
+    .footer-grid { display: grid; grid-template-columns: 1.5fr 1fr 1fr 1fr 1fr; gap: 32px; margin-bottom: 32px; }
+    .footer-brand h4 { font-size: 16px; font-weight: 800; margin-bottom: 12px; }
+    .footer-brand p { font-size: 13px; color: var(--text-secondary); line-height: 1.6; }
+    .footer-contact { margin-top: 16px; padding: 14px; background: var(--bg-elevated); border-radius: 10px; }
+    .footer-contact-label { font-size: 11px; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em; }
+    .footer-contact-value { font-size: 18px; font-weight: 800; color: var(--primary); margin: 4px 0; }
+    .footer-contact-note { font-size: 12px; color: var(--text-muted); }
+    .footer-section h5 { font-size: 13px; font-weight: 700; margin-bottom: 14px; text-transform: uppercase; letter-spacing: 0.03em; }
+    .footer-section ul { list-style: none; }
+    .footer-section li { margin-bottom: 10px; }
+    .footer-section a { font-size: 14px; color: var(--text-secondary); cursor: pointer; }
+    .footer-section a:hover { color: var(--primary); }
+    .footer-bottom { display: flex; justify-content: space-between; align-items: center; padding-top: 24px; border-top: 1px solid var(--border-subtle); font-size: 13px; color: var(--text-muted); }
+    .footer-legal { display: flex; gap: 20px; }
+    .footer-legal a { color: var(--text-muted); }
+    .footer-legal a:hover { color: var(--primary); }
+
+    /* Page containers */
+    .page { display: none; }
+    .page.active { display: block; }
+
+    @media (max-width: 1024px) {
+      .content-grid { grid-template-columns: 1fr; }
+      .services-grid { grid-template-columns: repeat(2, 1fr); }
+      .stats-grid { grid-template-columns: repeat(2, 1fr); }
+      .footer-grid { grid-template-columns: repeat(3, 1fr); }
+    }
+
+    @media (max-width: 768px) {
+      .nav { display: none; }
+      .hero h2 { font-size: 38px; }
+      .services-grid { grid-template-columns: 1fr; }
+      .stats-grid { grid-template-columns: 1fr 1fr; }
+      .footer-grid { grid-template-columns: 1fr 1fr; }
+    }
+
+    @media (max-width: 480px) {
+      .footer-grid { grid-template-columns: 1fr; }
+      .footer-bottom { flex-direction: column; gap: 12px; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+<div class="gov-banner">
+  <div class="container">
+    <div class="gov-banner-left">
+      <span class="gov-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M3 21h18"></path>
+          <path d="M5 21V7l8-4v18"></path>
+          <path d="M19 21V11l-6-4"></path>
+          <path d="M9 9v.01"></path>
+          <path d="M9 12v.01"></path>
+          <path d="M9 15v.01"></path>
+          <path d="M9 18v.01"></path>
+        </svg>
+      </span>
+      <span>An Official Government of Praya Website</span>
+      <button class="gov-how" onclick="toggleGovDropdown(this)">
+        How to identify
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
+      </button>
+    </div>
+    <div class="gov-banner-right">
+      <a href="/index.html">GOV.PRAYA</a>
+      <button class="theme-btn" onclick="toggleTheme()">Light</button>
+    </div>
+  </div>
+  <div class="gov-dropdown" id="govDropdown">
+    <div class="container">
+      <div class="gov-dropdown-inner">
+        <div class="gov-dropdown-item">
+          <div class="gov-dropdown-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+          </div>
+          <div class="gov-dropdown-text">
+            <h4>Official government websites use .gov.py</h4>
+            <p>A .gov.py website belongs to an official government organization in the Republic of Praya.</p>
+          </div>
+        </div>
+        <div class="gov-dropdown-item">
+          <div class="gov-dropdown-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+          </div>
+          <div class="gov-dropdown-text">
+            <h4>Secure .gov.py websites use HTTPS</h4>
+            <p>A lock icon or https:// means you've safely connected to the .gov.py website.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<header class="header">
+  <div class="container">
+    <div class="logo" onclick="showPage('home')">
+      <div class="logo-mark">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="2" y="5" width="20" height="14" rx="2"></rect>
+          <path d="M2 10h20"></path>
+        </svg>
+      </div>
+      <div class="logo-text">
+        <h1>Bank of Praya</h1>
+        <div class="tagline">Central Bank of the Republic</div>
+      </div>
+    </div>
+    <nav class="nav">
+      <button class="nav-link active" data-page="home" onclick="showPage('home')">Home</button>
+      <button class="nav-link" data-page="policy" onclick="showPage('policy')">Monetary Policy</button>
+      <button class="nav-link" data-page="banking" onclick="showPage('banking')">Banking Services</button>
+      <button class="nav-link" data-page="markets" onclick="showPage('markets')">Financial Markets</button>
+      <button class="nav-link" data-page="research" onclick="showPage('research')">Research & Data</button>
+      <button class="nav-link" data-page="about" onclick="showPage('about')">About</button>
+    </nav>
+  </div>
+</header>
+
+<div id="page-home" class="page active">
+  <section class="hero">
+    <div class="hero-bg">
+      <div class="hero-bg-shape"></div>
+      <div class="hero-bg-shape"></div>
+      <div class="hero-bg-shape"></div>
+    </div>
+    <div class="hero-pattern"></div>
+    <div class="container">
+      <div class="hero-content">
+        <div class="hero-badge">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+          Stability. Integrity. Growth.
+        </div>
+        <h2>Praya's <span>Financial</span> Foundation</h2>
+        <p>The Bank of Praya is the nation's central bank, responsible for monetary policy, financial system stability, currency issuance, and banking supervision across the Republic.</p>
+        <div>
+          <button class="btn btn-primary" onclick="showPage('policy')">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+            Monetary Policy
+          </button>
+          <button class="btn btn-secondary" onclick="showPage('research')">Economic Reports</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="stats-bar">
+    <div class="container">
+      <div class="stats-grid">
+        <div class="stat-item" onclick="showPage('policy')">
+          <div class="stat-label">Base Rate</div>
+          <div class="stat-value">3.75%</div>
+          <div class="stat-change">+0.25% this quarter</div>
+        </div>
+        <div class="stat-item" onclick="showPage('research')">
+          <div class="stat-label">Inflation Target</div>
+          <div class="stat-value">2.1%</div>
+          <div class="stat-change">Annual CPI</div>
+        </div>
+        <div class="stat-item" onclick="showPage('banking')">
+          <div class="stat-label">Foreign Reserves</div>
+          <div class="stat-value">¤82.4B</div>
+          <div class="stat-change">Six months coverage</div>
+        </div>
+        <div class="stat-item" onclick="showPage('markets')">
+          <div class="stat-label">Prayan Crown (PRY)</div>
+          <div class="stat-value">1.18</div>
+          <div class="stat-change">vs USD</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="main">
+    <div class="container">
+      <div class="content-grid">
+        <div>
+          <div class="card">
+            <div class="card-header">
+              <div class="card-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3h18v18H3z"></path><path d="M3 9h18"></path><path d="M9 3v18"></path></svg>
+              </div>
+              <div>
+                <div class="card-title">Central Banking Services</div>
+                <div class="card-subtitle">Core functions and public access</div>
+              </div>
+            </div>
+            <div class="services-grid">
+              <div class="service-card" onclick="showPage('policy')">
+                <div class="service-icon">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+                </div>
+                <div class="service-title">Monetary Policy</div>
+                <div class="service-desc">Interest rate decisions, quantitative measures, and inflation targeting framework.</div>
+                <div class="service-link">View policy <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg></div>
+              </div>
+              <div class="service-card" onclick="showPage('banking')">
+                <div class="service-icon">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+                </div>
+                <div class="service-title">Banking Supervision</div>
+                <div class="service-desc">Licensing, prudential oversight, stress testing, and resolution framework for banks.</div>
+                <div class="service-link">Regulation portal <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg></div>
+              </div>
+              <div class="service-card" onclick="showPage('markets')">
+                <div class="service-icon">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline></svg>
+                </div>
+                <div class="service-title">Market Operations</div>
+                <div class="service-desc">Open market operations, repo facilities, and interbank settlement systems.</div>
+                <div class="service-link">Trading desk <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg></div>
+              </div>
+              <div class="service-card" onclick="showPage('research')">
+                <div class="service-icon">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
+                </div>
+                <div class="service-title">Economic Research</div>
+                <div class="service-desc">GDP forecasts, sectoral analysis, financial stability reports, and working papers.</div>
+                <div class="service-link">Browse research <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg></div>
+              </div>
+              <div class="service-card" onclick="showPage('banking')">
+                <div class="service-icon">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><path d="M12 6v6l4 2"></path></svg>
+                </div>
+                <div class="service-title">Payment Systems</div>
+                <div class="service-desc">Real-time gross settlement (RTGS), automated clearing house, and digital currency pilots.</div>
+                <div class="service-link">System status <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg></div>
+              </div>
+              <div class="service-card" onclick="showPage('markets')">
+                <div class="service-icon">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path><path d="M9 10h.01M15 10h.01M9.5 15a3.5 3.5 0 005 0"></path></svg>
+                </div>
+                <div class="service-title">Currency Services</div>
+                <div class="service-desc">Banknote issuance, coin distribution, counterfeit detection, and damaged currency exchange.</div>
+                <div class="service-link">Currency info <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="card" style="background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%); border: none;">
+            <div style="color: white;">
+              <div style="font-size: 13px; font-weight: 700; opacity: 0.9; margin-bottom: 4px; letter-spacing: 0.03em;">MONETARY POLICY COMMITTEE</div>
+              <div style="font-size: 28px; font-weight: 800; margin-bottom: 8px;">Next Meeting: February 14, 2025</div>
+              <div style="font-size: 13px; opacity: 0.85;">The MPC convenes monthly to assess economic conditions and set the policy rate.</div>
+              <div style="font-size: 13px; opacity: 0.85; margin-top: 6px;">Interest rate decision announced at 14:00 • Press conference at 14:30</div>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <div class="card">
+            <div class="card-header">
+              <div class="card-icon" style="background: rgba(16, 185, 129, 0.12);">
+                <svg viewBox="0 0 24 24" fill="none" stroke="var(--success)" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+              </div>
+              <div>
+                <div class="card-title">Systems Status</div>
+                <div class="card-subtitle">Real-time availability</div>
+              </div>
+            </div>
+            <div style="font-size:13px;color:var(--text-secondary);">
+              <div style="display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--border-subtle);">
+                <span>RTGS Settlement</span>
+                <span class="card-subtitle" style="color: var(--success); font-weight: 700;">● Operational</span>
+              </div>
+              <div style="display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--border-subtle);">
+                <span>ACH Clearing</span>
+                <span class="card-subtitle" style="color: var(--success); font-weight: 700;">● Operational</span>
+              </div>
+              <div style="display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--border-subtle);">
+                <span>Securities Settlement</span>
+                <span class="card-subtitle" style="color: var(--success); font-weight: 700;">● Operational</span>
+              </div>
+              <div style="display:flex;justify-content:space-between;padding:10px 0;">
+                <span>FX Trading Platform</span>
+                <span class="card-subtitle" style="color: var(--success); font-weight: 700;">● Operational</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-header">
+              <div class="card-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
+              </div>
+              <div>
+                <div class="card-title">Quick Access</div>
+                <div class="card-subtitle">Popular resources</div>
+              </div>
+            </div>
+            <div class="quick-links">
+              <a class="quick-link" href="#page-policy" onclick="showPage('policy'); return false;">
+                <div class="quick-link-icon">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+                </div>
+                <div class="quick-link-text">View interest rate history</div>
+                <svg class="quick-link-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
+              </a>
+              <a class="quick-link" href="#page-research" onclick="showPage('research'); return false;">
+                <div class="quick-link-icon">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline></svg>
+                </div>
+                <div class="quick-link-text">Download economic indicators</div>
+                <svg class="quick-link-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
+              </a>
+              <a class="quick-link" href="#page-banking" onclick="showPage('banking'); return false;">
+                <div class="quick-link-icon">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+                </div>
+                <div class="quick-link-text">Apply for banking license</div>
+                <svg class="quick-link-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
+              </a>
+              <a class="quick-link" href="#page-markets" onclick="showPage('markets'); return false;">
+                <div class="quick-link-icon">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><path d="M12 6v6l4 2"></path></svg>
+                </div>
+                <div class="quick-link-text">FX rates & market data</div>
+                <svg class="quick-link-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<div id="page-policy" class="page">
+  <div class="hero" style="padding:48px 0;">
+    <div class="container">
+      <div class="hero-content">
+        <div class="hero-badge">Monetary Policy</div>
+        <h2>Price Stability & Economic Growth</h2>
+        <p>The Bank of Praya uses interest rate policy, reserve requirements, and open market operations to achieve its dual mandate of stable prices and full employment.</p>
+      </div>
+    </div>
+  </div>
+  <section class="main">
+    <div class="container">
+      <div class="content-grid">
+        <div class="card">
+          <div class="content-text">
+            <h3>Policy Framework</h3>
+            <p>The Monetary Policy Committee (MPC) targets an annual inflation rate of 2.0% ± 0.5%, measured by the Consumer Price Index. The policy rate is reviewed monthly, with decisions based on employment data, GDP growth, inflation expectations, and external sector balances.</p>
+
+            <div class="info-box">
+              <h4>Current Policy Rate: 3.75%</h4>
+              <p>The MPC raised the rate by 25 basis points in January 2025 to moderate demand-driven inflation pressures while supporting sustainable growth.</p>
+            </div>
+
+            <h3>Transmission Mechanisms</h3>
+            <ul>
+              <li><strong>Interest rate channel:</strong> Policy rate influences commercial lending rates, affecting consumption and investment.</li>
+              <li><strong>Exchange rate channel:</strong> Rate differentials impact the Prayan Crown, influencing net exports.</li>
+              <li><strong>Asset price channel:</strong> Monetary conditions affect equity and housing markets, altering household wealth.</li>
+              <li><strong>Credit channel:</strong> Bank lending standards tighten or ease in response to policy signals.</li>
+            </ul>
+
+            <h3>Forward Guidance</h3>
+            <p>The MPC expects to maintain a gradual tightening bias through mid-2025, contingent on labor market strength and inflation remaining within the target band. Quantitative easing programs initiated during the pandemic have been fully unwound.</p>
+
+            <h3>Unconventional Tools</h3>
+            <p>In extraordinary circumstances, the Bank may deploy asset purchase programs, negative interest rates, or targeted lending facilities to stabilize the financial system.</p>
+          </div>
+        </div>
+
+        <div>
+          <div class="card">
+            <div class="card-header">
+              <div class="card-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline></svg>
+              </div>
+              <div>
+                <div class="card-title">Key Indicators</div>
+                <div class="card-subtitle">Latest readings</div>
+              </div>
+            </div>
+            <ul style="list-style:none; color: var(--text-secondary); font-size:14px; display:grid; gap:10px;">
+              <li>• CPI Inflation: 2.1% year-over-year</li>
+              <li>• Core Inflation: 1.9% (excl. food & energy)</li>
+              <li>• Unemployment Rate: 3.8%</li>
+              <li>• GDP Growth: 3.2% annualized (Q4 2024)</li>
+              <li>• 10-Year Bond Yield: 4.12%</li>
+            </ul>
+          </div>
+
+          <div class="card">
+            <div class="card-header">
+              <div class="card-icon" style="background: var(--accent-light);">
+                <svg viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
+              </div>
+              <div>
+                <div class="card-title">Policy Minutes</div>
+                <div class="card-subtitle">Recent meetings</div>
+              </div>
+            </div>
+            <div class="info-box" style="margin-top:0;">
+              <h4>MPC Meeting - January 2025</h4>
+              <p>Minutes detail the committee's assessment of inflation risks, labor market tightness, and the rationale for the 25bp rate increase.</p>
+            </div>
+            <p style="color:var(--text-secondary);font-size:13px;">Full transcripts and voting records are published three weeks after each meeting, with anonymized member positions disclosed after two years.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<div id="page-banking" class="page">
+  <div class="hero" style="padding:48px 0;">
+    <div class="container">
+      <div class="hero-content">
+        <div class="hero-badge">Banking Supervision</div>
+        <h2>Prudential Oversight & Financial Stability</h2>
+        <p>The Bank of Praya licenses, regulates, and supervises commercial banks, credit unions, and payment institutions to ensure system-wide resilience.</p>
+      </div>
+    </div>
+  </div>
+  <section class="main">
+    <div class="container">
+      <div class="content-grid">
+        <div class="card">
+          <div class="content-text">
+            <h3>Licensing & Authorization</h3>
+            <p>New banking applicants must demonstrate adequate capital, qualified governance, sound business models, and anti-money laundering controls. Minimum paid-in capital for a retail bank is ¤50 million.</p>
+            <ul>
+              <li>Retail banking licenses (deposits, loans, payments)</li>
+              <li>Wholesale banking licenses (no retail deposits)</li>
+              <li>Payment institution licenses (e-money, transfers)</li>
+              <li>Credit union charters (member-owned cooperatives)</li>
+            </ul>
+
+            <h3>Prudential Standards</h3>
+            <p>All institutions must maintain a minimum Common Equity Tier 1 (CET1) ratio of 7%, with additional buffers for systemically important banks. Liquidity coverage ratio (LCR) must exceed 100%, ensuring 30-day survival in a stress scenario.</p>
+
+            <h3>Supervisory Activities</h3>
+            <p>On-site examinations occur annually for large banks, biennially for smaller institutions. Continuous monitoring uses regulatory reports (capital, liquidity, large exposures) and real-time transaction surveillance via RTGS feeds.</p>
+
+            <h3>Resolution Framework</h3>
+            <p>The Bank maintains resolution plans for all systemically important institutions. In the event of failure, resolution tools include purchase-and-assumption, bridge bank, and bail-in of subordinated creditors.</p>
+
+            <h3>Consumer Protection</h3>
+            <p>Retail customers are protected by deposit insurance (up to ¤100,000 per depositor), transparent fee disclosures, and access to the Banking Ombudsman for dispute resolution.</p>
+          </div>
+        </div>
+        <div>
+          <div class="card">
+            <div class="card-header">
+              <div class="card-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="16" rx="2" ry="2"></rect><path d="M7 4v4"></path><path d="M17 4v4"></path><path d="M3 10h18"></path></svg>
+              </div>
+              <div>
+                <div class="card-title">Banking Sector</div>
+                <div class="card-subtitle">Supervised entities</div>
+              </div>
+            </div>
+            <div style="display:grid;gap:10px;color:var(--text-secondary);font-size:14px;">
+              <div style="display:flex;justify-content:space-between;">
+                <span>Licensed banks</span>
+                <strong style="color:var(--primary);">28</strong>
+              </div>
+              <div style="display:flex;justify-content:space-between;">
+                <span>Credit unions</span>
+                <strong style="color:var(--primary);">142</strong>
+              </div>
+              <div style="display:flex;justify-content:space-between;">
+                <span>Payment institutions</span>
+                <strong style="color:var(--primary);">67</strong>
+              </div>
+              <div style="display:flex;justify-content:space-between;">
+                <span>Total assets under supervision</span>
+                <strong style="color:var(--primary);">¤412B</strong>
+              </div>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-header">
+              <div class="card-icon" style="background: rgba(245, 158, 11, 0.12);">
+                <svg viewBox="0 0 24 24" fill="none" stroke="var(--warning)" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><path d="M12 8v4"></path><path d="M12 16h.01"></path></svg>
+              </div>
+              <div>
+                <div class="card-title">Stress Testing</div>
+                <div class="card-subtitle">Annual exercises</div>
+              </div>
+            </div>
+            <p style="color:var(--text-secondary); font-size:13px;">All systemically important banks participate in stress tests simulating severe recession, interest rate shocks, and liquidity crises. Results inform capital buffer requirements.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<div id="page-markets" class="page">
+  <div class="hero" style="padding:48px 0;">
+    <div class="container">
+      <div class="hero-content">
+        <div class="hero-badge">Financial Markets</div>
+        <h2>Market Operations & Currency</h2>
+        <p>The Bank implements monetary policy through open market operations, manages foreign reserves, and issues the national currency.</p>
+      </div>
+    </div>
+  </div>
+  <section class="main">
+    <div class="container">
+      <div class="content-grid">
+        <div class="card">
+          <div class="content-text">
+            <h3>Open Market Operations</h3>
+            <p>The Bank conducts daily repo and reverse repo operations to steer overnight interbank rates toward the policy target. Primary dealers submit bids via the electronic trading platform, with settlements occurring in real time.</p>
+
+            <h3>Standing Facilities</h3>
+            <ul>
+              <li><strong>Lending facility:</strong> Banks can borrow overnight at policy rate + 50bp against eligible collateral.</li>
+              <li><strong>Deposit facility:</strong> Excess reserves earn policy rate - 50bp, creating a symmetric corridor.</li>
+            </ul>
+
+            <h3>Foreign Exchange Management</h3>
+            <p>The Bank maintains foreign reserves equivalent to six months of imports, primarily in USD, EUR, and gold. The Prayan Crown (PRY) floats freely, with interventions limited to smoothing excessive volatility.</p>
+
+            <div class="info-box">
+              <h4>Current Exchange Rates</h4>
+              <p>1 PRY = 1.18 USD | 1.08 EUR | 0.92 GBP | 162 JPY (as of Feb 1, 2025)</p>
+            </div>
+
+            <h3>Currency Management</h3>
+            <p>The Bank issues and distributes banknotes in denominations of 5, 10, 20, 50, 100, and 200 Crowns. Polymer notes feature advanced security threads, color-shifting ink, and tactile features for visually impaired users.</p>
+
+            <h3>Digital Currency</h3>
+            <p>A central bank digital currency (CBDC) pilot launched in 2024, allowing select merchants and consumers to hold digital Crowns in regulated wallets. Full rollout is expected by 2026.</p>
+          </div>
+        </div>
+        <div>
+          <div class="card">
+            <div class="card-header">
+              <div class="card-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline></svg>
+              </div>
+              <div>
+                <div class="card-title">Market Data</div>
+                <div class="card-subtitle">Live rates</div>
+              </div>
+            </div>
+            <ul style="list-style:none; color: var(--text-secondary); font-size:14px; display:grid; gap:10px;">
+              <li>• Overnight interbank rate: 3.73%</li>
+              <li>• 3-month treasury bill: 3.89%</li>
+              <li>• 2-year government bond: 4.02%</li>
+              <li>• 10-year government bond: 4.12%</li>
+              <li>• Prayan Crown index (vs basket): 102.4</li>
+            </ul>
+          </div>
+
+          <div class="card">
+            <div class="card-header">
+              <div class="card-icon" style="background: var(--accent-light);">
+                <svg viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><path d="M12 6v6l4 2"></path></svg>
+              </div>
+              <div>
+                <div class="card-title">Payment Systems</div>
+                <div class="card-subtitle">Infrastructure</div>
+              </div>
+            </div>
+            <div class="info-box" style="margin-top:0;">
+              <h4>RTGS & ACH</h4>
+              <p>The real-time gross settlement system processes ¤18 billion daily. The automated clearing house handles 2.4 million retail transactions per day.</p>
+            </div>
+            <p style="color:var(--text-secondary);font-size:13px;">Both systems operate from 07:00 to 18:00 on business days, with extended hours available for cross-border settlements.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<div id="page-research" class="page">
+  <div class="hero" style="padding:48px 0;">
+    <div class="container">
+      <div class="hero-content">
+        <div class="hero-badge">Research & Data</div>
+        <h2>Economic Analysis & Statistics</h2>
+        <p>The Bank's research division publishes forecasts, policy analysis, and macroeconomic data to inform policymakers, academics, and the public.</p>
+      </div>
+    </div>
+  </div>
+  <section class="main">
+    <div class="container">
+      <div class="content-grid">
+        <div class="card">
+          <div class="content-text">
+            <h3>Publications</h3>
+            <ul>
+              <li><strong>Monetary Policy Report:</strong> Quarterly assessment of economic conditions, inflation outlook, and policy stance.</li>
+              <li><strong>Financial Stability Report:</strong> Semi-annual analysis of systemic risks, banking sector health, and macro-prudential measures.</li>
+              <li><strong>Economic Bulletin:</strong> Monthly summary of key indicators, labor market trends, and external sector balances.</li>
+              <li><strong>Working Papers:</strong> Academic research on monetary transmission, banking regulation, and payment system innovation.</li>
+            </ul>
+
+            <h3>Statistical Releases</h3>
+            <p>The Bank publishes real-time data on interest rates, exchange rates, monetary aggregates (M1, M2, M3), credit growth, and payment system volumes. Historical series are available via the statistics portal in CSV and JSON formats.</p>
+
+            <h3>Economic Forecasts</h3>
+            <p>Quarterly GDP forecasts are produced using a dynamic stochastic general equilibrium (DSGE) model calibrated to Praya's economy. Forecasts include confidence intervals and scenario analysis.</p>
+
+            <div class="info-box">
+              <h4>2025 Baseline Forecast</h4>
+              <p>Real GDP growth: 3.0% | CPI inflation: 2.2% | Unemployment: 3.9%</p>
+            </div>
+
+            <h3>Research Collaboration</h3>
+            <p>The Bank hosts academic conferences, offers visiting scholar programs, and collaborates with universities on monetary economics, financial econometrics, and central banking history.</p>
+          </div>
+        </div>
+        <div>
+          <div class="card">
+            <div class="card-header">
+              <div class="card-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
+              </div>
+              <div>
+                <div class="card-title">Latest Reports</div>
+                <div class="card-subtitle">Recent publications</div>
+              </div>
+            </div>
+            <div style="display:grid;gap:12px;font-size:13px;color:var(--text-secondary);">
+              <div><strong style="color:var(--text-primary);">Monetary Policy Report Q4 2024</strong><br>Published Jan 15, 2025 • 64 pages</div>
+              <div><strong style="color:var(--text-primary);">Financial Stability Report 2024</strong><br>Published Dec 1, 2024 • 82 pages</div>
+              <div><strong style="color:var(--text-primary);">Economic Bulletin January 2025</strong><br>Published Feb 1, 2025 • 24 pages</div>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-header">
+              <div class="card-icon" style="background: var(--accent-light);">
+                <svg viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2h-4l-4 4v-4H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+              </div>
+              <div>
+                <div class="card-title">Data Portal</div>
+                <div class="card-subtitle">Download statistics</div>
+              </div>
+            </div>
+            <p style="color:var(--text-secondary); font-size:13px;">Access interactive charts, downloadable datasets, and API endpoints for interest rates, exchange rates, inflation, GDP, and banking sector metrics. Data updated daily at 09:00.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<div id="page-about" class="page">
+  <div class="hero" style="padding:48px 0;">
+    <div class="container">
+      <div class="hero-content">
+        <div class="hero-badge">About the Bank</div>
+        <h2>Independence, Transparency, Accountability</h2>
+        <p>Established in 2008, the Bank of Praya operates with statutory independence to fulfill its mandate of price stability and financial system resilience.</p>
+      </div>
+    </div>
+  </div>
+  <section class="main">
+    <div class="container">
+      <div class="content-grid">
+        <div class="card">
+          <div class="content-text">
+            <h3>Governance</h3>
+            <p>The Bank is governed by a Board of Directors, appointed by the President and confirmed by Parliament for non-renewable seven-year terms to ensure independence from political cycles.</p>
+
+            <h3>Governor</h3>
+            <p>Dr. Elena Vasquez serves as Governor, leading the institution since 2021. She previously held senior roles at the International Monetary Fund and taught monetary economics at the University of Praya.</p>
+
+            <h3>Mandate</h3>
+            <p>The Central Bank Act (2008) grants the Bank operational independence to pursue price stability as its primary objective, with financial stability and full employment as secondary goals.</p>
+
+            <h3>Transparency & Communication</h3>
+            <p>The Governor delivers quarterly public briefings, and the Bank publishes detailed minutes of Monetary Policy Committee meetings. An annual report is submitted to Parliament each March, followed by public hearings.</p>
+
+            <h3>Accountability</h3>
+            <p>The Bank is audited annually by an external accounting firm and the National Audit Office. Financial statements, salaries of senior officials, and procurement records are published online.</p>
+          </div>
+        </div>
+        <div>
+          <div class="card">
+            <div class="card-header">
+              <div class="card-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+              </div>
+              <div>
+                <div class="card-title">Contact</div>
+                <div class="card-subtitle">Headquarters</div>
+              </div>
+            </div>
+            <p style="color:var(--text-secondary); font-size:13px;">Bank of Praya<br>Central Banking Plaza<br>1 Republic Avenue, Praya 10-100<br><a href="tel:+8543000000">+854 300 0000</a> • <a href="mailto:info@bop.gov.py">info@bop.gov.py</a></p>
+          </div>
+          <div class="card">
+            <div class="card-header">
+              <div class="card-icon" style="background: var(--accent-light);">
+                <svg viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2"><path d="M3 12l2-2 4 4 10-10"></path><path d="M21 8v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path></svg>
+              </div>
+              <div>
+                <div class="card-title">Public Services</div>
+                <div class="card-subtitle">Office hours</div>
+              </div>
+            </div>
+            <div style="display:grid;gap:10px;color:var(--text-secondary);font-size:13px;">
+              <div><strong>Currency exchange (damaged notes)</strong><br>Mon-Fri 08:30-16:00<br>Ground floor, public counter</div>
+              <div><strong>Public archives & library</strong><br>Tue-Thu 10:00-17:00<br>Second floor, by appointment</div>
+              <div><strong>Media inquiries</strong><br><a href="mailto:press@bop.gov.py">press@bop.gov.py</a><br><a href="tel:+8543001200">+854 300 1200</a></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <h4>Bank of Praya</h4>
+        <p>The central bank of the Republic of Praya, safeguarding monetary stability, supervising the banking sector, and supporting sustainable economic growth.</p>
+        <div class="footer-contact">
+          <div class="footer-contact-label">Inquiries</div>
+          <div class="footer-contact-value">+854 300 0000</div>
+          <div class="footer-contact-note">Mon-Fri 08:30-17:00</div>
+        </div>
+      </div>
+      <div class="footer-section">
+        <h5>Policies</h5>
+        <ul>
+          <li><a href="#page-policy" onclick="showPage('policy'); return false;">Monetary policy</a></li>
+          <li><a href="#page-banking" onclick="showPage('banking'); return false;">Banking supervision</a></li>
+          <li><a href="#page-markets" onclick="showPage('markets'); return false;">Market operations</a></li>
+        </ul>
+      </div>
+      <div class="footer-section">
+        <h5>Resources</h5>
+        <ul>
+          <li><a href="#page-research" onclick="showPage('research'); return false;">Economic reports</a></li>
+          <li><a href="#page-research" onclick="showPage('research'); return false;">Statistical data</a></li>
+          <li><a href="#page-markets" onclick="showPage('markets'); return false;">FX rates</a></li>
+        </ul>
+      </div>
+      <div class="footer-section">
+        <h5>Services</h5>
+        <ul>
+          <li><a href="#page-banking" onclick="showPage('banking'); return false;">Banking licenses</a></li>
+          <li><a href="#page-markets" onclick="showPage('markets'); return false;">Currency exchange</a></li>
+        </ul>
+      </div>
+      <div class="footer-section">
+        <h5>About</h5>
+        <ul>
+          <li><a href="#page-about" onclick="showPage('about'); return false;">Governance</a></li>
+          <li><a href="#page-about" onclick="showPage('about'); return false;">Contact us</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div>© 2025 Bank of Praya, Republic of Praya</div>
+      <div class="footer-legal">
+        <a href="#page-about" onclick="showPage('about'); return false;">Accessibility</a>
+        <a href="#page-about" onclick="showPage('about'); return false;">Privacy</a>
+        <a href="#page-about" onclick="showPage('about'); return false;">Legal</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  function showPage(page) {
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    document.getElementById('page-' + page).classList.add('active');
+    document.querySelectorAll('.nav-link').forEach(link => link.classList.remove('active'));
+    const active = document.querySelector(`.nav-link[data-page="${page}"]`);
+    if (active) active.classList.add('active');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  function toggleTheme() {
+    document.body.classList.toggle('light');
+    const btn = document.querySelector('.theme-btn');
+    btn.textContent = document.body.classList.contains('light') ? 'Dark' : 'Light';
+  }
+
+  function toggleGovDropdown(btn) {
+    btn.classList.toggle('open');
+    document.getElementById('govDropdown').classList.toggle('open');
+  }
+</script>
+</body>
+</html>
