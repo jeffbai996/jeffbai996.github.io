@@ -1,73 +1,9 @@
 import { useState, useRef, useEffect } from 'react'
 import './ChatWidget.css'
+import { generateKnowledgeBase } from '../utils/departmentCrawler'
 
-// Citizen Services Knowledge Base
-const knowledgeBase = [
-  {
-    keywords: ['tax', 'taxes', 'pay tax', 'file tax', 'revenue', 'income tax'],
-    response: "For tax-related inquiries, please visit the Revenue Department (RD). You can file taxes online through your PrayaPass account, or visit any RD office during business hours (Mon-Fri, 8AM-5PM). Need help with cannabis taxes specifically? Visit the Cannabis Tax Bureau (CTB)."
-  },
-  {
-    keywords: ['cannabis', 'marijuana', 'ctb', 'cannabis tax', 'cannabis license', 'dispensary'],
-    response: "The Cannabis Tax Bureau (CTB) handles all cannabis-related licensing and taxation. For new dispensary licenses, visit the CTB portal. Current license holders can file monthly tax returns online. For questions, call the CTB hotline or visit during business hours."
-  },
-  {
-    keywords: ['id', 'identification', 'passport', 'driver license', 'drivers license', 'birth certificate', 'documents'],
-    response: "The Interior Department handles all identification documents including National IDs, passports, and birth certificates. To apply or renew, log in with your PrayaPass account or visit an Interior office. Processing times: National ID (5-7 days), Passport (10-14 days), Birth Certificate (3-5 days)."
-  },
-  {
-    keywords: ['police', 'crime', 'report', 'emergency', 'npa', 'law enforcement', 'theft', 'accident'],
-    response: "For emergencies, call 911 immediately. For non-emergency police matters, contact the National Police Agency (NPA). You can file police reports online through the NPA portal or visit your local station. The NPA also handles background checks and permits."
-  },
-  {
-    keywords: ['court', 'legal', 'lawsuit', 'attorney', 'lawyer', 'doj', 'justice', 'case'],
-    response: "The Department of Justice (DOJ) oversees all court proceedings and legal matters. For case information, use the DOJ case lookup tool. For legal aid services, contact the Public Defender's Office. Court schedules and filings are available on the DOJ portal."
-  },
-  {
-    keywords: ['bank', 'banking', 'account', 'loan', 'bop', 'savings', 'currency', 'praya dollar'],
-    response: "The Bank of Praya (BOP) is the national central bank. For personal banking needs, visit any BOP branch or use online banking. The official currency is the Praya Dollar (¤). For business loans or mortgages, schedule an appointment with a BOP financial advisor."
-  },
-  {
-    keywords: ['customs', 'border', 'import', 'export', 'cbca', 'shipping', 'travel'],
-    response: "The Customs and Border Control Agency (CBCA) handles all import/export regulations and border control. For import permits, apply online through the CBCA portal. Travelers should review entry requirements before visiting. Duty-free allowances and prohibited items are listed on our website."
-  },
-  {
-    keywords: ['health', 'hospital', 'medical', 'doctor', 'insurance', 'clinic', 'healthcare'],
-    response: "The Department of Health manages public health services and healthcare regulations. For medical emergencies, call 911 or visit the nearest hospital. Health insurance inquiries can be directed to the National Health Insurance office. Vaccination schedules and public health advisories are available online."
-  },
-  {
-    keywords: ['housing', 'rent', 'apartment', 'home', 'property', 'landlord', 'tenant'],
-    response: "The Housing Authority assists with public housing applications, tenant rights, and landlord regulations. For public housing waitlist status, check your PrayaPass account. Rental assistance programs and eviction protection information are available at any Housing Authority office."
-  },
-  {
-    keywords: ['mail', 'post', 'package', 'shipping', 'postal', 'letter', 'delivery'],
-    response: "Praya Post handles all domestic and international mail services. Track packages online using your tracking number. Post office hours are Mon-Fri 8AM-6PM, Sat 9AM-1PM. For bulk mailing or business accounts, contact your local post office or apply online."
-  },
-  {
-    keywords: ['login', 'account', 'prayapass', 'password', 'register', 'sign up', 'forgot password'],
-    response: "PrayaPass is your unified government account. To create an account, click 'Register' and follow the steps. Forgot your password? Use the 'Forgot Password' link on the login page. For account security issues, contact PrayaPass support or visit any government office with valid ID."
-  },
-  {
-    keywords: ['legislative', 'law', 'bill', 'council', 'vote', 'representative'],
-    response: "The Legislative Council (LC) is responsible for creating and passing laws. You can track current bills, view voting records, and contact your representative through the LC portal. Public hearings are announced on the official website and are open to all citizens."
-  },
-  {
-    keywords: ['hello', 'hi', 'hey', 'good morning', 'good afternoon', 'good evening'],
-    response: "Hello! Welcome to Praya Citizen Services. I'm here to help you navigate government services. You can ask me about taxes, IDs, police services, healthcare, housing, and more. How can I assist you today?"
-  },
-  {
-    keywords: ['help', 'what can you do', 'services', 'options'],
-    response: "I can help you with information about: \n• Taxes & Revenue (RD, CTB)\n• IDs & Documents (Interior)\n• Police & Justice (NPA, DOJ)\n• Banking (BOP)\n• Customs & Border (CBCA)\n• Health Services\n• Housing Authority\n• Postal Services\n• PrayaPass Account Help\n\nJust ask me a question about any of these services!"
-  },
-  {
-    keywords: ['hours', 'open', 'closed', 'business hours', 'schedule', 'when'],
-    response: "Most government offices are open Monday-Friday, 8AM-5PM. Some services vary:\n• Post Offices: Mon-Fri 8AM-6PM, Sat 9AM-1PM\n• Emergency Services: 24/7\n• Online Services: Available 24/7\n\nFor specific office hours, please check the department's page or call ahead."
-  },
-  {
-    keywords: ['thank', 'thanks', 'appreciate'],
-    response: "You're welcome! Is there anything else I can help you with regarding government services?"
-  }
-]
+// Generate expanded knowledge base from department data
+const knowledgeBase = generateKnowledgeBase()
 
 // Find best matching response
 function findResponse(message) {
