@@ -41,11 +41,16 @@ function findResponse(message) {
     return edgeCaseResponses.repeated
   }
 
-  // Enhanced keyword matching with better scoring
+  // Enhanced keyword matching with better scoring and priority
   let bestMatch = null
   let bestScore = 0
 
-  for (const entry of knowledgeBase) {
+  // Conversational patterns (greetings, goodbyes, apologies, etc.) - first 30 entries
+  // These get priority for short messages
+  const isShortMessage = lowerMessage.split(' ').length <= 5
+
+  for (let i = 0; i < knowledgeBase.length; i++) {
+    const entry = knowledgeBase[i]
     let score = 0
     let matchedKeywords = []
 
@@ -68,6 +73,17 @@ function findResponse(message) {
     // Bonus points for multiple keyword matches
     if (matchedKeywords.length > 1) {
       score += matchedKeywords.length * 5
+    }
+
+    // Priority boost for conversational patterns on short messages
+    // Assume first 30 knowledge base entries are conversational
+    if (i < 30 && isShortMessage && score > 0) {
+      score *= 1.5 // 50% boost for conversational patterns on short messages
+    }
+
+    // Exact short phrase match (like "hi", "bye", "thanks") gets massive boost
+    if (entry.keywords.some(k => k.toLowerCase() === lowerMessage)) {
+      score *= 3
     }
 
     if (score > bestScore) {
