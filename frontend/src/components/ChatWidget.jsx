@@ -5,13 +5,7 @@ import {
   classifyIntent,
   generateIntentResponse,
   handleFollowUp,
-  extractEntities,
-  normalizeText,
-  detectQuestionType,
-  extractTopics,
-  calculateSimilarity,
-  isSimilar,
-  expandWithSynonyms
+  extractEntities
 } from '../utils/intentRecognition'
 
 // Generate expanded knowledge base from department data
@@ -51,10 +45,9 @@ const smartSuggestions = {
 // Track recent messages to detect spam/repetition
 let recentMessages = []
 
-// Find best matching response with enhanced intelligence and intent recognition
+// Find best matching response with intent recognition and keyword matching
 function findResponse(message) {
   const lowerMessage = message.toLowerCase().trim()
-  const normalizedMessage = normalizeText(message)
 
   // Check for profanity
   if (containsProfanity(message)) {
@@ -83,24 +76,6 @@ function findResponse(message) {
     return edgeCaseResponses.repeated
   }
 
-  // Update conversation history
-  conversationContext.conversationHistory.push({
-    message: lowerMessage,
-    timestamp: Date.now()
-  })
-  if (conversationContext.conversationHistory.length > 5) {
-    conversationContext.conversationHistory.shift()
-  }
-
-  // Extract topics for context tracking
-  const newTopics = extractTopics(message)
-  if (newTopics.length > 0) {
-    conversationContext.currentTopics = newTopics
-  }
-
-  // Detect question type for better response handling
-  const questionType = detectQuestionType(message)
-
   // Extract any entities from the message (case numbers, tracking numbers, etc.)
   const extractedEntities = extractEntities(message)
   if (Object.keys(extractedEntities).length > 0) {
@@ -114,9 +89,9 @@ function findResponse(message) {
     }
   }
 
-  // Check if user is responding to a follow-up question with enhanced matching
+  // Check if user is responding to a follow-up question
   if (conversationContext.awaitingFollowUp && conversationContext.lastIntent) {
-    const followUpResult = handleFollowUpResponse(lowerMessage, normalizedMessage)
+    const followUpResult = handleFollowUpResponse(lowerMessage)
     if (followUpResult) {
       return followUpResult
     }
@@ -145,67 +120,31 @@ function findResponse(message) {
     return generateIntentResponse(matchedIntent, true)
   }
 
-  // Enhanced keyword matching with semantic similarity
+  // Simple keyword matching
   let bestMatch = null
   let bestScore = 0
-  const isShortMessage = lowerMessage.split(' ').length <= 5
-  const expandedTerms = expandWithSynonyms(normalizedMessage)
 
   for (let i = 0; i < knowledgeBase.length; i++) {
     const entry = knowledgeBase[i]
     let score = 0
-    let matchedKeywords = []
 
     for (const keyword of entry.keywords) {
       const keywordLower = keyword.toLowerCase()
 
-      // Exact word match gets highest priority
+      // Exact word match (word boundary)
       const wordBoundaryRegex = new RegExp(`\\b${keywordLower.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}\\b`, 'i')
       if (wordBoundaryRegex.test(lowerMessage)) {
-        score += keyword.length * 2.5
-        matchedKeywords.push(keyword)
+        score += keyword.length * 3
       }
-      // Check against normalized message
-      else if (wordBoundaryRegex.test(normalizedMessage)) {
-        score += keyword.length * 2
-        matchedKeywords.push(keyword)
-      }
-      // Synonym match
-      else if (expandedTerms.some(term => term === keywordLower || keywordLower.includes(term))) {
-        score += keyword.length * 1.5
-        matchedKeywords.push(keyword)
-      }
-      // Fuzzy match for typos (only for longer words)
-      else if (keyword.length >= 4) {
-        const words = lowerMessage.split(/\s+/)
-        for (const word of words) {
-          if (word.length >= 4 && isSimilar(word, keywordLower, 2)) {
-            score += keyword.length * 1.2
-            matchedKeywords.push(keyword)
-            break
-          }
-        }
-      }
-      // Partial match gets lower score
+      // Partial match (substring)
       else if (lowerMessage.includes(keywordLower)) {
-        score += keyword.length * 0.8
-        matchedKeywords.push(keyword)
+        score += keyword.length * 1.5
       }
     }
 
-    // Bonus points for multiple keyword matches
-    if (matchedKeywords.length > 1) {
-      score += matchedKeywords.length * 5
-    }
-
-    // Priority boost for conversational patterns on short messages
-    if (i < 35 && isShortMessage && score > 0) {
-      score *= 1.5
-    }
-
-    // Exact short phrase match gets massive boost
+    // Bonus for exact short phrase match
     if (entry.keywords.some(k => k.toLowerCase() === lowerMessage)) {
-      score *= 3
+      score *= 4
     }
 
     if (score > bestScore) {
@@ -214,24 +153,9 @@ function findResponse(message) {
     }
   }
 
-  if (bestMatch && bestScore > 0) {
+  if (bestMatch && bestScore > 5) {
     resetContext()
     return bestMatch.response
-  }
-
-  // Try to provide helpful suggestions based on detected topics
-  if (conversationContext.currentTopics.length > 0) {
-    const topic = conversationContext.currentTopics[0]
-    const topicSuggestions = getTopicSuggestions(topic)
-    if (topicSuggestions) {
-      conversationContext.clarificationCount++
-      return topicSuggestions
-    }
-  }
-
-  // Check for common question patterns and provide guidance
-  if (questionType.hasQuestion) {
-    return generateQuestionGuidance(questionType.type, lowerMessage)
   }
 
   // Smart fallback with categories
@@ -257,8 +181,8 @@ function resetContext() {
   }
 }
 
-// Handle follow-up responses with enhanced matching
-function handleFollowUpResponse(lowerMessage, normalizedMessage) {
+// Handle follow-up responses
+function handleFollowUpResponse(lowerMessage) {
   const intent = conversationContext.lastIntent
 
   // Check for numbered selection (1-5)
@@ -275,38 +199,19 @@ function handleFollowUpResponse(lowerMessage, normalizedMessage) {
     }
   }
 
-  // Check if message matches an option label (exact or fuzzy)
+  // Check if message matches an option label
   if (intent.followUp && intent.followUp.options) {
     for (const option of intent.followUp.options) {
       const optionLower = option.label.toLowerCase()
 
       // Exact match
-      if (lowerMessage === optionLower || normalizedMessage === optionLower) {
+      if (lowerMessage === optionLower) {
         conversationContext.awaitingFollowUp = false
         return handleFollowUp(intent.intent, option.value)
       }
 
       // Partial match
       if (lowerMessage.includes(optionLower) || optionLower.includes(lowerMessage)) {
-        conversationContext.awaitingFollowUp = false
-        return handleFollowUp(intent.intent, option.value)
-      }
-
-      // Fuzzy match for option labels
-      const optionWords = optionLower.split(/\s+/)
-      const messageWords = lowerMessage.split(/\s+/)
-      let matchCount = 0
-      for (const optWord of optionWords) {
-        if (optWord.length >= 3) {
-          for (const msgWord of messageWords) {
-            if (msgWord.length >= 3 && isSimilar(optWord, msgWord, 1)) {
-              matchCount++
-              break
-            }
-          }
-        }
-      }
-      if (matchCount >= Math.ceil(optionWords.length / 2)) {
         conversationContext.awaitingFollowUp = false
         return handleFollowUp(intent.intent, option.value)
       }
