@@ -44,8 +44,8 @@ jobs:
           NODE_ENV: production
           VITE_SUPABASE_URL: ${{ secrets.VITE_SUPABASE_URL }}
           VITE_SUPABASE_ANON_KEY: ${{ secrets.VITE_SUPABASE_ANON_KEY }}
-          VITE_GEMINI_ENABLED: ${{ secrets.VITE_GEMINI_ENABLED }}
-          VITE_API_URL: ${{ secrets.VITE_API_URL }}
+          VITE_GEMINI_ENABLED: true
+          VITE_GEMINI_API_KEY: ${{ secrets.VITE_GEMINI_API_KEY }}
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
