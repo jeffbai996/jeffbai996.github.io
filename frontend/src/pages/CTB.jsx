@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import React, { useEffect } from 'react'
 import { Routes, Route, Link, useNavigate } from 'react-router-dom'
 import './Department.css'
 
@@ -308,6 +308,39 @@ function CTBLicensing() {
 }
 
 function ComingSoon({ title }) {
+  const navigate = useNavigate();
+
+  const getServiceInfo = () => {
+    switch(title) {
+      case 'Taxation':
+        return {
+          description: 'File and manage cannabis tax returns, view current rates, and access compliance resources.',
+          services: ['Quarterly Tax Filing', 'Tax Rate Schedule', 'Payment History', 'Tax Calculation Tools'],
+          contact: 'Tax assistance: 1-800-PRAYA-TAX or tax@ctb.gov.py'
+        };
+      case 'Compliance':
+        return {
+          description: 'Compliance guidelines, inspection schedules, and regulatory requirements for license holders.',
+          services: ['Compliance Checklist', 'Inspection Calendar', 'Violation Reporting', 'Best Practices Guide'],
+          contact: 'Compliance questions: 1-800-PRAYA-CTB or compliance@ctb.gov.py'
+        };
+      case 'Research':
+        return {
+          description: 'Industry data, market research, and cannabis policy analysis for the Republic of Praya.',
+          services: ['Market Statistics', 'Research Reports', 'Policy Analysis', 'Industry Trends'],
+          contact: 'Research inquiries: research@ctb.gov.py'
+        };
+      default:
+        return {
+          description: 'This service is being developed to support the legal cannabis industry in Praya.',
+          services: [],
+          contact: 'For assistance, contact the Cannabis Tax Bureau at info@ctb.gov.py'
+        };
+    }
+  };
+
+  const info = getServiceInfo();
+
   return (
     <main className="main">
       <div className="page-header">
@@ -316,14 +349,80 @@ function ComingSoon({ title }) {
             <Link to="/ctb">Home</Link> / {title}
           </div>
           <h1>{title}</h1>
+          <p className="subtitle">{info.description}</p>
         </div>
       </div>
       <div className="container">
-        <div className="card" style={{ textAlign: 'center', padding: '60px' }}>
-          <h3>Coming Soon</h3>
-          <p style={{ color: 'var(--text-muted)', marginTop: '12px' }}>
-            This section is under development. Check back soon!
-          </p>
+        <div className="card">
+          <div style={{ padding: '20px', textAlign: 'center' }}>
+            <div style={{
+              width: '64px',
+              height: '64px',
+              background: 'linear-gradient(135deg, rgba(45, 134, 89, 0.1) 0%, rgba(45, 134, 89, 0.2) 100%)',
+              borderRadius: '50%',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              margin: '0 auto 20px'
+            }}>
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <circle cx="12" cy="12" r="10"/>
+                <path d="M12 16v-4M12 8h.01"/>
+              </svg>
+            </div>
+            <h3 style={{ marginBottom: '12px' }}>Service Under Development</h3>
+            <p style={{ color: 'var(--text-muted)', maxWidth: '500px', margin: '0 auto 24px' }}>
+              We're working to bring this service online. In the meantime, you can access these services through traditional channels or contact our office directly.
+            </p>
+
+            {info.services.length > 0 && (
+              <div style={{ marginTop: '24px', textAlign: 'left', maxWidth: '400px', margin: '24px auto 0' }}>
+                <h4 style={{ fontSize: '14px', marginBottom: '12px' }}>Available Services:</h4>
+                <ul style={{ color: 'var(--text-secondary)', fontSize: '14px' }}>
+                  {info.services.map(service => (
+                    <li key={service} style={{ marginBottom: '8px' }}>{service}</li>
+                  ))}
+                </ul>
+              </div>
+            )}
+
+            <div style={{
+              marginTop: '32px',
+              padding: '16px',
+              background: 'rgba(45, 134, 89, 0.05)',
+              borderRadius: '10px',
+              fontSize: '13px',
+              color: 'var(--text-muted)'
+            }}>
+              {info.contact}
+            </div>
+
+            <div style={{ marginTop: '32px' }}>
+              <h4 style={{ fontSize: '14px', marginBottom: '12px' }}>Related Services</h4>
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '12px' }}>
+                <Link to="/ctb/licensing" style={{
+                  padding: '14px',
+                  background: 'var(--bg-elevated)',
+                  border: '1px solid var(--border-subtle)',
+                  borderRadius: '10px',
+                  textDecoration: 'none',
+                  fontSize: '13px',
+                  fontWeight: '500',
+                  color: 'var(--text-primary)',
+                  transition: 'all 0.2s'
+                }}>
+                  Licensing Information
+                </Link>
+                <button
+                  onClick={() => navigate('/ctb')}
+                  className="btn btn-secondary"
+                  style={{ fontSize: '13px', padding: '14px' }}
+                >
+                  Return to CTB Home
+                </button>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </main>
