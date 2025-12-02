@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import React, { useEffect } from 'react'
 import { Routes, Route, Link, useNavigate } from 'react-router-dom'
 import './Department.css'
 
@@ -278,6 +278,39 @@ function DOJCourts() {
 }
 
 function ComingSoon({ title }) {
+  const navigate = useNavigate();
+
+  const getServiceInfo = () => {
+    switch(title) {
+      case 'Prosecution Services':
+        return {
+          description: 'Information about prosecution procedures and victim support services.',
+          services: ['Case Status Inquiry', 'Victim Services', 'Witness Information', 'Prosecution Guidelines'],
+          contact: 'For prosecution inquiries, contact the Office of the Prosecutor at 1-800-PRAYA-DOJ'
+        };
+      case 'Criminal Code':
+        return {
+          description: 'Access the complete Criminal Code of the Republic of Praya and legal resources.',
+          services: ['Criminal Code Database', 'Legal Definitions', 'Sentencing Guidelines', 'Recent Amendments'],
+          contact: 'Legal research assistance available at library@doj.gov.py'
+        };
+      case 'Online Services':
+        return {
+          description: 'Digital services for case management, filing, and court records access.',
+          services: ['Case Lookup', 'E-Filing System', 'Court Calendar', 'Legal Forms Download'],
+          contact: 'Technical support: 1-800-PRAYA-COURT or support@courts.gov.py'
+        };
+      default:
+        return {
+          description: 'This service is being developed to better serve the justice needs of Praya.',
+          services: [],
+          contact: 'For assistance, contact the Department of Justice at info@doj.gov.py'
+        };
+    }
+  };
+
+  const info = getServiceInfo();
+
   return (
     <main className="main">
       <div className="page-header">
@@ -286,14 +319,80 @@ function ComingSoon({ title }) {
             <Link to="/doj">Home</Link> / {title}
           </div>
           <h1>{title}</h1>
+          <p className="subtitle">{info.description}</p>
         </div>
       </div>
       <div className="container">
-        <div className="card" style={{ textAlign: 'center', padding: '60px' }}>
-          <h3>Coming Soon</h3>
-          <p style={{ color: 'var(--text-muted)', marginTop: '12px' }}>
-            This section is under development. Check back soon!
-          </p>
+        <div className="card">
+          <div style={{ padding: '20px', textAlign: 'center' }}>
+            <div style={{
+              width: '64px',
+              height: '64px',
+              background: 'linear-gradient(135deg, rgba(153, 27, 27, 0.1) 0%, rgba(153, 27, 27, 0.2) 100%)',
+              borderRadius: '50%',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              margin: '0 auto 20px'
+            }}>
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <circle cx="12" cy="12" r="10"/>
+                <path d="M12 16v-4M12 8h.01"/>
+              </svg>
+            </div>
+            <h3 style={{ marginBottom: '12px' }}>Service Under Development</h3>
+            <p style={{ color: 'var(--text-muted)', maxWidth: '500px', margin: '0 auto 24px' }}>
+              We're working to bring this service online. In the meantime, you can access these services through traditional channels.
+            </p>
+
+            {info.services.length > 0 && (
+              <div style={{ marginTop: '24px', textAlign: 'left', maxWidth: '400px', margin: '24px auto 0' }}>
+                <h4 style={{ fontSize: '14px', marginBottom: '12px' }}>Available Services:</h4>
+                <ul style={{ color: 'var(--text-secondary)', fontSize: '14px' }}>
+                  {info.services.map(service => (
+                    <li key={service} style={{ marginBottom: '8px' }}>{service}</li>
+                  ))}
+                </ul>
+              </div>
+            )}
+
+            <div style={{
+              marginTop: '32px',
+              padding: '16px',
+              background: 'rgba(153, 27, 27, 0.05)',
+              borderRadius: '10px',
+              fontSize: '13px',
+              color: 'var(--text-muted)'
+            }}>
+              {info.contact}
+            </div>
+
+            <div style={{ marginTop: '32px' }}>
+              <h4 style={{ fontSize: '14px', marginBottom: '12px' }}>Related Services</h4>
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '12px' }}>
+                <Link to="/doj/courts" style={{
+                  padding: '14px',
+                  background: 'var(--bg-elevated)',
+                  border: '1px solid var(--border-subtle)',
+                  borderRadius: '10px',
+                  textDecoration: 'none',
+                  fontSize: '13px',
+                  fontWeight: '500',
+                  color: 'var(--text-primary)',
+                  transition: 'all 0.2s'
+                }}>
+                  Court Information
+                </Link>
+                <button
+                  onClick={() => navigate('/doj')}
+                  className="btn btn-secondary"
+                  style={{ fontSize: '13px', padding: '14px' }}
+                >
+                  Return to DOJ Home
+                </button>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </main>
