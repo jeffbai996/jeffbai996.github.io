@@ -272,25 +272,184 @@ function isUnintelligible(text) {
 // Generate enhanced knowledge base entries from department data
 export function generateKnowledgeBase() {
   const baseKnowledge = [
+    // Greetings - expanded variations
     {
-      keywords: ['hello', 'hi', 'hey', 'good morning', 'good afternoon', 'good evening', 'greetings', 'howdy', 'sup', 'yo'],
+      keywords: ['hello', 'hi', 'hey', 'good morning', 'good afternoon', 'good evening', 'greetings', 'howdy', 'sup', 'yo', 'hola', 'aloha', 'heya', 'hiya', 'whats up', "what's up", 'wassup'],
       response: "Hello! Welcome to Praya Citizen Services. I'm here to help you navigate government services. You can ask me about taxes, IDs, police services, healthcare, housing, and more. How can I assist you today?"
     },
+    // Goodbyes
     {
-      keywords: ['help', 'what can you do', 'services', 'options', 'menu', 'assist', 'support', 'info', 'information'],
+      keywords: ['bye', 'goodbye', 'good bye', 'see you', 'see ya', 'later', 'farewell', 'take care', 'cya', 'catch you later', 'gotta go', 'have to go', 'leaving', 'talk to you later', 'ttyl', 'peace', 'adios', 'ciao'],
+      response: "Thank you for using Praya Citizen Services! If you need any assistance in the future, I'll be right here. Have a great day!"
+    },
+    // Apologies
+    {
+      keywords: ['sorry', 'apologize', 'my bad', 'my mistake', 'oops', 'excuse me', 'pardon', 'forgive me', 'apologies'],
+      response: "No problem at all! Don't worry about it. How can I help you with government services today?"
+    },
+    // Thanks - expanded
+    {
+      keywords: ['thank', 'thanks', 'appreciate', 'thank you', 'thx', 'ty', 'tysm', 'thank u', 'much appreciated', 'grateful', 'gracias'],
+      response: "You're welcome! Is there anything else I can help you with regarding government services?"
+    },
+    // Appreciation/Compliments
+    {
+      keywords: ['great', 'awesome', 'excellent', 'perfect', 'amazing', 'wonderful', 'fantastic', 'brilliant', 'helpful', 'you are good', 'youre good', 'good job', 'well done', 'nice', 'love it', 'love this'],
+      response: "I'm glad I could help! That's what I'm here for. Is there anything else you'd like to know about government services?"
+    },
+    // Affirmations
+    {
+      keywords: ['yes', 'yeah', 'yep', 'yup', 'sure', 'ok', 'okay', 'alright', 'all right', 'sounds good', 'agreed', 'correct', 'right', 'uh huh', 'mhm'],
+      response: "Great! What would you like to know more about? I can help with taxes, IDs, police services, healthcare, housing, postal services, and more."
+    },
+    // Negations
+    {
+      keywords: ['no', 'nope', 'nah', 'not really', 'no thanks', 'no thank you', "i'm good", 'im good', "that's all", 'thats all', 'nothing', 'nevermind', 'never mind'],
+      response: "Alright! If you need anything later, just let me know. I'm here 24/7 to help with Praya government services."
+    },
+    // Confusion
+    {
+      keywords: ['confused', 'confusing', "don't understand", 'dont understand', 'unclear', 'what do you mean', 'huh', 'wdym', 'explain', 'clarify', "i don't get it", 'lost', 'not sure'],
+      response: "I understand this can be confusing! Let me help clarify. Could you tell me specifically what service or information you're looking for? For example:\n• Getting an ID or passport\n• Filing taxes\n• Police services\n• Healthcare\n• Housing assistance\n\nWhat would you like to know more about?"
+    },
+    // Who/What are you
+    {
+      keywords: ['who are you', 'what are you', 'are you human', 'are you real', 'are you a bot', 'are you ai', 'chatbot', 'robot', 'your name', 'introduce yourself'],
+      response: "I'm the Praya Citizen Services Assistant, an AI-powered chatbot designed to help you navigate government services! I can answer questions about taxes, IDs, police services, healthcare, housing, and more. While I'm not human, I'm here 24/7 to provide accurate information about Praya government services. How can I help you today?"
+    },
+    // How are you
+    {
+      keywords: ['how are you', 'how are you doing', 'how do you do', 'hows it going', "how's it going", 'how are things', 'whats new', "what's new", 'you good', 'you ok'],
+      response: "I'm doing great, thank you for asking! I'm always ready to help citizens with government services. How can I assist you today?"
+    },
+    // Frustration
+    {
+      keywords: ['frustrated', 'frustrating', 'annoying', 'annoyed', 'irritated', 'mad', 'angry', 'this sucks', 'hate this', 'terrible', 'awful', 'worst', 'ugh'],
+      response: "I understand your frustration, and I'm here to help make things easier. Government processes can be complex, but I'll do my best to guide you through. What specific issue are you dealing with? Let me see if I can provide clear information or direct you to the right department."
+    },
+    // Jokes/Humor
+    {
+      keywords: ['joke', 'funny', 'make me laugh', 'tell me a joke', 'humor', 'laugh', 'entertain me', 'boring'],
+      response: "I appreciate the lighter mood! While I'm better at government services than comedy, I can tell you this: navigating bureaucracy doesn't have to be painful when you have the right information. Speaking of which, how can I help you with Praya services today? 😊"
+    },
+    // Small talk - weather
+    {
+      keywords: ['weather', 'temperature', 'hot', 'cold', 'raining', 'sunny', 'forecast', 'climate'],
+      response: "I don't have access to weather information, but you can check the current air quality index on the main portal (currently showing in the stats section). For detailed weather forecasts, you might want to check a dedicated weather service. Is there anything related to government services I can help you with?"
+    },
+    // Time/Date
+    {
+      keywords: ['what time', 'current time', 'time is it', 'what day', 'today', 'date', 'calendar'],
+      response: "I don't have access to real-time clock information, but your device should show you the current time and date. If you need information about government office hours or deadlines, I'd be happy to help with that! What service are you interested in?"
+    },
+    // Capabilities/Abilities
+    {
+      keywords: ['can you', 'are you able', 'do you know', 'capabilities', 'what can you do', 'your abilities', 'functions'],
+      response: "I specialize in providing information about Praya government services! I can help you with:\n• Finding the right department for your needs\n• Office hours and contact information\n• Service requirements and fees\n• Application processes\n• General government service questions\n\nWhat would you like to know about?"
+    },
+    // Help - expanded
+    {
+      keywords: ['help', 'services', 'options', 'menu', 'assist', 'support', 'info', 'information', 'guide', 'start'],
       response: "I can help you with information about:\n• Taxes & Revenue (RD, CTB)\n• IDs & Documents (Interior, Transport)\n• Police & Justice (NPA, DOJ)\n• Banking (BOP)\n• Customs & Border (CBCA)\n• Health Services\n• Housing Authority\n• Postal Services\n• Legislative Council\n• PrayaPass Account Help\n\nJust ask me a question about any of these services!"
     },
     {
       keywords: ['hours', 'open', 'closed', 'business hours', 'schedule', 'when', 'time', 'available', 'opening'],
       response: "Most government offices are open Monday-Friday, 8AM-5PM. Some services vary:\n• Post Offices: Mon-Fri 8AM-6PM, Sat 9AM-1PM\n• Emergency Services (Police, Health): 24/7\n• Border Crossings: 24/7\n• Online Services: Available 24/7\n\nFor specific office hours, please check the department's page or call ahead."
     },
+    // Wait/Hold on
     {
-      keywords: ['thank', 'thanks', 'appreciate', 'thank you', 'thx', 'ty'],
-      response: "You're welcome! Is there anything else I can help you with regarding government services?"
+      keywords: ['wait', 'hold on', 'one moment', 'one sec', 'give me a sec', 'just a moment', 'hang on', 'brb', 'be right back'],
+      response: "No problem! Take your time. I'll be here whenever you're ready to continue."
+    },
+    // Ready/Back
+    {
+      keywords: ['ready', 'im back', "i'm back", 'here', 'back', 'still there', 'you there'],
+      response: "Great, I'm here! How can I help you with government services?"
+    },
+    // Personal questions - age, location, etc.
+    {
+      keywords: ['how old are you', 'your age', 'when were you born', 'where are you from', 'where do you live', 'location'],
+      response: "I'm an AI assistant, so I don't have an age or physical location! I exist in the digital space to help Praya citizens 24/7. What government service can I help you with today?"
+    },
+    // Test/Testing
+    {
+      keywords: ['test', 'testing', 'is this working', 'are you working', 'hello world', 'check'],
+      response: "Yes, I'm working perfectly! The chat system is functioning normally. How can I help you with Praya government services?"
+    },
+    // Repeat/Say again
+    {
+      keywords: ['repeat', 'say that again', 'what', 'come again', 'pardon', 'one more time', 'didnt catch that', "didn't catch that"],
+      response: "I apologize if my previous response wasn't clear. Could you please let me know what specific information you need? I can help with:\n• Government departments and services\n• Office hours and locations\n• Application requirements\n• Fees and costs\n• Contact information\n\nWhat would you like to know more about?"
+    },
+    // Slow/Fast
+    {
+      keywords: ['too fast', 'too slow', 'slow down', 'speed up'],
+      response: "I'll do my best to provide information at a comfortable pace. Is there something specific you'd like me to explain about government services?"
+    },
+    // Language/Translation already covered above
+    // Praise/Positive feedback
+    {
+      keywords: ['good', 'cool', 'interesting', 'informative', 'useful', 'handy', 'neat'],
+      response: "I'm glad you find this helpful! Feel free to ask if you need any more information about government services."
     },
     {
       keywords: ['agent', 'human', 'person', 'representative', 'speak to someone', 'talk to agent', 'live agent', 'customer service', 'support agent', 'real person', 'operator'],
       response: "Agent currently unavailable. I'm an AI assistant here to help you find information about Praya government services. For direct assistance, you can:\n• Call the relevant department directly\n• Visit an office during business hours\n• Use online portals for specific services\n\nI can help you find the right contact information or service. What do you need help with?"
+    },
+    // About Praya
+    {
+      keywords: ['what is praya', 'where is praya', 'praya country', 'republic of praya', 'about praya', 'praya location', 'praya population', 'tell me about praya'],
+      response: "The Republic of Praya is a nation of 2.4 million citizens with a modern, digital-first government. We offer 127 online services available 24/7 across 12 major departments. Our government is committed to transparency, efficiency, and accessibility through technology. How can I help you access our services?"
+    },
+    // President/Leader/Government
+    {
+      keywords: ['president', 'prime minister', 'leader', 'who runs', 'government leader', 'elected', 'politics'],
+      response: "For information about Praya's government structure and elected officials, please visit the Legislative Council portal. The Legislative Council is our unicameral legislature responsible for lawmaking and oversight. You can view current council members and their voting records there. Is there a specific government service I can help you with?"
+    },
+    // Love/Like
+    {
+      keywords: ['i love you', 'love you', 'i like you', 'you rock', 'youre the best', "you're the best", 'best bot'],
+      response: "That's very kind of you! I'm here to serve the citizens of Praya. Is there anything specific I can help you with today regarding government services?"
+    },
+    // Hate/Dislike
+    {
+      keywords: ['i hate you', 'you suck', 'useless', 'not helpful', 'waste of time', "you're bad"],
+      response: "I'm sorry I haven't been helpful. Let me try to assist you better. Could you tell me specifically what you're trying to accomplish? I can:\n• Direct you to the right department\n• Provide contact information\n• Explain requirements for services\n• Answer questions about fees and processes\n\nWhat do you need help with?"
+    },
+    // Bored/Entertainment
+    {
+      keywords: ['bored', 'entertain', 'fun', 'play', 'game'],
+      response: "While I'm designed for government service information rather than entertainment, I'm happy to help you discover interesting services! Did you know Praya has 12 major departments offering everything from cannabis licensing to national park information? What would you like to explore?"
+    },
+    // Smart/Intelligent
+    {
+      keywords: ['smart', 'intelligent', 'clever', 'genius', 'impressive'],
+      response: "Thank you! I'm designed to help make government services more accessible. Is there something specific you'd like to know about Praya services?"
+    },
+    // Dumb/Stupid
+    {
+      keywords: ['dumb', 'stupid', 'idiot', 'moron'],
+      response: "I apologize if I'm not understanding your needs correctly. Could you please rephrase what you're looking for? I want to make sure I provide you with the right information about government services."
+    },
+    // Greeting variations for different times
+    {
+      keywords: ['good night', 'goodnight', 'night'],
+      response: "Good night! Remember, I'm available 24/7 if you need help with government services. Sleep well!"
+    },
+    // Quick service lookups
+    {
+      keywords: ['quick question', 'fast', 'urgent', 'asap', 'right now', 'immediately', 'hurry'],
+      response: "I'll help you as quickly as possible! What do you need to know? If this is a true emergency (life-threatening, crime in progress), please call 911 immediately."
+    },
+    // Recommendations
+    {
+      keywords: ['recommend', 'suggestion', 'what should i', 'advice', 'should i'],
+      response: "I can provide information about government services, but the best choice depends on your specific needs. Could you tell me what you're trying to accomplish? For example:\n• Getting official documents\n• Filing taxes\n• Reporting an issue\n• Applying for benefits\n• Finding legal assistance"
+    },
+    // Already tried/doesn't work
+    {
+      keywords: ['already tried', 'tried that', "doesn't work", 'didnt work', 'not working', 'still broken', 'same problem'],
+      response: "I understand you've already attempted a solution. For technical issues with online services or persistent problems, I recommend:\n• Contacting the specific department directly during business hours\n• Visiting an office in person with proper documentation\n• Checking the service status on the department's portal\n\nWhich department or service are you having trouble with? I can provide direct contact information."
     },
     {
       keywords: ['login', 'account', 'prayapass', 'password', 'register', 'sign up', 'forgot password', 'create account', 'sign in', 'log in'],
