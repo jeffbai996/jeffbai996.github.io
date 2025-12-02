@@ -71,8 +71,8 @@ export default function DOJ() {
               <h5>Government</h5>
               <ul>
                 <li><Link to="/">Gov Portal</Link></li>
-                <li><a href="/CTB_Praya.html">Cannabis Tax Bureau</a></li>
-                <li><a href="/ID_Praya.html">Interior Dept.</a></li>
+                <li><a href="/pages/CTB_Praya.html">Cannabis Tax Bureau</a></li>
+                <li><a href="/pages/ID_Praya.html">Interior Dept.</a></li>
               </ul>
             </div>
           </div>
