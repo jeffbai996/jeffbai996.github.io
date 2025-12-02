@@ -1,6 +1,6 @@
 # Google Gemini 2.0 API Integration Guide
 
-This guide explains how the chatbot integrates with Google Gemini 2.0 Flash API to provide intelligent responses for complex queries.
+This guide explains how the chatbot integrates with Google Gemini 2.0 Flash API directly from the frontend, without requiring a backend server.
 
 ## Overview
 
@@ -14,6 +14,7 @@ This approach ensures:
 - 🤖 Smart AI assistance for complex questions
 - 💰 Cost-effective (only uses AI when needed)
 - 🔄 Graceful fallback if AI is unavailable
+- 🚀 **No backend server required** - runs entirely on GitHub Pages
 
 ## Architecture
 
@@ -29,7 +30,7 @@ Fallback Detection
     │
     └─→ Low Confidence/Complex → Check Triggers
                                       ↓
-                                  Gemini API Call
+                                  Direct Gemini API Call (Frontend)
                                       ↓
                                   Stream Response
                                       ↓
@@ -49,348 +50,274 @@ The chatbot automatically uses Gemini 2.0 Flash when it detects:
 - Same query rephrased multiple times
 
 ### 3. Complex Query Patterns
-- Multiple departments/services mentioned ("I need to report a crime AND apply for victim compensation")
-- Comparison questions ("What's the difference between Form A and Form B?")
-- Process explanations ("How does the passport renewal process work?")
-- "I don't understand" / "confused" / "not sure"
-- Requests for detailed/step-by-step information
+- Multiple services mentioned ("I need both X and Y")
+- Comparison questions ("What's the difference between...")
+- Process questions ("How does X work?", "Explain the process")
+- Step-by-step requests
 
 ### 4. User Frustration
-- Keywords: "frustrated", "not helping", "useless", "doesn't work"
-- "Already tried", "same thing", "not what I asked"
+- Keywords: "frustrated", "not helping", "doesn't work", "already tried"
+- Multiple failed attempts to get information
 
 ### 5. Explicit Help Requests
-- "Tell me more", "explain better", "I need more information"
+- "Tell me more", "explain better", "need more information"
+- "I don't understand"
 
 ## Setup Instructions
 
-### Step 1: Get Gemini API Key
+### 1. Get Your Gemini API Key
 
-1. Visit [Google AI Studio](https://makersuite.google.com/app/apikey)
+1. Visit [Google AI Studio](https://aistudio.google.com/app/apikey)
 2. Sign in with your Google account
-3. Click **"Create API Key"**
-4. Copy the API key (starts with `AIza...`)
+3. Click "Create API Key"
+4. Copy the generated API key
 
-### Step 2: Configure Backend
+### 2. Configure GitHub Secrets
 
-1. Navigate to the backend directory:
+For production deployment on GitHub Pages, you need to set the API key as a GitHub Secret:
+
+1. Go to your GitHub repository
+2. Navigate to **Settings** → **Secrets and variables** → **Actions**
+3. Click **New repository secret**
+4. Add the following secret:
+   - **Name**: `VITE_GEMINI_API_KEY`
+   - **Value**: Your Gemini API key
+
+### 3. Secure Your API Key (Recommended)
+
+To prevent unauthorized use of your API key, add domain restrictions:
+
+1. Go to [Google Cloud Console](https://console.cloud.google.com/)
+2. Navigate to **APIs & Services** → **Credentials**
+3. Find your API key and click **Edit**
+4. Under **Application restrictions**:
+   - Select "HTTP referrers (web sites)"
+   - Add your GitHub Pages domain: `https://<username>.github.io/*`
+5. Click **Save**
+
+This ensures the API key only works from your GitHub Pages site.
+
+### 4. Local Development Setup
+
+For local development:
+
+1. Copy the example environment file:
    ```bash
-   cd backend
-   ```
-
-2. Create `.env` file from example:
-   ```bash
+   cd frontend
    cp .env.example .env
    ```
 
-3. Edit `.env` and add your API key:
+2. Edit `.env` and add your API key:
    ```env
-   GEMINI_API_KEY=AIzaSy...your_actual_key_here
-   PORT=5000
-   NODE_ENV=development
-   FRONTEND_URL=http://localhost:5173
+   VITE_GEMINI_API_KEY=your_api_key_here
+   VITE_GEMINI_ENABLED=true
    ```
 
-4. Install dependencies (if not already done):
+3. Install dependencies and run:
    ```bash
    npm install
-   ```
-
-5. Start the backend server:
-   ```bash
    npm run dev
    ```
 
-   You should see:
-   ```
-   🚀 Praya Chatbot Backend running on port 5000
-   📡 Frontend URL: http://localhost:5173
-   🤖 Gemini API Key: ✅ Configured
-   ⚡ Environment: development
-   ```
+### 5. Deployment
 
-### Step 3: Configure Frontend
+The GitHub Actions workflow automatically injects the API key during build:
 
-The frontend is already configured with environment variables. To verify:
-
-1. Check `frontend/.env.example` has:
-   ```env
-   VITE_GEMINI_ENABLED=true
-   VITE_API_URL=/api
-   ```
-
-2. If you have a custom `.env` file in `frontend/`, make sure it includes these variables.
-
-### Step 4: Test the Integration
-
-1. Start both backend and frontend:
-   ```bash
-   # Terminal 1 - Backend
-   cd backend
-   npm run dev
-
-   # Terminal 2 - Frontend
-   cd frontend
-   npm run dev
-   ```
-
-2. Open the app at `http://localhost:5173`
-
-3. Test with these queries:
-
-   **Simple query (uses rule-based):**
-   - "How do I apply for a passport?"
-   - "What are your hours?"
-
-   **Complex query (triggers Gemini):**
-   - "Can you explain the difference between applying for a new passport versus renewing one, and what documents I need for each?"
-   - "I need to report a crime but also need victim compensation and legal aid, where do I start?"
-
-4. Open browser console (F12) - you'll see:
-   - `"Using Gemini AI for complex query"` when AI is triggered
-   - `"Gemini API unavailable, falling back to rule-based system"` if there's an error
-
-## Rate Limits & Costs
-
-### Free Tier Limits (Gemini 2.0 Flash)
-- **15 requests per minute** (RPM)
-- **1 million tokens per day**
-- **1,500 requests per day**
-
-### Backend Rate Limiting
-- **10 requests per minute per IP** (conservative limit)
-- Automatic rate limit tracking and error messages
-- Graceful fallback to rule-based system when limit exceeded
-
-### Token Usage
-Typical query uses **500-800 tokens**:
-- **Input:** ~400-600 tokens (includes conversation history + department context)
-- **Output:** ~100-200 tokens (concise government service response)
-
-At this rate, the free tier supports:
-- **~1,800 AI-assisted conversations per day**
-- Sufficient for moderate traffic
-
-### Cost Estimation (if upgrading to paid)
-- Gemini 2.0 Flash: **$0.075 per 1M input tokens**, **$0.30 per 1M output tokens**
-- Average query cost: **~$0.0004** (less than 0.05¢)
-- 1,000 AI queries: **~$0.40**
-- Very affordable for most use cases
-
-## Configuration Options
-
-### Disable Gemini AI
-
-To disable AI and use only rule-based responses:
-
-**Frontend** (`frontend/.env`):
-```env
-VITE_GEMINI_ENABLED=false
+```yaml
+- name: Build frontend
+  working-directory: ./frontend
+  run: npm run build
+  env:
+    VITE_GEMINI_ENABLED: true
+    VITE_GEMINI_API_KEY: ${{ secrets.VITE_GEMINI_API_KEY }}
 ```
 
-The chatbot will work normally without any AI calls.
-
-### Adjust Fallback Sensitivity
-
-Edit `frontend/src/components/ChatWidget.jsx`, function `shouldUseGemini()`:
-
-```javascript
-// Make it MORE sensitive (use AI more often):
-const lowConfidence = !intentResult || (intentResult.confidence && intentResult.confidence < 0.8)
-
-// Make it LESS sensitive (use AI less often):
-const lowConfidence = !intentResult || (intentResult.confidence && intentResult.confidence < 0.4)
-```
-
-### Change Response Length
-
-Edit `backend/services/geminiService.js`:
-
-```javascript
-generationConfig: {
-  temperature: 0.7,
-  maxOutputTokens: 500, // Change this (100-8192)
-}
-```
-
-- Lower = shorter, more concise responses
-- Higher = more detailed, comprehensive responses
-
-## Monitoring & Debugging
-
-### Check Backend Status
+Simply push to the main branch to trigger deployment:
 
 ```bash
-curl http://localhost:5000/health
+git add .
+git commit -m "Enable Gemini AI integration"
+git push origin main
 ```
 
-Response:
-```json
-{
-  "status": "ok",
-  "service": "praya-chatbot-backend",
-  "timestamp": "2025-12-02T08:00:00.000Z",
-  "uptime": 120
-}
-```
+## How It Works
 
-### Check Gemini Status
+### Frontend Service (`frontend/src/services/geminiService.js`)
 
-```bash
-curl http://localhost:5000/api/gemini/status
-```
+The Gemini service handles direct API calls from the frontend:
 
-Response:
-```json
-{
-  "available": true,
-  "model": "gemini-2.0-flash-exp",
-  "rateLimit": {
-    "requestsUsed": 3,
-    "requestsRemaining": 12,
-    "windowResetIn": 45
+```javascript
+import { GoogleGenerativeAI } from '@google/generative-ai';
+
+class GeminiService {
+  constructor() {
+    const apiKey = import.meta.env.VITE_GEMINI_API_KEY;
+    this.genAI = new GoogleGenerativeAI(apiKey);
+    this.model = this.genAI.getGenerativeModel({
+      model: 'gemini-2.0-flash-exp',
+      // ... configuration
+    });
+  }
+
+  async generateResponse(userMessage, relevantDepartments, conversationHistory) {
+    // Build context and send to Gemini API
+    // Returns AI-generated response
   }
 }
 ```
 
-### Test Gemini API Directly
+### ChatWidget Integration (`frontend/src/components/ChatWidget.jsx`)
 
-```bash
-curl -X POST http://localhost:5000/api/gemini/chat \
-  -H "Content-Type: application/json" \
-  -d '{
-    "message": "What is the process for renewing a passport?",
-    "departmentContext": []
-  }'
+The chat widget calls the Gemini service when needed:
+
+```javascript
+import geminiService from '../services/geminiService';
+
+async function callGeminiAPI(message, messages) {
+  const relevantDepartments = // ... filter departments by keywords
+  const history = messages.slice(-10);
+
+  const result = await geminiService.generateResponse(
+    message,
+    relevantDepartments,
+    history
+  );
+
+  return result.response;
+}
 ```
 
-### View Logs
+## Model Configuration
 
-Backend logs show:
-- When Gemini is called
-- Token usage per request
-- Rate limit status
-- Error messages
+**Model**: `gemini-2.0-flash-exp` (Free tier available)
+
+**Generation Parameters**:
+- **Temperature**: 0.7 (Balanced creativity/factuality)
+- **Max Output Tokens**: 500 (Concise responses)
+- **Top P**: 0.95
+- **Top K**: 40
+
+**Safety Settings**: Medium and above blocking for:
+- Harassment
+- Hate speech
+- Sexually explicit content
+- Dangerous content
+
+## Rate Limits
+
+**Google Gemini Free Tier**:
+- 15 requests per minute
+- 1,500 requests per day
+- 1 million tokens per day
+
+The chatbot's hybrid approach helps stay within these limits by using Gemini only when necessary.
+
+## Testing
+
+### Test the Integration Locally
+
+1. Start the development server:
+   ```bash
+   cd frontend
+   npm run dev
+   ```
+
+2. Open the chatbot and try these test queries:
+   - **Rule-based** (fast): "I need a passport"
+   - **Complex** (uses AI): "What's the difference between a national ID and passport?"
+   - **Multi-part** (uses AI): "I need both a passport and driver's license, what's the process?"
+
+3. Check the browser console for logs:
+   - "Using Gemini AI for complex query" - AI is being used
+   - Response should stream character by character
+
+### Test on GitHub Pages
+
+After deployment:
+1. Visit your GitHub Pages site
+2. Open the chatbot
+3. Try the same test queries
+4. Verify AI responses work in production
 
 ## Troubleshooting
 
-### Issue: "Gemini API unavailable"
+### "Gemini API key not configured"
 
-**Causes:**
-1. Missing or invalid API key
-2. Rate limit exceeded
-3. Network issues
+**Cause**: API key is missing or invalid
 
-**Solutions:**
-```bash
-# Check if API key is set
-cd backend
-cat .env | grep GEMINI_API_KEY
+**Solutions**:
+- Check that `VITE_GEMINI_API_KEY` is set in GitHub Secrets
+- For local dev, check your `.env` file
+- Ensure the API key is valid (test at [AI Studio](https://aistudio.google.com/))
 
-# Restart backend
-npm run dev
+### "API quota exceeded"
 
-# Check logs for detailed error messages
-```
+**Cause**: Too many requests to Gemini API
 
-### Issue: AI never triggers
+**Solutions**:
+- Wait for the rate limit to reset (1 minute)
+- Reduce the number of test queries
+- Consider upgrading to paid tier for higher limits
 
-**Causes:**
-1. `VITE_GEMINI_ENABLED=false` in frontend
-2. Queries are too simple (rule-based system handles them)
+### "Response blocked due to safety filters"
 
-**Solutions:**
-- Check frontend `.env` has `VITE_GEMINI_ENABLED=true`
-- Try complex queries like "explain the difference between X and Y"
-- Lower confidence threshold in `shouldUseGemini()`
+**Cause**: Gemini's safety filters blocked the response
 
-### Issue: Rate limit errors
+**Solutions**:
+- Rephrase the query to be less ambiguous
+- The chatbot will automatically fall back to rule-based responses
 
-**Causes:**
-- More than 10 requests/minute from single IP
-- More than 15 requests/minute to Gemini API (global limit)
+### Chatbot always uses rule-based responses
 
-**Solutions:**
-- Wait 1 minute for rate limit to reset
-- Chatbot automatically falls back to rule-based system
-- Consider caching common responses
-- Upgrade to Gemini Pro for higher limits (if needed)
+**Cause**: Gemini is disabled or unavailable
 
-### Issue: Slow responses
+**Check**:
+1. Browser console for initialization errors
+2. `VITE_GEMINI_ENABLED=true` in environment
+3. API key is valid and has correct permissions
+4. Domain restrictions allow your site
 
-**Causes:**
-- Gemini API latency (typically 1-3 seconds)
-- Large conversation history
-- Complex department context
+## Security Best Practices
 
-**Solutions:**
-- This is normal for AI responses
-- Users see streaming text (typing effect) for better UX
-- Reduce `maxOutputTokens` for faster responses
-- Limit conversation history to last 5 messages (already done)
+### ✅ DO:
+- Store API key in GitHub Secrets for production
+- Add domain restrictions in Google Cloud Console
+- Use `.gitignore` to exclude `.env` files
+- Monitor API usage in Google Cloud Console
+- Use the free tier for small-scale deployments
 
-## Best Practices
+### ❌ DON'T:
+- Commit API keys to Git
+- Share API keys publicly
+- Skip domain restrictions
+- Expose the API key in client-side code (it's injected at build time)
 
-### For Development
-1. **Start with Gemini disabled** to test rule-based system first
-2. **Enable Gemini gradually** and monitor token usage
-3. **Use browser console** to see when AI triggers
-4. **Test edge cases** (long queries, special characters, etc.)
+## Cost Considerations
 
-### For Production
-1. **Monitor rate limits** using `/api/gemini/status` endpoint
-2. **Set up error alerting** for API failures
-3. **Cache common AI responses** to reduce API calls
-4. **Consider upgrading** to paid tier if traffic increases
-5. **Use environment variables** for all API keys (never hardcode)
+**Free Tier**: Sufficient for most personal/educational projects
+- 15 requests/minute
+- 1,500 requests/day
 
-### For Users
-1. **Simple queries use instant responses** (rule-based)
-2. **Complex queries may take 2-5 seconds** (AI processing)
-3. **Users see typing animation** during AI response
-4. **Fallback is automatic** if AI unavailable
+**Paid Tier**: For production applications with high traffic
+- Pay-per-token pricing
+- Higher rate limits
+- See [Gemini Pricing](https://ai.google.dev/pricing)
 
-## Security
-
-✅ **API Key Protection:**
-- Stored in backend `.env` file (never committed to git)
-- Never exposed to frontend/browser
-- Backend acts as secure proxy
-
-✅ **Input Validation:**
-- All user input sanitized
-- XSS protection enabled
-- Profanity and spam detection
-
-✅ **Rate Limiting:**
-- Per-IP limits prevent abuse
-- Global API limits prevent excessive costs
-- Graceful degradation on limit exceed
-
-✅ **CORS Protection:**
-- Backend only accepts requests from configured frontend URL
-- Prevents unauthorized API usage
-
-## Next Steps
-
-1. **Get your Gemini API key** from Google AI Studio
-2. **Configure backend** with API key in `.env`
-3. **Start both servers** (backend + frontend)
-4. **Test the integration** with complex queries
-5. **Monitor usage** via status endpoints
-6. **Adjust sensitivity** based on your needs
-
-For more details, see:
-- [Backend README](./backend/README.md) - Backend API documentation
-- [Google AI Studio](https://makersuite.google.com/) - Get API keys and docs
-- [Gemini API Docs](https://ai.google.dev/docs) - Official API documentation
+The hybrid approach minimizes costs by:
+- Using rule-based responses for common queries
+- Only calling Gemini for complex questions
+- Keeping responses concise (max 500 tokens)
 
 ## Support
 
-If you encounter issues:
-1. Check the troubleshooting section above
-2. View backend logs for error messages
-3. Test with curl commands to isolate the issue
-4. Ensure all environment variables are set correctly
+For issues or questions:
+1. Check the [troubleshooting section](#troubleshooting)
+2. Review [Google Gemini documentation](https://ai.google.dev/docs)
+3. Open an issue on the GitHub repository
 
-The chatbot is designed to work seamlessly whether Gemini is enabled or not. If you encounter any problems, the rule-based system will continue to function as a reliable fallback.
+## Further Reading
+
+- [Google Gemini API Documentation](https://ai.google.dev/docs)
+- [Gemini Safety Settings](https://ai.google.dev/docs/safety_setting_gemini)
+- [Vite Environment Variables](https://vitejs.dev/guide/env-and-mode.html)
+- [GitHub Actions Secrets](https://docs.github.com/en/actions/security-guides/encrypted-secrets)
