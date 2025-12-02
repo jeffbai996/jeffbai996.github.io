@@ -96,7 +96,7 @@ function findResponse(message) {
     return bestMatch.response
   }
 
-  return "I'm not sure I understand that question. I can help you with:\n• Taxes & Revenue\n• IDs & Passports\n• Police & Legal matters\n• Banking\n• Healthcare\n• Housing\n• Postal Services\n\nCould you please rephrase your question or ask about one of these topics?"
+  return "I'm not sure I understand that question. I can help you with:\n• **Taxes & Revenue** - Tax filing, business accounts, payments\n• **IDs & Passports** - Applications, renewals, requirements\n• **Police Services** - Emergency contacts, clearances, crime reporting\n• **Legal & Courts** - Court services, case lookup, legal aid\n• **Banking** - Bank of Praya services and accounts\n• **Healthcare** - Public health services, licensing, statistics\n• **Housing** - Affordable housing applications and eligibility\n• **Postal Services** - Package shipping, tracking, P.O. boxes\n• **Cannabis Licensing** - Dispensary and cultivation permits\n• **Transport** - Driver licenses, vehicle registration\n• **Customs & Border** - Import/export regulations, travel requirements\n• **Legislative Council** - Bills, voting records, representatives\n\nCould you please rephrase your question or ask about one of these topics?"
 }
 
 // Parse markdown-style bold (**text**) and return React elements
@@ -397,7 +397,7 @@ export default function ChatWidget() {
 
         {/* Footer */}
         <div className="chat-widget-footer">
-          Powered by Praya Citizen Services
+          Powered by GP.AI
         </div>
       </div>
     </>
