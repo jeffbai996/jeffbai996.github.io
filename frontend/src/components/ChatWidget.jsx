@@ -1,9 +1,17 @@
 import { useState, useRef, useEffect } from 'react'
 import './ChatWidget.css'
 import { generateKnowledgeBase, containsProfanity, isUnintelligible } from '../utils/departmentCrawler'
+import { classifyIntent, generateIntentResponse, handleFollowUp, extractEntities } from '../utils/intentRecognition'
 
 // Generate expanded knowledge base from department data
 const knowledgeBase = generateKnowledgeBase()
+
+// Track conversation context for follow-ups
+let conversationContext = {
+  lastIntent: null,
+  awaitingFollowUp: false,
+  entities: {}
+}
 
 // Polite responses for various edge cases
 const edgeCaseResponses = {
@@ -16,12 +24,13 @@ const edgeCaseResponses = {
 // Track recent messages to detect spam/repetition
 let recentMessages = []
 
-// Find best matching response with enhanced intelligence
+// Find best matching response with enhanced intelligence and intent recognition
 function findResponse(message) {
   const lowerMessage = message.toLowerCase().trim()
 
   // Check for profanity
   if (containsProfanity(message)) {
+    conversationContext = { lastIntent: null, awaitingFollowUp: false, entities: {} }
     return edgeCaseResponses.profanity
   }
 
@@ -41,7 +50,58 @@ function findResponse(message) {
     return edgeCaseResponses.repeated
   }
 
-  // Enhanced keyword matching with better scoring and priority
+  // Extract any entities from the message (case numbers, tracking numbers, etc.)
+  const extractedEntities = extractEntities(message)
+  if (Object.keys(extractedEntities).length > 0) {
+    conversationContext.entities = { ...conversationContext.entities, ...extractedEntities }
+  }
+
+  // Check if user is responding to a follow-up question
+  if (conversationContext.awaitingFollowUp && conversationContext.lastIntent) {
+    // Check if message looks like a selection (number or matches an option)
+    const numberMatch = lowerMessage.match(/^[1-5]$/)
+    if (numberMatch) {
+      const intent = conversationContext.lastIntent
+      if (intent.followUp && intent.followUp.options) {
+        const optionIndex = parseInt(numberMatch[0]) - 1
+        if (optionIndex >= 0 && optionIndex < intent.followUp.options.length) {
+          const selectedOption = intent.followUp.options[optionIndex]
+          conversationContext.awaitingFollowUp = false
+          const followUpResponse = handleFollowUp(intent.intent, selectedOption.value)
+          if (followUpResponse) {
+            return followUpResponse
+          }
+        }
+      }
+    }
+
+    // Check if message matches an option label
+    if (conversationContext.lastIntent.followUp && conversationContext.lastIntent.followUp.options) {
+      for (const option of conversationContext.lastIntent.followUp.options) {
+        if (lowerMessage.includes(option.label.toLowerCase()) ||
+            option.label.toLowerCase().includes(lowerMessage)) {
+          conversationContext.awaitingFollowUp = false
+          const followUpResponse = handleFollowUp(conversationContext.lastIntent.intent, option.value)
+          if (followUpResponse) {
+            return followUpResponse
+          }
+        }
+      }
+    }
+  }
+
+  // Try intent classification first - this handles specific user intents
+  const matchedIntent = classifyIntent(message)
+  if (matchedIntent) {
+    // Store context for potential follow-up
+    conversationContext.lastIntent = matchedIntent
+    conversationContext.awaitingFollowUp = !!matchedIntent.followUp
+
+    // Generate response with intent details
+    return generateIntentResponse(matchedIntent, true)
+  }
+
+  // Fall back to enhanced keyword matching
   let bestMatch = null
   let bestScore = 0
 
@@ -93,8 +153,13 @@ function findResponse(message) {
   }
 
   if (bestMatch && bestScore > 0) {
+    // Reset context for general responses
+    conversationContext = { lastIntent: null, awaitingFollowUp: false, entities: {} }
     return bestMatch.response
   }
+
+  // Reset context when no match found
+  conversationContext = { lastIntent: null, awaitingFollowUp: false, entities: {} }
 
   return "I'm not sure I understand that question. I can help you with:\n• **Taxes & Revenue** - Tax filing, business accounts, payments\n• **IDs & Passports** - Applications, renewals, requirements\n• **Police Services** - Emergency contacts, clearances, crime reporting\n• **Legal & Courts** - Court services, case lookup, legal aid\n• **Banking** - Bank of Praya services and accounts\n• **Healthcare** - Public health services, licensing, statistics\n• **Housing** - Affordable housing applications and eligibility\n• **Postal Services** - Package shipping, tracking, P.O. boxes\n• **Cannabis Licensing** - Dispensary and cultivation permits\n• **Transport** - Driver licenses, vehicle registration\n• **Customs & Border** - Import/export regulations, travel requirements\n• **Legislative Council** - Bills, voting records, representatives\n\nCould you please rephrase your question or ask about one of these topics?"
 }
