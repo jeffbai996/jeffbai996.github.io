@@ -1,24 +1,51 @@
 import { useState, useRef, useEffect } from 'react'
 import './ChatWidget.css'
 import { generateKnowledgeBase, containsProfanity, isUnintelligible } from '../utils/departmentCrawler'
-import { classifyIntent, generateIntentResponse, handleFollowUp, extractEntities } from '../utils/intentRecognition'
+import {
+  classifyIntent,
+  generateIntentResponse,
+  handleFollowUp,
+  extractEntities,
+  normalizeText,
+  detectQuestionType,
+  extractTopics,
+  calculateSimilarity,
+  isSimilar,
+  expandWithSynonyms
+} from '../utils/intentRecognition'
 
 // Generate expanded knowledge base from department data
 const knowledgeBase = generateKnowledgeBase()
 
-// Track conversation context for follow-ups
+// Track conversation context for follow-ups with enhanced memory
 let conversationContext = {
   lastIntent: null,
   awaitingFollowUp: false,
-  entities: {}
+  entities: {},
+  conversationHistory: [], // Track last 5 exchanges
+  currentTopics: [], // Track current discussion topics
+  userPreferences: {}, // Track user preferences mentioned
+  clarificationCount: 0, // Track how many times we asked for clarification
+  lastResponseTime: null
 }
 
-// Polite responses for various edge cases
+// Polite responses for various edge cases with more natural language
 const edgeCaseResponses = {
-  profanity: "I understand you might be frustrated, but I'd appreciate if we could keep our conversation professional. I'm here to help you with government services. How can I assist you today?",
-  unintelligible: "I'm having trouble understanding that. Could you please rephrase your question? I can help you with:\n• Taxes & Revenue\n• IDs & Passports\n• Police & Legal matters\n• Banking\n• Healthcare\n• Housing\n• Postal Services\n\nWhat would you like to know?",
-  repeated: "I noticed you've sent similar messages. If you're experiencing technical issues or need different information, please let me know specifically what you need help with.",
-  tooShort: "Your message seems a bit short. Could you provide more details about what you need help with? I'm here to assist with government services."
+  profanity: "I understand you might be frustrated, and I'm sorry if something isn't working as expected. I'm here to help you navigate government services - let's work together to solve your issue. What do you need help with?",
+  unintelligible: "I'm not quite sure what you mean. Could you try rephrasing that? Here's what I can help with:\n• **Documents**: IDs, passports, birth certificates\n• **Financial**: Taxes, banking, loans\n• **Services**: Police, courts, healthcare, housing\n• **Other**: Postal, customs, cannabis licensing, transport\n\nJust tell me what you're trying to do!",
+  repeated: "It looks like you're asking about the same thing. If my previous answer wasn't helpful, could you tell me more specifically what you need? I want to make sure I give you the right information.",
+  tooShort: "I'd love to help, but I need a bit more detail. What service are you looking for?",
+  stillConfused: "I'm still having trouble understanding. Let me try to help differently - are you looking to:\n\n1. Get a document (ID, passport, certificate)\n2. File or pay taxes\n3. Report something to police\n4. Track a package or case\n5. Something else\n\nJust type the number or describe what you need!",
+  contextualHelp: "Based on our conversation, it seems like you might need help with {topic}. Is that right? If not, please tell me what you're looking for."
+}
+
+// Smart suggestions based on partial matches
+const smartSuggestions = {
+  document: ["National ID", "Passport", "Birth Certificate", "Driver's License"],
+  money: ["File Taxes", "Pay Taxes", "Open Bank Account", "Apply for Loan"],
+  legal: ["File Police Report", "Court Case Lookup", "Legal Aid", "Police Clearance"],
+  tracking: ["Track Package", "Check Case Status", "Tax Refund Status"],
+  license: ["Driver's License", "Cannabis License", "Vehicle Registration"]
 }
 
 // Track recent messages to detect spam/repetition
@@ -27,15 +54,21 @@ let recentMessages = []
 // Find best matching response with enhanced intelligence and intent recognition
 function findResponse(message) {
   const lowerMessage = message.toLowerCase().trim()
+  const normalizedMessage = normalizeText(message)
 
   // Check for profanity
   if (containsProfanity(message)) {
-    conversationContext = { lastIntent: null, awaitingFollowUp: false, entities: {} }
+    resetContext()
     return edgeCaseResponses.profanity
   }
 
   // Check for unintelligible input
   if (isUnintelligible(message)) {
+    conversationContext.clarificationCount++
+    if (conversationContext.clarificationCount >= 3) {
+      conversationContext.clarificationCount = 0
+      return edgeCaseResponses.stillConfused
+    }
     return edgeCaseResponses.unintelligible
   }
 
@@ -46,68 +79,77 @@ function findResponse(message) {
   }
   const messageCount = recentMessages.filter(m => m === lowerMessage).length
   if (messageCount >= 3) {
-    recentMessages = [] // Reset to avoid getting stuck
+    recentMessages = []
     return edgeCaseResponses.repeated
   }
+
+  // Update conversation history
+  conversationContext.conversationHistory.push({
+    message: lowerMessage,
+    timestamp: Date.now()
+  })
+  if (conversationContext.conversationHistory.length > 5) {
+    conversationContext.conversationHistory.shift()
+  }
+
+  // Extract topics for context tracking
+  const newTopics = extractTopics(message)
+  if (newTopics.length > 0) {
+    conversationContext.currentTopics = newTopics
+  }
+
+  // Detect question type for better response handling
+  const questionType = detectQuestionType(message)
 
   // Extract any entities from the message (case numbers, tracking numbers, etc.)
   const extractedEntities = extractEntities(message)
   if (Object.keys(extractedEntities).length > 0) {
     conversationContext.entities = { ...conversationContext.entities, ...extractedEntities }
+    // If we got a tracking number, try to provide tracking info
+    if (extractedEntities.trackingNumber) {
+      return `I found tracking number **${extractedEntities.trackingNumber}**. To check the status of your package:\n\n1. Visit the Praya Post portal\n2. Enter your tracking number\n3. View delivery status and estimated arrival\n\nWould you like help with anything else regarding your shipment?`
+    }
+    if (extractedEntities.caseNumber) {
+      return `I found case number **${extractedEntities.caseNumber}**. To check your case status:\n\n1. Visit the NPA portal\n2. Go to "Case Lookup"\n3. Enter your case number\n\nTypically, cases are updated within 24-48 hours. Need anything else?`
+    }
   }
 
-  // Check if user is responding to a follow-up question
+  // Check if user is responding to a follow-up question with enhanced matching
   if (conversationContext.awaitingFollowUp && conversationContext.lastIntent) {
-    // Check if message looks like a selection (number or matches an option)
-    const numberMatch = lowerMessage.match(/^[1-5]$/)
-    if (numberMatch) {
-      const intent = conversationContext.lastIntent
-      if (intent.followUp && intent.followUp.options) {
-        const optionIndex = parseInt(numberMatch[0]) - 1
-        if (optionIndex >= 0 && optionIndex < intent.followUp.options.length) {
-          const selectedOption = intent.followUp.options[optionIndex]
-          conversationContext.awaitingFollowUp = false
-          const followUpResponse = handleFollowUp(intent.intent, selectedOption.value)
-          if (followUpResponse) {
-            return followUpResponse
-          }
-        }
-      }
+    const followUpResult = handleFollowUpResponse(lowerMessage, normalizedMessage)
+    if (followUpResult) {
+      return followUpResult
     }
+  }
 
-    // Check if message matches an option label
-    if (conversationContext.lastIntent.followUp && conversationContext.lastIntent.followUp.options) {
-      for (const option of conversationContext.lastIntent.followUp.options) {
-        if (lowerMessage.includes(option.label.toLowerCase()) ||
-            option.label.toLowerCase().includes(lowerMessage)) {
-          conversationContext.awaitingFollowUp = false
-          const followUpResponse = handleFollowUp(conversationContext.lastIntent.intent, option.value)
-          if (followUpResponse) {
-            return followUpResponse
-          }
-        }
-      }
+  // Handle menu-style numbered responses from previous clarification
+  const menuMatch = lowerMessage.match(/^[1-5]$/)
+  if (menuMatch && conversationContext.clarificationCount > 0) {
+    conversationContext.clarificationCount = 0
+    const menuResponses = {
+      '1': "Let me help you with documents. What type do you need?\n\n• **National ID** - New, renewal, or replacement\n• **Passport** - New application or renewal\n• **Birth Certificate** - Certified copies\n• **Driver's License** - New, renewal, or replacement\n\nWhich one interests you?",
+      '2': "I can help with taxes! What do you need?\n\n• **File Taxes** - Individual or business returns\n• **Pay Taxes** - Make a payment or set up a plan\n• **Check Refund** - Track your tax refund status\n\nWhat would you like to do?",
+      '3': "For police-related matters, I can help with:\n\n• **Report a Crime** - File a police report\n• **Check Case Status** - Track your report\n• **Police Clearance** - Background check certificate\n• **Emergency** - Call 911 for emergencies\n\nWhat do you need?",
+      '4': "I can help you track something:\n\n• **Track Package** - Praya Post shipments\n• **Case Status** - Police reports\n• **Tax Refund** - Refund status\n• **Application Status** - IDs, passports, etc.\n\nWhat would you like to track?",
+      '5': "No problem! Tell me in your own words what you're looking for, and I'll do my best to help."
     }
+    return menuResponses[menuMatch[0]]
   }
 
   // Try intent classification first - this handles specific user intents
   const matchedIntent = classifyIntent(message)
   if (matchedIntent) {
-    // Store context for potential follow-up
     conversationContext.lastIntent = matchedIntent
     conversationContext.awaitingFollowUp = !!matchedIntent.followUp
-
-    // Generate response with intent details
+    conversationContext.clarificationCount = 0
     return generateIntentResponse(matchedIntent, true)
   }
 
-  // Fall back to enhanced keyword matching
+  // Enhanced keyword matching with semantic similarity
   let bestMatch = null
   let bestScore = 0
-
-  // Conversational patterns (greetings, goodbyes, apologies, etc.) - first 30 entries
-  // These get priority for short messages
   const isShortMessage = lowerMessage.split(' ').length <= 5
+  const expandedTerms = expandWithSynonyms(normalizedMessage)
 
   for (let i = 0; i < knowledgeBase.length; i++) {
     const entry = knowledgeBase[i]
@@ -118,14 +160,35 @@ function findResponse(message) {
       const keywordLower = keyword.toLowerCase()
 
       // Exact word match gets highest priority
-      const wordBoundaryRegex = new RegExp(`\\b${keywordLower}\\b`, 'i')
+      const wordBoundaryRegex = new RegExp(`\\b${keywordLower.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}\\b`, 'i')
       if (wordBoundaryRegex.test(lowerMessage)) {
-        score += keyword.length * 2 // Double score for exact matches
+        score += keyword.length * 2.5
         matchedKeywords.push(keyword)
       }
-      // Partial match gets normal score
+      // Check against normalized message
+      else if (wordBoundaryRegex.test(normalizedMessage)) {
+        score += keyword.length * 2
+        matchedKeywords.push(keyword)
+      }
+      // Synonym match
+      else if (expandedTerms.some(term => term === keywordLower || keywordLower.includes(term))) {
+        score += keyword.length * 1.5
+        matchedKeywords.push(keyword)
+      }
+      // Fuzzy match for typos (only for longer words)
+      else if (keyword.length >= 4) {
+        const words = lowerMessage.split(/\s+/)
+        for (const word of words) {
+          if (word.length >= 4 && isSimilar(word, keywordLower, 2)) {
+            score += keyword.length * 1.2
+            matchedKeywords.push(keyword)
+            break
+          }
+        }
+      }
+      // Partial match gets lower score
       else if (lowerMessage.includes(keywordLower)) {
-        score += keyword.length
+        score += keyword.length * 0.8
         matchedKeywords.push(keyword)
       }
     }
@@ -136,12 +199,11 @@ function findResponse(message) {
     }
 
     // Priority boost for conversational patterns on short messages
-    // Assume first 30 knowledge base entries are conversational
-    if (i < 30 && isShortMessage && score > 0) {
-      score *= 1.5 // 50% boost for conversational patterns on short messages
+    if (i < 35 && isShortMessage && score > 0) {
+      score *= 1.5
     }
 
-    // Exact short phrase match (like "hi", "bye", "thanks") gets massive boost
+    // Exact short phrase match gets massive boost
     if (entry.keywords.some(k => k.toLowerCase() === lowerMessage)) {
       score *= 3
     }
@@ -153,15 +215,137 @@ function findResponse(message) {
   }
 
   if (bestMatch && bestScore > 0) {
-    // Reset context for general responses
-    conversationContext = { lastIntent: null, awaitingFollowUp: false, entities: {} }
+    resetContext()
     return bestMatch.response
   }
 
-  // Reset context when no match found
-  conversationContext = { lastIntent: null, awaitingFollowUp: false, entities: {} }
+  // Try to provide helpful suggestions based on detected topics
+  if (conversationContext.currentTopics.length > 0) {
+    const topic = conversationContext.currentTopics[0]
+    const topicSuggestions = getTopicSuggestions(topic)
+    if (topicSuggestions) {
+      conversationContext.clarificationCount++
+      return topicSuggestions
+    }
+  }
 
-  return "I'm not sure I understand that question. I can help you with:\n• **Taxes & Revenue** - Tax filing, business accounts, payments\n• **IDs & Passports** - Applications, renewals, requirements\n• **Police Services** - Emergency contacts, clearances, crime reporting\n• **Legal & Courts** - Court services, case lookup, legal aid\n• **Banking** - Bank of Praya services and accounts\n• **Healthcare** - Public health services, licensing, statistics\n• **Housing** - Affordable housing applications and eligibility\n• **Postal Services** - Package shipping, tracking, P.O. boxes\n• **Cannabis Licensing** - Dispensary and cultivation permits\n• **Transport** - Driver licenses, vehicle registration\n• **Customs & Border** - Import/export regulations, travel requirements\n• **Legislative Council** - Bills, voting records, representatives\n\nCould you please rephrase your question or ask about one of these topics?"
+  // Check for common question patterns and provide guidance
+  if (questionType.hasQuestion) {
+    return generateQuestionGuidance(questionType.type, lowerMessage)
+  }
+
+  // Smart fallback with categories
+  conversationContext.clarificationCount++
+  if (conversationContext.clarificationCount >= 2) {
+    return edgeCaseResponses.stillConfused
+  }
+
+  return "I want to make sure I help you correctly. Could you tell me a bit more about what you're looking for?\n\nFor example:\n• \"I need to renew my passport\"\n• \"How do I file my taxes?\"\n• \"I want to report a theft\"\n• \"Where can I track my package?\"\n\nWhat brings you here today?"
+}
+
+// Helper function to reset conversation context
+function resetContext() {
+  conversationContext = {
+    lastIntent: null,
+    awaitingFollowUp: false,
+    entities: conversationContext.entities, // Keep entities
+    conversationHistory: conversationContext.conversationHistory, // Keep history
+    currentTopics: [],
+    userPreferences: conversationContext.userPreferences,
+    clarificationCount: 0,
+    lastResponseTime: Date.now()
+  }
+}
+
+// Handle follow-up responses with enhanced matching
+function handleFollowUpResponse(lowerMessage, normalizedMessage) {
+  const intent = conversationContext.lastIntent
+
+  // Check for numbered selection (1-5)
+  const numberMatch = lowerMessage.match(/^[1-5]$/)
+  if (numberMatch && intent.followUp && intent.followUp.options) {
+    const optionIndex = parseInt(numberMatch[0]) - 1
+    if (optionIndex >= 0 && optionIndex < intent.followUp.options.length) {
+      const selectedOption = intent.followUp.options[optionIndex]
+      conversationContext.awaitingFollowUp = false
+      const followUpResponse = handleFollowUp(intent.intent, selectedOption.value)
+      if (followUpResponse) {
+        return followUpResponse
+      }
+    }
+  }
+
+  // Check if message matches an option label (exact or fuzzy)
+  if (intent.followUp && intent.followUp.options) {
+    for (const option of intent.followUp.options) {
+      const optionLower = option.label.toLowerCase()
+
+      // Exact match
+      if (lowerMessage === optionLower || normalizedMessage === optionLower) {
+        conversationContext.awaitingFollowUp = false
+        return handleFollowUp(intent.intent, option.value)
+      }
+
+      // Partial match
+      if (lowerMessage.includes(optionLower) || optionLower.includes(lowerMessage)) {
+        conversationContext.awaitingFollowUp = false
+        return handleFollowUp(intent.intent, option.value)
+      }
+
+      // Fuzzy match for option labels
+      const optionWords = optionLower.split(/\s+/)
+      const messageWords = lowerMessage.split(/\s+/)
+      let matchCount = 0
+      for (const optWord of optionWords) {
+        if (optWord.length >= 3) {
+          for (const msgWord of messageWords) {
+            if (msgWord.length >= 3 && isSimilar(optWord, msgWord, 1)) {
+              matchCount++
+              break
+            }
+          }
+        }
+      }
+      if (matchCount >= Math.ceil(optionWords.length / 2)) {
+        conversationContext.awaitingFollowUp = false
+        return handleFollowUp(intent.intent, option.value)
+      }
+    }
+  }
+
+  return null
+}
+
+// Get helpful suggestions based on detected topic
+function getTopicSuggestions(topic) {
+  const suggestions = {
+    police: "It looks like you might need police services. I can help with:\n• **Report a Crime** - File a police report\n• **Check Case Status** - Track your report\n• **Police Clearance** - Background check certificate\n• **Emergency** - Call 911 for emergencies\n\nWhich one do you need?",
+    banking: "It seems like you need banking assistance. I can help with:\n• **Open Account** - Personal or business\n• **Loans** - Mortgage, personal, or business loans\n• **Banking Info** - General Bank of Praya services\n\nWhat would you like to know?",
+    taxes: "Looks like you have a tax-related question! I can help with:\n• **File Taxes** - Individual or business\n• **Make Payment** - Pay taxes or set up a plan\n• **Check Refund** - Track your refund status\n\nWhat do you need?",
+    identity: "It seems you need help with identity documents. Options include:\n• **National ID** - New, renew, or replace\n• **Passport** - Applications and renewals\n• **Birth Certificate** - Certified copies\n\nWhich one interests you?",
+    transport: "It looks like you need transport services. I can help with:\n• **Driver's License** - New, renew, or test scheduling\n• **Vehicle Registration** - Register or renew\n• **Title Transfer** - Change vehicle ownership\n\nWhat do you need?",
+    health: "It seems you need health-related assistance. I can help with:\n• **Health Insurance** - National insurance enrollment\n• **Vaccinations** - Schedule appointments\n• **Health Info** - General Health Department services\n\nWhat would you like to know?",
+    housing: "It looks like you need housing assistance. Options include:\n• **Public Housing** - Apply for housing\n• **Rental Assistance** - Financial help programs\n• **Tenant Rights** - Eviction, rent disputes\n\nWhat do you need help with?",
+    postal: "It seems you need postal services. I can help with:\n• **Track Package** - Check delivery status\n• **Ship Package** - Domestic or international\n• **Postal Info** - General Praya Post services\n\nWhat would you like to do?",
+    legal: "It looks like you have a legal question. I can help with:\n• **Court Cases** - Civil or criminal matters\n• **Legal Aid** - Public defender, eligibility\n• **Case Lookup** - Find case information\n\nWhat do you need?",
+    customs: "It seems you need customs/border information. I can help with:\n• **Import/Export** - Permits and duties\n• **Travel Requirements** - Visa, entry rules\n• **Customs Info** - General CBCA services\n\nWhat would you like to know?"
+  }
+
+  return suggestions[topic] || null
+}
+
+// Generate guidance based on question type
+function generateQuestionGuidance(questionType, message) {
+  const guidance = {
+    howTo: "I'd be happy to explain how to do something! Could you specify what service you're interested in? For example:\n• How to get a passport\n• How to file taxes\n• How to report a crime\n• How to track a package",
+    howMuch: "I can help with fee information! Which service are you asking about? Common fees:\n• **National ID**: ¤25 (new), ¤15 (renewal)\n• **Passport**: ¤80 (standard), ¤150 (expedited)\n• **Driver's License**: ¤45 (new), ¤30 (renewal)\n• **Police Clearance**: ¤20",
+    whereIs: "I can help you find locations! Are you looking for:\n• A government office location\n• Where to submit documents\n• Which department handles your request\n\nPlease specify what you're looking for.",
+    whenIs: "I can provide timing information! Most government offices are open:\n• **Mon-Fri**: 8AM-5PM\n• **Some Sat**: 9AM-1PM\n• **Online**: 24/7\n\nWhat specific service do you need hours for?",
+    canI: "I can help determine if you're eligible for something. What service or benefit are you asking about?",
+    default: "I'm here to help with Praya government services! Could you rephrase your question? For example:\n• \"How do I apply for X?\"\n• \"What documents do I need for Y?\"\n• \"Where can I find Z?\""
+  }
+
+  return guidance[questionType] || guidance.default
 }
 
 // Parse markdown-style bold (**text**) and return React elements
