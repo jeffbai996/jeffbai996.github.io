@@ -7,10 +7,10 @@ import {
   handleFollowUp,
   extractEntities
 } from '../utils/intentRecognition'
+import geminiService from '../services/geminiService'
 
 // Configuration from environment variables
-const GEMINI_ENABLED = import.meta.env.VITE_GEMINI_ENABLED === 'true'
-const API_URL = import.meta.env.VITE_API_URL || '/api'
+const GEMINI_ENABLED = import.meta.env.VITE_GEMINI_ENABLED === 'true' && geminiService.isAvailable()
 
 // Generate expanded knowledge base from department data
 const knowledgeBase = generateKnowledgeBase()
@@ -320,37 +320,30 @@ function shouldUseGemini(message, intentResult, messages) {
 // Call Gemini API for complex queries
 async function callGeminiAPI(message, messages) {
   try {
-    // Prepare conversation history (last 5 messages)
+    // Prepare conversation history (last 10 messages)
     const history = messages.slice(-10).map(msg => ({
       sender: msg.type,
       text: msg.text,
       timestamp: msg.time
     }))
 
-    // Call the backend API
-    const response = await fetch(`${API_URL}/gemini/chat`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        message,
-        history,
-        departmentContext: departmentData
-      })
+    // Find relevant departments for context
+    const relevantDepartments = departmentData.filter(dept => {
+      const searchText = message.toLowerCase()
+      return dept.keywords?.some(kw => searchText.includes(kw.toLowerCase())) ||
+             dept.name.toLowerCase().includes(searchText) ||
+             dept.description.toLowerCase().includes(searchText)
     })
 
-    if (!response.ok) {
-      // If rate limited or error, return null to fall back
-      const errorData = await response.json().catch(() => null)
-      console.warn('Gemini API error:', errorData?.error || response.statusText)
-      return null
-    }
+    // Call Gemini service directly
+    const result = await geminiService.generateResponse(
+      message,
+      relevantDepartments,
+      history
+    )
 
-    const data = await response.json()
-
-    if (data.success && data.response) {
-      return data.response
+    if (result.success && result.response) {
+      return result.response
     }
 
     return null
