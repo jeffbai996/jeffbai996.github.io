@@ -1,12 +1,16 @@
 import { useState, useRef, useEffect } from 'react'
 import './ChatWidget.css'
-import { generateKnowledgeBase, containsProfanity, isUnintelligible } from '../utils/departmentCrawler'
+import { generateKnowledgeBase, containsProfanity, isUnintelligible, departmentData } from '../utils/departmentCrawler'
 import {
   classifyIntent,
   generateIntentResponse,
   handleFollowUp,
   extractEntities
 } from '../utils/intentRecognition'
+
+// Configuration from environment variables
+const GEMINI_ENABLED = import.meta.env.VITE_GEMINI_ENABLED === 'true'
+const API_URL = import.meta.env.VITE_API_URL || '/api'
 
 // Generate expanded knowledge base from department data
 const knowledgeBase = generateKnowledgeBase()
@@ -278,6 +282,84 @@ function parseFormattedText(text) {
   return parts.length > 0 ? parts : [text]
 }
 
+// Detect if a query needs Gemini AI assistance
+function shouldUseGemini(message, intentResult, messages) {
+  if (!GEMINI_ENABLED) return false
+
+  // Trigger 1: Low confidence match (intent classifier didn't find a good match)
+  const lowConfidence = !intentResult || (intentResult.confidence && intentResult.confidence < 0.6)
+
+  // Trigger 2: Repeated clarification attempts
+  const repeatedClarification = conversationContext.clarificationCount >= 2
+
+  // Trigger 3: Complex query patterns
+  const complexPatterns = [
+    /multiple|several|both|and also/i,
+    /what.*difference|compare|versus|vs\./i,
+    /explain|how does.*work|what is the process/i,
+    /i don't understand|confused|not sure|unclear/i,
+    /step by step|detailed|comprehensive/i,
+  ]
+  const isComplexQuery = complexPatterns.some(pattern => pattern.test(message))
+
+  // Trigger 4: Frustration detected
+  const frustrationKeywords = [
+    'frustrated', 'annoying', 'not helping', 'useless',
+    'doesn\'t work', 'still don\'t', 'already tried',
+    'same thing', 'not what i asked'
+  ]
+  const messageLower = message.toLowerCase()
+  const hasFrustration = frustrationKeywords.some(kw => messageLower.includes(kw))
+
+  // Trigger 5: Explicit request for more help
+  const explicitHelp = /more help|explain better|need more info|tell me more/i.test(message)
+
+  return lowConfidence || repeatedClarification || isComplexQuery || hasFrustration || explicitHelp
+}
+
+// Call Gemini API for complex queries
+async function callGeminiAPI(message, messages) {
+  try {
+    // Prepare conversation history (last 5 messages)
+    const history = messages.slice(-10).map(msg => ({
+      sender: msg.type,
+      text: msg.text,
+      timestamp: msg.time
+    }))
+
+    // Call the backend API
+    const response = await fetch(`${API_URL}/gemini/chat`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        message,
+        history,
+        departmentContext: departmentData
+      })
+    })
+
+    if (!response.ok) {
+      // If rate limited or error, return null to fall back
+      const errorData = await response.json().catch(() => null)
+      console.warn('Gemini API error:', errorData?.error || response.statusText)
+      return null
+    }
+
+    const data = await response.json()
+
+    if (data.success && data.response) {
+      return data.response
+    }
+
+    return null
+  } catch (error) {
+    console.error('Failed to call Gemini API:', error)
+    return null
+  }
+}
+
 export default function ChatWidget() {
   const [isOpen, setIsOpen] = useState(false)
   const [messages, setMessages] = useState([
@@ -319,7 +401,7 @@ export default function ChatWidget() {
     }
   }, [isOpen])
 
-  const handleSend = () => {
+  const handleSend = async () => {
     if (!inputValue.trim()) return
 
     const userMessage = {
@@ -333,12 +415,106 @@ export default function ChatWidget() {
     setInputValue('')
     setIsTyping(true)
 
-    // Simulate typing delay before streaming starts
+    // Try rule-based system first
+    const intentResult = classifyIntent(userMessage.text)
+
+    // Check if we should use Gemini AI
+    const useGemini = shouldUseGemini(userMessage.text, intentResult, messages)
+
+    if (useGemini) {
+      console.log('Using Gemini AI for complex query')
+
+      // Try calling Gemini API
+      const geminiResponse = await callGeminiAPI(userMessage.text, messages)
+
+      if (geminiResponse) {
+        // Use Gemini response
+        const botMessageId = Date.now() + 1
+        const botMessage = {
+          id: botMessageId,
+          type: 'bot',
+          text: '',
+          time: new Date(),
+          isStreaming: true
+        }
+
+        setMessages(prev => [...prev, botMessage])
+        setIsTyping(false)
+        setStreamingMessageId(botMessageId)
+        setStreamingText('')
+
+        // Stream the Gemini response
+        let charIndex = 0
+        if (streamingRef.current) {
+          clearTimeout(streamingRef.current)
+        }
+
+        const streamNextChunk = () => {
+          if (charIndex < geminiResponse.length) {
+            const char = geminiResponse[charIndex]
+            const isPunctuation = /[.,!?;:]/.test(char)
+            const isEndOfSentence = /[.!?]/.test(char)
+            const isNewline = char === '\n'
+
+            let charsToAdd
+            if (isPunctuation) {
+              charsToAdd = 1
+            } else if (isNewline) {
+              charsToAdd = 1
+            } else {
+              charsToAdd = Math.min(Math.floor(Math.random() * 4) + 2, geminiResponse.length - charIndex)
+            }
+
+            const newText = geminiResponse.slice(0, charIndex + charsToAdd)
+            charIndex += charsToAdd
+
+            setStreamingText(newText)
+            setMessages(prev => prev.map(msg =>
+              msg.id === botMessageId
+                ? { ...msg, text: newText }
+                : msg
+            ))
+
+            let delay
+            if (isEndOfSentence) {
+              delay = 150 + Math.random() * 100
+            } else if (isPunctuation) {
+              delay = 80 + Math.random() * 60
+            } else if (isNewline) {
+              delay = 100 + Math.random() * 80
+            } else if (Math.random() < 0.15) {
+              delay = 60 + Math.random() * 90
+            } else {
+              delay = 12 + Math.random() * 15
+            }
+
+            streamingRef.current = setTimeout(streamNextChunk, delay)
+          } else {
+            streamingRef.current = null
+            setStreamingMessageId(null)
+            setStreamingText('')
+            setMessages(prev => prev.map(msg =>
+              msg.id === botMessageId
+                ? { ...msg, text: geminiResponse, isStreaming: false }
+                : msg
+            ))
+            // Reset clarification count on successful response
+            conversationContext.clarificationCount = 0
+          }
+        }
+
+        streamNextChunk()
+        return
+      }
+      // If Gemini fails, fall back to rule-based system
+      console.log('Gemini API unavailable, falling back to rule-based system')
+    }
+
+    // Use rule-based system (original logic)
     setTimeout(() => {
       const response = findResponse(userMessage.text)
       const botMessageId = Date.now() + 1
 
-      // Create placeholder message for streaming
       const botMessage = {
         id: botMessageId,
         type: 'bot',
@@ -352,25 +528,18 @@ export default function ChatWidget() {
       setStreamingMessageId(botMessageId)
       setStreamingText('')
 
-      // Stream text character by character with variable intervals
       let charIndex = 0
-
-      // Clear any existing streaming timeout
       if (streamingRef.current) {
         clearTimeout(streamingRef.current)
       }
 
       const streamNextChunk = () => {
         if (charIndex < response.length) {
-          // Variable chunk size to simulate LLM thinking patterns
-          // Smaller chunks near punctuation, larger chunks for normal text
           const char = response[charIndex]
-          const nextChars = response.slice(charIndex, charIndex + 5)
           const isPunctuation = /[.,!?;:]/.test(char)
           const isEndOfSentence = /[.!?]/.test(char)
           const isNewline = char === '\n'
 
-          // Vary chunk size: 1-2 for punctuation, 2-5 for normal text
           let charsToAdd
           if (isPunctuation) {
             charsToAdd = 1
@@ -390,28 +559,21 @@ export default function ChatWidget() {
               : msg
           ))
 
-          // Variable delay to simulate LLM thinking
           let delay
           if (isEndOfSentence) {
-            // Longer pause after sentences (simulate processing)
             delay = 150 + Math.random() * 100
           } else if (isPunctuation) {
-            // Medium pause after commas/semicolons
             delay = 80 + Math.random() * 60
           } else if (isNewline) {
-            // Pause at line breaks
             delay = 100 + Math.random() * 80
           } else if (Math.random() < 0.15) {
-            // Random occasional "thinking" pauses (15% chance)
             delay = 60 + Math.random() * 90
           } else {
-            // Normal streaming speed with slight variation
             delay = 12 + Math.random() * 15
           }
 
           streamingRef.current = setTimeout(streamNextChunk, delay)
         } else {
-          // Streaming complete
           streamingRef.current = null
           setStreamingMessageId(null)
           setStreamingText('')
