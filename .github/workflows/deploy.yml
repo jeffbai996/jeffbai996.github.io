@@ -37,9 +37,18 @@ jobs:
         working-directory: ./frontend
         run: npm ci
 
+      - name: Validate environment variables
+        working-directory: ./frontend
+        run: npm run validate-env
+        env:
+          VITE_SUPABASE_URL: ${{ secrets.VITE_SUPABASE_URL }}
+          VITE_SUPABASE_ANON_KEY: ${{ secrets.VITE_SUPABASE_ANON_KEY }}
+          VITE_GEMINI_ENABLED: true
+          VITE_GEMINI_API_KEY: ${{ secrets.VITE_GEMINI_API_KEY }}
+
       - name: Build frontend
         working-directory: ./frontend
-        run: npm run build
+        run: npm run build:skip-validation
         env:
           NODE_ENV: production
           VITE_SUPABASE_URL: ${{ secrets.VITE_SUPABASE_URL }}
