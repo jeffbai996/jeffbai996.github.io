@@ -258,6 +258,34 @@
   }
 }
 
+/* Streaming Cursor */
+.streaming-cursor {
+  display: inline-block;
+  color: var(--primary);
+  animation: blink 0.8s infinite;
+  font-weight: normal;
+  margin-left: 1px;
+}
+
+@keyframes blink {
+  0%, 50% {
+    opacity: 1;
+  }
+  51%, 100% {
+    opacity: 0;
+  }
+}
+
+.chat-message.streaming .chat-message-content {
+  min-height: 20px;
+}
+
+/* Bold text styling */
+.chat-message-content strong {
+  font-weight: 600;
+  color: inherit;
+}
+
 /* Input Area */
 .chat-widget-input {
   display: flex;
