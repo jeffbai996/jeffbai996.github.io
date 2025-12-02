@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import React, { useEffect } from 'react'
 import { Routes, Route, Link, useNavigate } from 'react-router-dom'
 import './Department.css'
 
@@ -258,6 +258,60 @@ function InteriorHome({ navigate }) {
 }
 
 function LandRegistry() {
+  const [searchType, setSearchType] = React.useState('parcel');
+  const [searchTerm, setSearchTerm] = React.useState('');
+  const [errors, setErrors] = React.useState({});
+  const [isSubmitting, setIsSubmitting] = React.useState(false);
+  const [searchResults, setSearchResults] = React.useState(null);
+
+  const validateForm = () => {
+    const newErrors = {};
+
+    if (!searchTerm.trim()) {
+      newErrors.searchTerm = 'Please enter a search term';
+    } else if (searchType === 'parcel' && !/^[A-Z0-9]{6,12}$/i.test(searchTerm.trim())) {
+      newErrors.searchTerm = 'Parcel number must be 6-12 alphanumeric characters';
+    } else if (searchType === 'owner' && searchTerm.trim().length < 2) {
+      newErrors.searchTerm = 'Owner name must be at least 2 characters';
+    } else if (searchType === 'address' && searchTerm.trim().length < 3) {
+      newErrors.searchTerm = 'Address must be at least 3 characters';
+    }
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    if (!validateForm()) {
+      return;
+    }
+
+    setIsSubmitting(true);
+    setSearchResults(null);
+
+    // Simulate API call
+    setTimeout(() => {
+      setIsSubmitting(false);
+      setSearchResults({
+        success: true,
+        message: 'Search functionality will be available soon. Your search has been recorded.',
+        searchType,
+        searchTerm
+      });
+    }, 1000);
+  };
+
+  const getPlaceholder = () => {
+    switch(searchType) {
+      case 'parcel': return 'e.g., PRY123456';
+      case 'address': return 'e.g., 123 Main Street';
+      case 'owner': return 'e.g., John Smith';
+      default: return 'Enter search term...';
+    }
+  };
+
   return (
     <main className="main">
       <div className="page-header">
@@ -273,19 +327,70 @@ function LandRegistry() {
         <div className="card">
           <h4 className="card-title">Property Title Search</h4>
           <p style={{ color: 'var(--text-muted)', marginBottom: '20px' }}>Search for property records by parcel number, address, or owner name.</p>
-          <div className="form-group">
-            <label>Search Type</label>
-            <select>
-              <option>Parcel Number</option>
-              <option>Address</option>
-              <option>Owner Name</option>
-            </select>
-          </div>
-          <div className="form-group">
-            <label>Search Term</label>
-            <input type="text" placeholder="Enter search term..." />
-          </div>
-          <button className="btn btn-primary">Search Records</button>
+
+          <form onSubmit={handleSubmit}>
+            <div className="form-group">
+              <label>Search Type</label>
+              <select
+                value={searchType}
+                onChange={(e) => {
+                  setSearchType(e.target.value);
+                  setSearchTerm('');
+                  setErrors({});
+                }}
+              >
+                <option value="parcel">Parcel Number</option>
+                <option value="address">Address</option>
+                <option value="owner">Owner Name</option>
+              </select>
+            </div>
+            <div className="form-group">
+              <label>Search Term</label>
+              <input
+                type="text"
+                placeholder={getPlaceholder()}
+                value={searchTerm}
+                onChange={(e) => {
+                  setSearchTerm(e.target.value);
+                  if (errors.searchTerm) {
+                    setErrors({});
+                  }
+                }}
+                style={{
+                  borderColor: errors.searchTerm ? '#ef4444' : undefined
+                }}
+              />
+              {errors.searchTerm && (
+                <div style={{ color: '#ef4444', fontSize: '13px', marginTop: '6px' }}>
+                  {errors.searchTerm}
+                </div>
+              )}
+            </div>
+            <button
+              type="submit"
+              className="btn btn-primary"
+              disabled={isSubmitting}
+              style={{ opacity: isSubmitting ? 0.7 : 1 }}
+            >
+              {isSubmitting ? 'Searching...' : 'Search Records'}
+            </button>
+          </form>
+
+          {searchResults && searchResults.success && (
+            <div style={{
+              marginTop: '20px',
+              padding: '16px',
+              background: 'rgba(16, 185, 129, 0.1)',
+              border: '1px solid rgba(16, 185, 129, 0.2)',
+              borderRadius: '10px',
+              color: 'var(--text-secondary)'
+            }}>
+              <div style={{ fontWeight: '600', marginBottom: '6px', color: '#10b981' }}>
+                Search Submitted
+              </div>
+              {searchResults.message}
+            </div>
+          )}
         </div>
 
         <div className="content-text" style={{ marginTop: '24px' }}>
@@ -301,6 +406,32 @@ function LandRegistry() {
           <div className="warning-box">
             <h4>Important Notice</h4>
             <p>All property transfers must be registered within 30 days of closing to be legally recognized.</p>
+          </div>
+
+          <h3>Related Services</h3>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: '12px', marginTop: '16px' }}>
+            <Link to="/interior/permits" style={{
+              padding: '16px',
+              background: 'var(--bg-card)',
+              border: '1px solid var(--border-subtle)',
+              borderRadius: '12px',
+              textDecoration: 'none',
+              transition: 'all 0.2s'
+            }}>
+              <div style={{ fontWeight: '600', marginBottom: '6px', color: 'var(--text-primary)' }}>Building Permits</div>
+              <div style={{ fontSize: '13px', color: 'var(--text-muted)' }}>Apply for construction permits</div>
+            </Link>
+            <Link to="/interior/civil" style={{
+              padding: '16px',
+              background: 'var(--bg-card)',
+              border: '1px solid var(--border-subtle)',
+              borderRadius: '12px',
+              textDecoration: 'none',
+              transition: 'all 0.2s'
+            }}>
+              <div style={{ fontWeight: '600', marginBottom: '6px', color: 'var(--text-primary)' }}>Civil Records</div>
+              <div style={{ fontSize: '13px', color: 'var(--text-muted)' }}>Order certificates and records</div>
+            </Link>
           </div>
         </div>
       </div>
@@ -357,12 +488,67 @@ function Permits() {
           <h4>Processing Times</h4>
           <p>Standard permits: 5-10 business days. Complex projects may require additional review.</p>
         </div>
+
+        <div className="content-text" style={{ marginTop: '32px' }}>
+          <h3>Related Services</h3>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: '12px', marginTop: '16px' }}>
+            <Link to="/interior/land" style={{
+              padding: '16px',
+              background: 'var(--bg-card)',
+              border: '1px solid var(--border-subtle)',
+              borderRadius: '12px',
+              textDecoration: 'none',
+              transition: 'all 0.2s'
+            }}>
+              <div style={{ fontWeight: '600', marginBottom: '6px', color: 'var(--text-primary)' }}>Land Registry</div>
+              <div style={{ fontSize: '13px', color: 'var(--text-muted)' }}>Search property records and titles</div>
+            </Link>
+            <Link to="/interior/parks" style={{
+              padding: '16px',
+              background: 'var(--bg-card)',
+              border: '1px solid var(--border-subtle)',
+              borderRadius: '12px',
+              textDecoration: 'none',
+              transition: 'all 0.2s'
+            }}>
+              <div style={{ fontWeight: '600', marginBottom: '6px', color: 'var(--text-primary)' }}>Parks & Reserves</div>
+              <div style={{ fontSize: '13px', color: 'var(--text-muted)' }}>National parks information</div>
+            </Link>
+          </div>
+        </div>
       </div>
     </main>
   )
 }
 
 function ComingSoon({ title }) {
+  const navigate = useNavigate();
+
+  const getServiceInfo = () => {
+    switch(title) {
+      case 'Civil Registry':
+        return {
+          description: 'Access vital records including birth, death, and marriage certificates.',
+          services: ['Birth Certificates', 'Death Certificates', 'Marriage Licenses', 'Name Change Records'],
+          contact: 'For urgent certificate requests, call 1-800-PRAYA-ID or visit your local district office.'
+        };
+      case 'Parks & Reserves':
+        return {
+          description: 'Discover and explore Praya\'s network of national parks and protected natural areas.',
+          services: ['Park Permits', 'Trail Information', 'Camping Reservations', 'Conservation Programs'],
+          contact: 'Park information available at 1-800-PRAYA-PARK or parks@interior.gov.py'
+        };
+      default:
+        return {
+          description: 'This service is being developed to better serve the citizens of Praya.',
+          services: [],
+          contact: 'For assistance, contact the Interior Department at info@interior.gov.py'
+        };
+    }
+  };
+
+  const info = getServiceInfo();
+
   return (
     <main className="main">
       <div className="page-header">
@@ -371,14 +557,62 @@ function ComingSoon({ title }) {
             <Link to="/interior">Home</Link> / {title}
           </div>
           <h1>{title}</h1>
+          <p className="subtitle">{info.description}</p>
         </div>
       </div>
       <div className="container">
-        <div className="card" style={{ textAlign: 'center', padding: '60px' }}>
-          <h3>Coming Soon</h3>
-          <p style={{ color: 'var(--text-muted)', marginTop: '12px' }}>
-            This section is under development. Check back soon!
-          </p>
+        <div className="card">
+          <div style={{ padding: '20px', textAlign: 'center' }}>
+            <div style={{
+              width: '64px',
+              height: '64px',
+              background: 'linear-gradient(135deg, rgba(120, 113, 108, 0.1) 0%, rgba(120, 113, 108, 0.2) 100%)',
+              borderRadius: '50%',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              margin: '0 auto 20px'
+            }}>
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <circle cx="12" cy="12" r="10"/>
+                <path d="M12 16v-4M12 8h.01"/>
+              </svg>
+            </div>
+            <h3 style={{ marginBottom: '12px' }}>Service Under Development</h3>
+            <p style={{ color: 'var(--text-muted)', maxWidth: '500px', margin: '0 auto 24px' }}>
+              We're working to bring this service online. In the meantime, you can access these services through traditional channels.
+            </p>
+
+            {info.services.length > 0 && (
+              <div style={{ marginTop: '24px', textAlign: 'left', maxWidth: '400px', margin: '24px auto 0' }}>
+                <h4 style={{ fontSize: '14px', marginBottom: '12px' }}>Available Services:</h4>
+                <ul style={{ color: 'var(--text-secondary)', fontSize: '14px' }}>
+                  {info.services.map(service => (
+                    <li key={service} style={{ marginBottom: '8px' }}>{service}</li>
+                  ))}
+                </ul>
+              </div>
+            )}
+
+            <div style={{
+              marginTop: '32px',
+              padding: '16px',
+              background: 'rgba(120, 113, 108, 0.05)',
+              borderRadius: '10px',
+              fontSize: '13px',
+              color: 'var(--text-muted)'
+            }}>
+              {info.contact}
+            </div>
+
+            <button
+              onClick={() => navigate('/interior')}
+              className="btn btn-secondary"
+              style={{ marginTop: '24px' }}
+            >
+              Return to Interior Department Home
+            </button>
+          </div>
         </div>
       </div>
     </main>
