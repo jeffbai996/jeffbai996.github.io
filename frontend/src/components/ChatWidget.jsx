@@ -397,7 +397,7 @@ export default function ChatWidget() {
 
         {/* Footer */}
         <div className="chat-widget-footer">
-          Powered by Praya Citizen Services
+          Powered by GP.AI
         </div>
       </div>
     </>
