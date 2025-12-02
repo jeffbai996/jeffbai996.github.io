@@ -108,7 +108,7 @@ class GeminiService {
       // Build the system context
       const departmentContext = this.buildContext(relevantDepartments);
 
-      const systemPrompt = `You are a helpful assistant for a university website. You help students find information about university departments, services, and resources.
+      const systemPrompt = `You are a helpful assistant for GOV.PRAYA - the Government of Praya web portal. You help citizens find information about government services, departments, and resources.
 
 ${departmentContext}
 
@@ -117,7 +117,7 @@ Guidelines:
 - Use the department information provided when relevant
 - If you don't have enough information, suggest the user contact the relevant department
 - Keep responses under 150 words
-- Be encouraging and supportive`;
+- Be professional and helpful`;
 
       // Format conversation history
       const history = this.formatHistory(conversationHistory.slice(-6)); // Last 6 messages for context
@@ -131,7 +131,7 @@ Guidelines:
           },
           {
             role: 'model',
-            parts: [{ text: 'I understand. I will help students find information about university departments and services, keeping my responses concise and friendly.' }],
+            parts: [{ text: 'I understand. I will help citizens find information about government departments and services, keeping my responses concise and professional.' }],
           },
           ...history,
         ],
