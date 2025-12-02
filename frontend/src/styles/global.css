@@ -52,10 +52,10 @@ body.theme-doj {
 }
 
 body.theme-interior {
-  --primary: #78716c;
-  --primary-dark: #57534e;
-  --primary-light: rgba(120, 113, 108, 0.1);
-  --primary-glow: rgba(120, 113, 108, 0.25);
+  --primary: #71717a;
+  --primary-dark: #52525b;
+  --primary-light: rgba(113, 113, 122, 0.1);
+  --primary-glow: rgba(113, 113, 122, 0.25);
 }
 
 /* Animations */
