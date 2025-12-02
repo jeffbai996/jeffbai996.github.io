@@ -119,19 +119,34 @@ export default function ChatWidget() {
       setStreamingMessageId(botMessageId)
       setStreamingText('')
 
-      // Stream text character by character
+      // Stream text character by character with variable intervals
       let charIndex = 0
-      const streamSpeed = 15 // milliseconds per character
 
-      // Clear any existing streaming interval
+      // Clear any existing streaming timeout
       if (streamingRef.current) {
-        clearInterval(streamingRef.current)
+        clearTimeout(streamingRef.current)
       }
 
-      streamingRef.current = setInterval(() => {
+      const streamNextChunk = () => {
         if (charIndex < response.length) {
-          // Stream multiple characters at once for faster feel (2-4 chars)
-          const charsToAdd = Math.min(3, response.length - charIndex)
+          // Variable chunk size to simulate LLM thinking patterns
+          // Smaller chunks near punctuation, larger chunks for normal text
+          const char = response[charIndex]
+          const nextChars = response.slice(charIndex, charIndex + 5)
+          const isPunctuation = /[.,!?;:]/.test(char)
+          const isEndOfSentence = /[.!?]/.test(char)
+          const isNewline = char === '\n'
+
+          // Vary chunk size: 1-2 for punctuation, 2-5 for normal text
+          let charsToAdd
+          if (isPunctuation) {
+            charsToAdd = 1
+          } else if (isNewline) {
+            charsToAdd = 1
+          } else {
+            charsToAdd = Math.min(Math.floor(Math.random() * 4) + 2, response.length - charIndex)
+          }
+
           const newText = response.slice(0, charIndex + charsToAdd)
           charIndex += charsToAdd
 
@@ -141,9 +156,29 @@ export default function ChatWidget() {
               ? { ...msg, text: newText }
               : msg
           ))
+
+          // Variable delay to simulate LLM thinking
+          let delay
+          if (isEndOfSentence) {
+            // Longer pause after sentences (simulate processing)
+            delay = 150 + Math.random() * 100
+          } else if (isPunctuation) {
+            // Medium pause after commas/semicolons
+            delay = 80 + Math.random() * 60
+          } else if (isNewline) {
+            // Pause at line breaks
+            delay = 100 + Math.random() * 80
+          } else if (Math.random() < 0.15) {
+            // Random occasional "thinking" pauses (15% chance)
+            delay = 60 + Math.random() * 90
+          } else {
+            // Normal streaming speed with slight variation
+            delay = 12 + Math.random() * 15
+          }
+
+          streamingRef.current = setTimeout(streamNextChunk, delay)
         } else {
           // Streaming complete
-          clearInterval(streamingRef.current)
           streamingRef.current = null
           setStreamingMessageId(null)
           setStreamingText('')
@@ -153,7 +188,9 @@ export default function ChatWidget() {
               : msg
           ))
         }
-      }, streamSpeed)
+      }
+
+      streamNextChunk()
     }, 400 + Math.random() * 200)
   }
 
