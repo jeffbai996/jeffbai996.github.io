@@ -31,6 +31,31 @@ function findResponse(message) {
   return "I'm not sure I understand that question. I can help you with:\n• Taxes & Revenue\n• IDs & Passports\n• Police & Legal matters\n• Banking\n• Healthcare\n• Housing\n• Postal Services\n\nCould you please rephrase your question or ask about one of these topics?"
 }
 
+// Parse markdown-style bold (**text**) and return React elements
+function parseFormattedText(text) {
+  const parts = []
+  const regex = /\*\*([^*]+)\*\*/g
+  let lastIndex = 0
+  let match
+
+  while ((match = regex.exec(text)) !== null) {
+    // Add text before the match
+    if (match.index > lastIndex) {
+      parts.push(text.slice(lastIndex, match.index))
+    }
+    // Add bold text
+    parts.push(<strong key={match.index}>{match[1]}</strong>)
+    lastIndex = regex.lastIndex
+  }
+
+  // Add remaining text
+  if (lastIndex < text.length) {
+    parts.push(text.slice(lastIndex))
+  }
+
+  return parts.length > 0 ? parts : [text]
+}
+
 export default function ChatWidget() {
   const [isOpen, setIsOpen] = useState(false)
   const [messages, setMessages] = useState([
@@ -43,13 +68,16 @@ export default function ChatWidget() {
   ])
   const [inputValue, setInputValue] = useState('')
   const [isTyping, setIsTyping] = useState(false)
+  const [streamingMessageId, setStreamingMessageId] = useState(null)
+  const [streamingText, setStreamingText] = useState('')
   const messagesEndRef = useRef(null)
   const inputRef = useRef(null)
+  const streamingRef = useRef(null)
 
-  // Scroll to bottom when new messages arrive
+  // Scroll to bottom when new messages arrive or streaming updates
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' })
-  }, [messages])
+  }, [messages, streamingText])
 
   // Focus input when chat opens
   useEffect(() => {
@@ -72,18 +100,61 @@ export default function ChatWidget() {
     setInputValue('')
     setIsTyping(true)
 
-    // Simulate typing delay for natural feel
+    // Simulate typing delay before streaming starts
     setTimeout(() => {
       const response = findResponse(userMessage.text)
+      const botMessageId = Date.now() + 1
+
+      // Create placeholder message for streaming
       const botMessage = {
-        id: Date.now() + 1,
+        id: botMessageId,
         type: 'bot',
-        text: response,
-        time: new Date()
+        text: '',
+        time: new Date(),
+        isStreaming: true
       }
+
       setMessages(prev => [...prev, botMessage])
       setIsTyping(false)
-    }, 600 + Math.random() * 400)
+      setStreamingMessageId(botMessageId)
+      setStreamingText('')
+
+      // Stream text character by character
+      let charIndex = 0
+      const streamSpeed = 15 // milliseconds per character
+
+      // Clear any existing streaming interval
+      if (streamingRef.current) {
+        clearInterval(streamingRef.current)
+      }
+
+      streamingRef.current = setInterval(() => {
+        if (charIndex < response.length) {
+          // Stream multiple characters at once for faster feel (2-4 chars)
+          const charsToAdd = Math.min(3, response.length - charIndex)
+          const newText = response.slice(0, charIndex + charsToAdd)
+          charIndex += charsToAdd
+
+          setStreamingText(newText)
+          setMessages(prev => prev.map(msg =>
+            msg.id === botMessageId
+              ? { ...msg, text: newText }
+              : msg
+          ))
+        } else {
+          // Streaming complete
+          clearInterval(streamingRef.current)
+          streamingRef.current = null
+          setStreamingMessageId(null)
+          setStreamingText('')
+          setMessages(prev => prev.map(msg =>
+            msg.id === botMessageId
+              ? { ...msg, text: response, isStreaming: false }
+              : msg
+          ))
+        }
+      }, streamSpeed)
+    }, 400 + Math.random() * 200)
   }
 
   const handleKeyPress = (e) => {
@@ -147,16 +218,19 @@ export default function ChatWidget() {
         {/* Messages */}
         <div className="chat-widget-messages">
           {messages.map(msg => (
-            <div key={msg.id} className={`chat-message ${msg.type}`}>
+            <div key={msg.id} className={`chat-message ${msg.type}${msg.isStreaming ? ' streaming' : ''}`}>
               <div className="chat-message-content">
-                {msg.text.split('\n').map((line, i) => (
+                {msg.text.split('\n').map((line, i, arr) => (
                   <span key={i}>
-                    {line}
-                    {i < msg.text.split('\n').length - 1 && <br />}
+                    {parseFormattedText(line)}
+                    {i < arr.length - 1 && <br />}
                   </span>
                 ))}
+                {msg.isStreaming && <span className="streaming-cursor">▌</span>}
               </div>
-              <span className="chat-message-time">{formatTime(msg.time)}</span>
+              {!msg.isStreaming && (
+                <span className="chat-message-time">{formatTime(msg.time)}</span>
+              )}
             </div>
           ))}
           {isTyping && (
