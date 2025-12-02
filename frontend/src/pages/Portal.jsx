@@ -3,6 +3,86 @@ import { Link } from 'react-router-dom'
 import { useAuth } from '../utils/AuthContext'
 import './Portal.css'
 
+// Department icon components
+const departmentIcons = {
+  npa: (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M12 2l7 4v6c0 5-4 9-7 10-3-1-7-5-7-10V6z"></path>
+      <path d="M9 12h6"></path>
+      <path d="M12 9v6"></path>
+    </svg>
+  ),
+  bop: (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <rect x="2" y="5" width="20" height="14" rx="2"></rect>
+      <path d="M2 10h20"></path>
+    </svg>
+  ),
+  ctb: (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinejoin="round">
+      <path d="M12 3.5 6 6.75v3.6c0 3.12 2.52 6.25 6 7.9 3.48-1.65 6-4.78 6-7.9v-3.6z"/>
+      <path d="M12 6.5c-.8 1.45-1.26 3.11-1.26 4.74 0 .53.03 1.05.1 1.56"/>
+      <path d="M12 6.5c.8 1.45 1.26 3.11 1.26 4.74 0 .53-.03 1.05-.1 1.56"/>
+      <path d="M9.75 12.4c.7.34 1.46.53 2.25.53.79 0 1.55-.19 2.25-.53"/>
+    </svg>
+  ),
+  doj: (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+      <path d="M12 3v4M6 11h12M3 11l3 10h12l3-10M12 7l-2 4h4l-2-4"/>
+    </svg>
+  ),
+  interior: (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+      <polyline points="9 22 9 12 15 12 15 22"></polyline>
+    </svg>
+  ),
+  transport: (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+      <path d="M3 18h18M3 6h18M5 18V6M19 18V6M9 10h6M9 14h6"/>
+    </svg>
+  ),
+  revenue: (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+      <circle cx="12" cy="12" r="10"/>
+      <path d="M16 8h-6a2 2 0 1 0 0 4h4a2 2 0 1 1 0 4H8M12 18V6"/>
+    </svg>
+  ),
+  post: (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
+      <polyline points="7.5 4.21 12 6.81 16.5 4.21"></polyline>
+      <polyline points="7.5 19.79 7.5 14.6 3 12"></polyline>
+      <polyline points="21 12 16.5 14.6 16.5 19.79"></polyline>
+    </svg>
+  ),
+  health: (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M22 12h-4l-3 9L9 3l-3 9H2"></path>
+    </svg>
+  ),
+  housing: (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+      <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+      <polyline points="9 22 9 12 15 12 15 22"></polyline>
+    </svg>
+  ),
+  cbca: (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+      <polyline points="9 22 9 12 15 12 15 22"></polyline>
+    </svg>
+  ),
+  legislative: (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M3 21h18"></path>
+      <path d="M3 3h18v14H3z"></path>
+      <path d="M9 3v18"></path>
+      <path d="M3 9h18"></path>
+    </svg>
+  )
+}
+
 const departments = [
   {
     id: 'npa',
@@ -596,7 +676,7 @@ export default function Portal() {
             {departments.map(dept => (
               <a href={dept.url} key={dept.id} className="dept-card" style={{'--dept-color': dept.color}}>
                 <div className="dept-icon">
-                  <span>{dept.abbrev}</span>
+                  {departmentIcons[dept.id]}
                 </div>
                 <h3>{dept.name}</h3>
                 <p>{dept.description}</p>
