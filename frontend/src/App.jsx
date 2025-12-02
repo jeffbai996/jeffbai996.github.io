@@ -24,13 +24,13 @@ function App() {
         <Routes>
           <Route path="/" element={<Layout />}>
             <Route index element={<Portal />} />
-            <Route path="npa/*" element={<Navigate to="/NPA_fictional project.html" replace />} />
-            <Route path="bop/*" element={<Navigate to="/BOP_fictional project.html" replace />} />
-            <Route path="ctb/*" element={<Navigate to="/CTB_fictional project.html" replace />} />
+            <Route path="npa/*" element={<Navigate to="/pages/NPA_fictional project.html" replace />} />
+            <Route path="bop/*" element={<Navigate to="/pages/BOP_fictional project.html" replace />} />
+            <Route path="ctb/*" element={<Navigate to="/pages/CTB_fictional project.html" replace />} />
             <Route path="doj/*" element={<DOJ />} />
-            <Route path="interior/*" element={<Navigate to="/ID_fictional project.html" replace />} />
-            <Route path="post/*" element={<Navigate to="/fictional project_Post.html" replace />} />
-            <Route path="cbca/*" element={<Navigate to="/CBCA_fictional project.html" replace />} />
+            <Route path="interior/*" element={<Navigate to="/pages/ID_fictional project.html" replace />} />
+            <Route path="post/*" element={<Navigate to="/pages/fictional project_Post.html" replace />} />
+            <Route path="cbca/*" element={<Navigate to="/pages/CBCA_fictional project.html" replace />} />
 
             {/* Auth Routes */}
             <Route path="login" element={<Login />} />
