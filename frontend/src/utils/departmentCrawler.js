@@ -223,32 +223,102 @@ export const departmentData = [
   }
 ];
 
+// Profanity detection - common swear words and variations
+const profanityPatterns = [
+  /\bf+u+c+k+/i, /\bs+h+i+t+/i, /\ba+s+s+h+o+l+e+/i, /\bb+i+t+c+h+/i,
+  /\bd+a+m+n+/i, /\bc+r+a+p+/i, /\bp+i+s+s+/i, /\bb+a+s+t+a+r+d+/i,
+  /\bh+e+l+l+/i, /\bd+u+m+b+a+s+s+/i, /\bd+i+c+k+/i, /\bc+u+n+t+/i
+];
+
+// Check if text contains profanity
+function containsProfanity(text) {
+  return profanityPatterns.some(pattern => pattern.test(text));
+}
+
+// Check if text is unintelligible (gibberish)
+function isUnintelligible(text) {
+  const cleanText = text.toLowerCase().trim();
+
+  // Very short messages (1-2 chars) that aren't common words
+  if (cleanText.length <= 2 && !['hi', 'ok', 'no', 'id'].includes(cleanText)) {
+    return true;
+  }
+
+  // Check for excessive repetition of characters (e.g., "aaaaaa", "hahahaha")
+  if (/(.)\1{5,}/.test(cleanText)) {
+    return true;
+  }
+
+  // Check for random keyboard mashing (low vowel ratio + short length)
+  const vowels = (cleanText.match(/[aeiou]/g) || []).length;
+  const consonants = (cleanText.match(/[bcdfghjklmnpqrstvwxyz]/g) || []).length;
+  const totalLetters = vowels + consonants;
+
+  if (totalLetters > 5 && vowels / totalLetters < 0.15) {
+    return true;
+  }
+
+  // Check for strings of random characters with no spaces
+  if (cleanText.length > 15 && !cleanText.includes(' ')) {
+    const nonAlpha = (cleanText.match(/[^a-z0-9\s]/g) || []).length;
+    if (nonAlpha / cleanText.length > 0.3) {
+      return true;
+    }
+  }
+
+  return false;
+}
+
 // Generate enhanced knowledge base entries from department data
 export function generateKnowledgeBase() {
   const baseKnowledge = [
     {
-      keywords: ['hello', 'hi', 'hey', 'good morning', 'good afternoon', 'good evening', 'greetings'],
+      keywords: ['hello', 'hi', 'hey', 'good morning', 'good afternoon', 'good evening', 'greetings', 'howdy', 'sup', 'yo'],
       response: "Hello! Welcome to Praya Citizen Services. I'm here to help you navigate government services. You can ask me about taxes, IDs, police services, healthcare, housing, and more. How can I assist you today?"
     },
     {
-      keywords: ['help', 'what can you do', 'services', 'options', 'menu'],
+      keywords: ['help', 'what can you do', 'services', 'options', 'menu', 'assist', 'support', 'info', 'information'],
       response: "I can help you with information about:\n• Taxes & Revenue (RD, CTB)\n• IDs & Documents (Interior, Transport)\n• Police & Justice (NPA, DOJ)\n• Banking (BOP)\n• Customs & Border (CBCA)\n• Health Services\n• Housing Authority\n• Postal Services\n• Legislative Council\n• PrayaPass Account Help\n\nJust ask me a question about any of these services!"
     },
     {
-      keywords: ['hours', 'open', 'closed', 'business hours', 'schedule', 'when', 'time'],
+      keywords: ['hours', 'open', 'closed', 'business hours', 'schedule', 'when', 'time', 'available', 'opening'],
       response: "Most government offices are open Monday-Friday, 8AM-5PM. Some services vary:\n• Post Offices: Mon-Fri 8AM-6PM, Sat 9AM-1PM\n• Emergency Services (Police, Health): 24/7\n• Border Crossings: 24/7\n• Online Services: Available 24/7\n\nFor specific office hours, please check the department's page or call ahead."
     },
     {
-      keywords: ['thank', 'thanks', 'appreciate', 'thank you'],
+      keywords: ['thank', 'thanks', 'appreciate', 'thank you', 'thx', 'ty'],
       response: "You're welcome! Is there anything else I can help you with regarding government services?"
     },
     {
-      keywords: ['agent', 'human', 'person', 'representative', 'speak to someone', 'talk to agent', 'live agent', 'customer service', 'support agent', 'real person'],
+      keywords: ['agent', 'human', 'person', 'representative', 'speak to someone', 'talk to agent', 'live agent', 'customer service', 'support agent', 'real person', 'operator'],
       response: "Agent currently unavailable. I'm an AI assistant here to help you find information about Praya government services. For direct assistance, you can:\n• Call the relevant department directly\n• Visit an office during business hours\n• Use online portals for specific services\n\nI can help you find the right contact information or service. What do you need help with?"
     },
     {
-      keywords: ['login', 'account', 'prayapass', 'password', 'register', 'sign up', 'forgot password', 'create account'],
+      keywords: ['login', 'account', 'prayapass', 'password', 'register', 'sign up', 'forgot password', 'create account', 'sign in', 'log in'],
       response: "PrayaPass is your unified government account for accessing online services. To create an account, click 'Register' and follow the steps. Forgot your password? Use the 'Forgot Password' link on the login page. For account security issues, contact PrayaPass support or visit any government office with valid ID."
+    },
+    {
+      keywords: ['emergency', '911', 'urgent', 'crisis', 'danger', 'help me'],
+      response: "**For emergencies, please call 911 immediately.**\n\n911 handles:\n• Life-threatening medical situations\n• Crimes in progress\n• Fire emergencies\n• Missing children\n• Immediate danger\n\nFor non-emergencies, call 311.\n\nIf this is not an emergency, I can help you find information about government services. What do you need?"
+    },
+    {
+      keywords: ['complaint', 'complain', 'report problem', 'issue', 'dissatisfied', 'unhappy', 'bad service', 'poor service'],
+      response: "I'm sorry to hear you're experiencing issues. To file a formal complaint:\n\n• **General complaints**: Contact the specific department directly\n• **Service quality**: Use the feedback form on the department's page\n• **Serious misconduct**: Contact the Department of Justice\n• **PrayaPass issues**: Contact support via your account dashboard\n\nWould you like me to help you find the right department's contact information?"
+    },
+    {
+      keywords: ['cost', 'fee', 'price', 'how much', 'pay', 'payment', 'charge', 'expensive'],
+      response: "Service fees vary by department and service type. Common fees include:\n\n• **National ID**: ¤25 (new), ¤15 (renewal)\n• **Passport**: ¤80 (standard), ¤150 (expedited)\n• **Driver's License**: ¤45 (new), ¤30 (renewal)\n• **Birth Certificate**: ¤10\n• **Police Clearance**: ¤20\n\nFor specific fee information, please specify which service you need, or visit the relevant department's page."
+    },
+    {
+      keywords: ['language', 'translate', 'spanish', 'french', 'chinese', 'other language', 'english', 'interpretation'],
+      response: "Government services in Praya are primarily offered in English. For language assistance:\n\n• Many offices have multilingual staff\n• Translation services available for documents (fees may apply)\n• Interpretation available for in-person visits at major offices\n• Contact the specific department to arrange language support\n\nWhich department do you need language assistance with?"
+    },
+    {
+      keywords: ['appointment', 'schedule', 'book', 'reservation', 'meet', 'visit', 'walk-in'],
+      response: "**Appointments** can be scheduled for most government services:\n\n• **Online booking**: Available through PrayaPass for most departments\n• **Phone booking**: Call the department directly\n• **Walk-ins**: Accepted at most locations but may have longer wait times\n\nPopular services that benefit from appointments:\n• Driver's license testing (Transport Dept)\n• Passport applications (Interior Dept)\n• Business consultations (Revenue Dept)\n\nWhich service would you like to book?"
+    },
+    {
+      keywords: ['disabled', 'disability', 'accessibility', 'wheelchair', 'accessible', 'accommodation', 'special needs'],
+      response: "All Praya government facilities are **ADA-compliant** and accessible:\n\n• Wheelchair ramps and elevators\n• Accessible parking spaces\n• Sign language interpreters (request in advance)\n• Alternative format documents\n• Priority service windows\n\nFor specific accommodations, contact the department at least 48 hours before your visit. How can I help you access services?"
     }
   ];
 
@@ -289,3 +359,6 @@ function generateDepartmentResponse(dept) {
 
   return response.trim();
 }
+
+// Export utility functions for use in ChatWidget
+export { containsProfanity, isUnintelligible };

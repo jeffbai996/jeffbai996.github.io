@@ -1,23 +1,75 @@
 import { useState, useRef, useEffect } from 'react'
 import './ChatWidget.css'
-import { generateKnowledgeBase } from '../utils/departmentCrawler'
+import { generateKnowledgeBase, containsProfanity, isUnintelligible } from '../utils/departmentCrawler'
 
 // Generate expanded knowledge base from department data
 const knowledgeBase = generateKnowledgeBase()
 
-// Find best matching response
+// Polite responses for various edge cases
+const edgeCaseResponses = {
+  profanity: "I understand you might be frustrated, but I'd appreciate if we could keep our conversation professional. I'm here to help you with government services. How can I assist you today?",
+  unintelligible: "I'm having trouble understanding that. Could you please rephrase your question? I can help you with:\n• Taxes & Revenue\n• IDs & Passports\n• Police & Legal matters\n• Banking\n• Healthcare\n• Housing\n• Postal Services\n\nWhat would you like to know?",
+  repeated: "I noticed you've sent similar messages. If you're experiencing technical issues or need different information, please let me know specifically what you need help with.",
+  tooShort: "Your message seems a bit short. Could you provide more details about what you need help with? I'm here to assist with government services."
+}
+
+// Track recent messages to detect spam/repetition
+let recentMessages = []
+
+// Find best matching response with enhanced intelligence
 function findResponse(message) {
-  const lowerMessage = message.toLowerCase()
+  const lowerMessage = message.toLowerCase().trim()
+
+  // Check for profanity
+  if (containsProfanity(message)) {
+    return edgeCaseResponses.profanity
+  }
+
+  // Check for unintelligible input
+  if (isUnintelligible(message)) {
+    return edgeCaseResponses.unintelligible
+  }
+
+  // Check for repetition (same message within last 3 messages)
+  recentMessages.push(lowerMessage)
+  if (recentMessages.length > 10) {
+    recentMessages.shift()
+  }
+  const messageCount = recentMessages.filter(m => m === lowerMessage).length
+  if (messageCount >= 3) {
+    recentMessages = [] // Reset to avoid getting stuck
+    return edgeCaseResponses.repeated
+  }
+
+  // Enhanced keyword matching with better scoring
   let bestMatch = null
   let bestScore = 0
 
   for (const entry of knowledgeBase) {
     let score = 0
+    let matchedKeywords = []
+
     for (const keyword of entry.keywords) {
-      if (lowerMessage.includes(keyword.toLowerCase())) {
-        score += keyword.length // Longer matches score higher
+      const keywordLower = keyword.toLowerCase()
+
+      // Exact word match gets highest priority
+      const wordBoundaryRegex = new RegExp(`\\b${keywordLower}\\b`, 'i')
+      if (wordBoundaryRegex.test(lowerMessage)) {
+        score += keyword.length * 2 // Double score for exact matches
+        matchedKeywords.push(keyword)
+      }
+      // Partial match gets normal score
+      else if (lowerMessage.includes(keywordLower)) {
+        score += keyword.length
+        matchedKeywords.push(keyword)
       }
     }
+
+    // Bonus points for multiple keyword matches
+    if (matchedKeywords.length > 1) {
+      score += matchedKeywords.length * 5
+    }
+
     if (score > bestScore) {
       bestScore = score
       bestMatch = entry
@@ -79,10 +131,21 @@ export default function ChatWidget() {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' })
   }, [messages, streamingText])
 
-  // Focus input when chat opens
+  // Focus input when chat opens (with iOS consideration)
   useEffect(() => {
     if (isOpen) {
-      setTimeout(() => inputRef.current?.focus(), 100)
+      // Delay focus on iOS to prevent keyboard issues
+      const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent)
+      const delay = isIOS ? 300 : 100
+      setTimeout(() => {
+        if (inputRef.current) {
+          inputRef.current.focus()
+          // Scroll input into view on iOS
+          if (isIOS) {
+            inputRef.current.scrollIntoView({ behavior: 'smooth', block: 'nearest' })
+          }
+        }
+      }, delay)
     }
   }, [isOpen])
 
@@ -198,7 +261,19 @@ export default function ChatWidget() {
     if (e.key === 'Enter' && !e.shiftKey) {
       e.preventDefault()
       handleSend()
+      // Blur input on iOS to hide keyboard after send
+      if (/iPad|iPhone|iPod/.test(navigator.userAgent)) {
+        inputRef.current?.blur()
+        setTimeout(() => inputRef.current?.focus(), 100)
+      }
     }
+  }
+
+  // Handle send button click with iOS keyboard management
+  const handleSendClick = () => {
+    handleSend()
+    // Keep focus on input for better UX
+    setTimeout(() => inputRef.current?.focus(), 100)
   }
 
   const formatTime = (date) => {
@@ -294,8 +369,9 @@ export default function ChatWidget() {
           />
           <button
             className="chat-send-button"
-            onClick={handleSend}
+            onClick={handleSendClick}
             disabled={!inputValue.trim()}
+            type="button"
           >
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
               <path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z" />
