@@ -15,8 +15,7 @@ out/
 .env.development.local
 .env.test.local
 .env.production.local
-# Note: .env.production is tracked but should only contain placeholder values
-# Actual secrets are injected via GitHub Actions from GitHub Secrets
+.env.production
 
 # IDE/Editor
 .idea/
