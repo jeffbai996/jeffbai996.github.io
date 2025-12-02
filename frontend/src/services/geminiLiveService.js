@@ -3,7 +3,7 @@
  * Handles real-time voice communication with Gemini 2.0 Flash Live
  */
 
-const GEMINI_LIVE_API_KEY = import.meta.env.VITE_GEMINI_API_KEY || 'AIzaSyCeb7Ndiu3cJpNFKn-EX9XpX8EUYrpA3gQ'
+const GEMINI_LIVE_API_KEY = import.meta.env.VITE_GEMINI_API_KEY
 const GEMINI_LIVE_MODEL = 'gemini-2.0-flash-exp'
 // Use v1alpha endpoint which supports the Live API
 const WEBSOCKET_URL = `wss://generativelanguage.googleapis.com/ws/google.ai.generativelanguage.v1alpha.GenerativeService.BidiGenerateContent?key=${GEMINI_LIVE_API_KEY}`
