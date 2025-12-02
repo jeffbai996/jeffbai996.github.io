@@ -8,9 +8,11 @@ import {
   extractEntities
 } from '../utils/intentRecognition'
 import geminiService from '../services/geminiService'
+import { useGeminiLive, VoiceState, ConnectionState } from '../hooks/useGeminiLive'
 
 // Configuration from environment variables
 const GEMINI_ENABLED = import.meta.env.VITE_GEMINI_ENABLED === 'true' && geminiService.isAvailable()
+const VOICE_ENABLED = true // Enable voice chat feature
 
 // Generate expanded knowledge base from department data
 const knowledgeBase = generateKnowledgeBase()
@@ -371,6 +373,27 @@ export default function ChatWidget() {
   const inputRef = useRef(null)
   const streamingRef = useRef(null)
 
+  // Voice chat integration
+  const {
+    connectionState,
+    voiceState,
+    isVoiceModeActive,
+    toggleVoiceMode,
+    stopVoiceMode,
+    error: voiceError,
+    clearError: clearVoiceError,
+    transcripts
+  } = useGeminiLive()
+
+  // Voice status text
+  const getVoiceStatusText = () => {
+    if (connectionState === ConnectionState.CONNECTING) return 'Connecting...'
+    if (voiceState === VoiceState.LISTENING) return 'Listening...'
+    if (voiceState === VoiceState.SPEAKING) return 'Speaking...'
+    if (voiceState === VoiceState.PROCESSING) return 'Processing...'
+    return 'Voice Mode'
+  }
+
   // Scroll to bottom when new messages arrive or streaming updates
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' })
@@ -682,20 +705,70 @@ export default function ChatWidget() {
           <div ref={messagesEndRef} />
         </div>
 
+        {/* Voice Mode Overlay */}
+        {isVoiceModeActive && (
+          <div className="voice-mode-overlay">
+            <div className="voice-mode-content">
+              <div className={`voice-indicator ${voiceState}`}>
+                <div className="voice-rings">
+                  <div className="voice-ring"></div>
+                  <div className="voice-ring"></div>
+                  <div className="voice-ring"></div>
+                </div>
+                <div className="voice-icon">
+                  <svg viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12 14c1.66 0 3-1.34 3-3V5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3z"/>
+                    <path d="M17 11c0 2.76-2.24 5-5 5s-5-2.24-5-5H5c0 3.53 2.61 6.43 6 6.92V21h2v-3.08c3.39-.49 6-3.39 6-6.92h-2z"/>
+                  </svg>
+                </div>
+              </div>
+              <p className="voice-status">{getVoiceStatusText()}</p>
+              {voiceError && <p className="voice-error">{voiceError}</p>}
+              <button
+                className="voice-stop-button"
+                onClick={stopVoiceMode}
+                type="button"
+              >
+                Stop Voice Mode
+              </button>
+            </div>
+          </div>
+        )}
+
         {/* Input */}
-        <div className="chat-widget-input">
+        <div className={`chat-widget-input ${isVoiceModeActive ? 'voice-active' : ''}`}>
           <input
             ref={inputRef}
             type="text"
-            placeholder="Type your question..."
+            placeholder={isVoiceModeActive ? "Voice mode active..." : "Type your question..."}
             value={inputValue}
             onChange={(e) => setInputValue(e.target.value)}
             onKeyPress={handleKeyPress}
+            disabled={isVoiceModeActive}
           />
+          {VOICE_ENABLED && (
+            <button
+              className={`chat-voice-button ${isVoiceModeActive ? 'active' : ''} ${voiceState}`}
+              onClick={toggleVoiceMode}
+              type="button"
+              title={isVoiceModeActive ? 'Stop voice mode' : 'Start voice mode'}
+            >
+              {isVoiceModeActive ? (
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <rect x="6" y="6" width="12" height="12" rx="2" />
+                </svg>
+              ) : (
+                <svg viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M12 14c1.66 0 3-1.34 3-3V5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3z"/>
+                  <path d="M17 11c0 2.76-2.24 5-5 5s-5-2.24-5-5H5c0 3.53 2.61 6.43 6 6.92V21h2v-3.08c3.39-.49 6-3.39 6-6.92h-2z"/>
+                </svg>
+              )}
+            </button>
+          )}
           <button
             className="chat-send-button"
             onClick={handleSendClick}
-            disabled={!inputValue.trim()}
+            disabled={!inputValue.trim() || isVoiceModeActive}
             type="button"
           >
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
