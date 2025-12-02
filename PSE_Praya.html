@@ -6,6 +6,7 @@
   <title>Praya Stock Exchange | Financial Markets</title>
   <link rel="icon" type="image/svg+xml" href="/favicon.svg">
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -45,6 +46,7 @@
     @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
     @keyframes slideUp { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
     @keyframes shimmer { 0% { background-position: -1000px 0; } 100% { background-position: 1000px 0; } }
+    @keyframes shimmerSlow { 0% { background-position: -1000px 0; } 100% { background-position: 1000px 0; } }
 
     body {
       font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
@@ -75,6 +77,10 @@
     .header .container { display: flex; align-items: center; justify-content: space-between; height: 72px; }
     .logo { display: flex; align-items: center; gap: 14px; cursor: pointer; }
     .logo:hover { opacity: 0.9; }
+    .nav { display: flex; gap: 2px; }
+    .nav-link { padding: 8px 16px; color: var(--text-secondary); font-size: 14px; font-weight: 600; border-radius: 8px; cursor: pointer; border: none; background: none; font-family: inherit; transition: all 0.15s; }
+    .nav-link:hover { background: var(--bg-elevated); color: var(--text-primary); }
+    .nav-link.active { background: var(--primary-light); color: var(--primary); }
     .logo-mark {
       width: 48px;
       height: 48px;
@@ -93,7 +99,7 @@
       width: 100%;
       height: 100%;
       background: linear-gradient(45deg, transparent 30%, rgba(255,255,255,0.2) 50%, transparent 70%);
-      animation: shimmer 3s infinite;
+      animation: shimmerSlow 8s infinite;
       background-size: 200% 100%;
     }
     .logo-mark svg { width: 26px; height: 26px; color: white; position: relative; z-index: 1; }
@@ -267,50 +273,14 @@
       margin-top: 2px;
     }
 
-    /* Chart Placeholder */
+    /* Chart */
     .chart {
       width: 100%;
       height: 280px;
-      background: var(--bg-elevated);
-      border-radius: 12px;
       position: relative;
-      overflow: hidden;
     }
-    .chart-grid {
-      position: absolute;
-      inset: 0;
-      background-image:
-        repeating-linear-gradient(0deg, transparent, transparent 45px, var(--chart-grid) 45px, var(--chart-grid) 46px),
-        repeating-linear-gradient(90deg, transparent, transparent 60px, var(--chart-grid) 60px, var(--chart-grid) 61px);
-    }
-    .chart-line {
-      position: absolute;
-      bottom: 20%;
-      left: 0;
-      width: 100%;
-      height: 60%;
-      background: linear-gradient(to bottom, rgba(16, 185, 129, 0.3) 0%, transparent 100%);
-      clip-path: polygon(
-        0% 80%, 5% 75%, 10% 60%, 15% 65%, 20% 50%, 25% 55%,
-        30% 40%, 35% 35%, 40% 30%, 45% 25%, 50% 20%, 55% 25%,
-        60% 15%, 65% 10%, 70% 5%, 75% 8%, 80% 12%, 85% 10%,
-        90% 15%, 95% 12%, 100% 10%, 100% 100%, 0% 100%
-      );
-    }
-    .chart-line::after {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 2px;
-      background: var(--primary);
-      clip-path: polygon(
-        0% 80%, 5% 75%, 10% 60%, 15% 65%, 20% 50%, 25% 55%,
-        30% 40%, 35% 35%, 40% 30%, 45% 25%, 50% 20%, 55% 25%,
-        60% 15%, 65% 10%, 70% 5%, 75% 8%, 80% 12%, 85% 10%,
-        90% 15%, 95% 12%, 100% 10%
-      );
+    .chart canvas {
+      max-height: 280px;
     }
 
     /* Market Movers */
@@ -551,6 +521,20 @@
       gap: 24px;
     }
 
+    /* Page containers */
+    .page { display: none; }
+    .page.active { display: block; }
+
+    /* Content text styles */
+    .content-text h3 { font-size: 20px; font-weight: 700; margin: 24px 0 12px; color: var(--text-primary); }
+    .content-text p { font-size: 15px; color: var(--text-secondary); margin-bottom: 16px; line-height: 1.7; }
+    .content-text ul { padding-left: 20px; margin: 16px 0; }
+    .content-text li { color: var(--text-secondary); margin-bottom: 10px; font-size: 15px; line-height: 1.7; }
+    .info-box { background: var(--primary-light); border: 1px solid rgba(16, 185, 129, 0.2); border-radius: 12px; padding: 18px; margin: 20px 0; }
+    .info-box h4 { font-size: 15px; font-weight: 700; color: var(--primary); margin-bottom: 8px; }
+    .info-box p { font-size: 14px; color: var(--text-secondary); line-height: 1.7; margin-bottom: 8px; }
+    .info-box p:last-child { margin-bottom: 0; }
+
     @media (max-width: 1024px) {
       .dashboard-grid { grid-template-columns: 1fr; }
       .indices-grid { grid-template-columns: repeat(2, 1fr); }
@@ -569,7 +553,7 @@
 <body>
   <header class="header">
     <div class="container">
-      <div class="logo">
+      <div class="logo" onclick="showPage('home')">
         <div class="logo-mark">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline>
@@ -580,6 +564,13 @@
           <div class="tagline">PSE Markets</div>
         </div>
       </div>
+      <nav class="nav">
+        <button class="nav-link active" data-page="home" onclick="showPage('home')">Home</button>
+        <button class="nav-link" data-page="markets" onclick="showPage('markets')">Markets</button>
+        <button class="nav-link" data-page="research" onclick="showPage('research')">Research & Data</button>
+        <button class="nav-link" data-page="services" onclick="showPage('services')">Services</button>
+        <button class="nav-link" data-page="about" onclick="showPage('about')">About</button>
+      </nav>
       <div class="header-right">
         <div class="market-time">
           <div class="market-status"></div>
@@ -603,6 +594,7 @@
     </div>
   </header>
 
+<div id="page-home" class="page active">
   <section class="ticker">
     <div class="ticker-scroll">
       <div class="ticker-item">
@@ -729,8 +721,7 @@
             </div>
           </div>
           <div class="chart">
-            <div class="chart-grid"></div>
-            <div class="chart-line"></div>
+            <canvas id="performanceChart"></canvas>
           </div>
         </div>
 
@@ -779,11 +770,33 @@
               <div class="mover-icon">MN</div>
               <div class="mover-info">
                 <div class="mover-symbol">MANU</div>
-                <div class="mover-name">Manufacturing Ltd</div>
+                <div class="mover-name">Praya Manufacturing Ltd</div>
               </div>
               <div class="mover-price">
                 <div class="mover-value">¤124.55</div>
                 <div class="mover-change up">+1.1%</div>
+              </div>
+            </div>
+            <div class="mover-item">
+              <div class="mover-icon">TC</div>
+              <div class="mover-info">
+                <div class="mover-symbol">TCOM</div>
+                <div class="mover-name">Praya Telecommunications</div>
+              </div>
+              <div class="mover-price">
+                <div class="mover-value">¤87.90</div>
+                <div class="mover-change up">+0.9%</div>
+              </div>
+            </div>
+            <div class="mover-item">
+              <div class="mover-icon">RE</div>
+              <div class="mover-info">
+                <div class="mover-symbol">REAL</div>
+                <div class="mover-name">National Property Group</div>
+              </div>
+              <div class="mover-price">
+                <div class="mover-value">¤112.40</div>
+                <div class="mover-change up">+0.7%</div>
               </div>
             </div>
           </div>
@@ -939,6 +952,519 @@
       </div>
     </div>
   </main>
+</div>
+
+<!-- MARKETS PAGE -->
+<div id="page-markets" class="page">
+  <div class="dashboard" style="padding-top: 32px;">
+    <div class="container">
+      <h2 style="font-size: 36px; font-weight: 800; margin-bottom: 12px;">Financial Markets</h2>
+      <p style="color: var(--text-secondary); font-size: 16px; margin-bottom: 32px;">Trade equities, bonds, derivatives, and explore market indices on the PSE platform.</p>
+
+      <div class="card">
+        <div class="card-header">
+          <div>
+            <div class="card-title">Equities Market</div>
+            <div class="card-subtitle">Main board and growth stocks</div>
+          </div>
+        </div>
+        <div class="content-text">
+          <p>The PSE Equities Market is home to 342 listed companies across nine sectors, with a combined market capitalization of ¤2.8 trillion. Our Main Board hosts established corporations meeting stringent financial and governance standards, while the Growth Board provides smaller companies access to capital markets.</p>
+
+          <h3>Trading Hours</h3>
+          <ul>
+            <li><strong>Pre-Market Session:</strong> 08:30 - 09:30 (order entry and modification only)</li>
+            <li><strong>Opening Auction:</strong> 09:30 (price discovery via order matching)</li>
+            <li><strong>Continuous Trading:</strong> 09:30 - 15:45</li>
+            <li><strong>Closing Auction:</strong> 15:45 - 16:00</li>
+            <li><strong>Post-Market Session:</strong> 16:00 - 17:00 (for large block trades)</li>
+          </ul>
+
+          <h3>Market Structure</h3>
+          <p>The PSE operates an order-driven electronic market using a central limit order book (CLOB). Orders are matched using price-time priority, ensuring fairness and transparency. All trades are executed through the PSE's proprietary trading engine with latency under 100 microseconds.</p>
+
+          <div class="info-box">
+            <h4>Key Statistics (as of Dec 2024)</h4>
+            <p><strong>Listed Companies:</strong> 342 (Main Board: 287 | Growth Board: 55)</p>
+            <p><strong>Average Daily Value:</strong> ¤8.4 billion</p>
+            <p><strong>Average Daily Volume:</strong> 124.5 million shares</p>
+            <p><strong>Market Maker Program:</strong> 18 registered market makers</p>
+          </div>
+
+          <h3>Listing Requirements</h3>
+          <p><strong>Main Board:</strong> Minimum paid-in capital of ¤500 million, three years of audited financials showing profitability, public float of at least 25%, and compliance with corporate governance codes.</p>
+          <p><strong>Growth Board:</strong> Minimum capital of ¤100 million, two years of operations, public float of 20%, and appointment of a sponsor to guide compliance.</p>
+        </div>
+      </div>
+
+      <div class="card" style="margin-top: 24px;">
+        <div class="card-header">
+          <div>
+            <div class="card-title">Bonds & Fixed Income</div>
+            <div class="card-subtitle">Government and corporate debt securities</div>
+          </div>
+        </div>
+        <div class="content-text">
+          <p>The PSE Fixed Income platform facilitates trading of government bonds, municipal bonds, corporate bonds, and convertible securities. With over ¤650 billion in outstanding issuance, Praya's bond market provides investors with diverse income opportunities and issuers with flexible financing options.</p>
+
+          <h3>Product Categories</h3>
+          <ul>
+            <li><strong>Government Bonds (PGBs):</strong> Sovereign debt issued by the Republic of Praya in tenors from 2 to 30 years, denominated in Praya Dollar(s)(s). Outstanding volume: ¤420 billion.</li>
+            <li><strong>Municipal Bonds:</strong> Debt securities issued by provincial and city governments for infrastructure projects. Tax-exempt for domestic investors.</li>
+            <li><strong>Corporate Bonds:</strong> Investment-grade and high-yield bonds issued by PSE-listed and non-listed corporations. Minimum rating of B- required for listing.</li>
+            <li><strong>Convertible Bonds:</strong> Hybrid securities convertible to equity at predetermined ratios, offering upside participation with downside protection.</li>
+            <li><strong>Green Bonds:</strong> Dedicated financing for environmental and sustainability projects, certified under PSE Green Bond Framework.</li>
+          </ul>
+
+          <h3>Trading Mechanism</h3>
+          <p>Bonds trade on a quote-driven market with registered dealers providing two-way pricing. Retail investors can access bonds through their brokers, with minimum transaction size of ¤50,000. Institutional block trades (¤10 million+) can be reported to the exchange after bilateral negotiation.</p>
+
+          <div class="info-box">
+            <h4>Benchmark Yields (as of Feb 2025)</h4>
+            <p><strong>2-Year PGB:</strong> 4.02% | <strong>5-Year PGB:</strong> 4.15% | <strong>10-Year PGB:</strong> 4.12% | <strong>30-Year PGB:</strong> 4.28%</p>
+            <p><strong>Corporate AAA:</strong> +65 bps | <strong>Corporate A:</strong> +125 bps | <strong>High Yield BB:</strong> +380 bps</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="card" style="margin-top: 24px;">
+        <div class="card-header">
+          <div>
+            <div class="card-title">Derivatives Market</div>
+            <div class="card-subtitle">Options, futures, and structured products</div>
+          </div>
+        </div>
+        <div class="content-text">
+          <p>The PSE Derivatives Exchange (PSEDX) offers a comprehensive suite of derivative instruments for hedging, speculation, and portfolio management. Launched in 2018, PSEDX has grown rapidly to handle over 400,000 contracts daily across equity derivatives, index futures, and commodity futures.</p>
+
+          <h3>Equity Options</h3>
+          <p>Call and put options are available on 87 highly liquid stocks, with standardized strike prices and monthly expiries. Contract size: 100 shares per contract. American-style exercise. Options are cash-settled T+1.</p>
+          <ul>
+            <li><strong>Trading Hours:</strong> 09:30 - 16:00 (aligned with spot market)</li>
+            <li><strong>Tick Size:</strong> ¤0.05 for premiums under ¤10, ¤0.10 above</li>
+            <li><strong>Margin Requirements:</strong> Calculated using industry-standard SPAN methodology</li>
+            <li><strong>Market Makers:</strong> 8 registered options market makers providing continuous quotes</li>
+          </ul>
+
+          <h3>Index Futures</h3>
+          <p>Futures contracts on PSE 30 Index, PSE All Share Index, and PSE Growth 50 Index. Contract multiplier: ¤50 per index point. Quarterly expiries (March, June, September, December).</p>
+          <p><strong>Example:</strong> PSE 30 futures at 4,287 = contract value of ¤214,350. Initial margin: ¤21,435 (10%). Maintenance margin: ¤17,148 (8%).</p>
+
+          <h3>Single Stock Futures (SSFs)</h3>
+          <p>Leveraged exposure to individual stocks without options premium decay. Available on 45 large-cap stocks. One-month, two-month, and three-month contracts. Physical delivery or cash settlement at expiry.</p>
+
+          <h3>Commodity Futures</h3>
+          <p>The PSE has established contracts for key commodities important to Praya's economy:</p>
+          <ul>
+            <li><strong>Agricultural:</strong> Rice, coffee, sugar (physically settled at certified warehouses)</li>
+            <li><strong>Energy:</strong> Crude oil, natural gas (cash-settled against international benchmarks)</li>
+            <li><strong>Metals:</strong> Gold, silver, copper (cash-settled)</li>
+          </ul>
+
+          <h3>Structured Products</h3>
+          <p>The PSE facilitates issuance and trading of structured products including:</p>
+          <ul>
+            <li><strong>Callable Bull/Bear Contracts (CBBCs):</strong> Leveraged instruments with mandatory call features for intraday trading</li>
+            <li><strong>Warrants:</strong> Long-dated call and put warrants on indices and single stocks, issued by investment banks</li>
+            <li><strong>Equity-Linked Notes (ELNs):</strong> Principal-protected or yield-enhancement structures combining bonds with embedded derivatives</li>
+          </ul>
+
+          <div class="info-box">
+            <h4>Risk Disclosure</h4>
+            <p>Derivatives trading involves substantial risk and may not be suitable for all investors. Leverage can amplify both gains and losses. Investors should fully understand the characteristics and risks of each product before trading. The PSE requires all derivative traders to complete an approved education course and sign risk disclosure statements.</p>
+          </div>
+
+          <h3>Clearing & Settlement</h3>
+          <p>All derivative trades are cleared through PSE Clearing Corporation (PSECC), a central counterparty (CCP) that becomes the buyer to every seller and seller to every buyer. PSECC maintains a default fund capitalized at ¤2.8 billion and employs real-time risk management to monitor participant exposures. Mark-to-market settlements occur daily, with variation margin called multiple times per day during volatile periods.</p>
+        </div>
+      </div>
+
+      <div class="card" style="margin-top: 24px;">
+        <div class="card-header">
+          <div>
+            <div class="card-title">Market Indices</div>
+            <div class="card-subtitle">Benchmark performance indicators</div>
+          </div>
+        </div>
+        <div class="content-text">
+          <h3>PSE 30 Index</h3>
+          <p>The flagship benchmark, comprising the 30 largest and most liquid stocks by market capitalization and trading volume. Free-float adjusted, rebalanced quarterly. Represents approximately 68% of total market capitalization.</p>
+
+          <h3>PSE All Share Index</h3>
+          <p>Broad market index covering all 342 listed companies. Weighted by free-float adjusted market cap. Provides comprehensive market performance measurement.</p>
+
+          <h3>PSE Growth 50 Index</h3>
+          <p>Tracks the top 50 growth-oriented companies based on revenue growth, earnings growth, and market momentum. Popular among growth investors and as the underlying for ETFs.</p>
+
+          <h3>Sector Indices</h3>
+          <p>Nine sector-specific indices: Financials, Technology, Energy, Consumer Goods, Healthcare, Real Estate, Manufacturing, Telecommunications, Transportation.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- RESEARCH & DATA PAGE -->
+<div id="page-research" class="page">
+  <div class="dashboard" style="padding-top: 32px;">
+    <div class="container">
+      <h2 style="font-size: 36px; font-weight: 800; margin-bottom: 12px;">Research & Data</h2>
+      <p style="color: var(--text-secondary); font-size: 16px; margin-bottom: 32px;">Access real-time market data, research reports, and comprehensive statistics.</p>
+
+      <div class="card">
+        <div class="card-header">
+          <div>
+            <div class="card-title">Market Data Services</div>
+            <div class="card-subtitle">Real-time and historical data feeds</div>
+          </div>
+        </div>
+        <div class="content-text">
+          <h3>Data Products</h3>
+          <ul>
+            <li><strong>Level 1 Data:</strong> Real-time last trade price, bid/ask, volume for all securities. Free for registered users with 15-minute delay; subscription required for real-time.</li>
+            <li><strong>Level 2 Data:</strong> Full market depth showing all limit orders in the book (10 levels deep on each side). Professional subscription: ¤500/month.</li>
+            <li><strong>Historical Data:</strong> End-of-day prices, volumes, corporate actions since 1998. Downloadable in CSV/JSON formats. Free access.</li>
+            <li><strong>Tick Data:</strong> Every trade and quote update with millisecond timestamps. Used for algorithmic trading backtesting. Premium subscription: ¤2,000/month.</li>
+            <li><strong>Reference Data:</strong> Corporate profiles, financial statements, dividend histories, stock splits, index constituents. API access available.</li>
+          </ul>
+
+          <h3>Market Data API</h3>
+          <p>RESTful and WebSocket APIs for programmatic access to PSE data. Rate limits apply based on subscription tier. Documentation and sandbox environment available at developer.pse.praya.</p>
+
+          <div class="info-box">
+            <h4>Data Subscriptions</h4>
+            <p><strong>Retail Investor:</strong> Free (15-min delay) | <strong>Professional Trader:</strong> ¤500/month (real-time) | <strong>Institutional:</strong> ¤5,000/month (full depth + tick data) | <strong>Market Data Vendor:</strong> Custom pricing for redistribution</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="card" style="margin-top: 24px;">
+        <div class="card-header">
+          <div>
+            <div class="card-title">Research Publications</div>
+            <div class="card-subtitle">Market insights and analysis</div>
+          </div>
+        </div>
+        <div class="content-text">
+          <h3>PSE Research Reports</h3>
+          <ul>
+            <li><strong>Market Review (Monthly):</strong> Comprehensive analysis of market performance, trading statistics, sector trends, and notable corporate events.</li>
+            <li><strong>Annual Market Statistics:</strong> Full-year data compilation covering all listed securities, trading volumes, market capitalization changes, IPO activity, and foreign investor participation.</li>
+            <li><strong>Thematic Research:</strong> In-depth studies on emerging trends such as ESG investing, fintech disruption, demographic shifts, and regulatory changes.</li>
+            <li><strong>Investor Education:</strong> Guides explaining market mechanics, investment strategies, risk management, and derivative products for retail investors.</li>
+          </ul>
+
+          <h3>Economic Calendar</h3>
+          <p>Track important dates including earnings releases, dividend ex-dates, rights issue periods, AGM schedules, index rebalancing dates, and macroeconomic indicator releases. Subscribe to email alerts for specific events.</p>
+        </div>
+      </div>
+
+      <div class="card" style="margin-top: 24px;">
+        <div class="card-header">
+          <div>
+            <div class="card-title">Market Statistics</div>
+            <div class="card-subtitle">Key performance metrics</div>
+          </div>
+        </div>
+        <div class="content-text">
+          <h3>Trading Statistics (Latest Month)</h3>
+          <ul>
+            <li><strong>Total Trading Value:</strong> ¤176.3 billion</li>
+            <li><strong>Total Trading Volume:</strong> 2.61 billion shares</li>
+            <li><strong>Average Daily Value:</strong> ¤8.4 billion</li>
+            <li><strong>Average Daily Volume:</strong> 124.5 million shares</li>
+            <li><strong>Number of Trades:</strong> 4.2 million transactions</li>
+            <li><strong>Average Trade Size:</strong> ¤41,950</li>
+          </ul>
+
+          <h3>Market Capitalization</h3>
+          <ul>
+            <li><strong>Total Market Cap:</strong> ¤2,847 billion (PSE All Share)</li>
+            <li><strong>PSE 30 Market Cap:</strong> ¤1,936 billion (68% of total)</li>
+            <li><strong>Free Float Market Cap:</strong> ¤1,708 billion (60% free float)</li>
+            <li><strong>Foreign Ownership:</strong> ¤512 billion (18% of total market cap)</li>
+          </ul>
+
+          <h3>Valuation Metrics</h3>
+          <ul>
+            <li><strong>PSE 30 P/E Ratio:</strong> 16.2x (trailing twelve months)</li>
+            <li><strong>PSE 30 P/B Ratio:</strong> 2.1x</li>
+            <li><strong>PSE 30 Dividend Yield:</strong> 2.8%</li>
+            <li><strong>Market Turnover Ratio:</strong> 62% annualized</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SERVICES PAGE -->
+<div id="page-services" class="page">
+  <div class="dashboard" style="padding-top: 32px;">
+    <div class="container">
+      <h2 style="font-size: 36px; font-weight: 800; margin-bottom: 12px;">Services</h2>
+      <p style="color: var(--text-secondary); font-size: 16px; margin-bottom: 32px;">Comprehensive services for issuers, members, and market participants.</p>
+
+      <div class="card">
+        <div class="card-header">
+          <div>
+            <div class="card-title">Company Listing Services</div>
+            <div class="card-subtitle">Go public on the PSE</div>
+          </div>
+        </div>
+        <div class="content-text">
+          <h3>Initial Public Offerings (IPOs)</h3>
+          <p>The PSE provides a transparent, efficient pathway for companies to access public capital markets. Our experienced listing team guides issuers through every stage from pre-application consultation to post-listing compliance.</p>
+
+          <h3>Listing Process</h3>
+          <ul>
+            <li><strong>Pre-Consultation (Month 0):</strong> Initial meeting with PSE Listing Division to assess eligibility, discuss board selection (Main vs Growth), and review requirements.</li>
+            <li><strong>Formal Application (Month 1-2):</strong> Submit application form, audited financials, corporate governance documents, business plan, and use of proceeds. Application fee: ¤100,000.</li>
+            <li><strong>Due Diligence (Month 3-4):</strong> PSE reviews all submitted documents, conducts management interviews, and may perform site visits. Applicant must appoint issue manager (investment bank) and legal counsel.</li>
+            <li><strong>Approval (Month 5):</strong> PSE Listing Committee meets monthly to review applications. Conditional approval granted subject to satisfying outstanding items.</li>
+            <li><strong>Offering Period (Month 6-7):</strong> Company files prospectus with Securities Commission, conducts roadshow, and opens IPO subscription. Book-building or fixed-price methods supported.</li>
+            <li><strong>Trading Commencement (Month 8):</strong> Shares allocated to investors, listing ceremony held, trading begins on designated date.</li>
+          </ul>
+
+          <div class="info-box">
+            <h4>Listing Fees</h4>
+            <p><strong>Initial Listing Fee:</strong> 0.02% of market capitalization (minimum ¤100,000, maximum ¤2,000,000)</p>
+            <p><strong>Annual Listing Fee:</strong> Based on market cap tier, ranging from ¤50,000 to ¤500,000</p>
+            <p><strong>Corporate Action Fees:</strong> Rights issues, stock splits, consolidations charged separately</p>
+          </div>
+
+          <h3>Secondary Offerings</h3>
+          <p>Already-listed companies can raise additional capital through:</p>
+          <ul>
+            <li><strong>Follow-on Offerings (FPOs):</strong> Sale of additional shares to public investors</li>
+            <li><strong>Rights Issues:</strong> Offer of new shares to existing shareholders at discounted price</li>
+            <li><strong>Private Placements:</strong> Sale of shares to select institutional investors (maximum 10% of capital in any 12-month period)</li>
+          </ul>
+
+          <h3>Alternative Listing Methods</h3>
+          <ul>
+            <li><strong>Reverse Takeover (RTO):</strong> Private company acquires control of listed shell company</li>
+            <li><strong>Direct Listing:</strong> Existing shares made tradeable without capital raise (subject to liquidity requirements)</li>
+            <li><strong>SPAC Mergers:</strong> PSE permits Special Purpose Acquisition Companies; de-SPAC transactions must meet listing standards</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="card" style="margin-top: 24px;">
+        <div class="card-header">
+          <div>
+            <div class="card-title">Trading Membership</div>
+            <div class="card-subtitle">Become a PSE trading participant</div>
+          </div>
+        </div>
+        <div class="content-text">
+          <h3>Membership Categories</h3>
+          <ul>
+            <li><strong>Trading Member:</strong> Full access to PSE trading platform for equities and bonds. Can execute proprietary and client orders. Minimum capital: ¤50 million.</li>
+            <li><strong>Trading Clearing Member:</strong> Trading privileges plus direct clearing through PSECC. Can offer DMA to clients. Minimum capital: ¤150 million.</li>
+            <li><strong>Derivatives Trading Participant:</strong> Authorization to trade PSEDX futures and options. Additional capital requirements and risk management standards apply.</li>
+            <li><strong>Remote Member:</strong> Foreign brokers accessing PSE from overseas (subject to reciprocity agreements with home jurisdiction).</li>
+          </ul>
+
+          <h3>Application Process</h3>
+          <p>Applicants must demonstrate adequate capital, qualified personnel (licensed traders and compliance officers), robust technology infrastructure, and comprehensive risk management frameworks. Background checks performed on all controlling shareholders and key executives.</p>
+
+          <div class="info-box">
+            <h4>Membership Fees</h4>
+            <p><strong>Application Fee:</strong> ¤200,000 (non-refundable) | <strong>Admission Fee:</strong> ¤1,000,000 (one-time) | <strong>Annual Membership Fee:</strong> ¤300,000 | <strong>Transaction Levy:</strong> 0.0050% of trade value</p>
+          </div>
+
+          <h3>Technology Requirements</h3>
+          <p>Members must connect to PSE via certified trading terminals supporting FIX 4.4 protocol. Co-location services available at PSE data center for low-latency trading. Disaster recovery and business continuity plans mandatory.</p>
+        </div>
+      </div>
+
+      <div class="card" style="margin-top: 24px;">
+        <div class="card-header">
+          <div>
+            <div class="card-title">Trading Services</div>
+            <div class="card-subtitle">Advanced trading solutions</div>
+          </div>
+        </div>
+        <div class="content-text">
+          <h3>Order Types</h3>
+          <ul>
+            <li><strong>Market Orders:</strong> Execute immediately at best available price</li>
+            <li><strong>Limit Orders:</strong> Execute only at specified price or better</li>
+            <li><strong>Stop Orders:</strong> Trigger market/limit order when stop price reached</li>
+            <li><strong>Iceberg Orders:</strong> Display only portion of order size to reduce market impact</li>
+            <li><strong>VWAP Orders:</strong> Execute throughout day targeting volume-weighted average price</li>
+            <li><strong>MOC/LOC:</strong> Market/Limit on Close orders executed in closing auction</li>
+          </ul>
+
+          <h3>Algorithmic Trading</h3>
+          <p>The PSE supports algorithmic trading with sub-millisecond latencies. Members can deploy DMA (Direct Market Access) connections and sponsor client algorithms subject to risk controls. All algorithms must be registered with PSE and comply with market conduct rules prohibiting manipulative strategies.</p>
+
+          <h3>Block Trading Facility</h3>
+          <p>Large institutional trades (minimum ¤10 million per transaction) can be negotiated privately and reported to PSE within 10 minutes. Block trades executed at prices within daily price limits receive automatic approval.</p>
+        </div>
+      </div>
+
+      <div class="card" style="margin-top: 24px;">
+        <div class="card-header">
+          <div>
+            <div class="card-title">Clearing & Settlement</div>
+            <div class="card-subtitle">Post-trade infrastructure</div>
+          </div>
+        </div>
+        <div class="content-text">
+          <h3>PSE Clearing Corporation (PSECC)</h3>
+          <p>PSECC operates as a central counterparty (CCP) for all PSE trades, guaranteeing settlement and managing counterparty risk. By novating trades, PSECC becomes the buyer to every seller and the seller to every buyer, eliminating bilateral credit risk.</p>
+
+          <h3>Settlement Cycle</h3>
+          <ul>
+            <li><strong>Equities:</strong> T+2 settlement (trade date + 2 business days)</li>
+            <li><strong>Bonds:</strong> T+1 settlement</li>
+            <li><strong>Derivatives:</strong> Daily mark-to-market with T+1 final settlement at expiry</li>
+          </ul>
+
+          <h3>Delivery vs Payment (DVP)</h3>
+          <p>All settlements occur through DVP mechanism coordinated with Bank of Praya's RTGS system and PSE Depository. Securities transfer and cash payment happen simultaneously, eliminating principal risk.</p>
+
+          <h3>Risk Management</h3>
+          <p>PSECC employs multiple safeguards:</p>
+          <ul>
+            <li><strong>Margin Requirements:</strong> Initial and variation margin collected from clearing members</li>
+            <li><strong>Default Fund:</strong> ¤2.8 billion mutualized fund covering clearing member defaults</li>
+            <li><strong>Real-Time Monitoring:</strong> Continuous surveillance of participant exposures and credit usage</li>
+            <li><strong>Stress Testing:</strong> Daily VaR calculations and weekly stress scenarios</li>
+          </ul>
+
+          <h3>Central Securities Depository (CSD)</h3>
+          <p>PSE Depository maintains electronic book-entry records for all listed securities. Physical certificates eliminated; all holdings exist as dematerialized entries. Investors access holdings through CDS accounts at their brokers.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ABOUT PAGE -->
+<div id="page-about" class="page">
+  <div class="dashboard" style="padding-top: 32px;">
+    <div class="container">
+      <h2 style="font-size: 36px; font-weight: 800; margin-bottom: 12px;">About PSE</h2>
+      <p style="color: var(--text-secondary); font-size: 16px; margin-bottom: 32px;">Praya's premier securities exchange, connecting capital with opportunity since 1998.</p>
+
+      <div class="card">
+        <div class="card-header">
+          <div>
+            <div class="card-title">Our History</div>
+            <div class="card-subtitle">Building Praya's financial future</div>
+          </div>
+        </div>
+        <div class="content-text">
+          <h3>Foundation (1998)</h3>
+          <p>The Praya Stock Exchange was established following enactment of the Securities Market Act of 1997. The PSE began operations on March 2, 1998, with 42 founding listed companies and 12 trading members. Initial trading was conducted via open outcry on the exchange floor.</p>
+
+          <h3>Electronic Trading Era (2003)</h3>
+          <p>PSE migrated to fully electronic trading, retiring the physical trading floor. This modernization dramatically increased efficiency, reduced costs, and attracted international investors. Daily trading volume increased 400% within two years.</p>
+
+          <h3>Derivatives Launch (2018)</h3>
+          <p>The PSE Derivatives Exchange (PSEDX) commenced operations, offering equity options and index futures. This milestone provided Prayan investors with sophisticated hedging and speculation tools, further deepening capital markets.</p>
+
+          <h3>Recent Developments (2020-Present)</h3>
+          <p>The PSE has invested heavily in technology infrastructure, implementing sub-millisecond trading engines, expanding data center capacity, and launching mobile trading applications. Strategic initiatives include promoting ESG-compliant listings, developing a carbon credits trading platform, and exploring blockchain applications for post-trade settlement.</p>
+        </div>
+      </div>
+
+      <div class="card" style="margin-top: 24px;">
+        <div class="card-header">
+          <div>
+            <div class="card-title">Governance</div>
+            <div class="card-subtitle">Leadership and oversight</div>
+          </div>
+        </div>
+        <div class="content-text">
+          <h3>Ownership Structure</h3>
+          <p>The PSE is a demutualized, for-profit corporation owned by a consortium of institutional investors including banks, insurance companies, and asset managers. PSE shares are listed on its own exchange under ticker symbol "EXCH."</p>
+
+          <h3>Board of Directors</h3>
+          <p>The PSE Board consists of 11 members: 4 independent directors, 3 shareholder representatives, 2 trading member representatives, 1 listed company representative, and the CEO. The Board meets monthly and oversees strategy, risk management, and regulatory compliance.</p>
+
+          <h3>Management Team</h3>
+          <ul>
+            <li><strong>Chief Executive Officer:</strong> Michael Chen (appointed 2020, formerly CFO of Singapore Exchange)</li>
+            <li><strong>Chief Operating Officer:</strong> Sarah Nakamura (oversees trading operations, technology, and market surveillance)</li>
+            <li><strong>Chief Regulatory Officer:</strong> Dr. James Patel (supervises listing compliance, market conduct, and member regulation)</li>
+            <li><strong>Chief Financial Officer:</strong> Maria Rodriguez (finance, treasury, and investor relations)</li>
+          </ul>
+
+          <h3>Regulatory Oversight</h3>
+          <p>The PSE operates under supervision of the Praya Securities Commission (PSC), an independent statutory body. The PSC approves PSE rulebook amendments, reviews market conduct investigations, and ensures the exchange acts in the public interest.</p>
+        </div>
+      </div>
+
+      <div class="card" style="margin-top: 24px;">
+        <div class="card-header">
+          <div>
+            <div class="card-title">Rules & Regulations</div>
+            <div class="card-subtitle">Market conduct standards</div>
+          </div>
+        </div>
+        <div class="content-text">
+          <h3>PSE Rulebook</h3>
+          <p>The comprehensive PSE Rulebook governs all aspects of exchange operations including:</p>
+          <ul>
+            <li><strong>Listing Rules:</strong> Eligibility criteria, ongoing obligations, disclosure requirements, and delisting procedures</li>
+            <li><strong>Trading Rules:</strong> Permitted order types, price limits, trading halts, error trade protocols, and prohibited conduct</li>
+            <li><strong>Membership Rules:</strong> Capital requirements, personnel qualifications, technology standards, and disciplinary procedures</li>
+            <li><strong>Clearing Rules:</strong> Settlement obligations, margin requirements, default management, and delivery procedures</li>
+          </ul>
+
+          <h3>Market Surveillance</h3>
+          <p>The PSE Market Surveillance Division employs advanced algorithms to monitor trading in real-time, detecting potential market manipulation, insider trading, and other misconduct. Suspicious activities are investigated and referred to the PSC for enforcement action if warranted.</p>
+
+          <h3>Prohibited Activities</h3>
+          <ul>
+            <li>Market manipulation (pump-and-dump schemes, spoofing, layering, wash trades)</li>
+            <li>Insider trading based on material non-public information</li>
+            <li>Front-running client orders</li>
+            <li>Spreading false rumors to influence prices</li>
+            <li>Cornering or squeezing the market</li>
+          </ul>
+
+          <p>Violations may result in trading suspensions, fines up to ¤10 million, license revocation, and criminal prosecution.</p>
+
+          <div class="info-box">
+            <h4>Whistleblower Program</h4>
+            <p>The PSE operates a confidential whistleblower hotline for reporting suspected market misconduct. Informants who provide original information leading to successful enforcement actions may receive awards of 10-30% of monetary sanctions collected, subject to maximum of ¤5 million.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="card" style="margin-top: 24px;">
+        <div class="card-header">
+          <div>
+            <div class="card-title">News & Media</div>
+            <div class="card-subtitle">Latest updates</div>
+          </div>
+        </div>
+        <div class="content-text">
+          <h3>Recent Announcements</h3>
+          <ul>
+            <li><strong>February 1, 2025:</strong> PSE announces record trading volume for January 2025, up 18% year-over-year</li>
+            <li><strong>January 15, 2025:</strong> Four new companies commence trading on Growth Board, raising combined ¤820 million</li>
+            <li><strong>December 10, 2024:</strong> PSE launches ESG indices in partnership with Sustainable Finance Initiative</li>
+            <li><strong>November 22, 2024:</strong> PSECC passes annual stress test conducted by Bank of Praya, demonstrating resilience to extreme market scenarios</li>
+          </ul>
+
+          <h3>Media Contacts</h3>
+          <p><strong>Investor Relations:</strong> ir@pse.praya | +854 400 5100<br>
+          <strong>Media Inquiries:</strong> press@pse.praya | +854 400 5200<br>
+          <strong>Business Development:</strong> partnerships@pse.praya | +854 400 5300</p>
+
+          <h3>Connect With Us</h3>
+          <p>Follow @PrayaStockExchange on social media for market updates, educational content, and company news.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 
   <footer class="footer">
     <div class="container">
@@ -954,37 +1480,37 @@
         <div class="footer-section">
           <h4>Markets</h4>
           <ul>
-            <li><a href="#equities">Equities</a></li>
-            <li><a href="#bonds">Bonds</a></li>
-            <li><a href="#derivatives">Derivatives</a></li>
-            <li><a href="#indices">Indices</a></li>
+            <li><a href="#markets" onclick="showPage('markets'); return false;">Equities</a></li>
+            <li><a href="#markets" onclick="showPage('markets'); return false;">Bonds</a></li>
+            <li><a href="#markets" onclick="showPage('markets'); return false;">Derivatives</a></li>
+            <li><a href="#markets" onclick="showPage('markets'); return false;">Indices</a></li>
           </ul>
         </div>
         <div class="footer-section">
           <h4>Data & Research</h4>
           <ul>
-            <li><a href="#market-data">Market Data</a></li>
-            <li><a href="#reports">Research Reports</a></li>
-            <li><a href="#statistics">Statistics</a></li>
-            <li><a href="#calendar">Economic Calendar</a></li>
+            <li><a href="#research" onclick="showPage('research'); return false;">Market Data</a></li>
+            <li><a href="#research" onclick="showPage('research'); return false;">Research Reports</a></li>
+            <li><a href="#research" onclick="showPage('research'); return false;">Statistics</a></li>
+            <li><a href="#research" onclick="showPage('research'); return false;">Economic Calendar</a></li>
           </ul>
         </div>
         <div class="footer-section">
           <h4>Services</h4>
           <ul>
-            <li><a href="#listing">Company Listing</a></li>
-            <li><a href="#membership">Membership</a></li>
-            <li><a href="#trading">Trading Services</a></li>
-            <li><a href="#clearing">Clearing & Settlement</a></li>
+            <li><a href="#services" onclick="showPage('services'); return false;">Company Listing</a></li>
+            <li><a href="#services" onclick="showPage('services'); return false;">Membership</a></li>
+            <li><a href="#services" onclick="showPage('services'); return false;">Trading Services</a></li>
+            <li><a href="#services" onclick="showPage('services'); return false;">Clearing & Settlement</a></li>
           </ul>
         </div>
         <div class="footer-section">
           <h4>About PSE</h4>
           <ul>
-            <li><a href="#about">About Us</a></li>
-            <li><a href="#governance">Governance</a></li>
-            <li><a href="#rules">Rules & Regulations</a></li>
-            <li><a href="#news">News & Media</a></li>
+            <li><a href="#about" onclick="showPage('about'); return false;">About Us</a></li>
+            <li><a href="#about" onclick="showPage('about'); return false;">Governance</a></li>
+            <li><a href="#about" onclick="showPage('about'); return false;">Rules & Regulations</a></li>
+            <li><a href="#about" onclick="showPage('about'); return false;">News & Media</a></li>
           </ul>
         </div>
       </div>
@@ -1000,6 +1526,15 @@
   </footer>
 
   <script>
+    function showPage(page) {
+      document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+      document.getElementById('page-' + page).classList.add('active');
+      document.querySelectorAll('.nav-link').forEach(link => link.classList.remove('active'));
+      const active = document.querySelector(`.nav-link[data-page="${page}"]`);
+      if (active) active.classList.add('active');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
     function toggleTheme() {
       document.body.classList.toggle('light');
       const btn = document.querySelector('.theme-toggle');
@@ -1014,6 +1549,137 @@
         card.style.opacity = '0';
         card.style.animation = `fadeIn 0.5s ease-out ${index * 0.05}s forwards`;
       });
+
+      // Initialize Chart.js
+      const ctx = document.getElementById('performanceChart');
+      if (ctx) {
+        const isDark = !document.body.classList.contains('light');
+        const gridColor = isDark ? 'rgba(100, 116, 139, 0.1)' : 'rgba(100, 116, 139, 0.15)';
+        const textColor = isDark ? '#cbd5e1' : '#334155';
+
+        // Generate realistic intraday data
+        const times = [];
+        const prices = [];
+        const basePrice = 4189; // Starting price
+        let currentPrice = basePrice;
+
+        for (let hour = 9; hour <= 16; hour++) {
+          for (let min = (hour === 9 ? 30 : 0); min < 60; min += 5) {
+            if (hour === 16 && min > 0) break;
+            const timeStr = `${hour.toString().padStart(2, '0')}:${min.toString().padStart(2, '0')}`;
+            times.push(timeStr);
+
+            // Simulate realistic price movement
+            const change = (Math.random() - 0.45) * 5; // Slight upward bias
+            currentPrice += change;
+            prices.push(Math.round(currentPrice * 100) / 100);
+          }
+        }
+
+        const chart = new Chart(ctx, {
+          type: 'line',
+          data: {
+            labels: times,
+            datasets: [{
+              label: 'PSE 30 Index',
+              data: prices,
+              borderColor: '#10b981',
+              backgroundColor: function(context) {
+                const ctx = context.chart.ctx;
+                const gradient = ctx.createLinearGradient(0, 0, 0, 280);
+                gradient.addColorStop(0, 'rgba(16, 185, 129, 0.3)');
+                gradient.addColorStop(1, 'rgba(16, 185, 129, 0.0)');
+                return gradient;
+              },
+              borderWidth: 2.5,
+              fill: true,
+              tension: 0.4,
+              pointRadius: 0,
+              pointHoverRadius: 6,
+              pointHoverBackgroundColor: '#10b981',
+              pointHoverBorderColor: '#fff',
+              pointHoverBorderWidth: 2,
+            }]
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            interaction: {
+              intersect: false,
+              mode: 'index',
+            },
+            plugins: {
+              legend: {
+                display: false
+              },
+              tooltip: {
+                backgroundColor: isDark ? '#1e293b' : '#ffffff',
+                titleColor: textColor,
+                bodyColor: textColor,
+                borderColor: '#10b981',
+                borderWidth: 1,
+                padding: 12,
+                displayColors: false,
+                callbacks: {
+                  label: function(context) {
+                    return 'Index: ' + context.parsed.y.toFixed(2);
+                  },
+                  afterLabel: function(context) {
+                    const change = context.parsed.y - basePrice;
+                    const pct = ((change / basePrice) * 100).toFixed(2);
+                    return `Change: ${change >= 0 ? '+' : ''}${change.toFixed(2)} (${change >= 0 ? '+' : ''}${pct}%)`;
+                  }
+                }
+              }
+            },
+            scales: {
+              x: {
+                grid: {
+                  color: gridColor,
+                  drawBorder: false,
+                },
+                ticks: {
+                  color: textColor,
+                  maxTicksLimit: 10,
+                  font: {
+                    size: 11
+                  }
+                }
+              },
+              y: {
+                grid: {
+                  color: gridColor,
+                  drawBorder: false,
+                },
+                ticks: {
+                  color: textColor,
+                  callback: function(value) {
+                    return '¤' + value.toLocaleString();
+                  },
+                  font: {
+                    size: 11
+                  }
+                },
+                beginAtZero: false
+              }
+            }
+          }
+        });
+
+        // Update chart when theme changes
+        const observer = new MutationObserver(() => {
+          const isDark = !document.body.classList.contains('light');
+          chart.options.scales.x.grid.color = isDark ? 'rgba(100, 116, 139, 0.1)' : 'rgba(100, 116, 139, 0.15)';
+          chart.options.scales.y.grid.color = isDark ? 'rgba(100, 116, 139, 0.1)' : 'rgba(100, 116, 139, 0.15)';
+          chart.options.scales.x.ticks.color = isDark ? '#cbd5e1' : '#334155';
+          chart.options.scales.y.ticks.color = isDark ? '#cbd5e1' : '#334155';
+          chart.options.plugins.tooltip.backgroundColor = isDark ? '#1e293b' : '#ffffff';
+          chart.options.plugins.tooltip.titleColor = isDark ? '#cbd5e1' : '#334155';
+          chart.options.plugins.tooltip.bodyColor = isDark ? '#cbd5e1' : '#334155';
+          chart.update();
+        });
+        observer.observe(document.body, { attributes: true, attributeFilter: ['class'] });
+      }
     });
   </script>
 </body>
