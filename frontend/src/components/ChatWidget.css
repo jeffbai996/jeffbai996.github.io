@@ -357,30 +357,165 @@
 }
 
 /* Mobile Responsive */
+@media (max-width: 768px) {
+  .chat-widget-panel {
+    width: 360px;
+    max-width: calc(100vw - 32px);
+  }
+
+  .chat-message {
+    max-width: 90%;
+  }
+}
+
 @media (max-width: 480px) {
   .chat-widget-button {
     bottom: 16px;
     right: 16px;
     width: 56px;
     height: 56px;
+    box-shadow: 0 4px 16px rgba(249, 115, 22, 0.4);
+  }
+
+  .chat-widget-button svg {
+    width: 26px;
+    height: 26px;
   }
 
   .chat-widget-panel {
-    bottom: 88px;
-    right: 16px;
-    left: 16px;
+    bottom: 80px;
+    right: 12px;
+    left: 12px;
     width: auto;
     max-width: none;
-    height: calc(100vh - 120px);
+    height: calc(100vh - 110px);
     max-height: none;
+    border-radius: 12px;
   }
 
   .chat-widget-header {
-    padding: 14px 16px;
+    padding: 12px 14px;
+  }
+
+  .chat-widget-header h3 {
+    font-size: 14px;
+  }
+
+  .chat-widget-avatar {
+    width: 36px;
+    height: 36px;
+  }
+
+  .chat-widget-avatar svg {
+    width: 20px;
+    height: 20px;
+  }
+
+  .chat-widget-close {
+    width: 30px;
+    height: 30px;
+  }
+
+  .chat-widget-close svg {
+    width: 16px;
+    height: 16px;
+  }
+
+  .chat-widget-messages {
+    padding: 12px;
+    gap: 10px;
+  }
+
+  .chat-message {
+    max-width: 88%;
   }
 
   .chat-message-content {
-    padding: 10px 14px;
+    padding: 10px 13px;
+    font-size: 14px;
+    line-height: 1.45;
+    border-radius: 14px;
+  }
+
+  .chat-message.user .chat-message-content {
+    border-bottom-right-radius: 3px;
+  }
+
+  .chat-message.bot .chat-message-content {
+    border-bottom-left-radius: 3px;
+  }
+
+  .chat-message-time {
+    font-size: 10px;
+    margin-top: 3px;
+  }
+
+  .chat-widget-input {
+    padding: 10px 12px;
+    gap: 6px;
+  }
+
+  .chat-widget-input input {
+    padding: 11px 14px;
+    font-size: 14px;
+    border-radius: 22px;
+  }
+
+  .chat-send-button {
+    width: 42px;
+    height: 42px;
+    /* Ensure touch-friendly size */
+    min-width: 42px;
+    min-height: 42px;
+  }
+
+  .chat-send-button svg {
+    width: 18px;
+    height: 18px;
+  }
+
+  .chat-widget-footer {
+    padding: 8px 12px;
+    font-size: 10px;
+  }
+
+  .chat-typing-indicator {
+    padding: 14px;
+  }
+}
+
+/* Extra small devices (very small phones) */
+@media (max-width: 360px) {
+  .chat-widget-button {
+    bottom: 12px;
+    right: 12px;
+    width: 52px;
+    height: 52px;
+  }
+
+  .chat-widget-panel {
+    bottom: 72px;
+    right: 8px;
+    left: 8px;
+    height: calc(100vh - 90px);
+    border-radius: 10px;
+  }
+
+  .chat-widget-messages {
+    padding: 10px;
+  }
+
+  .chat-message-content {
+    padding: 9px 12px;
+    font-size: 13px;
+  }
+
+  .chat-widget-input {
+    padding: 8px 10px;
+  }
+
+  .chat-widget-input input {
+    padding: 10px 12px;
     font-size: 13px;
   }
 }
