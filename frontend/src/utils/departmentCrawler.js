@@ -272,10 +272,10 @@ function isUnintelligible(text) {
 // Generate enhanced knowledge base entries from department data
 export function generateKnowledgeBase() {
   const baseKnowledge = [
-    // Greetings - expanded variations
+    // Greetings - expanded variations with natural responses
     {
-      keywords: ['hello', 'hi', 'hey', 'good morning', 'good afternoon', 'good evening', 'greetings', 'howdy', 'sup', 'yo', 'hola', 'aloha', 'heya', 'hiya', 'whats up', "what's up", 'wassup'],
-      response: "Hello there! 👋 Welcome to fictional project Citizen Services. I'm your friendly AI assistant, here to help you navigate all government services quickly and easily.\n\nI can assist with:\n• **Taxes & Revenue** - Filing, payments, business accounts\n• **IDs & Passports** - Applications, renewals, requirements\n• **Police Services** - Emergency contacts, clearances, reporting\n• **Legal & Courts** - Court services, case lookup, legal aid\n• **Banking** - Bank of fictional project services and information\n• **Healthcare** - Public health services and licensing\n• **Housing** - Affordable housing applications\n• **Postal Services** - Shipping, tracking, P.O. boxes\n• **Cannabis Licensing** - Dispensary and cultivation permits\n• **Transport** - Driver licenses, vehicle registration\n• **Customs & Border** - Import/export, travel requirements\n• **Legislative Council** - Bills, representatives, voting\n\nWhat can I help you with today?"
+      keywords: ['hello', 'hi', 'hey', 'good morning', 'good afternoon', 'good evening', 'greetings', 'howdy', 'sup', 'yo', 'hola', 'aloha', 'heya', 'hiya', 'whats up', "what's up", 'wassup', 'hi there', 'hey there', 'hello there', 'good day', 'g\'day'],
+      response: "Hello! Welcome to fictional project Citizen Services. I'm here to help you with any government service you need.\n\nPopular services:\n• **IDs & Passports** - Apply, renew, or replace\n• **Taxes** - File returns, make payments, check refunds\n• **Police Services** - Report crimes, get clearances\n• **Driver's License** - New, renewal, or tests\n\nWhat can I help you with today?"
     },
     // Goodbyes
     {
