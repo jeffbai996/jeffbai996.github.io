@@ -6,9 +6,11 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
+    "build": "node scripts/validate-env.js && vite build",
+    "build:skip-validation": "vite build",
     "preview": "vite preview",
-    "lint": "eslint src --ext js,jsx"
+    "lint": "eslint src --ext js,jsx",
+    "validate-env": "node scripts/validate-env.js"
   },
   "dependencies": {
     "@google/generative-ai": "^0.21.0",
