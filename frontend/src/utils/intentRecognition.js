@@ -1141,98 +1141,24 @@ export function normalizeText(text) {
 }
 
 /**
- * Classify user intent based on message with enhanced intelligence
- * Uses multi-strategy matching: regex, fuzzy, semantic
+ * Classify user intent based on message using simple regex matching
  * @param {string} message - User's input message
  * @returns {object|null} - Matched intent with response data, or null if no match
  */
 export function classifyIntent(message) {
   const lowerMessage = message.toLowerCase().trim();
-  const normalizedMessage = normalizeText(message);
-  const expandedTerms = expandWithSynonyms(normalizedMessage);
 
-  // First pass: Exact regex pattern matching (highest confidence)
+  // Check each intent pattern with simple regex matching
   for (const [intentName, intent] of Object.entries(intentPatterns)) {
     for (const pattern of intent.patterns) {
-      if (pattern.test(lowerMessage) || pattern.test(normalizedMessage)) {
+      if (pattern.test(lowerMessage)) {
         return {
           intent: intentName,
           ...intent,
-          matchedPattern: pattern.toString(),
-          confidence: 'high'
+          matchedPattern: pattern.toString()
         };
       }
     }
-  }
-
-  // Second pass: Fuzzy matching for typos and variations
-  const intentScores = [];
-
-  for (const [intentName, intent] of Object.entries(intentPatterns)) {
-    let maxScore = 0;
-    let matchedPattern = null;
-
-    for (const pattern of intent.patterns) {
-      // Extract keywords from pattern
-      const patternStr = pattern.source;
-      const keywords = patternStr
-        .replace(/[\\^$.*+?()[\]{}|]/g, ' ')
-        .replace(/\s+/g, ' ')
-        .trim()
-        .split(' ')
-        .filter(k => k.length > 2);
-
-      // Calculate similarity using expanded terms
-      let score = 0;
-      for (const keyword of keywords) {
-        // Check against original message
-        if (lowerMessage.includes(keyword)) {
-          score += keyword.length * 2;
-        }
-        // Check against expanded terms (synonyms)
-        else if (expandedTerms.some(term => term.includes(keyword) || keyword.includes(term))) {
-          score += keyword.length * 1.5;
-        }
-        // Fuzzy match for typos
-        else {
-          const words = lowerMessage.split(/\s+/);
-          for (const word of words) {
-            if (word.length >= 4 && isSimilar(word, keyword, 2)) {
-              score += keyword.length;
-              break;
-            }
-          }
-        }
-      }
-
-      if (score > maxScore) {
-        maxScore = score;
-        matchedPattern = pattern.toString();
-      }
-    }
-
-    if (maxScore > 0) {
-      intentScores.push({
-        intentName,
-        intent,
-        score: maxScore,
-        matchedPattern
-      });
-    }
-  }
-
-  // Sort by score and return best match if above threshold
-  intentScores.sort((a, b) => b.score - a.score);
-
-  if (intentScores.length > 0 && intentScores[0].score >= 8) {
-    const best = intentScores[0];
-    return {
-      intent: best.intentName,
-      ...best.intent,
-      matchedPattern: best.matchedPattern,
-      confidence: best.score >= 15 ? 'medium' : 'low',
-      score: best.score
-    };
   }
 
   return null;
