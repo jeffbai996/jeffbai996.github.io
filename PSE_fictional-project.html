@@ -714,14 +714,24 @@
               <div class="card-subtitle">Last 24 hours</div>
             </div>
             <div class="tabs">
-              <button class="tab active">1D</button>
-              <button class="tab">5D</button>
-              <button class="tab">1M</button>
-              <button class="tab">1Y</button>
+              <button class="tab active" onclick="updateChart('1D', this)">1D</button>
+              <button class="tab" onclick="updateChart('5D', this)">5D</button>
+              <button class="tab" onclick="updateChart('1M', this)">1M</button>
+              <button class="tab" onclick="updateChart('1Y', this)">1Y</button>
             </div>
           </div>
           <div class="chart">
             <canvas id="performanceChart"></canvas>
+          </div>
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 16px; padding: 12px 16px; background: var(--bg-elevated); border-radius: 10px;">
+            <div>
+              <div style="font-size: 11px; font-weight: 600; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 4px;">Trading Volume</div>
+              <div id="volumeDisplay" style="font-size: 20px; font-weight: 700; color: var(--text-primary);">124.5M shares</div>
+            </div>
+            <div>
+              <div style="font-size: 11px; font-weight: 600; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 4px;">Value Traded</div>
+              <div id="valueDisplay" style="font-size: 20px; font-weight: 700; color: var(--text-primary);">¤8.4B</div>
+            </div>
           </div>
         </div>
 
@@ -786,17 +796,6 @@
               <div class="mover-price">
                 <div class="mover-value">¤87.90</div>
                 <div class="mover-change up">+0.9%</div>
-              </div>
-            </div>
-            <div class="mover-item">
-              <div class="mover-icon">RE</div>
-              <div class="mover-info">
-                <div class="mover-symbol">REAL</div>
-                <div class="mover-name">National Property Group</div>
-              </div>
-              <div class="mover-price">
-                <div class="mover-value">¤112.40</div>
-                <div class="mover-change up">+0.7%</div>
               </div>
             </div>
           </div>
@@ -1526,6 +1525,8 @@
   </footer>
 
   <script>
+    let chartInstance = null;
+
     function showPage(page) {
       document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
       document.getElementById('page-' + page).classList.add('active');
@@ -1540,6 +1541,104 @@
       const btn = document.querySelector('.theme-toggle');
       const text = btn.lastChild;
       text.textContent = document.body.classList.contains('light') ? ' Dark' : ' Light';
+    }
+
+    function generateChartData(period) {
+      const times = [];
+      const prices = [];
+      let basePrice = 4189;
+      let currentPrice = basePrice;
+      let volumeShares = '';
+      let valueTraded = '';
+      let subtitle = '';
+
+      if (period === '1D') {
+        // Intraday 5-minute intervals
+        for (let hour = 9; hour <= 16; hour++) {
+          for (let min = (hour === 9 ? 30 : 0); min < 60; min += 5) {
+            if (hour === 16 && min > 0) break;
+            const timeStr = `${hour.toString().padStart(2, '0')}:${min.toString().padStart(2, '0')}`;
+            times.push(timeStr);
+            const change = (Math.random() - 0.45) * 5;
+            currentPrice += change;
+            prices.push(Math.round(currentPrice * 100) / 100);
+          }
+        }
+        volumeShares = '124.5M shares';
+        valueTraded = '¤8.4B';
+        subtitle = 'Last 24 hours';
+      } else if (period === '5D') {
+        // 5 days of hourly data
+        const days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri'];
+        basePrice = 4150;
+        currentPrice = basePrice;
+        for (let d = 0; d < 5; d++) {
+          for (let hour = 9; hour <= 16; hour++) {
+            const timeStr = `${days[d]} ${hour.toString().padStart(2, '0')}:00`;
+            times.push(timeStr);
+            const change = (Math.random() - 0.48) * 8;
+            currentPrice += change;
+            prices.push(Math.round(currentPrice * 100) / 100);
+          }
+        }
+        volumeShares = '615.2M shares';
+        valueTraded = '¤41.8B';
+        subtitle = 'Last 5 trading days';
+      } else if (period === '1M') {
+        // 1 month of daily data (21 trading days)
+        basePrice = 4050;
+        currentPrice = basePrice;
+        for (let d = 1; d <= 21; d++) {
+          times.push(`Day ${d}`);
+          const change = (Math.random() - 0.47) * 20;
+          currentPrice += change;
+          prices.push(Math.round(currentPrice * 100) / 100);
+        }
+        volumeShares = '2.6B shares';
+        valueTraded = '¤176.3B';
+        subtitle = 'Last month';
+      } else if (period === '1Y') {
+        // 1 year of weekly data (52 weeks)
+        basePrice = 3750;
+        currentPrice = basePrice;
+        const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+        for (let w = 1; w <= 52; w++) {
+          const monthIndex = Math.floor((w - 1) / 4.33);
+          times.push(`${months[monthIndex]} W${((w - 1) % 4) + 1}`);
+          const change = (Math.random() - 0.46) * 35;
+          currentPrice += change;
+          prices.push(Math.round(currentPrice * 100) / 100);
+        }
+        volumeShares = '32.1B shares';
+        valueTraded = '¤2.1T';
+        subtitle = 'Last year';
+      }
+
+      return { times, prices, volumeShares, valueTraded, subtitle, basePrice };
+    }
+
+    function updateChart(period, button) {
+      // Update active button
+      document.querySelectorAll('.tabs .tab').forEach(tab => tab.classList.remove('active'));
+      button.classList.add('active');
+
+      // Generate new data
+      const data = generateChartData(period);
+
+      // Update subtitle
+      const subtitleEl = document.querySelector('.card-title').nextElementSibling;
+      subtitleEl.textContent = data.subtitle;
+
+      // Update volume display
+      document.getElementById('volumeDisplay').textContent = data.volumeShares;
+      document.getElementById('valueDisplay').textContent = data.valueTraded;
+
+      // Update chart
+      if (chartInstance) {
+        chartInstance.data.labels = data.times;
+        chartInstance.data.datasets[0].data = data.prices;
+        chartInstance.update();
+      }
     }
 
     // Animate cards on load
@@ -1557,26 +1656,13 @@
         const gridColor = isDark ? 'rgba(100, 116, 139, 0.1)' : 'rgba(100, 116, 139, 0.15)';
         const textColor = isDark ? '#cbd5e1' : '#334155';
 
-        // Generate realistic intraday data
-        const times = [];
-        const prices = [];
-        const basePrice = 4189; // Starting price
-        let currentPrice = basePrice;
+        // Generate initial data for 1D
+        const initialData = generateChartData('1D');
+        const times = initialData.times;
+        const prices = initialData.prices;
+        const basePrice = initialData.basePrice;
 
-        for (let hour = 9; hour <= 16; hour++) {
-          for (let min = (hour === 9 ? 30 : 0); min < 60; min += 5) {
-            if (hour === 16 && min > 0) break;
-            const timeStr = `${hour.toString().padStart(2, '0')}:${min.toString().padStart(2, '0')}`;
-            times.push(timeStr);
-
-            // Simulate realistic price movement
-            const change = (Math.random() - 0.45) * 5; // Slight upward bias
-            currentPrice += change;
-            prices.push(Math.round(currentPrice * 100) / 100);
-          }
-        }
-
-        const chart = new Chart(ctx, {
+        chartInstance = new Chart(ctx, {
           type: 'line',
           data: {
             labels: times,
@@ -1669,14 +1755,14 @@
         // Update chart when theme changes
         const observer = new MutationObserver(() => {
           const isDark = !document.body.classList.contains('light');
-          chart.options.scales.x.grid.color = isDark ? 'rgba(100, 116, 139, 0.1)' : 'rgba(100, 116, 139, 0.15)';
-          chart.options.scales.y.grid.color = isDark ? 'rgba(100, 116, 139, 0.1)' : 'rgba(100, 116, 139, 0.15)';
-          chart.options.scales.x.ticks.color = isDark ? '#cbd5e1' : '#334155';
-          chart.options.scales.y.ticks.color = isDark ? '#cbd5e1' : '#334155';
-          chart.options.plugins.tooltip.backgroundColor = isDark ? '#1e293b' : '#ffffff';
-          chart.options.plugins.tooltip.titleColor = isDark ? '#cbd5e1' : '#334155';
-          chart.options.plugins.tooltip.bodyColor = isDark ? '#cbd5e1' : '#334155';
-          chart.update();
+          chartInstance.options.scales.x.grid.color = isDark ? 'rgba(100, 116, 139, 0.1)' : 'rgba(100, 116, 139, 0.15)';
+          chartInstance.options.scales.y.grid.color = isDark ? 'rgba(100, 116, 139, 0.1)' : 'rgba(100, 116, 139, 0.15)';
+          chartInstance.options.scales.x.ticks.color = isDark ? '#cbd5e1' : '#334155';
+          chartInstance.options.scales.y.ticks.color = isDark ? '#cbd5e1' : '#334155';
+          chartInstance.options.plugins.tooltip.backgroundColor = isDark ? '#1e293b' : '#ffffff';
+          chartInstance.options.plugins.tooltip.titleColor = isDark ? '#cbd5e1' : '#334155';
+          chartInstance.options.plugins.tooltip.bodyColor = isDark ? '#cbd5e1' : '#334155';
+          chartInstance.update();
         });
         observer.observe(document.body, { attributes: true, attributeFilter: ['class'] });
       }
