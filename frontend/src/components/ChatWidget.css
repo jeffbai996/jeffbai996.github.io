@@ -580,3 +580,298 @@ body.light .chat-widget-button {
 body.light .chat-widget-button:hover {
   box-shadow: 0 6px 28px rgba(249, 115, 22, 0.4);
 }
+
+/* ===========================================
+   Voice Chat Styles
+   =========================================== */
+
+/* Voice Button */
+.chat-voice-button {
+  width: 44px;
+  height: 44px;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+}
+
+.chat-voice-button:hover {
+  background: var(--primary);
+  border-color: var(--primary);
+}
+
+.chat-voice-button:hover svg {
+  color: white;
+}
+
+.chat-voice-button svg {
+  width: 20px;
+  height: 20px;
+  color: var(--text-secondary);
+  transition: color 0.2s;
+}
+
+.chat-voice-button.active {
+  background: #ef4444;
+  border-color: #ef4444;
+  animation: voice-pulse 1.5s ease-in-out infinite;
+}
+
+.chat-voice-button.active svg {
+  color: white;
+}
+
+.chat-voice-button.active:hover {
+  background: #dc2626;
+  border-color: #dc2626;
+}
+
+@keyframes voice-pulse {
+  0%, 100% {
+    box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.4);
+  }
+  50% {
+    box-shadow: 0 0 0 8px rgba(239, 68, 68, 0);
+  }
+}
+
+/* Voice Mode Overlay */
+.voice-mode-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.85);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+  border-radius: 16px;
+  animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.voice-mode-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  padding: 20px;
+}
+
+/* Voice Indicator */
+.voice-indicator {
+  position: relative;
+  width: 120px;
+  height: 120px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.voice-rings {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+
+.voice-ring {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  border: 2px solid var(--primary);
+  opacity: 0;
+}
+
+.voice-ring:nth-child(1) {
+  width: 60%;
+  height: 60%;
+  animation: ring-pulse 2s ease-out infinite;
+}
+
+.voice-ring:nth-child(2) {
+  width: 80%;
+  height: 80%;
+  animation: ring-pulse 2s ease-out infinite 0.4s;
+}
+
+.voice-ring:nth-child(3) {
+  width: 100%;
+  height: 100%;
+  animation: ring-pulse 2s ease-out infinite 0.8s;
+}
+
+/* Listening state - active rings */
+.voice-indicator.listening .voice-ring {
+  border-color: #4ade80;
+}
+
+/* Speaking state - different color */
+.voice-indicator.speaking .voice-ring {
+  border-color: #60a5fa;
+  animation-duration: 1s;
+}
+
+/* Processing state - slower animation */
+.voice-indicator.processing .voice-ring {
+  border-color: #fbbf24;
+  animation-duration: 1.5s;
+}
+
+/* Idle state - no animation */
+.voice-indicator.idle .voice-ring {
+  animation: none;
+  opacity: 0.3;
+}
+
+@keyframes ring-pulse {
+  0% {
+    opacity: 0.6;
+    transform: translate(-50%, -50%) scale(0.8);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(1.2);
+  }
+}
+
+.voice-icon {
+  width: 60px;
+  height: 60px;
+  background: var(--primary);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1;
+}
+
+.voice-indicator.listening .voice-icon {
+  background: #4ade80;
+}
+
+.voice-indicator.speaking .voice-icon {
+  background: #60a5fa;
+}
+
+.voice-indicator.processing .voice-icon {
+  background: #fbbf24;
+}
+
+.voice-icon svg {
+  width: 28px;
+  height: 28px;
+  color: white;
+}
+
+/* Voice Status Text */
+.voice-status {
+  font-size: 16px;
+  font-weight: 500;
+  color: white;
+  margin: 0;
+}
+
+.voice-error {
+  font-size: 13px;
+  color: #ef4444;
+  margin: 0;
+  text-align: center;
+  max-width: 250px;
+}
+
+/* Stop Voice Button */
+.voice-stop-button {
+  padding: 12px 24px;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 24px;
+  color: white;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.voice-stop-button:hover {
+  background: rgba(255, 255, 255, 0.2);
+  border-color: rgba(255, 255, 255, 0.3);
+}
+
+/* Input area when voice is active */
+.chat-widget-input.voice-active {
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+.chat-widget-input.voice-active input {
+  background: var(--bg-dark);
+}
+
+/* Mobile Responsive for Voice */
+@media (max-width: 480px) {
+  .chat-voice-button {
+    width: 42px;
+    height: 42px;
+    min-width: 42px;
+    min-height: 42px;
+  }
+
+  .chat-voice-button svg {
+    width: 18px;
+    height: 18px;
+  }
+
+  .voice-indicator {
+    width: 100px;
+    height: 100px;
+  }
+
+  .voice-icon {
+    width: 50px;
+    height: 50px;
+  }
+
+  .voice-icon svg {
+    width: 24px;
+    height: 24px;
+  }
+
+  .voice-status {
+    font-size: 14px;
+  }
+
+  .voice-stop-button {
+    padding: 10px 20px;
+    font-size: 13px;
+  }
+}
+
+/* Light Mode Voice Adjustments */
+body.light .voice-mode-overlay {
+  background: rgba(0, 0, 0, 0.75);
+}
+
+body.light .chat-voice-button {
+  background: var(--bg-card);
+}
+
+body.light .chat-voice-button:hover {
+  background: var(--primary);
+}
