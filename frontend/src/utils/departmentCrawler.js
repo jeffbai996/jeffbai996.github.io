@@ -275,7 +275,7 @@ export function generateKnowledgeBase() {
     // Greetings - expanded variations
     {
       keywords: ['hello', 'hi', 'hey', 'good morning', 'good afternoon', 'good evening', 'greetings', 'howdy', 'sup', 'yo', 'hola', 'aloha', 'heya', 'hiya', 'whats up', "what's up", 'wassup'],
-      response: "Hello! Welcome to fictional project Citizen Services. I'm here to help you navigate government services. You can ask me about taxes, IDs, police services, healthcare, housing, and more. How can I assist you today?"
+      response: "Hello there! 👋 Welcome to fictional project Citizen Services. I'm your friendly AI assistant, here to help you navigate all government services quickly and easily.\n\nI can assist with:\n• **Taxes & Revenue** - Filing, payments, business accounts\n• **IDs & Passports** - Applications, renewals, requirements\n• **Police Services** - Emergency contacts, clearances, reporting\n• **Legal & Courts** - Court services, case lookup, legal aid\n• **Banking** - Bank of fictional project services and information\n• **Healthcare** - Public health services and licensing\n• **Housing** - Affordable housing applications\n• **Postal Services** - Shipping, tracking, P.O. boxes\n• **Cannabis Licensing** - Dispensary and cultivation permits\n• **Transport** - Driver licenses, vehicle registration\n• **Customs & Border** - Import/export, travel requirements\n• **Legislative Council** - Bills, representatives, voting\n\nWhat can I help you with today?"
     },
     // Goodbyes
     {
