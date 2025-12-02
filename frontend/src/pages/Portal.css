@@ -765,10 +765,10 @@ body.light .portal-header {
 }
 
 .dept-icon {
-  width: 56px;
-  height: 56px;
-  background: color-mix(in srgb, var(--dept-color) 15%, transparent);
-  border-radius: 14px;
+  width: 44px;
+  height: 44px;
+  background: color-mix(in srgb, var(--dept-color) 20%, transparent);
+  border-radius: 12px;
   display: flex;
   align-items: center;
   justify-content: center;
