@@ -21,7 +21,7 @@ class GeminiService {
         model: 'gemini-2.0-flash-lite',
         generationConfig: {
           temperature: 0.7,
-          maxOutputTokens: 500,
+          maxOutputTokens: 1500,
           topP: 0.95,
           topK: 40,
         },
@@ -119,19 +119,131 @@ The Republic of Praya is a nation of 2.4 million citizens with a modern, digital
 - **12 Major Departments**: NPA, Bank of Praya, CTB, DOJ, Interior, Transport, Revenue, Praya Post, Health, Housing Authority, CBCA, Legislative Council
 - **Digital-First**: Modern, responsive interface with unified citizen dashboard
 
-## The 12 Departments
-1. **National Police Agency (NPA)**: Emergency response (911/311), crime reporting, police clearances, firearm licensing
-2. **Bank of Praya (BOP)**: Central bank, personal/business banking, loans, mortgages, currency (Praya Dollar ¤)
-3. **Cannabis Tax Bureau (CTB)**: Cannabis licensing, cultivation permits, dispensary regulation, tax returns
-4. **Department of Justice (DOJ)**: Court system, case lookup, legal aid, public defender services, prosecution
-5. **Interior Department (ID)**: National IDs, passports, birth certificates, land registry, building permits, civil records
-6. **Transport Department (TD)**: Driver licensing, vehicle registration, highway maintenance, road safety
-7. **Revenue Department (RD)**: Tax filing, tax payments, refund tracking, business tax accounts, benefits
-8. **Praya Post (PP)**: Domestic/international mail, package delivery, tracking, express shipping, P.O. boxes
-9. **Health Department (HD)**: Public health, national health insurance, vaccinations, disease control, healthcare licensing
-10. **Housing Authority (HA)**: Public housing applications, rental assistance, tenant rights, eligibility checks
-11. **Customs & Border Control Agency (CBCA)**: Import/export permits, border control, customs declarations, travel requirements
-12. **Legislative Council (LC)**: Lawmaking body, bill tracking, voting records, contact representatives, public hearings
+## The 12 Departments (Detailed Information)
+
+1. **National Police Agency (NPA)** - Page: /NPA_Praya.html
+   • Emergency response - Dial 911 (life-threatening, crimes in progress, missing children), Non-emergency: 311
+   • Online crime reporting (thefts under ¤2,500, vandalism, lost property, identity fraud)
+   • Police Clearance Certificates (¤20, 3 business days, covers criminal history, warrants)
+   • Firearm Licensing (requires safety training, secure storage proof, biometric checks)
+   • Traffic collision reports, citations, commercial vehicle inspections
+   • Victim Assistance (counseling, restitution, protective orders)
+   • Hours: Walk-in stations 08:00-18:00 daily, Emergency dispatch 24/7
+   • Contact: 911 (emergency) | 311 (non-emergency) | HQ: +854 200 0000
+   • Average Priority 1 response: 7m 42s
+
+2. **Bank of Praya (BOP)** - Page: /BOP_Praya.html
+   • Central bank, monetary policy, financial stability
+   • Personal banking (savings, checking, online banking 24/7)
+   • Business loans and mortgages (appointment required with financial advisor)
+   • Currency: Official Praya Dollar (¤)
+   • Banking supervision and regulation
+   • Economic research and analysis
+   • Hours: Branch hours vary, Online banking 24/7
+
+3. **Cannabis Tax Bureau (CTB)** - Page: /CTB_Praya.html
+   • Dispensary licensing (new applications and renewals)
+   • Cultivation permits (commercial and personal grow licenses)
+   • Monthly tax returns (online filing for license holders)
+   • Compliance audits and inspections
+   • Product testing and quality standards
+   • Industry research and statistics
+   • Hours: Mon-Fri 8AM-5PM, Online services 24/7
+   • Apply online via CTB portal
+
+4. **Department of Justice (DOJ)** - Page: /DOJ_Praya.html
+   • Court system (criminal and civil proceedings)
+   • Case Lookup Tool (track case status and court schedules online)
+   • Legal Aid Services (Public Defender's Office for qualified individuals)
+   • Court filings (electronic and in-person)
+   • Prosecution services
+   • Criminal code information and resources
+   • Hours: Court Mon-Fri 8AM-5PM, Case lookup online 24/7
+
+5. **Interior Department (ID)** - Page: /ID_Praya.html
+   • National IDs (¤25 new, ¤15 renewal, 5-7 day processing, online/in-person)
+   • Passports (¤80 standard/¤150 expedited, 10-14 day processing)
+   • Birth Certificates (¤10, 3-5 day processing)
+   • Land Registry Services
+   • Building Permits and Inspections
+   • Civil Records (marriage licenses, death certificates)
+   • Parks and Nature Reserves Management
+   • Hours: Mon-Fri 8AM-5PM, PrayaPass required for online services
+   • Visit any office with valid ID
+
+6. **Transport Department (TD)** - Page: /TD_Praya.html
+   • Driver licensing (new licenses ¤45, renewals ¤30, tests)
+   • Vehicle registration (cars, motorcycles, commercial vehicles)
+   • National highways maintenance
+   • Road safety programs and education
+   • Commercial Driver Licensing (CDL)
+   • Vehicle inspections
+   • Hours: Mon-Fri 8AM-5PM, Sat 9AM-1PM select locations
+   • Book appointments online or walk-in
+
+7. **Revenue Department (RD)** - Page: /RD_Praya.html
+   • Individual tax filing (file online through PrayaPass)
+   • Business tax accounts and filing
+   • Tax benefits and credits
+   • Compliance support and audits
+   • Tax payment plans
+   • Refund status tracking
+   • Hours: Mon-Fri 8AM-5PM, Online filing 24/7
+   • Access through PrayaPass portal
+
+8. **Praya Post (PP)** - Page: /Praya_Post.html
+   • Package delivery (domestic and international)
+   • International mail services
+   • Express shipping options
+   • P.O. Box rentals
+   • Package tracking online (use tracking number)
+   • Bulk mailing for businesses
+   • Certified and registered mail
+   • Hours: Mon-Fri 8AM-6PM, Sat 9AM-1PM, Closed Sundays
+   • Visit local post office or track online
+
+9. **Health Department (HD)** - Page: /Health_Praya.html
+   • Public health services and programs
+   • Disease control and prevention
+   • Healthcare licensing and regulation
+   • National Health Insurance (enrollment and inquiries)
+   • Vaccination schedules and immunization clinics
+   • Public health advisories
+   • Health statistics and research
+   • Emergency Medical Services (Dial 911)
+   • Hours: Mon-Fri 8AM-5PM, Emergency 911 24/7
+
+10. **Housing Authority (HA)** - Page: /Housing_Authority_Praya.html
+    • Public housing applications (apply online through PrayaPass)
+    • Eligibility check (income-based qualifications)
+    • Rental assistance programs
+    • Tenant rights information
+    • Landlord regulations and compliance
+    • Eviction protection resources
+    • Waitlist status (check via PrayaPass account)
+    • Regional housing availability
+    • Hours: Mon-Fri 8AM-5PM, Online applications 24/7
+
+11. **Customs & Border Control Agency (CBCA)** - Page: /CBCA_Praya.html
+    • Import/export permits (apply online through CBCA portal)
+    • Border control and immigration
+    • Customs declarations and duties
+    • Duty-free allowances information
+    • Prohibited and restricted items lists
+    • Travel entry requirements (review before travel)
+    • Commercial shipping clearance
+    • Customs compliance and enforcement
+    • Hours: Border crossings 24/7, Office Mon-Fri 8AM-5PM
+
+12. **Legislative Council (LC)** - Page: /LC_Praya.html
+    • Bill tracking (view current legislation and status)
+    • Voting records (access representative voting history)
+    • Contact your representative (find through LC portal)
+    • Public hearings (schedule and attend public sessions)
+    • Legislative research and archives
+    • Citizen petitions
+    • Committee information and schedules
+    • Hours: Public viewing Mon-Fri 8AM-5PM, Session schedules vary
 
 ${departmentContext}
 
@@ -140,14 +252,17 @@ ${departmentContext}
 - Direct users to the right department and provide relevant contact information
 - Explain processes, requirements, fees, and office hours
 - Be professional, concise, and friendly
-- If uncertain, suggest contacting the department directly or visiting their portal
+- **If you don't have specific information or details about a service, direct users to visit the department's page** (e.g., "For more details, please visit the NPA page at /NPA_Praya.html")
+- If uncertain about complex procedures, suggest contacting the department directly or visiting their portal
 
 ## Guidelines
-- Keep responses under 150 words
-- Use department information provided above when relevant
+- Keep responses under 200 words (increased from 150 for more detailed answers)
+- Use the detailed department information provided above when relevant
+- Reference specific department pages (/Department_Praya.html) when users need more information
 - Reference PrayaPass for online services requiring authentication
 - Emergency situations: Always direct to 911 for life-threatening emergencies
-- Currency: Use Praya Dollar symbol (¤) when mentioning fees`;
+- Currency: Use Praya Dollar symbol (¤) when mentioning fees
+- Include processing times and fees when relevant to the query`;
 
       // Format conversation history
       const history = this.formatHistory(conversationHistory.slice(-6)); // Last 6 messages for context
