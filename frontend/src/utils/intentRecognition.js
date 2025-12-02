@@ -2,6 +2,318 @@
 // This system classifies user intents using regex patterns and provides
 // appropriate responses with follow-up actions
 
+// ===== INTELLIGENT TEXT PROCESSING UTILITIES =====
+
+/**
+ * Calculate Levenshtein distance between two strings for fuzzy matching
+ * @param {string} a - First string
+ * @param {string} b - Second string
+ * @returns {number} - Edit distance
+ */
+function levenshteinDistance(a, b) {
+  if (a.length === 0) return b.length;
+  if (b.length === 0) return a.length;
+
+  const matrix = [];
+  for (let i = 0; i <= b.length; i++) {
+    matrix[i] = [i];
+  }
+  for (let j = 0; j <= a.length; j++) {
+    matrix[0][j] = j;
+  }
+  for (let i = 1; i <= b.length; i++) {
+    for (let j = 1; j <= a.length; j++) {
+      if (b.charAt(i - 1) === a.charAt(j - 1)) {
+        matrix[i][j] = matrix[i - 1][j - 1];
+      } else {
+        matrix[i][j] = Math.min(
+          matrix[i - 1][j - 1] + 1,
+          matrix[i][j - 1] + 1,
+          matrix[i - 1][j] + 1
+        );
+      }
+    }
+  }
+  return matrix[b.length][a.length];
+}
+
+/**
+ * Check if two words are similar (fuzzy match for typos)
+ * @param {string} word1 - First word
+ * @param {string} word2 - Second word
+ * @param {number} threshold - Maximum edit distance (default 2)
+ * @returns {boolean} - Whether words are similar
+ */
+export function isSimilar(word1, word2, threshold = 2) {
+  if (!word1 || !word2) return false;
+  const w1 = word1.toLowerCase();
+  const w2 = word2.toLowerCase();
+  if (w1 === w2) return true;
+  if (Math.abs(w1.length - w2.length) > threshold) return false;
+  return levenshteinDistance(w1, w2) <= threshold;
+}
+
+/**
+ * Comprehensive synonym map for government services
+ * Maps common words to their canonical forms
+ */
+export const synonymMap = {
+  // Document synonyms
+  'id': ['identification', 'identity', 'id card', 'national id', 'ident'],
+  'passport': ['travel document', 'travel papers'],
+  'license': ['licence', 'permit', 'certification'],
+  'certificate': ['cert', 'certification', 'document'],
+
+  // Action synonyms
+  'apply': ['get', 'obtain', 'request', 'need', 'want', 'acquire', 'file for', 'submit'],
+  'renew': ['extend', 'update', 'refresh', 'reapply'],
+  'replace': ['reissue', 'get new', 'lost', 'stolen', 'damaged'],
+  'track': ['check', 'find', 'locate', 'lookup', 'look up', 'follow', 'trace', 'status'],
+  'file': ['submit', 'lodge', 'send', 'report', 'declare'],
+  'pay': ['settle', 'remit', 'submit payment', 'make payment'],
+
+  // Service synonyms
+  'tax': ['taxes', 'taxation', 'revenue', 'irs', 'income tax', 'duty'],
+  'police': ['cops', 'law enforcement', 'authorities', 'officers', 'npa'],
+  'bank': ['banking', 'financial', 'bop', 'savings', 'money'],
+  'court': ['legal', 'lawsuit', 'litigation', 'judicial', 'justice'],
+  'health': ['medical', 'healthcare', 'hospital', 'clinic', 'doctor'],
+  'housing': ['home', 'apartment', 'residence', 'dwelling', 'property', 'rent'],
+  'mail': ['post', 'postal', 'package', 'parcel', 'shipping', 'delivery'],
+  'driver': ['driving', 'drivers', "driver's", 'driveing'],
+  'vehicle': ['car', 'automobile', 'auto', 'truck', 'motorcycle', 'motorbike'],
+  'cannabis': ['marijuana', 'weed', 'pot', 'dispensary'],
+  'customs': ['border', 'import', 'export', 'cbca'],
+
+  // Status synonyms
+  'status': ['progress', 'update', 'where is', 'check on'],
+
+  // Question words
+  'how': ['what way', 'method', 'process', 'steps'],
+  'where': ['location', 'place', 'which office'],
+  'when': ['what time', 'hours', 'schedule'],
+  'cost': ['fee', 'price', 'charge', 'how much', 'payment amount'],
+
+  // Common typos and variations
+  'governement': ['government'],
+  'goverment': ['government'],
+  'licence': ['license'],
+  'licences': ['licenses'],
+  'passaport': ['passport'],
+  'pasport': ['passport'],
+  'registeration': ['registration'],
+  'regestration': ['registration'],
+  'certficate': ['certificate'],
+  'certificat': ['certificate'],
+  'insurence': ['insurance'],
+  'insuranse': ['insurance'],
+  'emergancy': ['emergency'],
+  'emergeny': ['emergency'],
+  'vehical': ['vehicle'],
+  'vehicel': ['vehicle'],
+  'acount': ['account'],
+  'acconut': ['account'],
+  'refund': ['rebate', 'return', 'reimbursement'],
+  'complain': ['complaint', 'grievance', 'issue', 'problem']
+};
+
+/**
+ * Word stemming - reduce words to their root form
+ * Simple suffix stripping for common patterns
+ */
+export function stemWord(word) {
+  if (!word || word.length < 4) return word;
+  let w = word.toLowerCase();
+
+  // Common suffix patterns
+  const suffixes = [
+    { suffix: 'ation', replacement: '' },
+    { suffix: 'tion', replacement: '' },
+    { suffix: 'sion', replacement: '' },
+    { suffix: 'ment', replacement: '' },
+    { suffix: 'ness', replacement: '' },
+    { suffix: 'ity', replacement: '' },
+    { suffix: 'ing', replacement: '' },
+    { suffix: 'ings', replacement: '' },
+    { suffix: 'ed', replacement: '' },
+    { suffix: 'es', replacement: '' },
+    { suffix: 's', replacement: '' },
+    { suffix: 'ly', replacement: '' },
+    { suffix: 'ful', replacement: '' },
+    { suffix: 'less', replacement: '' },
+    { suffix: 'able', replacement: '' },
+    { suffix: 'ible', replacement: '' },
+    { suffix: 'er', replacement: '' },
+    { suffix: 'or', replacement: '' },
+    { suffix: 'ist', replacement: '' }
+  ];
+
+  for (const { suffix, replacement } of suffixes) {
+    if (w.endsWith(suffix) && w.length > suffix.length + 2) {
+      return w.slice(0, -suffix.length) + replacement;
+    }
+  }
+  return w;
+}
+
+/**
+ * Expand text with synonyms for better matching
+ * @param {string} text - Input text
+ * @returns {string[]} - Array of expanded terms
+ */
+export function expandWithSynonyms(text) {
+  const words = text.toLowerCase().split(/\s+/);
+  const expanded = new Set(words);
+
+  for (const word of words) {
+    // Check if word is a key in synonym map
+    if (synonymMap[word]) {
+      synonymMap[word].forEach(syn => expanded.add(syn));
+    }
+    // Check if word is a value in synonym map
+    for (const [key, values] of Object.entries(synonymMap)) {
+      if (values.includes(word)) {
+        expanded.add(key);
+      }
+    }
+    // Add stemmed version
+    const stemmed = stemWord(word);
+    if (stemmed !== word) {
+      expanded.add(stemmed);
+    }
+  }
+
+  return Array.from(expanded);
+}
+
+/**
+ * Detect question type for better response formatting
+ * @param {string} message - User message
+ * @returns {object} - Question type info
+ */
+export function detectQuestionType(message) {
+  const lower = message.toLowerCase().trim();
+
+  const patterns = {
+    howTo: /^(how (do|can|to|should)|what('s| is) the (way|process|procedure)|steps to|guide me)/i,
+    whatIs: /^(what('s| is| are)|define|explain|tell me about)/i,
+    whereIs: /^(where('s| is| can| do)|which (office|location|place)|location of)/i,
+    whenIs: /^(when('s| is| can| do)|what time|hours|schedule)/i,
+    howMuch: /^(how much|what('s| is) the (cost|fee|price)|cost of|fee for)/i,
+    canI: /^(can i|am i (able|allowed)|is it possible|do i qualify)/i,
+    doYou: /^(do you|can you|are you (able|going))/i,
+    whyIs: /^(why('s| is| do| does| are)|reason for)/i,
+    yesNo: /^(is it|are there|do they|does it|have you|has it|will it|can they)/i
+  };
+
+  for (const [type, pattern] of Object.entries(patterns)) {
+    if (pattern.test(lower)) {
+      return { type, hasQuestion: true };
+    }
+  }
+
+  // Check for question marks
+  if (lower.includes('?')) {
+    return { type: 'general', hasQuestion: true };
+  }
+
+  return { type: 'statement', hasQuestion: false };
+}
+
+/**
+ * Extract key topics from message for better context tracking
+ * @param {string} message - User message
+ * @returns {string[]} - Array of detected topics
+ */
+export function extractTopics(message) {
+  const topics = [];
+  const lower = message.toLowerCase();
+
+  const topicPatterns = {
+    police: /police|crime|report|emergency|911|theft|assault|clearance/,
+    banking: /bank|account|loan|mortgage|savings|checking/,
+    taxes: /tax|refund|file|revenue|income|business tax/,
+    identity: /id|identification|passport|birth certificate|documents/,
+    transport: /driver|license|vehicle|registration|car|motorcycle/,
+    health: /health|insurance|vaccination|medical|hospital/,
+    housing: /housing|rent|apartment|landlord|tenant|eviction/,
+    postal: /mail|package|shipping|tracking|post office/,
+    cannabis: /cannabis|marijuana|dispensary|cultivation/,
+    customs: /customs|border|import|export|travel|visa/,
+    legal: /court|legal|lawsuit|attorney|lawyer|case/,
+    legislative: /representative|bill|legislation|council|vote/
+  };
+
+  for (const [topic, pattern] of Object.entries(topicPatterns)) {
+    if (pattern.test(lower)) {
+      topics.push(topic);
+    }
+  }
+
+  return topics;
+}
+
+/**
+ * Calculate semantic similarity score between message and keywords
+ * Uses multiple matching strategies
+ * @param {string} message - User message
+ * @param {string[]} keywords - Keywords to match against
+ * @returns {number} - Similarity score
+ */
+export function calculateSimilarity(message, keywords) {
+  const words = message.toLowerCase().split(/\s+/);
+  const expandedWords = expandWithSynonyms(message);
+  let score = 0;
+
+  for (const keyword of keywords) {
+    const keywordLower = keyword.toLowerCase();
+    const keywordWords = keywordLower.split(/\s+/);
+
+    // Exact phrase match (highest priority)
+    if (message.toLowerCase().includes(keywordLower)) {
+      score += keyword.length * 3;
+      continue;
+    }
+
+    // Word boundary match
+    const wordBoundaryRegex = new RegExp(`\\b${keywordLower}\\b`, 'i');
+    if (wordBoundaryRegex.test(message)) {
+      score += keyword.length * 2.5;
+      continue;
+    }
+
+    // Synonym match
+    if (expandedWords.some(w => w === keywordLower || keywordLower.includes(w))) {
+      score += keyword.length * 2;
+      continue;
+    }
+
+    // Fuzzy match (typo tolerance)
+    for (const word of words) {
+      if (word.length >= 4 && isSimilar(word, keywordLower, 2)) {
+        score += keyword.length * 1.5;
+        break;
+      }
+    }
+
+    // Stemmed match
+    const stemmedKeyword = stemWord(keywordLower);
+    for (const word of words) {
+      if (stemWord(word) === stemmedKeyword) {
+        score += keyword.length * 1.2;
+        break;
+      }
+    }
+
+    // Partial match (substring)
+    if (words.some(w => keywordLower.includes(w) || w.includes(keywordLower))) {
+      score += keyword.length * 0.8;
+    }
+  }
+
+  return score;
+}
+
 // Intent patterns organized by category
 export const intentPatterns = {
   // ===== POLICE/CRIME RELATED =====
@@ -14,9 +326,20 @@ export const intentPatterns = {
       /been robbed/i,
       /want to report/i,
       /someone broke in/i,
-      /my (car|bike|property|wallet|phone) was (stolen|taken)/i,
-      /i was (mugged|attacked|assaulted)/i,
-      /witness(ed)? (a )?crime/i
+      /my (car|bike|property|wallet|phone|purse|bag|laptop|computer) was (stolen|taken|snatched)/i,
+      /i was (mugged|attacked|assaulted|robbed)/i,
+      /witness(ed)? (a )?crime/i,
+      /someone stole/i,
+      /got robbed/i,
+      /house was broken into/i,
+      /car break.?in/i,
+      /lost.*property/i,
+      /fraud(ulent)?/i,
+      /scam(med)?/i,
+      /identity theft/i,
+      /someone hit my car/i,
+      /vandal/i,
+      /graffiti/i
     ],
     response: "I can help you file a police report. Let me guide you through the National Police Agency process.",
     action: 'routeToNPA',
@@ -156,7 +479,25 @@ export const intentPatterns = {
       /tax declaration/i,
       /submit.*(tax|return)/i,
       /do my taxes/i,
-      /tax filing/i
+      /tax filing/i,
+      /how.*file.*tax/i,
+      /when.*file.*tax/i,
+      /tax.*deadline/i,
+      /tax.*due/i,
+      /w-?2/i,
+      /1099/i,
+      /tax.*form/i,
+      /annual.*tax/i,
+      /yearly.*tax/i,
+      /tax.*season/i,
+      /prepare.*tax/i,
+      /tax.*preparation/i,
+      /e-?file/i,
+      /electronic.*tax/i,
+      /online.*tax/i,
+      /self.*employed.*tax/i,
+      /freelancer.*tax/i,
+      /small.*business.*tax/i
     ],
     response: "I can guide you through filing your taxes with the Revenue Department.",
     action: 'routeToRevenue',
@@ -226,7 +567,19 @@ export const intentPatterns = {
       /need (a )?new id/i,
       /id (card )?application/i,
       /national id/i,
-      /identification card/i
+      /identification card/i,
+      /replace.*id/i,
+      /lost.*id/i,
+      /id.*expired/i,
+      /renew.*id/i,
+      /update.*id/i,
+      /change.*address.*id/i,
+      /id.*stolen/i,
+      /damaged.*id/i,
+      /how.*(get|apply|obtain).*id/i,
+      /where.*get.*id/i,
+      /state id/i,
+      /government id/i
     ],
     response: "I can help you apply for a National ID through the Interior Department.",
     action: 'routeToInterior',
@@ -250,7 +603,22 @@ export const intentPatterns = {
       /need (a )?passport/i,
       /passport (application|renewal)/i,
       /renew.*passport/i,
-      /new passport/i
+      /new passport/i,
+      /passport.*expired/i,
+      /lost.*passport/i,
+      /passport.*stolen/i,
+      /replace.*passport/i,
+      /damaged.*passport/i,
+      /update.*passport/i,
+      /how.*get.*passport/i,
+      /where.*apply.*passport/i,
+      /passport.*photo/i,
+      /expedited.*passport/i,
+      /rush.*passport/i,
+      /urgent.*passport/i,
+      /passport.*pages/i,
+      /passport.*travel/i,
+      /international.*travel.*document/i
     ],
     response: "I can help you with passport services through the Interior Department.",
     action: 'routeToInterior',
@@ -297,7 +665,30 @@ export const intentPatterns = {
       /get.*(driver|driving) (license|licence)/i,
       /renew.*(driver|license)/i,
       /learner('s)? permit/i,
-      /driving test/i
+      /driving test/i,
+      /dmv/i,
+      /license.*expired/i,
+      /lost.*license/i,
+      /replace.*license/i,
+      /update.*license/i,
+      /change.*address.*license/i,
+      /license.*stolen/i,
+      /how.*get.*license/i,
+      /schedule.*driving.*test/i,
+      /road test/i,
+      /written test/i,
+      /license.*photo/i,
+      /license.*points/i,
+      /suspended.*license/i,
+      /revoked.*license/i,
+      /international.*license/i,
+      /motorcycle.*license/i,
+      /commercial.*license/i,
+      /cdl/i,
+      /learn.*to.*drive/i,
+      /first.*license/i,
+      /new.*driver/i,
+      /provisional.*license/i
     ],
     response: "I can help you with driver's license services through the Transport Department.",
     action: 'routeToTransport',
@@ -705,24 +1096,143 @@ export const departmentRoutes = {
 };
 
 /**
- * Classify user intent based on message
+ * Normalize text for better matching
+ * - Fixes common typos
+ * - Expands contractions
+ * - Normalizes whitespace
+ */
+export function normalizeText(text) {
+  let normalized = text.toLowerCase().trim();
+
+  // Fix common typos using synonym map
+  for (const [typo, corrections] of Object.entries(synonymMap)) {
+    if (typo.length > 5) { // Only fix longer typos to avoid false positives
+      const regex = new RegExp(`\\b${typo}\\b`, 'gi');
+      if (regex.test(normalized)) {
+        normalized = normalized.replace(regex, corrections[0]);
+      }
+    }
+  }
+
+  // Expand contractions
+  const contractions = {
+    "i'm": 'i am', "i've": 'i have', "i'd": 'i would', "i'll": 'i will',
+    "don't": 'do not', "doesn't": 'does not', "didn't": 'did not',
+    "can't": 'cannot', "couldn't": 'could not', "won't": 'will not',
+    "wouldn't": 'would not', "shouldn't": 'should not',
+    "haven't": 'have not', "hasn't": 'has not', "hadn't": 'had not',
+    "isn't": 'is not', "aren't": 'are not', "wasn't": 'was not',
+    "weren't": 'were not', "what's": 'what is', "where's": 'where is',
+    "how's": 'how is', "who's": 'who is', "that's": 'that is',
+    "there's": 'there is', "here's": 'here is', "let's": 'let us',
+    "gonna": 'going to', "wanna": 'want to', "gotta": 'got to',
+    "gimme": 'give me', "lemme": 'let me', "kinda": 'kind of',
+    "sorta": 'sort of', "dunno": 'do not know', "y'all": 'you all'
+  };
+
+  for (const [contraction, expansion] of Object.entries(contractions)) {
+    normalized = normalized.replace(new RegExp(contraction.replace("'", "'?"), 'gi'), expansion);
+  }
+
+  // Normalize multiple spaces
+  normalized = normalized.replace(/\s+/g, ' ');
+
+  return normalized;
+}
+
+/**
+ * Classify user intent based on message with enhanced intelligence
+ * Uses multi-strategy matching: regex, fuzzy, semantic
  * @param {string} message - User's input message
  * @returns {object|null} - Matched intent with response data, or null if no match
  */
 export function classifyIntent(message) {
   const lowerMessage = message.toLowerCase().trim();
+  const normalizedMessage = normalizeText(message);
+  const expandedTerms = expandWithSynonyms(normalizedMessage);
 
-  // Check each intent pattern
+  // First pass: Exact regex pattern matching (highest confidence)
   for (const [intentName, intent] of Object.entries(intentPatterns)) {
     for (const pattern of intent.patterns) {
-      if (pattern.test(lowerMessage)) {
+      if (pattern.test(lowerMessage) || pattern.test(normalizedMessage)) {
         return {
           intent: intentName,
           ...intent,
-          matchedPattern: pattern.toString()
+          matchedPattern: pattern.toString(),
+          confidence: 'high'
         };
       }
     }
+  }
+
+  // Second pass: Fuzzy matching for typos and variations
+  const intentScores = [];
+
+  for (const [intentName, intent] of Object.entries(intentPatterns)) {
+    let maxScore = 0;
+    let matchedPattern = null;
+
+    for (const pattern of intent.patterns) {
+      // Extract keywords from pattern
+      const patternStr = pattern.source;
+      const keywords = patternStr
+        .replace(/[\\^$.*+?()[\]{}|]/g, ' ')
+        .replace(/\s+/g, ' ')
+        .trim()
+        .split(' ')
+        .filter(k => k.length > 2);
+
+      // Calculate similarity using expanded terms
+      let score = 0;
+      for (const keyword of keywords) {
+        // Check against original message
+        if (lowerMessage.includes(keyword)) {
+          score += keyword.length * 2;
+        }
+        // Check against expanded terms (synonyms)
+        else if (expandedTerms.some(term => term.includes(keyword) || keyword.includes(term))) {
+          score += keyword.length * 1.5;
+        }
+        // Fuzzy match for typos
+        else {
+          const words = lowerMessage.split(/\s+/);
+          for (const word of words) {
+            if (word.length >= 4 && isSimilar(word, keyword, 2)) {
+              score += keyword.length;
+              break;
+            }
+          }
+        }
+      }
+
+      if (score > maxScore) {
+        maxScore = score;
+        matchedPattern = pattern.toString();
+      }
+    }
+
+    if (maxScore > 0) {
+      intentScores.push({
+        intentName,
+        intent,
+        score: maxScore,
+        matchedPattern
+      });
+    }
+  }
+
+  // Sort by score and return best match if above threshold
+  intentScores.sort((a, b) => b.score - a.score);
+
+  if (intentScores.length > 0 && intentScores[0].score >= 8) {
+    const best = intentScores[0];
+    return {
+      intent: best.intentName,
+      ...best.intent,
+      matchedPattern: best.matchedPattern,
+      confidence: best.score >= 15 ? 'medium' : 'low',
+      score: best.score
+    };
   }
 
   return null;
@@ -797,7 +1307,29 @@ export function handleFollowUp(intentName, selection) {
 
     // Passport follow-ups
     passport_new: "To apply for a new passport:\n\n**Requirements:**\n• National ID\n• Passport photo (2x2 inches)\n• Completed application\n• Fee: ¤80 (standard) or ¤150 (expedited)\n\n**Processing:**\n• Standard: 10-14 business days\n• Expedited: 3-5 business days\n\nAppointment required at Interior Department.",
-    passport_expedited: "For expedited passport service:\n\n**Additional fee:** ¤70 (total ¤150)\n**Processing:** 3-5 business days\n\nMust apply in person. Bring proof of urgent travel if requesting same-week processing."
+    passport_expedited: "For expedited passport service:\n\n**Additional fee:** ¤70 (total ¤150)\n**Processing:** 3-5 business days\n\nMust apply in person. Bring proof of urgent travel if requesting same-week processing.",
+
+    // Driver's license follow-ups
+    license_new: "To get a new driver's license:\n\n**Requirements:**\n• Valid National ID\n• Proof of address\n• Vision test (at TD office)\n• Written test\n• Road test\n• Fee: ¤45\n\n**Steps:**\n1. Schedule appointment online\n2. Pass vision and written tests\n3. Schedule road test\n4. Receive license in 5-7 days",
+    license_renew: "To renew your driver's license:\n\n**Requirements:**\n• Current/expired license\n• Fee: ¤30\n\n**Options:**\n• Online: Via PrayaPass (if eligible)\n• In-person: Any Transport Department office\n\nOnline renewals process in 3-5 days.",
+    license_replace: "To replace a lost/stolen license:\n\n**Requirements:**\n• Police report (if stolen)\n• Valid ID\n• Fee: ¤25\n\nYou can apply online or visit a TD office. Replacement takes 5-7 days.",
+    license_test: "To schedule a driving test:\n\n1. Book online at Transport Department portal\n2. Choose location and time\n3. Bring learner's permit and valid ID\n4. Arrive 15 minutes early\n\n**Test includes:**\n• Pre-drive checklist\n• Basic maneuvers\n• City driving\n• Highway section (varies by location)",
+
+    // Health follow-ups
+    health_enroll: "To enroll in National Health Insurance:\n\n**Requirements:**\n• Valid National ID\n• Proof of residence\n• Income documentation\n\n**Options:**\n• Standard Plan: Basic coverage\n• Premium Plan: Extended benefits\n\nApply online through PrayaPass or visit Health Department.",
+    vaccine_schedule: "To schedule a vaccination:\n\n1. Log into PrayaPass\n2. Go to Health Department services\n3. Select 'Vaccination Scheduling'\n4. Choose vaccine type and location\n5. Select available date/time\n\nBring your ID and insurance card to the appointment.",
+
+    // Housing follow-ups
+    housing_public: "To apply for public housing:\n\n**Eligibility:**\n• Income below threshold (varies by area)\n• Praya citizen or permanent resident\n• No current public housing\n\n**Process:**\n1. Apply online through PrayaPass\n2. Submit income verification\n3. Background check\n4. Waitlist placement\n\n**Note:** Waitlists vary by region. Check current times online.",
+    housing_rental: "For rental assistance programs:\n\n**Available Programs:**\n• Emergency Rental Assistance\n• Housing Choice Vouchers\n• Utility Assistance\n\n**Requirements:**\n• Income verification\n• Rental agreement\n• Landlord participation\n\nApply through Housing Authority portal.",
+
+    // Cannabis follow-ups
+    cannabis_retail: "For retail dispensary licensing:\n\n**Requirements:**\n• Business registration\n• Background check\n• Location approval\n• Security plan\n• Fee: Varies by license type\n\n**Process:**\n1. Pre-application consultation\n2. Submit full application\n3. Site inspection\n4. License issuance (60-90 days)\n\nContact CTB for current application windows.",
+    cannabis_personal: "For personal cultivation permits:\n\n**Limits:**\n• Up to 6 plants per household\n• 18+ age requirement\n• Registration required\n\n**Fee:** ¤50 annually\n\nRegister online through CTB portal.",
+
+    // Legal follow-ups
+    court_civil: "For civil court cases:\n\n**Types handled:**\n• Contract disputes\n• Property matters\n• Family law\n• Personal injury\n\n**To file:**\n1. Complete civil complaint form\n2. Pay filing fee (¤50-¤200)\n3. Serve defendant\n4. Await court date\n\nSmall claims (under ¤5,000) have simplified procedures.",
+    legal_public: "For public defender services:\n\n**Eligibility:**\n• Criminal case\n• Income below threshold\n• Unable to afford attorney\n\n**Process:**\n1. Request at arraignment\n2. Financial screening\n3. Assignment of attorney\n\nContact DOJ for eligibility screening."
   };
 
   return followUpResponses[selection] ||
@@ -806,6 +1338,7 @@ export function handleFollowUp(intentName, selection) {
 
 /**
  * Extract entities from user message (e.g., case numbers, tracking numbers)
+ * Enhanced with more patterns and context detection
  * @param {string} message - User's input message
  * @returns {object} - Extracted entities
  */
@@ -824,11 +1357,108 @@ export function extractEntities(message) {
     entities.trackingNumber = trackingMatch[0].toUpperCase();
   }
 
-  // Tax ID pattern
+  // Tax ID pattern (various formats)
   const taxIdMatch = message.match(/\d{3}-\d{2}-\d{4}/);
   if (taxIdMatch) {
     entities.taxId = taxIdMatch[0];
   }
 
+  // License plate pattern
+  const plateMatch = message.match(/[A-Z]{2,3}[- ]?\d{3,4}/i);
+  if (plateMatch) {
+    entities.licensePlate = plateMatch[0].toUpperCase();
+  }
+
+  // Date patterns (MM/DD/YYYY or YYYY-MM-DD)
+  const dateMatch = message.match(/(\d{1,2}\/\d{1,2}\/\d{4}|\d{4}-\d{2}-\d{2})/);
+  if (dateMatch) {
+    entities.date = dateMatch[0];
+  }
+
+  // Phone number pattern
+  const phoneMatch = message.match(/\+?(\d{1,3}[-.\s]?)?\(?\d{3}\)?[-.\s]?\d{3}[-.\s]?\d{4}/);
+  if (phoneMatch) {
+    entities.phone = phoneMatch[0];
+  }
+
+  // Email pattern
+  const emailMatch = message.match(/[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}/);
+  if (emailMatch) {
+    entities.email = emailMatch[0].toLowerCase();
+  }
+
+  // Amount/money pattern (with currency symbol)
+  const amountMatch = message.match(/[¤$]\s*\d+(?:,\d{3})*(?:\.\d{2})?/);
+  if (amountMatch) {
+    entities.amount = amountMatch[0];
+  }
+
+  // Reference number (generic alphanumeric)
+  const refMatch = message.match(/ref(?:erence)?[#:\s]*([A-Z0-9]{6,12})/i);
+  if (refMatch) {
+    entities.referenceNumber = refMatch[1].toUpperCase();
+  }
+
+  // District/area detection
+  const districtPatterns = ['north', 'south', 'east', 'west', 'central', 'downtown', 'uptown', 'harbor', 'hills', 'valley'];
+  for (const district of districtPatterns) {
+    if (message.toLowerCase().includes(district)) {
+      entities.district = district.charAt(0).toUpperCase() + district.slice(1);
+      break;
+    }
+  }
+
   return entities;
+}
+
+/**
+ * Detect user sentiment from message
+ * @param {string} message - User message
+ * @returns {string} - Sentiment: positive, negative, neutral, frustrated
+ */
+export function detectSentiment(message) {
+  const lower = message.toLowerCase();
+
+  // Frustrated indicators
+  const frustratedPatterns = /\b(ugh|argh|frustrated|annoyed|angry|mad|ridiculous|stupid|terrible|awful|worst|hate|useless|waste|sick of|tired of|fed up)\b/i;
+  if (frustratedPatterns.test(lower)) {
+    return 'frustrated';
+  }
+
+  // Negative indicators
+  const negativePatterns = /\b(bad|wrong|issue|problem|error|fail|broken|not working|doesn't work|can't|won't|unable|stuck|confused|help)\b/i;
+  if (negativePatterns.test(lower)) {
+    return 'negative';
+  }
+
+  // Positive indicators
+  const positivePatterns = /\b(thanks|thank you|great|awesome|perfect|excellent|wonderful|love|appreciate|helpful|good|nice)\b/i;
+  if (positivePatterns.test(lower)) {
+    return 'positive';
+  }
+
+  return 'neutral';
+}
+
+/**
+ * Detect urgency level from message
+ * @param {string} message - User message
+ * @returns {string} - Urgency: high, medium, low
+ */
+export function detectUrgency(message) {
+  const lower = message.toLowerCase();
+
+  // High urgency
+  const highUrgencyPatterns = /\b(urgent|emergency|asap|immediately|right now|critical|life|death|dying|hurry|quick|fast|today|deadline)\b/i;
+  if (highUrgencyPatterns.test(lower) || lower.includes('911') || lower.includes('!')) {
+    return 'high';
+  }
+
+  // Medium urgency
+  const mediumUrgencyPatterns = /\b(soon|need|important|time.?sensitive|waiting|pending|overdue)\b/i;
+  if (mediumUrgencyPatterns.test(lower)) {
+    return 'medium';
+  }
+
+  return 'low';
 }
