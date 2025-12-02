@@ -1,0 +1,1020 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Praya Stock Exchange | Financial Markets</title>
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --primary: #10b981;
+      --primary-dark: #059669;
+      --primary-light: rgba(16, 185, 129, 0.12);
+      --accent: #06b6d4;
+      --accent-light: rgba(6, 182, 212, 0.12);
+      --success: #10b981;
+      --danger: #ef4444;
+      --warning: #f59e0b;
+      --bg-dark: #030712;
+      --bg-card: #0f172a;
+      --bg-elevated: #1e293b;
+      --border: #1e293b;
+      --border-subtle: #1e293b;
+      --text-primary: #f8fafc;
+      --text-secondary: #cbd5e1;
+      --text-muted: #64748b;
+      --chart-grid: rgba(100, 116, 139, 0.1);
+    }
+
+    body.light {
+      --bg-dark: #ffffff;
+      --bg-card: #f8fafc;
+      --bg-elevated: #f1f5f9;
+      --border: #e2e8f0;
+      --border-subtle: #f1f5f9;
+      --text-primary: #0f172a;
+      --text-secondary: #334155;
+      --text-muted: #64748b;
+      --chart-grid: rgba(100, 116, 139, 0.15);
+    }
+
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+    @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
+    @keyframes slideUp { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+    @keyframes shimmer { 0% { background-position: -1000px 0; } 100% { background-position: 1000px 0; } }
+
+    body {
+      font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+      line-height: 1.6;
+      background: var(--bg-dark);
+      color: var(--text-primary);
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+
+    html { scroll-behavior: smooth; }
+    a { color: var(--primary); text-decoration: none; transition: all 0.2s ease; }
+    a:hover { filter: brightness(1.2); }
+    ::selection { background: var(--primary); color: white; }
+    .container { max-width: 1400px; margin: 0 auto; padding: 0 24px; }
+
+    /* Header */
+    .header {
+      background: rgba(15, 23, 42, 0.95);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    }
+    body.light .header { background: rgba(255, 255, 255, 0.95); }
+    .header .container { display: flex; align-items: center; justify-content: space-between; height: 72px; }
+    .logo { display: flex; align-items: center; gap: 14px; cursor: pointer; }
+    .logo:hover { opacity: 0.9; }
+    .logo-mark {
+      width: 48px;
+      height: 48px;
+      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+    }
+    .logo-mark::before {
+      content: '';
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(45deg, transparent 30%, rgba(255,255,255,0.2) 50%, transparent 70%);
+      animation: shimmer 3s infinite;
+      background-size: 200% 100%;
+    }
+    .logo-mark svg { width: 26px; height: 26px; color: white; position: relative; z-index: 1; }
+    .logo-text h1 { font-size: 18px; font-weight: 800; color: var(--text-primary); letter-spacing: -0.02em; line-height: 1.2; }
+    .logo-text .tagline { font-size: 11px; font-weight: 600; color: var(--primary); text-transform: uppercase; letter-spacing: 0.08em; }
+
+    .header-right { display: flex; align-items: center; gap: 8px; }
+    .market-time {
+      background: var(--bg-elevated);
+      padding: 8px 16px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      border: 1px solid var(--border);
+    }
+    .market-status {
+      width: 8px;
+      height: 8px;
+      background: var(--success);
+      border-radius: 50%;
+      animation: pulse 2s infinite;
+    }
+    .market-time-text { font-size: 13px; font-weight: 600; color: var(--text-secondary); }
+    .theme-toggle {
+      background: var(--bg-elevated);
+      border: 1px solid var(--border);
+      color: var(--text-secondary);
+      padding: 10px 14px;
+      border-radius: 10px;
+      cursor: pointer;
+      font-size: 13px;
+      font-weight: 600;
+      font-family: inherit;
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .theme-toggle:hover { background: var(--bg-card); color: var(--text-primary); }
+
+    /* Hero Ticker */
+    .ticker {
+      background: var(--bg-elevated);
+      border-bottom: 1px solid var(--border);
+      padding: 16px 0;
+      overflow: hidden;
+    }
+    .ticker-scroll {
+      display: flex;
+      gap: 48px;
+      animation: scroll 30s linear infinite;
+    }
+    @keyframes scroll {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+    .ticker-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    .ticker-symbol { font-size: 13px; font-weight: 700; color: var(--text-primary); }
+    .ticker-price { font-size: 14px; font-weight: 700; color: var(--text-primary); }
+    .ticker-change {
+      font-size: 12px;
+      font-weight: 700;
+      padding: 4px 8px;
+      border-radius: 6px;
+    }
+    .ticker-change.up { background: rgba(16, 185, 129, 0.15); color: var(--success); }
+    .ticker-change.down { background: rgba(239, 68, 68, 0.15); color: var(--danger); }
+
+    /* Main Dashboard */
+    .dashboard {
+      padding: 32px 0;
+    }
+    .dashboard-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 24px;
+      margin-bottom: 24px;
+    }
+
+    /* Index Cards */
+    .indices-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+    .index-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 24px;
+      transition: all 0.2s;
+      position: relative;
+      overflow: hidden;
+    }
+    .index-card:hover {
+      border-color: var(--primary);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+    }
+    .index-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 3px;
+      background: linear-gradient(90deg, var(--primary), var(--accent));
+      opacity: 0;
+      transition: opacity 0.2s;
+    }
+    .index-card:hover::before { opacity: 1; }
+    .index-name {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 8px;
+    }
+    .index-value {
+      font-size: 32px;
+      font-weight: 800;
+      color: var(--text-primary);
+      margin-bottom: 8px;
+      letter-spacing: -0.02em;
+    }
+    .index-change {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 14px;
+      font-weight: 700;
+      padding: 6px 12px;
+      border-radius: 8px;
+    }
+    .index-change.up { background: rgba(16, 185, 129, 0.15); color: var(--success); }
+    .index-change.down { background: rgba(239, 68, 68, 0.15); color: var(--danger); }
+
+    /* Card */
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 24px;
+      height: 100%;
+    }
+    .card-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 20px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid var(--border);
+    }
+    .card-title {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--text-primary);
+    }
+    .card-subtitle {
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+
+    /* Chart Placeholder */
+    .chart {
+      width: 100%;
+      height: 280px;
+      background: var(--bg-elevated);
+      border-radius: 12px;
+      position: relative;
+      overflow: hidden;
+    }
+    .chart-grid {
+      position: absolute;
+      inset: 0;
+      background-image:
+        repeating-linear-gradient(0deg, transparent, transparent 45px, var(--chart-grid) 45px, var(--chart-grid) 46px),
+        repeating-linear-gradient(90deg, transparent, transparent 60px, var(--chart-grid) 60px, var(--chart-grid) 61px);
+    }
+    .chart-line {
+      position: absolute;
+      bottom: 20%;
+      left: 0;
+      width: 100%;
+      height: 60%;
+      background: linear-gradient(to bottom, rgba(16, 185, 129, 0.3) 0%, transparent 100%);
+      clip-path: polygon(
+        0% 80%, 5% 75%, 10% 60%, 15% 65%, 20% 50%, 25% 55%,
+        30% 40%, 35% 35%, 40% 30%, 45% 25%, 50% 20%, 55% 25%,
+        60% 15%, 65% 10%, 70% 5%, 75% 8%, 80% 12%, 85% 10%,
+        90% 15%, 95% 12%, 100% 10%, 100% 100%, 0% 100%
+      );
+    }
+    .chart-line::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background: var(--primary);
+      clip-path: polygon(
+        0% 80%, 5% 75%, 10% 60%, 15% 65%, 20% 50%, 25% 55%,
+        30% 40%, 35% 35%, 40% 30%, 45% 25%, 50% 20%, 55% 25%,
+        60% 15%, 65% 10%, 70% 5%, 75% 8%, 80% 12%, 85% 10%,
+        90% 15%, 95% 12%, 100% 10%
+      );
+    }
+
+    /* Market Movers */
+    .movers-list {
+      display: grid;
+      gap: 12px;
+    }
+    .mover-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 14px;
+      background: var(--bg-elevated);
+      border-radius: 12px;
+      transition: all 0.2s;
+      cursor: pointer;
+    }
+    .mover-item:hover {
+      background: var(--bg-card);
+      transform: translateX(4px);
+    }
+    .mover-icon {
+      width: 44px;
+      height: 44px;
+      background: var(--primary-light);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      font-size: 14px;
+      color: var(--primary);
+      flex-shrink: 0;
+    }
+    .mover-info {
+      flex: 1;
+    }
+    .mover-symbol {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--text-primary);
+    }
+    .mover-name {
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+    .mover-price {
+      text-align: right;
+    }
+    .mover-value {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--text-primary);
+    }
+    .mover-change {
+      font-size: 12px;
+      font-weight: 700;
+    }
+    .mover-change.up { color: var(--success); }
+    .mover-change.down { color: var(--danger); }
+
+    /* Tabs */
+    .tabs {
+      display: flex;
+      gap: 4px;
+      margin-bottom: 16px;
+      background: var(--bg-elevated);
+      padding: 4px;
+      border-radius: 10px;
+    }
+    .tab {
+      flex: 1;
+      padding: 8px 16px;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-secondary);
+      background: none;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.2s;
+      font-family: inherit;
+    }
+    .tab:hover { color: var(--text-primary); }
+    .tab.active {
+      background: var(--bg-card);
+      color: var(--primary);
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Stats Grid */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+    .stat-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 20px;
+      text-align: center;
+      transition: all 0.2s;
+    }
+    .stat-card:hover {
+      border-color: var(--primary);
+      transform: translateY(-2px);
+    }
+    .stat-label {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 8px;
+    }
+    .stat-value {
+      font-size: 24px;
+      font-weight: 800;
+      color: var(--text-primary);
+      letter-spacing: -0.02em;
+    }
+
+    /* Sectors */
+    .sectors-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+    .sector-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 20px;
+      transition: all 0.2s;
+      cursor: pointer;
+    }
+    .sector-card:hover {
+      border-color: var(--primary);
+      transform: translateY(-2px);
+    }
+    .sector-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 12px;
+    }
+    .sector-name {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--text-primary);
+    }
+    .sector-icon {
+      width: 36px;
+      height: 36px;
+      background: var(--primary-light);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .sector-icon svg {
+      width: 18px;
+      height: 18px;
+      color: var(--primary);
+    }
+    .sector-change {
+      font-size: 20px;
+      font-weight: 800;
+      margin-bottom: 4px;
+    }
+    .sector-change.up { color: var(--success); }
+    .sector-change.down { color: var(--danger); }
+    .sector-companies {
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+
+    /* Footer */
+    .footer {
+      background: var(--bg-card);
+      border-top: 1px solid var(--border);
+      padding: 48px 0 24px;
+      margin-top: 64px;
+    }
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr 1fr;
+      gap: 40px;
+      margin-bottom: 32px;
+    }
+    .footer-brand h3 {
+      font-size: 18px;
+      font-weight: 800;
+      margin-bottom: 12px;
+    }
+    .footer-brand p {
+      font-size: 13px;
+      color: var(--text-secondary);
+      line-height: 1.7;
+      margin-bottom: 20px;
+    }
+    .footer-section h4 {
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 16px;
+      color: var(--text-muted);
+    }
+    .footer-section ul {
+      list-style: none;
+    }
+    .footer-section li {
+      margin-bottom: 10px;
+    }
+    .footer-section a {
+      font-size: 14px;
+      color: var(--text-secondary);
+      transition: color 0.2s;
+    }
+    .footer-section a:hover {
+      color: var(--primary);
+    }
+    .footer-bottom {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 24px;
+      border-top: 1px solid var(--border);
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+    .footer-legal {
+      display: flex;
+      gap: 24px;
+    }
+
+    @media (max-width: 1024px) {
+      .dashboard-grid { grid-template-columns: 1fr; }
+      .indices-grid { grid-template-columns: repeat(2, 1fr); }
+      .sectors-grid { grid-template-columns: repeat(2, 1fr); }
+      .stats-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    @media (max-width: 768px) {
+      .indices-grid { grid-template-columns: 1fr; }
+      .sectors-grid { grid-template-columns: 1fr; }
+      .stats-grid { grid-template-columns: 1fr 1fr; }
+      .footer-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <div class="container">
+      <div class="logo">
+        <div class="logo-mark">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline>
+          </svg>
+        </div>
+        <div class="logo-text">
+          <h1>Praya Stock Exchange</h1>
+          <div class="tagline">PSE Markets</div>
+        </div>
+      </div>
+      <div class="header-right">
+        <div class="market-time">
+          <div class="market-status"></div>
+          <div class="market-time-text">Market Open • 09:30 - 16:00</div>
+        </div>
+        <button class="theme-toggle" onclick="toggleTheme()">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="1" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line>
+            <line x1="21" y1="12" x2="23" y2="12"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+          </svg>
+          Light
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <section class="ticker">
+    <div class="ticker-scroll">
+      <div class="ticker-item">
+        <span class="ticker-symbol">PSE30</span>
+        <span class="ticker-price">4,287.45</span>
+        <span class="ticker-change up">+2.3%</span>
+      </div>
+      <div class="ticker-item">
+        <span class="ticker-symbol">BANK</span>
+        <span class="ticker-price">142.80</span>
+        <span class="ticker-change up">+1.8%</span>
+      </div>
+      <div class="ticker-item">
+        <span class="ticker-symbol">TECH</span>
+        <span class="ticker-price">98.45</span>
+        <span class="ticker-change down">-0.6%</span>
+      </div>
+      <div class="ticker-item">
+        <span class="ticker-symbol">ENRG</span>
+        <span class="ticker-price">67.20</span>
+        <span class="ticker-change up">+3.2%</span>
+      </div>
+      <div class="ticker-item">
+        <span class="ticker-symbol">MANU</span>
+        <span class="ticker-price">124.55</span>
+        <span class="ticker-change up">+1.1%</span>
+      </div>
+      <div class="ticker-item">
+        <span class="ticker-symbol">PROP</span>
+        <span class="ticker-price">89.30</span>
+        <span class="ticker-change down">-0.4%</span>
+      </div>
+      <div class="ticker-item">
+        <span class="ticker-symbol">CONS</span>
+        <span class="ticker-price">156.75</span>
+        <span class="ticker-change up">+2.7%</span>
+      </div>
+      <!-- Duplicate for seamless loop -->
+      <div class="ticker-item">
+        <span class="ticker-symbol">PSE30</span>
+        <span class="ticker-price">4,287.45</span>
+        <span class="ticker-change up">+2.3%</span>
+      </div>
+      <div class="ticker-item">
+        <span class="ticker-symbol">BANK</span>
+        <span class="ticker-price">142.80</span>
+        <span class="ticker-change up">+1.8%</span>
+      </div>
+      <div class="ticker-item">
+        <span class="ticker-symbol">TECH</span>
+        <span class="ticker-price">98.45</span>
+        <span class="ticker-change down">-0.6%</span>
+      </div>
+      <div class="ticker-item">
+        <span class="ticker-symbol">ENRG</span>
+        <span class="ticker-price">67.20</span>
+        <span class="ticker-change up">+3.2%</span>
+      </div>
+      <div class="ticker-item">
+        <span class="ticker-symbol">MANU</span>
+        <span class="ticker-price">124.55</span>
+        <span class="ticker-change up">+1.1%</span>
+      </div>
+      <div class="ticker-item">
+        <span class="ticker-symbol">PROP</span>
+        <span class="ticker-price">89.30</span>
+        <span class="ticker-change down">-0.4%</span>
+      </div>
+      <div class="ticker-item">
+        <span class="ticker-symbol">CONS</span>
+        <span class="ticker-price">156.75</span>
+        <span class="ticker-change up">+2.7%</span>
+      </div>
+    </div>
+  </section>
+
+  <main class="dashboard">
+    <div class="container">
+      <div class="indices-grid">
+        <div class="index-card">
+          <div class="index-name">PSE 30 Index</div>
+          <div class="index-value">4,287.45</div>
+          <div class="index-change up">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+              <polyline points="18 15 12 9 6 15"></polyline>
+            </svg>
+            +98.52 (2.35%)
+          </div>
+        </div>
+        <div class="index-card">
+          <div class="index-name">PSE All Share</div>
+          <div class="index-value">6,542.18</div>
+          <div class="index-change up">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+              <polyline points="18 15 12 9 6 15"></polyline>
+            </svg>
+            +124.35 (1.94%)
+          </div>
+        </div>
+        <div class="index-card">
+          <div class="index-name">PSE Growth 50</div>
+          <div class="index-value">2,891.76</div>
+          <div class="index-change down">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+              <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
+            -15.42 (0.53%)
+          </div>
+        </div>
+      </div>
+
+      <div class="dashboard-grid">
+        <div class="card">
+          <div class="card-header">
+            <div>
+              <div class="card-title">PSE 30 Performance</div>
+              <div class="card-subtitle">Last 24 hours</div>
+            </div>
+            <div class="tabs">
+              <button class="tab active">1D</button>
+              <button class="tab">5D</button>
+              <button class="tab">1M</button>
+              <button class="tab">1Y</button>
+            </div>
+          </div>
+          <div class="chart">
+            <div class="chart-grid"></div>
+            <div class="chart-line"></div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <div>
+              <div class="card-title">Top Movers</div>
+              <div class="card-subtitle">Today's gainers</div>
+            </div>
+          </div>
+          <div class="movers-list">
+            <div class="mover-item">
+              <div class="mover-icon">EN</div>
+              <div class="mover-info">
+                <div class="mover-symbol">ENRG</div>
+                <div class="mover-name">Praya Energy Corp</div>
+              </div>
+              <div class="mover-price">
+                <div class="mover-value">¤67.20</div>
+                <div class="mover-change up">+3.2%</div>
+              </div>
+            </div>
+            <div class="mover-item">
+              <div class="mover-icon">CS</div>
+              <div class="mover-info">
+                <div class="mover-symbol">CONS</div>
+                <div class="mover-name">Consumer Holdings</div>
+              </div>
+              <div class="mover-price">
+                <div class="mover-value">¤156.75</div>
+                <div class="mover-change up">+2.7%</div>
+              </div>
+            </div>
+            <div class="mover-item">
+              <div class="mover-icon">BK</div>
+              <div class="mover-info">
+                <div class="mover-symbol">BANK</div>
+                <div class="mover-name">United Bank Praya</div>
+              </div>
+              <div class="mover-price">
+                <div class="mover-value">¤142.80</div>
+                <div class="mover-change up">+1.8%</div>
+              </div>
+            </div>
+            <div class="mover-item">
+              <div class="mover-icon">MN</div>
+              <div class="mover-info">
+                <div class="mover-symbol">MANU</div>
+                <div class="mover-name">Manufacturing Ltd</div>
+              </div>
+              <div class="mover-price">
+                <div class="mover-value">¤124.55</div>
+                <div class="mover-change up">+1.1%</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-label">Trading Volume</div>
+          <div class="stat-value">¤8.4B</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Shares Traded</div>
+          <div class="stat-value">124.5M</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Market Cap</div>
+          <div class="stat-value">¤2.8T</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Listed Companies</div>
+          <div class="stat-value">342</div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <div>
+            <div class="card-title">Sector Performance</div>
+            <div class="card-subtitle">Today's sector movements</div>
+          </div>
+        </div>
+        <div class="sectors-grid">
+          <div class="sector-card">
+            <div class="sector-header">
+              <div class="sector-name">Financial Services</div>
+              <div class="sector-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <rect x="3" y="5" width="18" height="14" rx="2"></rect>
+                  <path d="M3 10h18"></path>
+                </svg>
+              </div>
+            </div>
+            <div class="sector-change up">+2.4%</div>
+            <div class="sector-companies">58 companies</div>
+          </div>
+          <div class="sector-card">
+            <div class="sector-header">
+              <div class="sector-name">Technology</div>
+              <div class="sector-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <rect x="2" y="3" width="20" height="14" rx="2"></rect>
+                  <line x1="8" y1="21" x2="16" y2="21"></line>
+                  <line x1="12" y1="17" x2="12" y2="21"></line>
+                </svg>
+              </div>
+            </div>
+            <div class="sector-change down">-0.6%</div>
+            <div class="sector-companies">42 companies</div>
+          </div>
+          <div class="sector-card">
+            <div class="sector-header">
+              <div class="sector-name">Energy</div>
+              <div class="sector-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+                </svg>
+              </div>
+            </div>
+            <div class="sector-change up">+3.1%</div>
+            <div class="sector-companies">28 companies</div>
+          </div>
+          <div class="sector-card">
+            <div class="sector-header">
+              <div class="sector-name">Consumer Goods</div>
+              <div class="sector-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <circle cx="9" cy="21" r="1"></circle>
+                  <circle cx="20" cy="21" r="1"></circle>
+                  <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+                </svg>
+              </div>
+            </div>
+            <div class="sector-change up">+1.8%</div>
+            <div class="sector-companies">67 companies</div>
+          </div>
+          <div class="sector-card">
+            <div class="sector-header">
+              <div class="sector-name">Healthcare</div>
+              <div class="sector-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M22 12h-4l-3 9L9 3l-3 9H2"></path>
+                </svg>
+              </div>
+            </div>
+            <div class="sector-change up">+1.2%</div>
+            <div class="sector-companies">34 companies</div>
+          </div>
+          <div class="sector-card">
+            <div class="sector-header">
+              <div class="sector-name">Real Estate</div>
+              <div class="sector-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                  <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                </svg>
+              </div>
+            </div>
+            <div class="sector-change down">-0.4%</div>
+            <div class="sector-companies">51 companies</div>
+          </div>
+          <div class="sector-card">
+            <div class="sector-header">
+              <div class="sector-name">Manufacturing</div>
+              <div class="sector-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <rect x="2" y="7" width="20" height="14" rx="2"></rect>
+                  <path d="M16 3l-4 4-4-4"></path>
+                </svg>
+              </div>
+            </div>
+            <div class="sector-change up">+1.5%</div>
+            <div class="sector-companies">39 companies</div>
+          </div>
+          <div class="sector-card">
+            <div class="sector-header">
+              <div class="sector-name">Telecommunications</div>
+              <div class="sector-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+                </svg>
+              </div>
+            </div>
+            <div class="sector-change up">+0.9%</div>
+            <div class="sector-companies">12 companies</div>
+          </div>
+          <div class="sector-card">
+            <div class="sector-header">
+              <div class="sector-name">Transportation</div>
+              <div class="sector-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M17 21v-2a1 1 0 0 1-1-1v-1a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v1a1 1 0 0 1-1 1v2"></path>
+                  <path d="M7 21v-2a1 1 0 0 0 1-1v-1a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v1a1 1 0 0 0 1 1v2"></path>
+                  <path d="M5 14V6a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v8"></path>
+                  <path d="M2 14h20"></path>
+                </svg>
+              </div>
+            </div>
+            <div class="sector-change up">+0.7%</div>
+            <div class="sector-companies">11 companies</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <h3>Praya Stock Exchange</h3>
+          <p>The leading securities exchange in the Republic of Praya, providing a transparent and efficient marketplace for trading equities, bonds, and derivatives since 1998.</p>
+          <p style="font-size: 12px; color: var(--text-muted); margin-top: 16px;">
+            <strong>Trading Hours:</strong> Monday - Friday, 09:30 - 16:00 PRD<br>
+            <strong>Contact:</strong> +854 400 5000 • info@pse.praya
+          </p>
+        </div>
+        <div class="footer-section">
+          <h4>Markets</h4>
+          <ul>
+            <li><a href="#equities">Equities</a></li>
+            <li><a href="#bonds">Bonds</a></li>
+            <li><a href="#derivatives">Derivatives</a></li>
+            <li><a href="#indices">Indices</a></li>
+          </ul>
+        </div>
+        <div class="footer-section">
+          <h4>Data & Research</h4>
+          <ul>
+            <li><a href="#market-data">Market Data</a></li>
+            <li><a href="#reports">Research Reports</a></li>
+            <li><a href="#statistics">Statistics</a></li>
+            <li><a href="#calendar">Economic Calendar</a></li>
+          </ul>
+        </div>
+        <div class="footer-section">
+          <h4>Services</h4>
+          <ul>
+            <li><a href="#listing">Company Listing</a></li>
+            <li><a href="#membership">Membership</a></li>
+            <li><a href="#trading">Trading Services</a></li>
+            <li><a href="#clearing">Clearing & Settlement</a></li>
+          </ul>
+        </div>
+        <div class="footer-section">
+          <h4>About PSE</h4>
+          <ul>
+            <li><a href="#about">About Us</a></li>
+            <li><a href="#governance">Governance</a></li>
+            <li><a href="#rules">Rules & Regulations</a></li>
+            <li><a href="#news">News & Media</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <div>© 2025 Praya Stock Exchange. All rights reserved.</div>
+        <div class="footer-legal">
+          <a href="#privacy">Privacy Policy</a>
+          <a href="#terms">Terms of Use</a>
+          <a href="#disclaimer">Disclaimer</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    function toggleTheme() {
+      document.body.classList.toggle('light');
+      const btn = document.querySelector('.theme-toggle');
+      const text = btn.lastChild;
+      text.textContent = document.body.classList.contains('light') ? ' Dark' : ' Light';
+    }
+
+    // Animate cards on load
+    document.addEventListener('DOMContentLoaded', () => {
+      const cards = document.querySelectorAll('.index-card, .stat-card, .sector-card, .mover-item');
+      cards.forEach((card, index) => {
+        card.style.opacity = '0';
+        card.style.animation = `fadeIn 0.5s ease-out ${index * 0.05}s forwards`;
+      });
+    });
+  </script>
+</body>
+</html>
