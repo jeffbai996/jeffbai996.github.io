@@ -4,8 +4,9 @@
  */
 
 const GEMINI_LIVE_API_KEY = import.meta.env.VITE_GEMINI_API_KEY || 'AIzaSyCeb7Ndiu3cJpNFKn-EX9XpX8EUYrpA3gQ'
-const GEMINI_LIVE_MODEL = 'gemini-2.0-flash-live-001'
-const WEBSOCKET_URL = `wss://generativelanguage.googleapis.com/ws/google.ai.generativelanguage.v1beta.GenerativeService.BidiGenerateContent?key=${GEMINI_LIVE_API_KEY}`
+const GEMINI_LIVE_MODEL = 'gemini-2.0-flash-exp'
+// Use v1alpha endpoint which supports the Live API
+const WEBSOCKET_URL = `wss://generativelanguage.googleapis.com/ws/google.ai.generativelanguage.v1alpha.GenerativeService.BidiGenerateContent?key=${GEMINI_LIVE_API_KEY}`
 
 // System instruction for the voice assistant
 const SYSTEM_INSTRUCTION = `You are a helpful voice assistant for GOV.PRAYA, the official government portal of the Republic of Praya.
@@ -144,19 +145,18 @@ class GeminiLiveService {
       setup: {
         model: `models/${GEMINI_LIVE_MODEL}`,
         generationConfig: {
-          responseModalities: ['AUDIO'],
+          responseModalities: 'audio',  // String, not array
           speechConfig: {
             voiceConfig: {
               prebuiltVoiceConfig: {
-                voiceName: 'Kore'  // Clear, professional voice
+                voiceName: 'Aoede'  // Available voice for Live API
               }
             }
           }
         },
         systemInstruction: {
           parts: [{ text: SYSTEM_INSTRUCTION }]
-        },
-        tools: []
+        }
       }
     }
 
