@@ -74,7 +74,7 @@ export function AuthProvider({ children }) {
             last_name: lastName,
             phone: phone || null,
           },
-          emailRedirectTo: `${window.location.origin}/`,
+          emailRedirectTo: `${window.location.origin}/auth/callback?type=signup`,
         },
       })
 
