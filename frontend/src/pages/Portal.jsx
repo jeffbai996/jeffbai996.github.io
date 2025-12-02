@@ -33,11 +33,11 @@ const departments = [
   },
   {
     id: 'doj',
-    name: 'Department of Justice',
+    name: 'Justice Department',
     abbrev: 'DOJ',
     url: '/DOJ_Praya.html',
     description: 'Court system, prosecution services, and legal resources for citizens of Praya.',
-    color: '#7c3aed',
+    color: '#991b1b',
     services: ['Court Services', 'Case Lookup', 'Legal Aid', 'Criminal Code']
   },
   {
@@ -46,8 +46,17 @@ const departments = [
     abbrev: 'ID',
     url: '/ID_Praya.html',
     description: 'Land registry, building permits, civil records, and parks management.',
-    color: '#7c3aed',
+    color: '#78716c',
     services: ['Land Registry', 'Building Permits', 'Civil Records', 'Parks & Reserves']
+  },
+  {
+    id: 'transport',
+    name: 'Transport Department',
+    abbrev: 'TD',
+    url: '/TD_Praya.html',
+    description: 'Driver licensing, vehicle registration, and management of national highways.',
+    color: '#0d9488',
+    services: ['Driver Licensing', 'Vehicle Registration', 'National Highways', 'Road Safety']
   },
   {
     id: 'revenue',
@@ -100,7 +109,7 @@ const departments = [
     abbrev: 'LC',
     url: '/LC_Praya.html',
     description: 'The unicameral legislature of Praya, responsible for enacting laws and providing oversight.',
-    color: '#7c3aed',
+    color: '#6366f1',
     services: ['View Legislation', 'Council Members', 'Session Calendar', 'Public Comment']
   }
 ]
@@ -270,7 +279,7 @@ export default function Portal() {
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                   <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
                 </svg>
-                <span>11 major departments & agencies</span>
+                <span>12 major departments & agencies</span>
               </div>
             </div>
             <div className="hero-actions">
@@ -438,7 +447,7 @@ export default function Portal() {
                   <path d="M12 6v6l4 2"></path>
                 </svg>
               </div>
-              <h3>Department of Justice</h3>
+              <h3>Justice Department</h3>
               <p>Court services, case lookup, legal aid, and access to the criminal code and legal resources.</p>
               <div className="featured-stat-row">
                 <div><strong>42</strong> court locations</div>
@@ -674,8 +683,9 @@ export default function Portal() {
                 <li><a href="/NPA_Praya.html">National Police Agency</a></li>
                 <li><a href="/BOP_Praya.html">Bank of Praya</a></li>
                 <li><a href="/CTB_Praya.html">Cannabis Tax Bureau</a></li>
-                <li><a href="/DOJ_Praya.html">Department of Justice</a></li>
+                <li><a href="/DOJ_Praya.html">Justice Department</a></li>
                 <li><a href="/ID_Praya.html">Interior Department</a></li>
+                <li><a href="/TD_Praya.html">Transport Department</a></li>
                 <li><a href="/RD_Praya.html">Revenue Department</a></li>
                 <li><a href="/Praya_Post.html">Praya Post</a></li>
                 <li><a href="/Health_Praya.html">Health Department</a></li>
