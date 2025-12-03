@@ -70,8 +70,8 @@ export default function SWD() {
               <h5>Government</h5>
               <ul>
                 <li><Link to="/">Gov Portal</Link></li>
-                <li><a href="/pages/Health_Praya.html">Health Dept.</a></li>
-                <li><a href="/pages/Housing_Authority_Praya.html">Housing Authority</a></li>
+                <li><a href="/health">Health Dept.</a></li>
+                <li><a href="/housing">Housing Authority</a></li>
               </ul>
             </div>
           </div>
