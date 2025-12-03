@@ -383,6 +383,83 @@
   text-align: center;
 }
 
+/* ===========================================
+   Quick Actions / Conversation Starters
+   =========================================== */
+
+.chat-quick-actions {
+  padding: 8px 0;
+  animation: slideUp 0.3s ease;
+}
+
+.quick-actions-label {
+  font-size: 12px;
+  color: var(--text-muted);
+  margin: 0 0 8px 0;
+  padding: 0 4px;
+}
+
+.quick-actions-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.quick-action-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 14px;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  font-size: 13px;
+  color: var(--text-primary);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-family: inherit;
+  white-space: nowrap;
+}
+
+.quick-action-chip:hover {
+  background: var(--primary);
+  border-color: var(--primary);
+  color: white;
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(249, 115, 22, 0.3);
+}
+
+.quick-action-chip:hover svg {
+  stroke: white;
+}
+
+.quick-action-chip:active {
+  transform: translateY(0);
+}
+
+.quick-action-chip svg {
+  flex-shrink: 0;
+  stroke: var(--text-secondary);
+  transition: stroke 0.2s;
+}
+
+.quick-action-chip span {
+  font-weight: 500;
+}
+
+/* Department-Specific Header Styling */
+.chat-widget-header.department-specific {
+  background: linear-gradient(135deg, var(--primary), var(--primary-dark, #ea580c));
+}
+
+.chat-widget-header.department-specific h3 {
+  font-size: 14px;
+  max-width: 180px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
 /* Mobile Responsive */
 @media (max-width: 768px) {
   .chat-widget-panel {
@@ -529,6 +606,31 @@
 
   .chat-typing-indicator {
     padding: 14px;
+  }
+
+  /* Quick actions mobile */
+  .quick-actions-chips {
+    gap: 6px;
+  }
+
+  .quick-action-chip {
+    padding: 6px 12px;
+    font-size: 12px;
+    gap: 5px;
+  }
+
+  .quick-action-chip svg {
+    width: 14px;
+    height: 14px;
+  }
+
+  .quick-actions-label {
+    font-size: 11px;
+  }
+
+  .chat-widget-header.department-specific h3 {
+    font-size: 13px;
+    max-width: 150px;
   }
 }
 
