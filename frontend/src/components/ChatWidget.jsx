@@ -17,6 +17,26 @@ import {
   generateNavigationOffer,
   getDepartmentPriorityBoost
 } from '../utils/departmentContext'
+// Enhanced intelligence modules
+import {
+  analyzeQueryComplexity,
+  determineResponseStrategy,
+  buildEnhancedContext,
+  ResponseStrategy
+} from '../utils/intelligentRouter'
+import conversationMemory from '../utils/conversationMemory'
+import { classifyIntentHybrid } from '../utils/semanticClassifier'
+import {
+  extractAndLinkEntities,
+  generateEntityContext,
+  getServicePrerequisites,
+  generateServiceChain
+} from '../utils/entityLinker'
+import {
+  generateProactiveSuggestions,
+  generateProactiveTip,
+  detectProactiveIntervention
+} from '../utils/proactiveSuggestions'
 
 // Configuration from environment variables
 const GEMINI_ENABLED = import.meta.env.VITE_GEMINI_ENABLED === 'true' && geminiService.isAvailable()
@@ -26,6 +46,7 @@ const VOICE_ENABLED = true // Enable voice chat feature
 const knowledgeBase = generateKnowledgeBase()
 
 // Track conversation context for follow-ups with enhanced memory
+// Note: We now use the conversationMemory module for most context tracking
 let conversationContext = {
   lastIntent: null,
   awaitingFollowUp: false,
@@ -34,7 +55,10 @@ let conversationContext = {
   currentTopics: [], // Track current discussion topics
   userPreferences: {}, // Track user preferences mentioned
   clarificationCount: 0, // Track how many times we asked for clarification
-  lastResponseTime: null
+  lastResponseTime: null,
+  // Enhanced context
+  lastStrategy: null, // Track what response strategy was used
+  offeredRelated: false // Track if we offered related services
 }
 
 // Polite responses for various edge cases with more natural language
@@ -59,21 +83,24 @@ const smartSuggestions = {
 // Track recent messages to detect spam/repetition
 let recentMessages = []
 
-// Find best matching response with intent recognition and keyword matching
+// Find best matching response with enhanced semantic intent recognition
 function findResponse(message) {
   const lowerMessage = message.toLowerCase().trim()
 
   // Check for profanity
   if (containsProfanity(message)) {
     resetContext()
+    conversationMemory.resetClarification()
     return edgeCaseResponses.profanity
   }
 
   // Check for unintelligible input
   if (isUnintelligible(message)) {
     conversationContext.clarificationCount++
+    conversationMemory.incrementClarification()
     if (conversationContext.clarificationCount >= 3) {
       conversationContext.clarificationCount = 0
+      conversationMemory.resetClarification()
       return edgeCaseResponses.stillConfused
     }
     return edgeCaseResponses.unintelligible
@@ -96,10 +123,12 @@ function findResponse(message) {
     conversationContext.entities = { ...conversationContext.entities, ...extractedEntities }
     // If we got a tracking number, try to provide tracking info
     if (extractedEntities.trackingNumber) {
-      return `I found tracking number **${extractedEntities.trackingNumber}**. To check the status of your package:\n\n1. Visit the Praya Post portal\n2. Enter your tracking number\n3. View delivery status and estimated arrival\n\nWould you like help with anything else regarding your shipment?`
+      conversationMemory.resetClarification()
+      return `I found tracking number **${extractedEntities.trackingNumber}**. To check the status of your package:\n\n1. Visit the [Praya Post tracking page](/post/track)\n2. Enter your tracking number\n3. View delivery status and estimated arrival\n\nWould you like help with anything else regarding your shipment?`
     }
     if (extractedEntities.caseNumber) {
-      return `I found case number **${extractedEntities.caseNumber}**. To check your case status:\n\n1. Visit the NPA portal\n2. Go to "Case Lookup"\n3. Enter your case number\n\nTypically, cases are updated within 24-48 hours. Need anything else?`
+      conversationMemory.resetClarification()
+      return `I found case number **${extractedEntities.caseNumber}**. To check your case status:\n\n1. Visit the [NPA Case Lookup](/npa/lookup)\n2. Enter your case number\n3. View status and updates\n\nTypically, cases are updated within 24-48 hours. Need anything else?`
     }
   }
 
@@ -107,6 +136,7 @@ function findResponse(message) {
   if (conversationContext.awaitingFollowUp && conversationContext.lastIntent) {
     const followUpResult = handleFollowUpResponse(lowerMessage)
     if (followUpResult) {
+      conversationMemory.resetClarification()
       return followUpResult
     }
   }
@@ -115,6 +145,7 @@ function findResponse(message) {
   const menuMatch = lowerMessage.match(/^[1-5]$/)
   if (menuMatch && conversationContext.clarificationCount > 0) {
     conversationContext.clarificationCount = 0
+    conversationMemory.resetClarification()
     const menuResponses = {
       '1': "Let me help you with documents. What type do you need?\n\n• **National ID** - New, renewal, or replacement\n• **Passport** - New application or renewal\n• **Birth Certificate** - Certified copies\n• **Driver's License** - New, renewal, or replacement\n\nWhich one interests you?",
       '2': "I can help with taxes! What do you need?\n\n• **File Taxes** - Individual or business returns\n• **Pay Taxes** - Make a payment or set up a plan\n• **Check Refund** - Track your tax refund status\n\nWhat would you like to do?",
@@ -125,12 +156,34 @@ function findResponse(message) {
     return menuResponses[menuMatch[0]]
   }
 
-  // Try intent classification first - this handles specific user intents
+  // Use hybrid intent classification (semantic + regex)
+  const hybridResult = classifyIntentHybrid(message, {
+    lastIntent: conversationContext.lastIntent,
+    topics: conversationMemory.getSummary().activeTopics
+  })
+
+  // If hybrid classification found a confident match
+  if (hybridResult.intent && hybridResult.confidence >= 0.5 && hybridResult.details) {
+    conversationContext.lastIntent = hybridResult.details
+    conversationContext.awaitingFollowUp = !!hybridResult.details.followUp
+    conversationContext.clarificationCount = 0
+    conversationMemory.resetClarification()
+
+    // Track the matched intent in memory
+    if (hybridResult.intent) {
+      conversationMemory.resolveTopic(hybridResult.intent)
+    }
+
+    return generateIntentResponse(hybridResult.details, true)
+  }
+
+  // Fall back to standard regex classification
   const matchedIntent = classifyIntent(message)
   if (matchedIntent) {
     conversationContext.lastIntent = matchedIntent
     conversationContext.awaitingFollowUp = !!matchedIntent.followUp
     conversationContext.clarificationCount = 0
+    conversationMemory.resetClarification()
     return generateIntentResponse(matchedIntent, true)
   }
 
@@ -483,43 +536,33 @@ function QuickActionIcon({ icon }) {
   return icons[icon] || icons.document
 }
 
-// Detect if a query needs Gemini AI assistance
+// Detect if a query needs Gemini AI assistance using enhanced intelligence
 function shouldUseGemini(message, intentResult, messages) {
-  if (!GEMINI_ENABLED) return false
+  if (!GEMINI_ENABLED) return { useGemini: false, strategy: ResponseStrategy.RULE_BASED }
 
-  // Trigger 1: Low confidence match (intent classifier didn't find a good match)
-  const lowConfidence = !intentResult || (intentResult.confidence && intentResult.confidence < 0.6)
+  // Use intelligent router for decision making
+  const complexity = analyzeQueryComplexity(message, {
+    clarificationCount: conversationContext.clarificationCount
+  })
 
-  // Trigger 2: Repeated clarification attempts
-  const repeatedClarification = conversationContext.clarificationCount >= 2
+  const strategy = determineResponseStrategy(intentResult, complexity, {
+    geminiEnabled: GEMINI_ENABLED
+  })
 
-  // Trigger 3: Complex query patterns
-  const complexPatterns = [
-    /multiple|several|both|and also/i,
-    /what.*difference|compare|versus|vs\./i,
-    /explain|how does.*work|what is the process/i,
-    /i don't understand|confused|not sure|unclear/i,
-    /step by step|detailed|comprehensive/i,
-  ]
-  const isComplexQuery = complexPatterns.some(pattern => pattern.test(message))
+  // Store the strategy for later use
+  conversationContext.lastStrategy = strategy
 
-  // Trigger 4: Frustration detected
-  const frustrationKeywords = [
-    'frustrated', 'annoying', 'not helping', 'useless',
-    'doesn\'t work', 'still don\'t', 'already tried',
-    'same thing', 'not what i asked'
-  ]
-  const messageLower = message.toLowerCase()
-  const hasFrustration = frustrationKeywords.some(kw => messageLower.includes(kw))
-
-  // Trigger 5: Explicit request for more help
-  const explicitHelp = /more help|explain better|need more info|tell me more/i.test(message)
-
-  return lowConfidence || repeatedClarification || isComplexQuery || hasFrustration || explicitHelp
+  return {
+    useGemini: strategy.useGemini,
+    strategy: strategy.strategy,
+    reason: strategy.reason,
+    enhancedContext: strategy.enhancedContext || false,
+    complexity
+  }
 }
 
-// Call Gemini API for complex queries with optional department context
-async function callGeminiAPI(message, messages, currentDeptData = null) {
+// Call Gemini API for complex queries with enhanced context
+async function callGeminiAPI(message, messages, currentDeptData = null, useEnhancedContext = false) {
   try {
     // Prepare conversation history (last 10 messages)
     const history = messages.slice(-10).map(msg => ({
@@ -549,14 +592,35 @@ async function callGeminiAPI(message, messages, currentDeptData = null) {
 
     relevantDepartments = [...relevantDepartments, ...additionalDepts]
 
-    // Call Gemini service directly
+    // Build enhanced context if requested
+    let enhancedContext = {}
+    if (useEnhancedContext) {
+      const memorySummary = conversationMemory.getSummary()
+      enhancedContext = buildEnhancedContext(
+        message,
+        history,
+        conversationContext.entities,
+        currentDeptData
+      )
+      // Add memory summary data
+      enhancedContext.sentiment = memorySummary.sentiment
+      enhancedContext.userGoals = memorySummary.userGoals
+      enhancedContext.activeTopics = memorySummary.activeTopics
+    }
+
+    // Call Gemini service with enhanced context
     const result = await geminiService.generateResponse(
       message,
       relevantDepartments,
-      history
+      history,
+      enhancedContext
     )
 
     if (result.success && result.response) {
+      // If there are proactive suggestions from Gemini, store them
+      if (result.suggestions && result.suggestions.length > 0) {
+        conversationContext.geminiSuggestions = result.suggestions
+      }
       return result.response
     }
 
@@ -675,7 +739,7 @@ export default function ChatWidget({ currentPath = '/' }) {
     navigate(url)
   }
 
-  // Process a message (extracted for reuse)
+  // Process a message (extracted for reuse) - Enhanced with intelligent routing
   const processMessage = async (messageText) => {
     const userMessage = {
       id: Date.now(),
@@ -688,30 +752,86 @@ export default function ChatWidget({ currentPath = '/' }) {
     setIsTyping(true)
     setShowQuickActions(false)
 
+    // Track message in conversation memory
+    conversationMemory.addMessage({ sender: 'user', text: messageText })
+
+    // Check for linked entities (case numbers, tracking numbers, etc.)
+    const linkedEntities = extractAndLinkEntities(messageText)
+    if (linkedEntities.length > 0) {
+      // Merge entities into context
+      linkedEntities.forEach(entity => {
+        conversationContext.entities[entity.type] = entity.value
+      })
+    }
+
     // Check for relevant sub-page to offer navigation
     const relevantSubPage = findRelevantSubPage(messageText, departmentContext.id)
 
-    // Try rule-based system first
-    const intentResult = classifyIntent(messageText)
+    // Use hybrid intent classification (semantic + regex)
+    const hybridResult = classifyIntentHybrid(messageText, {
+      lastIntent: conversationContext.lastIntent,
+      topics: conversationMemory.getSummary().activeTopics
+    })
+
+    // Also get standard intent result for compatibility
+    const intentResult = hybridResult.intent ? {
+      intent: hybridResult.intent,
+      ...hybridResult.details,
+      confidence: hybridResult.confidence
+    } : classifyIntent(messageText)
 
     // Get department priority boost
     const priorityBoost = getDepartmentPriorityBoost(messageText, departmentContext.id)
 
-    // Check if we should use Gemini AI
-    const useGemini = shouldUseGemini(messageText, intentResult, messages)
+    // Check if we should use Gemini AI using intelligent routing
+    const routingDecision = shouldUseGemini(messageText, intentResult, messages)
 
-    if (useGemini) {
-      console.log('Using Gemini AI for complex query')
+    // Check for proactive intervention needs
+    const intervention = detectProactiveIntervention(messageText, {
+      topics: conversationMemory.getSummary().activeTopics,
+      messageCount: conversationMemory.getSummary().messageCount,
+      offeredRelated: conversationContext.offeredRelated
+    })
 
-      // Try calling Gemini API with department context
-      const geminiResponse = await callGeminiAPI(messageText, messages, currentDeptData)
+    if (routingDecision.useGemini) {
+      console.log(`Using Gemini AI: ${routingDecision.reason}`)
+
+      // Try calling Gemini API with enhanced context
+      const geminiResponse = await callGeminiAPI(
+        messageText,
+        messages,
+        currentDeptData,
+        routingDecision.enhancedContext
+      )
 
       if (geminiResponse) {
-        // Append navigation offer if relevant
+        // Build final response with enhancements
         let finalResponse = geminiResponse
+
+        // Add entity context if we found linked entities
+        if (linkedEntities.length > 0) {
+          const entityInfo = generateEntityContext(linkedEntities)
+          if (entityInfo && !finalResponse.includes(entityInfo)) {
+            finalResponse = entityInfo + '\n\n' + finalResponse
+          }
+        }
+
+        // Append navigation offer if relevant
         if (relevantSubPage) {
           finalResponse += generateNavigationOffer(relevantSubPage)
         }
+
+        // Add proactive tip if relevant
+        const memorySummary = conversationMemory.getSummary()
+        if (memorySummary.activeTopics.length > 0) {
+          const tip = generateProactiveTip(memorySummary.activeTopics[0])
+          if (tip && !finalResponse.includes(tip)) {
+            finalResponse += `\n\n💡 ${tip}`
+          }
+        }
+
+        // Track bot response in memory
+        conversationMemory.addMessage({ sender: 'bot', text: finalResponse })
 
         // Use Gemini response
         const botMessageId = Date.now() + 1
@@ -736,14 +856,30 @@ export default function ChatWidget({ currentPath = '/' }) {
       console.log('Gemini API unavailable, falling back to rule-based system')
     }
 
-    // Use rule-based system
+    // Use rule-based system with semantic enhancement
     setTimeout(() => {
       let response = findResponse(messageText)
+
+      // Add entity context if we found linked entities
+      if (linkedEntities.length > 0) {
+        const entityInfo = generateEntityContext(linkedEntities)
+        if (entityInfo && !response.includes(entityInfo)) {
+          response = entityInfo + '\n\n' + response
+        }
+      }
 
       // Append navigation offer if relevant
       if (relevantSubPage) {
         response += generateNavigationOffer(relevantSubPage)
       }
+
+      // Add intervention response if needed
+      if (intervention && intervention.type === 'assistance') {
+        response = intervention.message + '\n\n' + response
+      }
+
+      // Track bot response in memory
+      conversationMemory.addMessage({ sender: 'bot', text: response })
 
       const botMessageId = Date.now() + 1
       const botMessage = {

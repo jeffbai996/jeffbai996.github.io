@@ -3,6 +3,12 @@ import { GoogleGenerativeAI } from '@google/generative-ai';
 /**
  * Direct Gemini API Service for Frontend
  * Calls Google's Gemini API directly without a backend server
+ *
+ * Enhanced with:
+ * - Dynamic system prompts based on conversation context
+ * - User expertise level adaptation
+ * - Conversation summary injection
+ * - Proactive suggestion generation
  */
 class GeminiService {
   constructor() {
@@ -50,6 +56,111 @@ class GeminiService {
       console.error('Failed to initialize Gemini API:', error);
       this.initialized = false;
     }
+  }
+
+  /**
+   * Build dynamic context additions based on enhanced context
+   * @param {object} enhancedContext - Context from conversation memory
+   * @returns {string} - Additional context for system prompt
+   */
+  buildDynamicContext(enhancedContext = {}) {
+    let dynamicContext = '';
+
+    // Add conversation summary if available
+    if (enhancedContext.conversationSummary) {
+      dynamicContext += `\n\n## Current Conversation Context\n${enhancedContext.conversationSummary}`;
+    }
+
+    // Adapt response style based on user expertise
+    if (enhancedContext.expertiseLevel === 'technical') {
+      dynamicContext += `\n\n## Response Style Note\nThe user appears technically proficient. You may use more specific terminology and provide detailed technical information where relevant.`;
+    } else if (enhancedContext.expertiseLevel === 'general') {
+      dynamicContext += `\n\n## Response Style Note\nKeep explanations clear and avoid jargon. Use step-by-step instructions where helpful.`;
+    }
+
+    // Add apparent goal context
+    if (enhancedContext.apparentGoal) {
+      dynamicContext += `\n\n## User's Apparent Goal\nThe user appears to be: ${enhancedContext.apparentGoal}. Focus your response on helping them achieve this goal.`;
+    }
+
+    // Add entity references for continuity
+    if (enhancedContext.entities && Object.keys(enhancedContext.entities).length > 0) {
+      dynamicContext += `\n\n## Referenced Information\nThe user has mentioned these specific references: `;
+      dynamicContext += Object.entries(enhancedContext.entities)
+        .map(([key, value]) => `${key}: ${value}`)
+        .join(', ');
+      dynamicContext += `. Reference these naturally in your response if relevant.`;
+    }
+
+    // Handle frustrated user
+    if (enhancedContext.sentiment === 'frustrated') {
+      dynamicContext += `\n\n## Important: User Assistance Note\nThe user seems frustrated. Please:\n- Acknowledge their situation empathetically\n- Provide an especially clear and helpful response\n- Offer multiple ways to get help (online, phone, in-person)\n- Be extra patient and thorough`;
+    }
+
+    // First message context
+    if (enhancedContext.isFirstMessage) {
+      dynamicContext += `\n\n## First Interaction\nThis is the user's first message. Be welcoming and offer to help them navigate available services.`;
+    }
+
+    // Add related topics for comprehensive response
+    if (enhancedContext.topics && enhancedContext.topics.length > 0) {
+      dynamicContext += `\n\n## Related Topics in Conversation\nTopics discussed: ${enhancedContext.topics.join(', ')}. Consider mentioning related services if relevant.`;
+    }
+
+    return dynamicContext;
+  }
+
+  /**
+   * Generate proactive suggestions based on context
+   * @param {string} response - The generated response
+   * @param {object} enhancedContext - Conversation context
+   * @returns {string[]} - Array of suggestion strings
+   */
+  generateProactiveSuggestions(response, enhancedContext = {}) {
+    const suggestions = [];
+
+    // Based on apparent goal, suggest next steps
+    const goalSuggestions = {
+      'completing an application': [
+        'Would you like to know the required documents?',
+        'Should I explain the processing timeline?'
+      ],
+      'tracking a status': [
+        'Want me to explain what each status means?',
+        'Would you like contact information for follow-up?'
+      ],
+      'understanding costs': [
+        'Are you interested in payment plan options?',
+        'Would you like to know about fee waivers?'
+      ],
+      'understanding a process': [
+        'Should I provide a step-by-step checklist?',
+        'Would you like to know common mistakes to avoid?'
+      ]
+    };
+
+    if (enhancedContext.apparentGoal && goalSuggestions[enhancedContext.apparentGoal]) {
+      suggestions.push(...goalSuggestions[enhancedContext.apparentGoal]);
+    }
+
+    // Based on current topics
+    if (enhancedContext.currentTopics) {
+      const topicSuggestions = {
+        police: ['Do you need information about police station locations?'],
+        taxes: ['Would you like to know about common deductions?'],
+        transport: ['Do you need to schedule a driving test?'],
+        health: ['Want to find healthcare providers in your area?'],
+        housing: ['Are you interested in rental assistance programs?']
+      };
+
+      for (const topic of enhancedContext.currentTopics) {
+        if (topicSuggestions[topic] && !suggestions.includes(topicSuggestions[topic][0])) {
+          suggestions.push(...topicSuggestions[topic]);
+        }
+      }
+    }
+
+    return suggestions.slice(0, 2); // Return max 2 suggestions
   }
 
   /**
@@ -104,8 +215,12 @@ class GeminiService {
 
   /**
    * Generate a response using Gemini API
+   * @param {string} userMessage - The user's message
+   * @param {array} relevantDepartments - Array of relevant department data
+   * @param {array} conversationHistory - Previous messages in conversation
+   * @param {object} enhancedContext - Enhanced context from conversation memory
    */
-  async generateResponse(userMessage, relevantDepartments = [], conversationHistory = []) {
+  async generateResponse(userMessage, relevantDepartments = [], conversationHistory = [], enhancedContext = {}) {
     if (!this.initialized) {
       throw new Error('Gemini API not initialized');
     }
@@ -113,6 +228,9 @@ class GeminiService {
     try {
       // Build the system context
       const departmentContext = this.buildContext(relevantDepartments);
+
+      // Build dynamic context based on conversation state
+      const dynamicContext = this.buildDynamicContext(enhancedContext);
 
       const systemPrompt = `You are a helpful assistant for GOV.PRAYA - the official Government of Praya web portal.
 
@@ -234,6 +352,7 @@ The Republic of Praya is a nation of 2.4 million citizens with a modern, digital
     • Hours: Mon-Fri 8AM-5PM, Emergency services 24/7
 
 ${departmentContext}
+${dynamicContext}
 
 ## Your Role
 - Help citizens navigate government services quickly and efficiently
@@ -242,6 +361,8 @@ ${departmentContext}
 - Be professional, concise, and friendly
 - **If you don't have specific information or details about a service, direct users to visit the department's page** (e.g., "For more details, please visit the NPA page at /npa")
 - If uncertain about complex procedures, suggest contacting the department directly or visiting their portal
+- **Proactively offer related helpful information** when relevant (e.g., if user asks about passport renewal, mention required documents)
+- **Anticipate follow-up questions** and address them proactively when appropriate
 
 ## Guidelines
 - Keep responses under 200 words (increased from 150 for more detailed answers)
@@ -251,7 +372,8 @@ ${departmentContext}
 - Reference PrayaPass for online services requiring authentication
 - Emergency situations: Always direct to 911 for life-threatening emergencies
 - Currency: Use Praya Dollar symbol (¤) when mentioning fees
-- Include processing times and fees when relevant to the query`;
+- Include processing times and fees when relevant to the query
+- **End complex answers with a brief follow-up question** to ensure the user's needs are fully met (e.g., "Would you like more details about the required documents?")`;
 
       // Format conversation history
       const history = this.formatHistory(conversationHistory.slice(-6)); // Last 6 messages for context
@@ -265,7 +387,7 @@ ${departmentContext}
           },
           {
             role: 'model',
-            parts: [{ text: 'I understand. I am the GOV.PRAYA assistant for the Republic of Praya government portal. I will help citizens navigate the 12 major departments and 127 online services efficiently, providing information about processes, requirements, fees, and contact details. I will keep responses under 150 words, be professional and friendly, and direct citizens to the appropriate resources.' }],
+            parts: [{ text: 'I understand. I am the GOV.PRAYA assistant for the Republic of Praya government portal. I will help citizens navigate the 15 major departments and 127 online services efficiently, providing information about processes, requirements, fees, and contact details. I will keep responses concise but thorough, be professional and friendly, proactively offer helpful related information, and direct citizens to appropriate resources with direct links.' }],
           },
           ...history,
         ],
@@ -276,9 +398,13 @@ ${departmentContext}
       const response = result.response;
       const text = response.text();
 
+      // Generate proactive suggestions if context available
+      const suggestions = this.generateProactiveSuggestions(text, enhancedContext);
+
       return {
         success: true,
         response: text,
+        suggestions,
         tokensUsed: {
           prompt: result.response.usageMetadata?.promptTokenCount || 0,
           completion: result.response.usageMetadata?.candidatesTokenCount || 0,
