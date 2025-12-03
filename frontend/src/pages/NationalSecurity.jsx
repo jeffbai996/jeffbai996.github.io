@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import './Department.css'
+import { getCurrentSecurityLevel, getNationalStatus } from '../utils/nationalStatus'
 
 const securityLevels = [
   {
@@ -143,9 +144,13 @@ const alertTypes = [
 ]
 
 export default function NationalSecurity() {
+  // Get current security level from national status
+  const currentSecurity = getCurrentSecurityLevel()
+  const nationalStatus = getNationalStatus()
+
   useEffect(() => {
-    document.body.classList.add('theme-npa')
-    return () => document.body.classList.remove('theme-npa')
+    document.body.classList.add('theme-dark-security')
+    return () => document.body.classList.remove('theme-dark-security')
   }, [])
 
   return (
@@ -159,8 +164,7 @@ export default function NationalSecurity() {
               </svg>
             </div>
             <div className="logo-text">
-              <h1>National Security Level</h1>
-              <span className="tagline">Civil Defense • Republic of Praya</span>
+              <h1>National Security Alert Level</h1>
             </div>
           </Link>
           <nav className="nav">
@@ -191,13 +195,13 @@ export default function NationalSecurity() {
         </div>
       </section>
 
-      <section className="stats-bar">
+      <section className="stats-bar security-stats-dark">
         <div className="container">
           <div className="stats-grid">
             <div className="stat-item">
               <span className="stat-label">Current Level</span>
-              <span className="stat-value" style={{ color: '#0ea5e9' }}>2</span>
-              <span className="stat-change">Elevated</span>
+              <span className="stat-value" style={{ color: currentSecurity.color }}>{currentSecurity.level}</span>
+              <span className="stat-change">{currentSecurity.name}</span>
             </div>
             <div className="stat-item">
               <span className="stat-label">Status</span>
@@ -206,12 +210,12 @@ export default function NationalSecurity() {
             </div>
             <div className="stat-item">
               <span className="stat-label">Days at Current Level</span>
-              <span className="stat-value">14</span>
-              <span className="stat-change">Since Nov 19</span>
+              <span className="stat-value">{nationalStatus.security.daysAtCurrentLevel}</span>
+              <span className="stat-change">Since {nationalStatus.security.lastUpdated}</span>
             </div>
             <div className="stat-item">
               <span className="stat-label">Public Shelters</span>
-              <span className="stat-value">342</span>
+              <span className="stat-value">{nationalStatus.security.publicShelters}</span>
               <span className="stat-change">Nationwide</span>
             </div>
           </div>
@@ -229,7 +233,7 @@ export default function NationalSecurity() {
             {securityLevels.map((level) => (
               <div
                 key={level.level}
-                className={`security-level-card ${level.level === 2 ? 'current-level' : ''}`}
+                className={`security-level-card ${level.level === currentSecurity.level ? 'current-level' : ''}`}
                 style={{
                   borderLeft: `4px solid ${level.color}`,
                   background: level.bgColor
@@ -242,7 +246,7 @@ export default function NationalSecurity() {
                   <div className="security-level-info">
                     <div className="security-level-name" style={{ color: level.color }}>
                       {level.name}
-                      {level.level === 2 && <span className="current-badge">CURRENT</span>}
+                      {level.level === currentSecurity.level && <span className="current-badge">CURRENT</span>}
                     </div>
                     <p className="security-description">{level.description}</p>
                   </div>
@@ -648,6 +652,173 @@ export default function NationalSecurity() {
 
         .section-header p {
           color: var(--text-secondary, #6b7280);
+        }
+
+        /* Dark theme for National Security page */
+        .theme-dark-security {
+          --bg-primary: #0f172a;
+          --bg-secondary: #1e293b;
+          --text-primary: #f1f5f9;
+          --text-secondary: #94a3b8;
+          --border-color: #334155;
+          --card-bg: #1e293b;
+          --section-alt-bg: #1e293b;
+        }
+
+        .theme-dark-security .dept-header {
+          background: #1e293b !important;
+          border-bottom: 1px solid #334155;
+        }
+
+        .theme-dark-security .dept-header .logo-text h1 {
+          color: #f1f5f9;
+          font-size: 1.75rem;
+          font-weight: 700;
+        }
+
+        .theme-dark-security .nav-link {
+          color: #94a3b8;
+        }
+
+        .theme-dark-security .nav-link:hover {
+          color: #3b82f6;
+        }
+
+        .theme-dark-security .hero {
+          background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+        }
+
+        .theme-dark-security .hero h2 {
+          color: #f1f5f9;
+        }
+
+        .theme-dark-security .hero p {
+          color: #94a3b8;
+        }
+
+        .theme-dark-security .hero-badge {
+          background: rgba(59, 130, 246, 0.15) !important;
+        }
+
+        .theme-dark-security .security-stats-dark {
+          background: #1e293b;
+          border-bottom: 1px solid #334155;
+        }
+
+        .theme-dark-security .stat-item .stat-label {
+          color: #64748b;
+        }
+
+        .theme-dark-security .stat-item .stat-value {
+          color: #f1f5f9;
+        }
+
+        .theme-dark-security .stat-item .stat-change {
+          color: #94a3b8;
+        }
+
+        .theme-dark-security .services-section,
+        .theme-dark-security .alert-types-section {
+          background: #0f172a;
+        }
+
+        .theme-dark-security .info-section {
+          background: #1e293b !important;
+        }
+
+        .theme-dark-security .section-header h2 {
+          color: #f1f5f9;
+        }
+
+        .theme-dark-security .section-header p {
+          color: #94a3b8;
+        }
+
+        .theme-dark-security .security-level-card {
+          background: rgba(30, 41, 59, 0.5) !important;
+        }
+
+        .theme-dark-security .security-description,
+        .theme-dark-security .action-block p {
+          color: #94a3b8;
+        }
+
+        .theme-dark-security .action-block strong {
+          color: #cbd5e1;
+        }
+
+        .theme-dark-security .civil-defense-card {
+          background: #0f172a;
+          border-color: #334155;
+        }
+
+        .theme-dark-security .cd-card-header h3 {
+          color: #f1f5f9;
+        }
+
+        .theme-dark-security .cd-list li {
+          color: #94a3b8;
+        }
+
+        .theme-dark-security .cd-icon {
+          background: rgba(59, 130, 246, 0.15);
+          color: #3b82f6;
+        }
+
+        .theme-dark-security .alert-type-card {
+          background: #1e293b;
+          border-color: #334155;
+        }
+
+        .theme-dark-security .alert-type-card h3 {
+          color: #f1f5f9;
+        }
+
+        .theme-dark-security .alert-type-card p {
+          color: #94a3b8;
+        }
+
+        .theme-dark-security .resource-card {
+          background: #1e293b;
+          border-color: #334155;
+        }
+
+        .theme-dark-security .resource-card h3 {
+          color: #f1f5f9;
+        }
+
+        .theme-dark-security .resource-card p {
+          color: #94a3b8;
+        }
+
+        .theme-dark-security .footer {
+          background: #0f172a;
+          border-top: 1px solid #334155;
+        }
+
+        .theme-dark-security .footer h4 {
+          color: #f1f5f9;
+        }
+
+        .theme-dark-security .footer p {
+          color: #64748b;
+        }
+
+        .theme-dark-security .footer h5 {
+          color: #f1f5f9;
+        }
+
+        .theme-dark-security .footer a {
+          color: #64748b;
+        }
+
+        .theme-dark-security .footer a:hover {
+          color: #3b82f6;
+        }
+
+        .theme-dark-security .footer-bottom {
+          border-top-color: #334155;
+          color: #64748b;
         }
       `}</style>
     </>
