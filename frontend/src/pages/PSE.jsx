@@ -91,6 +91,7 @@ export default function PSE() {
   const [marketData] = useState(() => generateMarketData(60))
   const [selectedStock, setSelectedStock] = useState('PSE')
   const [timeframe, setTimeframe] = useState('1D')
+  const [chartLoaded, setChartLoaded] = useState(false)
   const mainChartRef = useRef(null)
   const rsiChartRef = useRef(null)
   const macdChartRef = useRef(null)
@@ -121,8 +122,13 @@ export default function PSE() {
   ]
 
   useEffect(() => {
+    // Only initialize charts after Chart.js is loaded
+    if (!chartLoaded || typeof window === 'undefined' || !window.Chart) {
+      return
+    }
+
     // Initialize main price chart
-    if (mainChartRef.current && typeof window !== 'undefined') {
+    if (mainChartRef.current) {
       const ctx = mainChartRef.current.getContext('2d')
 
       if (window.mainChart) {
@@ -217,7 +223,7 @@ export default function PSE() {
     }
 
     // Initialize RSI chart
-    if (rsiChartRef.current && typeof window !== 'undefined') {
+    if (rsiChartRef.current) {
       const ctx = rsiChartRef.current.getContext('2d')
 
       if (window.rsiChart) {
@@ -321,7 +327,7 @@ export default function PSE() {
     }
 
     // Initialize MACD chart
-    if (macdChartRef.current && typeof window !== 'undefined') {
+    if (macdChartRef.current) {
       const ctx = macdChartRef.current.getContext('2d')
 
       if (window.macdChart) {
@@ -418,15 +424,25 @@ export default function PSE() {
       if (window.rsiChart) window.rsiChart.destroy()
       if (window.macdChart) window.macdChart.destroy()
     }
-  }, [marketData])
+  }, [marketData, chartLoaded])
 
-  // Load Chart.js
+  // Load Chart.js first
   useEffect(() => {
-    if (typeof window !== 'undefined' && !window.Chart) {
-      const script = document.createElement('script')
-      script.src = 'https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js'
-      script.async = true
-      document.head.appendChild(script)
+    if (typeof window !== 'undefined') {
+      if (window.Chart) {
+        setChartLoaded(true)
+      } else {
+        const script = document.createElement('script')
+        script.src = 'https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js'
+        script.async = true
+        script.onload = () => {
+          setChartLoaded(true)
+        }
+        script.onerror = () => {
+          console.error('Failed to load Chart.js')
+        }
+        document.head.appendChild(script)
+      }
     }
   }, [])
 
