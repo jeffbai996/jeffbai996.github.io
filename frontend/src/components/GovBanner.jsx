@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { Link } from 'react-router-dom'
 import { useTheme } from '../utils/ThemeContext'
 import './GovBanner.css'
 
@@ -11,6 +12,7 @@ export default function GovBanner() {
       <div className="gov-banner">
         <div className="container">
           <div className="gov-banner-left">
+            <Link to="/" className="gov-praya-link">GOV.PRAYA</Link>
             <div className="gov-icon">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                 <path d="M3 21h18M3 10h18M5 6l7-3 7 3M4 10v11M20 10v11M8 14v3M12 14v3M16 14v3"/>
