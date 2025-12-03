@@ -1031,67 +1031,164 @@ export const intentPatterns = {
   }
 };
 
-// Department routing information
+// Department routing information with correct URLs
 export const departmentRoutes = {
   npa: {
     name: 'National Police Agency',
     phone: '311 (non-emergency), 911 (emergency)',
-    portal: '/departments/police'
+    portal: '/npa',
+    subPages: {
+      report: '/npa/report',
+      services: '/npa/services',
+      safety: '/npa/safety'
+    }
   },
   bop: {
     name: 'Bank of Praya',
     phone: 'See BOP portal for branch numbers',
-    portal: '/departments/bank'
+    portal: '/bop',
+    subPages: {
+      personal: '/bop/personal',
+      business: '/bop/business',
+      exchange: '/bop/exchange'
+    }
   },
   revenue: {
     name: 'Revenue Department',
-    phone: 'Contact via PrayaPass',
-    portal: '/departments/revenue'
+    phone: '1-800-TAX-HELP',
+    portal: '/revenue',
+    subPages: {
+      file: '/revenue/file',
+      payment: '/revenue/payment',
+      refunds: '/revenue/refunds'
+    }
   },
   interior: {
     name: 'Interior Department',
     phone: 'Visit any Interior office',
-    portal: '/departments/interior'
+    portal: '/interior',
+    subPages: {
+      id: '/interior/id',
+      passport: '/interior/passport',
+      birth: '/interior/birth',
+      records: '/interior/records'
+    }
   },
   transport: {
     name: 'Transport Department',
     phone: 'Book appointments online',
-    portal: '/departments/transport'
+    portal: '/transport',
+    subPages: {
+      license: '/transport/license',
+      registration: '/transport/registration',
+      test: '/transport/test'
+    }
   },
   health: {
     name: 'Health Department',
-    phone: '911 for emergencies',
-    portal: '/departments/health'
+    phone: '1-800-HEALTH-PY | Emergency: 911',
+    portal: '/health',
+    subPages: {
+      insurance: '/health/insurance',
+      vaccinations: '/health/vaccinations',
+      providers: '/health/providers',
+      alerts: '/health/alerts'
+    }
   },
   housing: {
     name: 'Housing Authority',
     phone: 'Visit HA office or check PrayaPass',
-    portal: '/departments/housing'
+    portal: '/housing',
+    subPages: {
+      apply: '/housing/apply',
+      eligibility: '/housing/eligibility',
+      rights: '/housing/rights',
+      waitlist: '/housing/waitlist'
+    }
   },
   post: {
     name: 'Praya Post',
     phone: 'Visit local post office',
-    portal: '/departments/post'
+    portal: '/post',
+    subPages: {
+      track: '/post/track',
+      ship: '/post/ship',
+      locations: '/post/locations'
+    }
   },
   ctb: {
     name: 'Cannabis Tax Bureau',
     phone: 'CTB hotline during business hours',
-    portal: '/departments/cannabis'
+    portal: '/ctb',
+    subPages: {
+      apply: '/ctb/apply',
+      taxes: '/ctb/taxes',
+      compliance: '/ctb/compliance'
+    }
   },
   cbca: {
     name: 'Customs and Border Control Agency',
     phone: 'Review requirements before travel',
-    portal: '/departments/customs'
+    portal: '/cbca',
+    subPages: {
+      permits: '/cbca/permits',
+      travel: '/cbca/travel',
+      prohibited: '/cbca/prohibited'
+    }
   },
   doj: {
     name: 'Department of Justice',
     phone: 'See DOJ portal',
-    portal: '/departments/justice'
+    portal: '/doj',
+    subPages: {
+      lookup: '/doj/lookup',
+      legalAid: '/doj/legal-aid',
+      filings: '/doj/filings'
+    }
   },
   lc: {
     name: 'Legislative Council',
     phone: 'Find via LC portal',
-    portal: '/departments/legislative'
+    portal: '/lc',
+    subPages: {
+      bills: '/lc/bills',
+      representatives: '/lc/representatives',
+      voting: '/lc/voting',
+      hearings: '/lc/hearings'
+    }
+  },
+  bd: {
+    name: 'Buildings Department',
+    phone: 'Visit BD office',
+    portal: '/bd',
+    subPages: {
+      permits: '/bd/permits',
+      inspections: '/bd/inspections',
+      contractors: '/bd/contractors',
+      codes: '/bd/codes'
+    }
+  },
+  cr: {
+    name: 'Companies Registry',
+    phone: 'Contact CR office',
+    portal: '/cr',
+    subPages: {
+      register: '/cr/register',
+      search: '/cr/search',
+      filings: '/cr/filings',
+      name: '/cr/name'
+    }
+  },
+  swd: {
+    name: 'Social Welfare Department',
+    phone: 'SWD hotline',
+    portal: '/swd',
+    subPages: {
+      benefits: '/swd/benefits',
+      family: '/swd/family',
+      elderly: '/swd/elderly',
+      disability: '/swd/disability'
+    }
   }
 };
 
@@ -1189,10 +1286,21 @@ export function generateIntentResponse(intent, includeDetails = true) {
     }
   }
 
-  // Add department routing info if available
+  // Add department routing info with hyperlinks if available
   if (intent.department && departmentRoutes[intent.department]) {
     const dept = departmentRoutes[intent.department];
-    response += `\n\n**Need more help?** Visit the ${dept.name} portal or contact them directly.`;
+    response += `\n\n**Need more help?** Visit the [${dept.name}](${dept.portal}) portal or contact them directly.`;
+
+    // Add relevant sub-page links if available
+    if (dept.subPages) {
+      const subPageLinks = Object.entries(dept.subPages)
+        .slice(0, 3)
+        .map(([name, url]) => `[${name.charAt(0).toUpperCase() + name.slice(1)}](${url})`)
+        .join(' | ');
+      if (subPageLinks) {
+        response += `\n**Quick Links:** ${subPageLinks}`;
+      }
+    }
   }
 
   return response;
