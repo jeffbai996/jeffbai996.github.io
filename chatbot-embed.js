@@ -1,6 +1,7 @@
 /**
  * Standalone Chatbot Embed for Static Pages
  * This creates a fully functional chat widget with department-specific context
+ * Dark theme with Gemini API integration
  */
 (function() {
   'use strict';
@@ -11,79 +12,118 @@
       name: 'National Police Agency',
       abbrev: 'NPA',
       color: '#1d4ed8',
-      focus: 'You are helping users with National Police Agency services including emergency response, crime reporting, police clearance certificates, and firearm licensing.'
+      focus: 'You are helping users with National Police Agency services including emergency response, crime reporting, police clearance certificates, and firearm licensing.',
+      services: ['Emergency Response (911)', 'Crime Reporting', 'Police Clearance Certificates', 'Firearm Licensing', 'Traffic Services', 'Background Checks'],
+      hours: 'Emergency: 24/7 | Walk-in: Mon-Fri 8AM-6PM',
+      contact: 'Emergency: 911 | Non-emergency: 311'
     },
     'BOP_Praya.html': {
       name: 'Bank of Praya',
       abbrev: 'BOP',
       color: '#0ea5e9',
-      focus: 'You are helping users with Bank of Praya services including central banking, monetary policy, personal banking, and business loans.'
+      focus: 'You are helping users with Bank of Praya services including central banking, monetary policy, personal banking, and business loans.',
+      services: ['Personal Banking', 'Business Loans', 'Mortgage Services', 'Currency Exchange', 'Economic Reports'],
+      hours: 'Mon-Fri 9AM-5PM | Sat 9AM-1PM',
+      contact: '+854 300 0000'
     },
     'CTB_Praya.html': {
       name: 'Cannabis Tax Bureau',
       abbrev: 'CTB',
       color: '#2d8659',
-      focus: 'You are helping users with Cannabis Tax Bureau services including dispensary licensing, cultivation permits, and tax filing.'
+      focus: 'You are helping users with Cannabis Tax Bureau services including dispensary licensing, cultivation permits, and tax filing for cannabis businesses.',
+      services: ['Dispensary Licensing', 'Cultivation Permits', 'Tax Filing', 'Compliance Audits', 'Business Registration'],
+      hours: 'Mon-Fri 8AM-5PM',
+      contact: '+854 400 0000'
     },
     'DOJ_Praya.html': {
       name: 'Department of Justice',
       abbrev: 'DOJ',
       color: '#991b1b',
-      focus: 'You are helping users with Department of Justice services including court system, case lookup, legal aid, and criminal code information.'
+      focus: 'You are helping users with Department of Justice services including court system, case lookup, legal aid, and criminal code information.',
+      services: ['Court Case Lookup', 'Legal Aid Services', 'Criminal Records', 'Public Defender', 'Victim Services'],
+      hours: 'Mon-Fri 8AM-5PM',
+      contact: '+854 500 0000'
     },
     'ID_Praya.html': {
       name: 'Interior Department',
       abbrev: 'ID',
       color: '#78716c',
-      focus: 'You are helping users with Interior Department services including national IDs, passports, birth certificates, land registry, and building permits.'
+      focus: 'You are helping users with Interior Department services including national IDs, passports, birth certificates, land registry, and building permits.',
+      services: ['National ID Cards', 'Passports', 'Birth Certificates', 'Marriage Certificates', 'Land Registry', 'Building Permits'],
+      hours: 'Mon-Fri 8AM-5PM | Sat 9AM-1PM',
+      contact: '+854 600 0000'
     },
     'TD_Praya.html': {
       name: 'Transport Department',
       abbrev: 'TD',
       color: '#0d9488',
-      focus: 'You are helping users with Transport Department services including driver licensing, vehicle registration, and road safety.'
+      focus: 'You are helping users with Transport Department services including driver licensing, vehicle registration, and road safety.',
+      services: ['Driver Licensing', 'Vehicle Registration', 'Road Safety Programs', 'Commercial Vehicle Permits', 'Traffic Violations'],
+      hours: 'Mon-Fri 8AM-5PM',
+      contact: '+854 700 0000'
     },
     'RD_Praya.html': {
       name: 'Revenue Department',
       abbrev: 'RD',
       color: '#0ea5e9',
-      focus: 'You are helping users with Revenue Department services including tax filing, business accounts, and tax benefits.'
+      focus: 'You are helping users with Revenue Department services including tax filing, business accounts, and tax benefits.',
+      services: ['Tax Filing', 'Business Tax Registration', 'Tax Refunds', 'Payment Plans', 'Tax Benefits'],
+      hours: 'Mon-Fri 8AM-5PM',
+      contact: '+854 800 0000'
     },
     'Praya_Post.html': {
       name: 'Praya Post',
       abbrev: 'PP',
       color: '#f97316',
-      focus: 'You are helping users with Praya Post services including package delivery, international mail, and P.O. box rentals.'
+      focus: 'You are helping users with Praya Post services including package delivery, international mail, and P.O. box rentals.',
+      services: ['Package Tracking', 'Domestic Mail', 'International Shipping', 'P.O. Box Rentals', 'Certified Mail'],
+      hours: 'Mon-Fri 8AM-6PM | Sat 9AM-1PM',
+      contact: '+854 900 0000'
     },
     'Health_Praya.html': {
       name: 'Health Department',
       abbrev: 'HD',
       color: '#dc2626',
-      focus: 'You are helping users with Health Department services including public health, disease control, healthcare licensing, and vaccination schedules.'
+      focus: 'You are helping users with Health Department services including public health, disease control, healthcare licensing, and vaccination schedules.',
+      services: ['Vaccination Programs', 'Health Inspections', 'Medical Licensing', 'Disease Control', 'Public Health Alerts'],
+      hours: 'Mon-Fri 8AM-5PM',
+      contact: '+854 100 0000'
     },
     'Housing_Authority_Praya.html': {
       name: 'Housing Authority',
       abbrev: 'HA',
       color: '#ea580c',
-      focus: 'You are helping users with Housing Authority services including public housing applications, eligibility checks, and rental assistance programs.'
+      focus: 'You are helping users with Housing Authority services including public housing applications, eligibility checks, and rental assistance programs.',
+      services: ['Public Housing Applications', 'Rental Assistance', 'Section 8 Vouchers', 'Tenant Rights', 'Housing Inspections'],
+      hours: 'Mon-Fri 8AM-5PM',
+      contact: '+854 110 0000'
     },
     'CBCA_Praya.html': {
       name: 'Customs & Border Control Agency',
       abbrev: 'CBCA',
       color: '#0891b2',
-      focus: 'You are helping users with Customs & Border Control services including import/export permits, customs declarations, and immigration.'
+      focus: 'You are helping users with Customs & Border Control services including import/export permits, customs declarations, and immigration.',
+      services: ['Import/Export Permits', 'Customs Declarations', 'Immigration Services', 'Visa Processing', 'Border Crossing Info'],
+      hours: 'Border: 24/7 | Office: Mon-Fri 8AM-5PM',
+      contact: '+854 120 0000'
     },
     'LC_Praya.html': {
       name: 'Legislative Council',
       abbrev: 'LC',
       color: '#6366f1',
-      focus: 'You are helping users with Legislative Council services including bill tracking, voting records, and contacting representatives.'
+      focus: 'You are helping users with Legislative Council services including bill tracking, voting records, and contacting representatives.',
+      services: ['Bill Tracking', 'Voting Records', 'Contact Representatives', 'Public Hearings', 'Legislative Calendar'],
+      hours: 'Mon-Fri 9AM-5PM',
+      contact: '+854 130 0000'
     },
     'PSE_Praya.html': {
       name: 'Praya Stock Exchange',
       abbrev: 'PSE',
       color: '#0ea5e9',
-      focus: 'You are helping users with Praya Stock Exchange services including securities trading, market data, and investment information.'
+      focus: 'You are helping users with Praya Stock Exchange services including securities trading, market data, and investment information.',
+      services: ['Market Data', 'Stock Listings', 'Investment Information', 'Broker Registration', 'Trading Rules'],
+      hours: 'Trading: Mon-Fri 9AM-4PM',
+      contact: '+854 140 0000'
     }
   };
 
@@ -102,18 +142,6 @@
   let conversationHistory = [];
   let isOpen = false;
   const currentDepartment = detectDepartment();
-
-  // Extract department icon from page logo-mark
-  function getDepartmentIcon() {
-    const logoMark = document.querySelector('.logo-mark svg');
-    if (logoMark) {
-      return logoMark.outerHTML;
-    }
-    // Fallback to text abbreviation
-    return null;
-  }
-
-  const departmentIcon = getDepartmentIcon();
 
   // Color utility functions
   function hexToRgba(hex, alpha) {
@@ -134,13 +162,23 @@
       .toString(16).slice(1);
   }
 
-  // Create chat widget
+  // Create chat widget with dark theme
   function createChatWidget() {
     // Get department-specific color or use default
-    const primaryColor = currentDepartment ? currentDepartment.color : '#1d4ed8';
+    const primaryColor = currentDepartment ? currentDepartment.color : '#f97316';
     const darkColor = shadeColor(primaryColor, -20);
 
-    // Add styles
+    // Dark theme CSS variables
+    const bgDark = '#0b1020';
+    const bgCard = '#101726';
+    const bgElevated = '#0f172a';
+    const borderColor = '#1f2937';
+    const borderSubtle = '#1e293b';
+    const textPrimary = '#f8fafc';
+    const textSecondary = '#cbd5e1';
+    const textMuted = '#94a3b8';
+
+    // Add styles - Dark Theme
     const styles = document.createElement('style');
     styles.textContent = `
       #praya-chat-button {
@@ -152,7 +190,7 @@
         border-radius: 50%;
         background: linear-gradient(135deg, ${primaryColor} 0%, ${darkColor} 100%);
         border: none;
-        box-shadow: 0 4px 12px ${hexToRgba(primaryColor, 0.4)}, 0 2px 4px rgba(0, 0, 0, 0.1);
+        box-shadow: 0 4px 20px ${hexToRgba(primaryColor, 0.4)};
         cursor: pointer;
         display: flex;
         align-items: center;
@@ -160,11 +198,13 @@
         transition: all 0.3s ease;
         z-index: 9998;
         color: white;
+        -webkit-tap-highlight-color: transparent;
+        touch-action: manipulation;
       }
 
       #praya-chat-button:hover {
-        transform: scale(1.1);
-        box-shadow: 0 6px 16px ${hexToRgba(primaryColor, 0.5)}, 0 4px 8px rgba(0, 0, 0, 0.15);
+        transform: scale(1.08);
+        box-shadow: 0 6px 28px ${hexToRgba(primaryColor, 0.5)};
       }
 
       #praya-chat-button:active {
@@ -182,11 +222,12 @@
         right: 24px;
         width: 380px;
         max-width: calc(100vw - 48px);
-        height: 600px;
-        max-height: calc(100vh - 150px);
-        background: white;
+        height: 550px;
+        max-height: calc(100vh - 140px);
+        background: ${bgCard};
+        border: 1px solid ${borderColor};
         border-radius: 16px;
-        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
         display: none;
         flex-direction: column;
         z-index: 9999;
@@ -196,15 +237,28 @@
 
       #praya-chat-widget.open {
         display: flex;
+        animation: slideUp 0.3s ease;
+      }
+
+      @keyframes slideUp {
+        from {
+          opacity: 0;
+          transform: translateY(20px) scale(0.95);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0) scale(1);
+        }
       }
 
       .chat-header {
         background: linear-gradient(135deg, ${primaryColor} 0%, ${darkColor} 100%);
         color: white;
-        padding: 20px;
+        padding: 16px 20px;
         display: flex;
         align-items: center;
         justify-content: space-between;
+        flex-shrink: 0;
       }
 
       .chat-header-info {
@@ -213,27 +267,9 @@
         gap: 12px;
       }
 
-      .chat-avatar {
-        width: 40px;
-        height: 40px;
-        background: rgba(255, 255, 255, 0.2);
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-weight: 700;
-        font-size: 16px;
-      }
-
-      .chat-avatar svg {
-        width: 20px;
-        height: 20px;
-        color: white;
-      }
-
       .chat-header-text h3 {
         margin: 0;
-        font-size: 16px;
+        font-size: 15px;
         font-weight: 600;
       }
 
@@ -241,93 +277,130 @@
         margin: 4px 0 0 0;
         font-size: 12px;
         opacity: 0.9;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+      }
+
+      .chat-header-text .status-dot {
+        width: 8px;
+        height: 8px;
+        background: #4ade80;
+        border-radius: 50%;
+        animation: pulse 2s infinite;
+      }
+
+      @keyframes pulse {
+        0%, 100% { opacity: 1; }
+        50% { opacity: 0.5; }
       }
 
       .chat-close {
-        background: none;
+        background: rgba(255, 255, 255, 0.15);
         border: none;
         color: white;
         cursor: pointer;
-        padding: 4px;
+        padding: 8px;
+        border-radius: 8px;
         display: flex;
         align-items: center;
-        opacity: 0.8;
+        opacity: 0.9;
+        transition: all 0.2s;
       }
 
       .chat-close:hover {
         opacity: 1;
+        background: rgba(255, 255, 255, 0.25);
       }
 
       .chat-messages {
         flex: 1;
         overflow-y: auto;
-        padding: 20px;
-        background: #f8fafc;
+        padding: 16px;
+        background: ${bgDark};
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        -webkit-overflow-scrolling: touch;
+        overscroll-behavior-y: contain;
+      }
+
+      .chat-messages::-webkit-scrollbar {
+        width: 6px;
+      }
+
+      .chat-messages::-webkit-scrollbar-track {
+        background: transparent;
+      }
+
+      .chat-messages::-webkit-scrollbar-thumb {
+        background: ${borderColor};
+        border-radius: 3px;
       }
 
       .chat-message {
-        margin-bottom: 16px;
+        max-width: 85%;
         display: flex;
-        gap: 12px;
+        flex-direction: column;
+        animation: messageSlide 0.3s ease;
+      }
+
+      @keyframes messageSlide {
+        from {
+          opacity: 0;
+          transform: translateY(10px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
       }
 
       .chat-message.user {
-        flex-direction: row-reverse;
+        align-self: flex-end;
       }
 
-      .message-avatar {
-        width: 32px;
-        height: 32px;
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 14px;
-        font-weight: 600;
-        flex-shrink: 0;
-      }
-
-      .message-avatar svg {
-        width: 16px;
-        height: 16px;
-        color: white;
-      }
-
-      .chat-message.bot .message-avatar {
-        background: linear-gradient(135deg, ${primaryColor} 0%, ${darkColor} 100%);
-        color: white;
-      }
-
-      .chat-message.user .message-avatar {
-        background: #64748b;
-        color: white;
+      .chat-message.bot {
+        align-self: flex-start;
       }
 
       .message-bubble {
-        max-width: 75%;
         padding: 12px 16px;
-        border-radius: 12px;
+        border-radius: 16px;
         font-size: 14px;
         line-height: 1.5;
         word-wrap: break-word;
       }
 
       .chat-message.bot .message-bubble {
-        background: white;
-        color: #0f172a;
+        background: ${bgCard};
+        color: ${textPrimary};
+        border: 1px solid ${borderSubtle};
         border-bottom-left-radius: 4px;
       }
 
       .chat-message.user .message-bubble {
-        background: ${primaryColor};
+        background: linear-gradient(135deg, ${primaryColor} 0%, ${darkColor} 100%);
         color: white;
         border-bottom-right-radius: 4px;
       }
 
+      .message-time {
+        font-size: 10px;
+        color: ${textMuted};
+        margin-top: 4px;
+        padding: 0 4px;
+      }
+
+      .chat-message.user .message-time {
+        text-align: right;
+      }
+
       .chat-input-container {
-        padding: 16px;
-        background: white;
-        border-top: 1px solid #e2e8f0;
+        padding: 12px 16px;
+        background: ${bgCard};
+        border-top: 1px solid ${borderSubtle};
+        flex-shrink: 0;
       }
 
       .chat-input-wrapper {
@@ -338,20 +411,28 @@
       .chat-input {
         flex: 1;
         padding: 12px 16px;
-        border: 1px solid #e2e8f0;
+        background: ${bgElevated};
+        border: 1px solid ${borderColor};
         border-radius: 24px;
-        font-size: 14px;
+        font-size: 16px;
         font-family: inherit;
         outline: none;
+        color: ${textPrimary};
+        transition: border-color 0.2s;
+        -webkit-appearance: none;
       }
 
       .chat-input:focus {
         border-color: ${primaryColor};
       }
 
+      .chat-input::placeholder {
+        color: ${textMuted};
+      }
+
       .chat-send {
-        width: 40px;
-        height: 40px;
+        width: 44px;
+        height: 44px;
         border-radius: 50%;
         background: linear-gradient(135deg, ${primaryColor} 0%, ${darkColor} 100%);
         border: none;
@@ -361,10 +442,12 @@
         align-items: center;
         justify-content: center;
         transition: all 0.2s;
+        flex-shrink: 0;
       }
 
-      .chat-send:hover {
+      .chat-send:hover:not(:disabled) {
         transform: scale(1.05);
+        box-shadow: 0 4px 12px ${hexToRgba(primaryColor, 0.4)};
       }
 
       .chat-send:disabled {
@@ -373,17 +456,27 @@
         transform: none;
       }
 
+      .chat-send svg {
+        width: 20px;
+        height: 20px;
+      }
+
       .typing-indicator {
         display: flex;
         gap: 4px;
-        padding: 12px 16px;
+        padding: 16px;
+        background: ${bgCard};
+        border: 1px solid ${borderSubtle};
+        border-radius: 16px;
+        border-bottom-left-radius: 4px;
+        align-self: flex-start;
       }
 
       .typing-dot {
         width: 8px;
         height: 8px;
         border-radius: 50%;
-        background: #64748b;
+        background: ${textMuted};
         animation: typing 1.4s infinite;
       }
 
@@ -397,9 +490,11 @@
 
       @keyframes typing {
         0%, 60%, 100% {
-          opacity: 0.3;
+          transform: translateY(0);
+          opacity: 0.4;
         }
         30% {
+          transform: translateY(-4px);
           opacity: 1;
         }
       }
@@ -408,51 +503,52 @@
         color: #ef4444;
         font-size: 13px;
         padding: 8px 12px;
-        background: #fee2e2;
+        background: rgba(239, 68, 68, 0.1);
+        border: 1px solid rgba(239, 68, 68, 0.2);
         border-radius: 8px;
-        margin-top: 8px;
+        margin-bottom: 8px;
       }
 
-      @media (max-width: 768px) {
+      .chat-footer {
+        padding: 8px 16px;
+        background: ${bgCard};
+        border-top: 1px solid ${borderSubtle};
+        font-size: 11px;
+        color: ${textMuted};
+        text-align: center;
+        flex-shrink: 0;
+      }
+
+      /* Mobile Responsive */
+      @media (max-width: 480px) {
         #praya-chat-button {
-          width: 60px;
-          height: 60px;
-          bottom: 24px;
-          right: 24px;
+          bottom: 16px;
+          right: 16px;
+          width: 56px;
+          height: 56px;
         }
 
         #praya-chat-button svg {
-          width: 28px;
-          height: 28px;
+          width: 26px;
+          height: 26px;
         }
 
         #praya-chat-widget {
-          position: fixed;
-          bottom: 100px;
-          right: 16px;
-          left: 16px;
-          top: auto;
-          width: calc(100% - 32px);
-          height: 500px;
-          max-width: calc(100% - 32px);
-          max-height: calc(100vh - 150px);
-          border-radius: 16px;
+          bottom: 80px;
+          right: 12px;
+          left: 12px;
+          width: auto;
+          max-width: none;
+          height: 520px;
+          max-height: calc(100vh - 100px);
+          max-height: calc(100dvh - 100px);
+          border-radius: 12px;
         }
 
         .chat-header {
-          padding: 16px;
+          padding: 14px 16px;
         }
 
-        .message-bubble {
-          max-width: 85%;
-        }
-
-        .chat-input-container {
-          padding: 12px;
-        }
-      }
-
-      @media (max-width: 480px) {
         .chat-header-text h3 {
           font-size: 14px;
         }
@@ -461,10 +557,93 @@
           font-size: 11px;
         }
 
-        .chat-avatar {
-          width: 36px;
-          height: 36px;
+        .chat-messages {
+          padding: 12px;
+          gap: 10px;
+        }
+
+        .chat-message {
+          max-width: 90%;
+        }
+
+        .message-bubble {
+          padding: 10px 14px;
           font-size: 14px;
+          border-radius: 14px;
+        }
+
+        .chat-message.bot .message-bubble {
+          border-bottom-left-radius: 3px;
+        }
+
+        .chat-message.user .message-bubble {
+          border-bottom-right-radius: 3px;
+        }
+
+        .chat-input-container {
+          padding: 10px 12px;
+        }
+
+        .chat-input {
+          padding: 11px 14px;
+          font-size: 16px;
+          border-radius: 22px;
+        }
+
+        .chat-send {
+          width: 42px;
+          height: 42px;
+          min-width: 42px;
+          min-height: 42px;
+        }
+
+        .chat-send svg {
+          width: 18px;
+          height: 18px;
+        }
+
+        .chat-footer {
+          padding: 6px 12px;
+          font-size: 10px;
+        }
+      }
+
+      /* iOS-specific fixes */
+      @supports (-webkit-touch-callout: none) {
+        #praya-chat-widget {
+          height: 480px !important;
+          max-height: 65vh !important;
+        }
+
+        .chat-input {
+          font-size: 16px !important;
+        }
+
+        .chat-messages {
+          -webkit-overflow-scrolling: touch;
+        }
+      }
+
+      /* Extra small devices */
+      @media (max-width: 360px) {
+        #praya-chat-button {
+          bottom: 12px;
+          right: 12px;
+          width: 52px;
+          height: 52px;
+        }
+
+        #praya-chat-widget {
+          bottom: 72px;
+          right: 8px;
+          left: 8px;
+          height: calc(100vh - 90px);
+          border-radius: 10px;
+        }
+
+        .message-bubble {
+          padding: 9px 12px;
+          font-size: 13px;
         }
       }
     `;
@@ -482,20 +661,19 @@
     button.setAttribute('aria-label', 'Open chatbot');
     button.setAttribute('title', 'Need help? Chat with us');
 
-    // Create widget
+    // Create widget with dark theme
     const widget = document.createElement('div');
     widget.id = 'praya-chat-widget';
     widget.innerHTML = `
       <div class="chat-header">
         <div class="chat-header-info">
-          <div class="chat-avatar">${departmentIcon || (currentDepartment ? currentDepartment.abbrev : 'CS')}</div>
           <div class="chat-header-text">
             <h3>Citizen Services</h3>
-            <p>${currentDepartment ? currentDepartment.name : 'GOV.PRAYA'}</p>
+            <p><span class="status-dot"></span>${currentDepartment ? currentDepartment.name : 'GOV.PRAYA'}</p>
           </div>
         </div>
         <button class="chat-close" aria-label="Close chat">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <line x1="18" y1="6" x2="6" y2="18"></line>
             <line x1="6" y1="6" x2="18" y2="18"></line>
           </svg>
@@ -503,25 +681,26 @@
       </div>
       <div class="chat-messages" id="chat-messages">
         <div class="chat-message bot">
-          <div class="message-avatar">${departmentIcon || (currentDepartment ? currentDepartment.abbrev : 'CS')}</div>
           <div class="message-bubble">
             ${currentDepartment
-              ? `Welcome to ${currentDepartment.name} Citizen Services! I'm here to help you navigate our services. How can I assist you today?`
-              : 'Welcome to GOV.PRAYA Citizen Services! How can I help you today?'
+              ? `Welcome to ${currentDepartment.name} Citizen Services! I'm your AI assistant powered by GP.AI. I can help you with:\n\n${currentDepartment.services.slice(0, 4).map(s => '• ' + s).join('\n')}\n\nHow can I assist you today?`
+              : 'Welcome to GOV.PRAYA Citizen Services! I\'m your AI assistant. How can I help you today?'
             }
           </div>
         </div>
       </div>
       <div class="chat-input-container">
         <div class="chat-input-wrapper">
-          <input type="text" class="chat-input" id="chat-input" placeholder="Type your message..." />
+          <input type="text" class="chat-input" id="chat-input" placeholder="Type your message..." autocomplete="off" />
           <button class="chat-send" id="chat-send" aria-label="Send message">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <line x1="22" y1="2" x2="11" y2="13"></line>
-              <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+              <path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"></path>
             </svg>
           </button>
         </div>
+      </div>
+      <div class="chat-footer">
+        Powered by GP.AI
       </div>
     `;
 
@@ -549,10 +728,16 @@
     const widget = document.getElementById('praya-chat-widget');
     if (isOpen) {
       widget.classList.add('open');
-      document.getElementById('chat-input').focus();
+      setTimeout(() => {
+        document.getElementById('chat-input').focus();
+      }, 100);
     } else {
       widget.classList.remove('open');
     }
+  }
+
+  function formatTime(date) {
+    return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
   }
 
   function addMessage(text, isUser = false) {
@@ -560,10 +745,15 @@
     const messageDiv = document.createElement('div');
     messageDiv.className = `chat-message ${isUser ? 'user' : 'bot'}`;
 
-    const avatar = departmentIcon || (currentDepartment ? currentDepartment.abbrev : 'CS');
+    // Format text with line breaks and bold
+    const formattedText = text
+      .replace(/\n/g, '<br>')
+      .replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>')
+      .replace(/\*([^*]+)\*/g, '<em>$1</em>');
+
     messageDiv.innerHTML = `
-      <div class="message-avatar">${isUser ? 'You' : avatar}</div>
-      <div class="message-bubble">${escapeHtml(text)}</div>
+      <div class="message-bubble">${formattedText}</div>
+      <span class="message-time">${formatTime(new Date())}</span>
     `;
 
     messagesContainer.appendChild(messageDiv);
@@ -573,17 +763,12 @@
   function showTypingIndicator() {
     const messagesContainer = document.getElementById('chat-messages');
     const typingDiv = document.createElement('div');
-    typingDiv.className = 'chat-message bot';
     typingDiv.id = 'typing-indicator';
-
-    const avatar = departmentIcon || (currentDepartment ? currentDepartment.abbrev : 'CS');
+    typingDiv.className = 'typing-indicator';
     typingDiv.innerHTML = `
-      <div class="message-avatar">${avatar}</div>
-      <div class="message-bubble typing-indicator">
-        <div class="typing-dot"></div>
-        <div class="typing-dot"></div>
-        <div class="typing-dot"></div>
-      </div>
+      <div class="typing-dot"></div>
+      <div class="typing-dot"></div>
+      <div class="typing-dot"></div>
     `;
 
     messagesContainer.appendChild(typingDiv);
@@ -634,20 +819,39 @@
     showTypingIndicator();
 
     try {
-      // Build context-aware system prompt
-      let systemPrompt = `You are a helpful assistant for the Republic of Praya government portal.`;
+      // Build context-aware system prompt with rich department info
+      let systemPrompt = `You are a helpful, professional AI assistant for the Republic of Praya government portal. You provide accurate, concise information about government services.`;
 
       if (currentDepartment) {
-        systemPrompt += `\n\n${currentDepartment.focus}\n\nThe user is currently on the ${currentDepartment.name} page, so prioritize information relevant to this department while still being able to help with general government services.`;
+        systemPrompt += `\n\n## Current Department: ${currentDepartment.name} (${currentDepartment.abbrev})
+
+${currentDepartment.focus}
+
+### Available Services:
+${currentDepartment.services.map(s => '- ' + s).join('\n')}
+
+### Hours of Operation:
+${currentDepartment.hours}
+
+### Contact:
+${currentDepartment.contact}
+
+The user is currently on the ${currentDepartment.name} page. Prioritize information relevant to this department while still being helpful with general government questions. Be conversational but professional.`;
       }
 
-      systemPrompt += `\n\nKeep responses concise (under 150 words), professional, and helpful. If you don't have specific information, direct users to contact the department or visit the main portal at https://jeffbai996.github.io/`;
+      systemPrompt += `\n\n## Response Guidelines:
+- Keep responses concise (under 150 words) unless detailed info is requested
+- Use bullet points for lists of services or steps
+- Be friendly and helpful
+- If you don't have specific information, direct users to contact the department or visit the main portal
+- Format important terms in bold using **term**
+- Always provide actionable next steps when possible`;
 
       const response = await callGeminiAPI(message, systemPrompt);
 
       hideTypingIndicator();
       addMessage(response, false);
-      conversationHistory.push({ role: 'assistant', text: response });
+      conversationHistory.push({ role: 'model', text: response });
 
     } catch (error) {
       hideTypingIndicator();
@@ -678,15 +882,15 @@
         },
         {
           role: 'model',
-          parts: [{ text: 'I understand. I will help users with government services for this department, keeping responses concise and professional.' }]
+          parts: [{ text: 'I understand. I am ready to help users with government services for this department, keeping responses concise, professional, and helpful.' }]
         }
       ];
 
-      // Add conversation history (last 4 exchanges)
-      const recentHistory = conversationHistory.slice(-8);
+      // Add conversation history (last 6 exchanges) - FIXED: use 'model' not 'assistant'
+      const recentHistory = conversationHistory.slice(-12);
       recentHistory.forEach(msg => {
         contents.push({
-          role: msg.role,
+          role: msg.role === 'user' ? 'user' : 'model',  // Ensure correct role for Gemini API
           parts: [{ text: msg.text }]
         });
       });
@@ -773,26 +977,29 @@
   function getFallbackResponse(message) {
     const lowerMessage = message.toLowerCase();
 
-    // Department-specific responses
+    // Department-specific responses with richer context
     if (currentDepartment) {
-      if (lowerMessage.includes('hour') || lowerMessage.includes('open') || lowerMessage.includes('time')) {
-        return `For specific hours and contact information, please check the details on this page. You can also visit the main portal at https://jeffbai996.github.io/ for comprehensive information about all government services.`;
+      // Hours and availability
+      if (lowerMessage.includes('hour') || lowerMessage.includes('open') || lowerMessage.includes('time') || lowerMessage.includes('when')) {
+        return `**${currentDepartment.name} Hours:**\n${currentDepartment.hours}\n\nFor specific service availability, please contact: ${currentDepartment.contact}`;
       }
 
-      if (lowerMessage.includes('contact') || lowerMessage.includes('phone') || lowerMessage.includes('email')) {
-        return `Contact information for ${currentDepartment.name} can be found on this page. For assistance across all departments, visit https://jeffbai996.github.io/`;
+      // Contact information
+      if (lowerMessage.includes('contact') || lowerMessage.includes('phone') || lowerMessage.includes('email') || lowerMessage.includes('call')) {
+        return `**Contact ${currentDepartment.name}:**\n${currentDepartment.contact}\n\n**Hours:** ${currentDepartment.hours}\n\nYou can also visit our office in person during business hours.`;
       }
 
-      return `I'm here to help with ${currentDepartment.name} services! For detailed assistance with AI-powered chat, please visit the main government portal at https://jeffbai996.github.io/ where our full chatbot is available.`;
+      // Services
+      if (lowerMessage.includes('service') || lowerMessage.includes('help') || lowerMessage.includes('what can') || lowerMessage.includes('do you')) {
+        return `**${currentDepartment.name} Services:**\n\n${currentDepartment.services.map(s => '• ' + s).join('\n')}\n\nHow can I help you with any of these services?`;
+      }
+
+      // Generic department help
+      return `I'm here to help with **${currentDepartment.name}** services!\n\n**Available Services:**\n${currentDepartment.services.slice(0, 4).map(s => '• ' + s).join('\n')}\n\n**Contact:** ${currentDepartment.contact}\n**Hours:** ${currentDepartment.hours}\n\nWhat would you like to know more about?`;
     }
 
-    return `For comprehensive help with all government services, please visit the main portal at https://jeffbai996.github.io/ where our AI-powered assistant can provide detailed guidance.`;
-  }
-
-  function escapeHtml(text) {
-    const div = document.createElement('div');
-    div.textContent = text;
-    return div.innerHTML;
+    // Generic fallback
+    return `Thank you for your question! For comprehensive help with all government services, please visit the main portal at https://jeffbai996.github.io/ where our full AI-powered assistant can provide detailed guidance.\n\nYou can also contact specific departments directly for immediate assistance.`;
   }
 
   // Initialize when DOM is ready
