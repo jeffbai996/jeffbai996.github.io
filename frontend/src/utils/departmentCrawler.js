@@ -1,11 +1,13 @@
 // Department page crawler for knowledge base expansion
 // This extracts information from each department HTML page
+// Enhanced with detailed page content, URLs, and sub-pages for AI agent navigation
 
 export const departmentData = [
   {
     id: 'npa',
     name: 'National Police Agency',
     abbrev: 'NPA',
+    url: '/npa',
     keywords: ['police', 'crime', 'report', 'emergency', 'npa', 'law enforcement', 'theft', 'accident', '911', 'background check', 'clearance', 'firearm', 'licensing', 'safety'],
     description: 'National policing, emergency response, and community safety services across Praya.',
     services: [
@@ -19,14 +21,26 @@ export const departmentData = [
       'Victim Assistance - counseling, restitution advocates, protective order coordinators',
       'Community Programs - school safety officers, patrol briefings'
     ],
+    subPages: [
+      { name: 'File Police Report', url: '/npa/report', description: 'Submit non-emergency reports online for theft under ¤2,500, lost property, vandalism, vehicle accidents with no injuries' },
+      { name: 'Police Services', url: '/npa/services', description: 'Access police clearances, case lookups, and community programs' },
+      { name: 'Public Safety', url: '/npa/safety', description: 'Safety tips, crime prevention resources, and community awareness programs' }
+    ],
+    statistics: {
+      responseTime: '4.2min average',
+      crimeRate: '-12% vs Last Year',
+      casesSolved: '87% this year',
+      officers: '3,421 active duty'
+    },
     hours: 'Walk-in stations: 08:00-18:00 daily. Emergency dispatch: 24/7',
-    contact: 'Emergency: 911 | Non-emergency: 311 | HQ: +854 200 0000',
+    contact: 'Emergency: 911 | Non-emergency: 311 | HQ: +854 200 0000 | Anonymous Tips: 1-800-CRIME-TIP',
     responseInfo: 'Average Priority 1 response: 7m 42s. Priority system ensures resources based on threat to life.'
   },
   {
     id: 'bop',
     name: 'Bank of Praya',
     abbrev: 'BOP',
+    url: '/bop',
     keywords: ['bank', 'banking', 'account', 'loan', 'bop', 'savings', 'currency', 'praya dollar', '¤', 'mortgage', 'financial', 'central bank', 'monetary'],
     description: 'Central bank responsible for monetary policy, financial stability, and banking supervision.',
     services: [
@@ -37,6 +51,11 @@ export const departmentData = [
       'Monetary Policy',
       'Economic Research and Analysis'
     ],
+    subPages: [
+      { name: 'Personal Banking', url: '/bop/personal', description: 'Savings accounts, checking accounts, and personal financial services' },
+      { name: 'Business Banking', url: '/bop/business', description: 'Business loans, mortgages, and commercial banking services' },
+      { name: 'Currency Exchange', url: '/bop/exchange', description: 'Currency exchange services and rates' }
+    ],
     hours: 'Branch hours vary by location. Online banking available 24/7',
     contact: 'Main branch and customer service information available on BOP portal'
   },
@@ -44,6 +63,7 @@ export const departmentData = [
     id: 'ctb',
     name: 'Cannabis Tax Bureau',
     abbrev: 'CTB',
+    url: '/ctb',
     keywords: ['cannabis', 'marijuana', 'ctb', 'cannabis tax', 'cannabis license', 'dispensary', 'cultivation', 'retail', 'medical cannabis', 'recreational'],
     description: 'Licensing, taxation, and regulation of cannabis industry in the Republic of Praya.',
     services: [
@@ -55,6 +75,11 @@ export const departmentData = [
       'Product Testing and Quality Standards',
       'Industry Research and Statistics'
     ],
+    subPages: [
+      { name: 'Apply for License', url: '/ctb/apply', description: 'Apply for dispensary, cultivation, or processing licenses' },
+      { name: 'Tax Filing', url: '/ctb/taxes', description: 'File monthly cannabis tax returns online' },
+      { name: 'Compliance', url: '/ctb/compliance', description: 'Compliance requirements, audits, and inspections information' }
+    ],
     hours: 'Office hours: Mon-Fri 8AM-5PM. Online services available 24/7',
     contact: 'CTB hotline available during business hours. Apply online via CTB portal'
   },
@@ -62,6 +87,7 @@ export const departmentData = [
     id: 'doj',
     name: 'Department of Justice',
     abbrev: 'DOJ',
+    url: '/doj',
     keywords: ['court', 'legal', 'lawsuit', 'attorney', 'lawyer', 'doj', 'justice', 'case', 'trial', 'prosecutor', 'public defender', 'lawsuit', 'litigation'],
     description: 'Court system, prosecution services, and legal resources for citizens of Praya.',
     services: [
@@ -72,6 +98,11 @@ export const departmentData = [
       'Prosecution Services',
       'Criminal Code Information and Resources'
     ],
+    subPages: [
+      { name: 'Case Lookup', url: '/doj/lookup', description: 'Track case status and court schedules online' },
+      { name: 'Legal Aid', url: '/doj/legal-aid', description: 'Public Defender services and civil legal aid for qualified individuals' },
+      { name: 'Court Filings', url: '/doj/filings', description: 'Electronic and in-person court filing information' }
+    ],
     hours: 'Court hours: Mon-Fri 8AM-5PM. Case lookup available 24/7 online',
     contact: 'DOJ main office and courthouse locations available on DOJ portal'
   },
@@ -79,6 +110,7 @@ export const departmentData = [
     id: 'interior',
     name: 'Interior Department',
     abbrev: 'ID',
+    url: '/interior',
     keywords: ['id', 'identification', 'passport', 'driver license', 'drivers license', 'birth certificate', 'documents', 'national id', 'interior', 'civil records', 'land registry', 'building permit'],
     description: 'Land registry, building permits, civil records, and parks management.',
     services: [
@@ -91,6 +123,17 @@ export const departmentData = [
       'Civil Records - marriage licenses, death certificates',
       'Parks and Nature Reserves Management'
     ],
+    subPages: [
+      { name: 'National ID', url: '/interior/id', description: 'Apply for or renew your National ID card. Fee: ¤25 new, ¤15 renewal. Processing: 5-7 days.' },
+      { name: 'Passport Services', url: '/interior/passport', description: 'Apply for passport. Standard: ¤80, 10-14 days. Expedited: ¤150, 3-5 days.' },
+      { name: 'Birth Certificates', url: '/interior/birth', description: 'Request certified copies or register a birth. Fee: ¤10. Processing: 3-5 days.' },
+      { name: 'Civil Records', url: '/interior/records', description: 'Marriage licenses, death certificates, and other civil documents' }
+    ],
+    fees: {
+      nationalId: { new: '¤25', renewal: '¤15', processing: '5-7 business days' },
+      passport: { standard: '¤80', expedited: '¤150', standardProcessing: '10-14 days', expeditedProcessing: '3-5 days' },
+      birthCertificate: { fee: '¤10', processing: '3-5 business days' }
+    },
     hours: 'Mon-Fri 8AM-5PM. PrayaPass account required for online services',
     contact: 'Visit any Interior Department office with valid ID'
   },
@@ -98,6 +141,7 @@ export const departmentData = [
     id: 'transport',
     name: 'Transport Department',
     abbrev: 'TD',
+    url: '/transport',
     keywords: ['transport', 'driver', 'license', 'driving', 'vehicle', 'registration', 'dmv', 'car', 'highway', 'road', 'traffic'],
     description: 'Driver licensing, vehicle registration, and management of national highways.',
     services: [
@@ -108,6 +152,15 @@ export const departmentData = [
       'Commercial Driver Licensing (CDL)',
       'Vehicle Inspections'
     ],
+    subPages: [
+      { name: 'Driver License', url: '/transport/license', description: 'Apply for new license, renew, or schedule driving tests. Fee: ¤45 new, ¤30 renewal.' },
+      { name: 'Vehicle Registration', url: '/transport/registration', description: 'Register vehicles, renew registration, or transfer titles' },
+      { name: 'Schedule Test', url: '/transport/test', description: 'Schedule written or road tests for driver licensing' }
+    ],
+    fees: {
+      driverLicense: { new: '¤45', renewal: '¤30', replacement: '¤25', valid: '5 years' },
+      vehicleRegistration: { annual: 'varies by vehicle type' }
+    },
     hours: 'Mon-Fri 8AM-5PM, Sat 9AM-1PM select locations',
     contact: 'Book appointments online or visit walk-in centers'
   },
@@ -115,6 +168,7 @@ export const departmentData = [
     id: 'revenue',
     name: 'Revenue Department',
     abbrev: 'RD',
+    url: '/revenue',
     keywords: ['tax', 'taxes', 'pay tax', 'file tax', 'revenue', 'income tax', 'business tax', 'tax return', 'refund', 'irs'],
     description: 'Tax collection, benefits, and financial services for individuals and businesses.',
     services: [
@@ -125,13 +179,31 @@ export const departmentData = [
       'Tax Payment Plans',
       'Refund Status Tracking'
     ],
+    subPages: [
+      { name: 'File Taxes', url: '/revenue/file', description: 'File individual or business tax returns online. Free e-file for incomes under ¤75,000.' },
+      { name: 'Make Payment', url: '/revenue/payment', description: 'Pay taxes online, set up payment plans, or manage your account' },
+      { name: 'Refund Status', url: '/revenue/refunds', description: 'Track refund status and update direct deposit information' }
+    ],
+    statistics: {
+      returnsFiled: '2.8M this year',
+      eFileRate: '87% online filing',
+      avgRefund: '¤2,840 per return',
+      processingTime: '21 days e-file average'
+    },
+    taxInfo: {
+      deadline: 'April 15 annually',
+      freeFileThreshold: '¤75,000 AGI',
+      standardDeduction: { single: '¤13,850', marriedJoint: '¤27,700', headOfHousehold: '¤20,800' },
+      helpLine: '1-800-TAX-HELP'
+    },
     hours: 'Office hours: Mon-Fri 8AM-5PM. Online filing available 24/7',
-    contact: 'Visit RD offices or access services through PrayaPass portal'
+    contact: 'Phone: 1-800-TAX-HELP | Email: help@revenue.gov.py | Visit RD offices or access services through PrayaPass portal'
   },
   {
     id: 'post',
     name: 'Praya Post',
     abbrev: 'PP',
+    url: '/post',
     keywords: ['mail', 'post', 'package', 'shipping', 'postal', 'letter', 'delivery', 'postage', 'mailbox', 'p.o. box', 'tracking'],
     description: 'National postal service providing domestic and international mail and package delivery.',
     services: [
@@ -143,6 +215,11 @@ export const departmentData = [
       'Bulk Mailing for Businesses',
       'Certified and Registered Mail'
     ],
+    subPages: [
+      { name: 'Track Package', url: '/post/track', description: 'Track your package using the tracking number (format: PP followed by numbers)' },
+      { name: 'Ship Package', url: '/post/ship', description: 'Calculate shipping rates and ship packages domestically or internationally' },
+      { name: 'Find Location', url: '/post/locations', description: 'Find post office locations and hours near you' }
+    ],
     hours: 'Mon-Fri 8AM-6PM, Sat 9AM-1PM. Closed Sundays',
     contact: 'Track packages online using tracking number. Visit local post office'
   },
@@ -150,6 +227,7 @@ export const departmentData = [
     id: 'health',
     name: 'Health Department',
     abbrev: 'HD',
+    url: '/health',
     keywords: ['health', 'hospital', 'medical', 'doctor', 'insurance', 'clinic', 'healthcare', 'vaccination', 'public health', 'disease', 'health insurance'],
     description: 'Public health services, disease control, healthcare licensing, and health statistics.',
     services: [
@@ -162,13 +240,32 @@ export const departmentData = [
       'Health Statistics and Research',
       'Emergency Medical Services - Dial 911'
     ],
+    subPages: [
+      { name: 'Health Insurance', url: '/health/insurance', description: 'Enroll in National Health Insurance. Standard Plan ¤50-¤350/month, Premium Plan ¤180-¤520/month based on income.' },
+      { name: 'Vaccinations', url: '/health/vaccinations', description: 'View vaccination records, schedule immunizations, find clinic locations' },
+      { name: 'Find Provider', url: '/health/providers', description: 'Search for doctors, specialists, hospitals, and clinics in your area' },
+      { name: 'Health Alerts', url: '/health/alerts', description: 'Public health advisories, disease outbreaks, and safety recommendations' }
+    ],
+    statistics: {
+      insuredCitizens: '94.2% coverage rate',
+      healthcareFacilities: '1,247 nationwide',
+      lifeExpectancy: '81.3 years average',
+      vaccinationRate: '89% full coverage'
+    },
+    insuranceInfo: {
+      standardPlan: '¤50-¤350/month based on income',
+      premiumPlan: '¤180-¤520/month based on income',
+      openEnrollment: 'November 1 - December 31',
+      coverageStart: 'January 1'
+    },
     hours: 'Office hours: Mon-Fri 8AM-5PM. Emergency: 911 24/7',
-    contact: 'National Health Insurance office for insurance questions. Visit nearest hospital for emergencies'
+    contact: 'Health Info: 1-800-HEALTH-PY | Crisis Line: 988 | Poison Control: 1-800-POISON | Emergency: 911'
   },
   {
     id: 'housing',
     name: 'Housing Authority',
     abbrev: 'HA',
+    url: '/housing',
     keywords: ['housing', 'rent', 'apartment', 'home', 'property', 'landlord', 'tenant', 'public housing', 'rental assistance', 'eviction', 'affordable housing'],
     description: 'Affordable public housing programs and subsidized rental assistance for eligible citizens.',
     services: [
@@ -181,6 +278,12 @@ export const departmentData = [
       'Waitlist Status - check via PrayaPass account',
       'Regional Housing Availability'
     ],
+    subPages: [
+      { name: 'Apply for Housing', url: '/housing/apply', description: 'Apply for public housing or rental assistance programs' },
+      { name: 'Check Eligibility', url: '/housing/eligibility', description: 'Check income-based eligibility requirements for housing programs' },
+      { name: 'Tenant Rights', url: '/housing/rights', description: 'Information about tenant rights, eviction protection, and landlord disputes' },
+      { name: 'Waitlist Status', url: '/housing/waitlist', description: 'Check your position on housing waitlists' }
+    ],
     hours: 'Mon-Fri 8AM-5PM. Online applications accepted 24/7',
     contact: 'Visit Housing Authority office or check status via PrayaPass'
   },
@@ -188,6 +291,7 @@ export const departmentData = [
     id: 'cbca',
     name: 'Customs and Border Control Agency',
     abbrev: 'CBCA',
+    url: '/cbca',
     keywords: ['customs', 'border', 'import', 'export', 'cbca', 'shipping', 'travel', 'duty', 'tariff', 'international shipping', 'visa'],
     description: 'Import/export regulations, border control, and customs enforcement.',
     services: [
@@ -200,6 +304,11 @@ export const departmentData = [
       'Commercial Shipping Clearance',
       'Customs Compliance and Enforcement'
     ],
+    subPages: [
+      { name: 'Import/Export', url: '/cbca/permits', description: 'Apply for import or export permits, view tariff information' },
+      { name: 'Travel Requirements', url: '/cbca/travel', description: 'Entry requirements, visa information, and what to declare' },
+      { name: 'Prohibited Items', url: '/cbca/prohibited', description: 'List of items prohibited or restricted from import/export' }
+    ],
     hours: 'Border crossings: 24/7. Office hours: Mon-Fri 8AM-5PM',
     contact: 'Review entry requirements before travel. Apply for permits online'
   },
@@ -207,6 +316,7 @@ export const departmentData = [
     id: 'lc',
     name: 'Legislative Council',
     abbrev: 'LC',
+    url: '/lc',
     keywords: ['legislative', 'law', 'bill', 'council', 'vote', 'representative', 'parliament', 'congress', 'legislation', 'lawmaker', 'elected'],
     description: 'Legislative body responsible for creating and passing laws.',
     services: [
@@ -218,6 +328,12 @@ export const departmentData = [
       'Citizen Petitions',
       'Committee Information and Schedules'
     ],
+    subPages: [
+      { name: 'Bills & Legislation', url: '/lc/bills', description: 'Track current legislation, view bill status and history' },
+      { name: 'Find Representative', url: '/lc/representatives', description: 'Find and contact your district representative' },
+      { name: 'Voting Records', url: '/lc/voting', description: 'View representative voting history on legislation' },
+      { name: 'Public Hearings', url: '/lc/hearings', description: 'Schedule of public hearings and how to attend' }
+    ],
     hours: 'Public viewing hours: Mon-Fri 8AM-5PM. Session schedules vary',
     contact: 'Find your representative through LC portal'
   },
@@ -225,6 +341,7 @@ export const departmentData = [
     id: 'bd',
     name: 'Buildings Department',
     abbrev: 'BD',
+    url: '/bd',
     keywords: ['building', 'construction', 'permit', 'inspection', 'contractor', 'building code', 'safety', 'architecture', 'renovation', 'development', 'structural'],
     description: 'Building permits, construction safety, inspections, and enforcement of building codes.',
     services: [
@@ -236,6 +353,12 @@ export const departmentData = [
       'Permit Status Tracking',
       'Construction Site Monitoring'
     ],
+    subPages: [
+      { name: 'Apply for Permit', url: '/bd/permits', description: 'Apply for building permits for new construction or renovations' },
+      { name: 'Schedule Inspection', url: '/bd/inspections', description: 'Schedule building inspections for code compliance' },
+      { name: 'Contractor License', url: '/bd/contractors', description: 'Apply for or verify contractor licenses' },
+      { name: 'Building Codes', url: '/bd/codes', description: 'View building code requirements and regulations' }
+    ],
     hours: 'Mon-Fri 8AM-5PM. Online permit applications available 24/7',
     contact: 'Visit Buildings Department office or submit applications online'
   },
@@ -243,6 +366,7 @@ export const departmentData = [
     id: 'cr',
     name: 'Companies Registry',
     abbrev: 'CR',
+    url: '/cr',
     keywords: ['company', 'business', 'incorporation', 'register', 'corporate', 'llc', 'corporation', 'business registration', 'company search', 'annual filing', 'articles of incorporation'],
     description: 'Business incorporation, company registration, and corporate filing services.',
     services: [
@@ -254,6 +378,12 @@ export const departmentData = [
       'Business Entity Changes - amendments and updates',
       'Dissolution Services - wind up companies'
     ],
+    subPages: [
+      { name: 'Register Company', url: '/cr/register', description: 'Incorporate a new business or register a company' },
+      { name: 'Company Search', url: '/cr/search', description: 'Look up registered businesses and access corporate records' },
+      { name: 'Annual Filings', url: '/cr/filings', description: 'Submit required annual corporate documents' },
+      { name: 'Name Reservation', url: '/cr/name', description: 'Reserve a business name before incorporation' }
+    ],
     hours: 'Mon-Fri 8AM-5PM. Online registration available 24/7',
     contact: 'Register online or visit Companies Registry office'
   },
@@ -261,6 +391,7 @@ export const departmentData = [
     id: 'swd',
     name: 'Social Welfare Department',
     abbrev: 'SWD',
+    url: '/swd',
     keywords: ['social', 'welfare', 'benefits', 'assistance', 'family', 'elderly', 'disability', 'support', 'care', 'subsidy', 'allowance', 'social services'],
     description: 'Social benefits, family services, elderly care, and support for vulnerable citizens.',
     services: [
@@ -271,6 +402,12 @@ export const departmentData = [
       'Child Welfare Services',
       'Community Care Programs',
       'Emergency Assistance'
+    ],
+    subPages: [
+      { name: 'Apply for Benefits', url: '/swd/benefits', description: 'Apply for social benefits and financial assistance' },
+      { name: 'Family Services', url: '/swd/family', description: 'Family support programs and child welfare services' },
+      { name: 'Elderly Care', url: '/swd/elderly', description: 'Senior citizen programs and elderly care services' },
+      { name: 'Disability Support', url: '/swd/disability', description: 'Services and support for disabled citizens' }
     ],
     hours: 'Mon-Fri 8AM-5PM. Emergency services available 24/7',
     contact: 'Visit SWD office or call hotline for assistance'
@@ -547,6 +684,11 @@ export function generateKnowledgeBase() {
 function generateDepartmentResponse(dept) {
   let response = `**${dept.name} (${dept.abbrev})**\n\n${dept.description}\n\n`;
 
+  // Add link to department page
+  if (dept.url) {
+    response += `**Visit:** [${dept.name} Portal](${dept.url})\n\n`;
+  }
+
   if (dept.services && dept.services.length > 0) {
     response += '**Services:**\n';
     dept.services.slice(0, 5).forEach(service => {
@@ -555,6 +697,15 @@ function generateDepartmentResponse(dept) {
     if (dept.services.length > 5) {
       response += `• ...and ${dept.services.length - 5} more services\n`;
     }
+    response += '\n';
+  }
+
+  // Add sub-pages with links
+  if (dept.subPages && dept.subPages.length > 0) {
+    response += '**Quick Links:**\n';
+    dept.subPages.slice(0, 4).forEach(page => {
+      response += `• [${page.name}](${page.url}) - ${page.description}\n`;
+    });
     response += '\n';
   }
 
