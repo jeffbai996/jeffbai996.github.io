@@ -8,68 +8,81 @@
   // Department context mapping based on page URL
   const DEPARTMENT_CONTEXTS = {
     'NPA_Praya.html': {
-      name: 'National Police Agency (NPA)',
+      name: 'National Police Agency',
       abbrev: 'NPA',
+      color: '#1d4ed8',
       focus: 'You are helping users with National Police Agency services including emergency response, crime reporting, police clearance certificates, and firearm licensing.'
     },
     'BOP_Praya.html': {
-      name: 'Bank of Praya (BOP)',
+      name: 'Bank of Praya',
       abbrev: 'BOP',
+      color: '#0ea5e9',
       focus: 'You are helping users with Bank of Praya services including central banking, monetary policy, personal banking, and business loans.'
     },
     'CTB_Praya.html': {
-      name: 'Cannabis Tax Bureau (CTB)',
+      name: 'Cannabis Tax Bureau',
       abbrev: 'CTB',
+      color: '#2d8659',
       focus: 'You are helping users with Cannabis Tax Bureau services including dispensary licensing, cultivation permits, and tax filing.'
     },
     'DOJ_Praya.html': {
-      name: 'Department of Justice (DOJ)',
+      name: 'Department of Justice',
       abbrev: 'DOJ',
+      color: '#991b1b',
       focus: 'You are helping users with Department of Justice services including court system, case lookup, legal aid, and criminal code information.'
     },
     'ID_Praya.html': {
-      name: 'Interior Department (ID)',
+      name: 'Interior Department',
       abbrev: 'ID',
+      color: '#78716c',
       focus: 'You are helping users with Interior Department services including national IDs, passports, birth certificates, land registry, and building permits.'
     },
     'TD_Praya.html': {
-      name: 'Transport Department (TD)',
+      name: 'Transport Department',
       abbrev: 'TD',
+      color: '#0d9488',
       focus: 'You are helping users with Transport Department services including driver licensing, vehicle registration, and road safety.'
     },
     'RD_Praya.html': {
-      name: 'Revenue Department (RD)',
+      name: 'Revenue Department',
       abbrev: 'RD',
+      color: '#0ea5e9',
       focus: 'You are helping users with Revenue Department services including tax filing, business accounts, and tax benefits.'
     },
     'Praya_Post.html': {
-      name: 'Praya Post (PP)',
+      name: 'Praya Post',
       abbrev: 'PP',
+      color: '#f97316',
       focus: 'You are helping users with Praya Post services including package delivery, international mail, and P.O. box rentals.'
     },
     'Health_Praya.html': {
-      name: 'Health Department (HD)',
+      name: 'Health Department',
       abbrev: 'HD',
+      color: '#dc2626',
       focus: 'You are helping users with Health Department services including public health, disease control, healthcare licensing, and vaccination schedules.'
     },
     'Housing_Authority_Praya.html': {
-      name: 'Housing Authority (HA)',
+      name: 'Housing Authority',
       abbrev: 'HA',
+      color: '#ea580c',
       focus: 'You are helping users with Housing Authority services including public housing applications, eligibility checks, and rental assistance programs.'
     },
     'CBCA_Praya.html': {
-      name: 'Customs & Border Control Agency (CBCA)',
+      name: 'Customs & Border Control Agency',
       abbrev: 'CBCA',
+      color: '#0891b2',
       focus: 'You are helping users with Customs & Border Control services including import/export permits, customs declarations, and immigration.'
     },
     'LC_Praya.html': {
-      name: 'Legislative Council (LC)',
+      name: 'Legislative Council',
       abbrev: 'LC',
+      color: '#6366f1',
       focus: 'You are helping users with Legislative Council services including bill tracking, voting records, and contacting representatives.'
     },
     'PSE_Praya.html': {
-      name: 'Praya Stock Exchange (PSE)',
+      name: 'Praya Stock Exchange',
       abbrev: 'PSE',
+      color: '#0ea5e9',
       focus: 'You are helping users with Praya Stock Exchange services including securities trading, market data, and investment information.'
     }
   };
@@ -90,8 +103,31 @@
   let isOpen = false;
   const currentDepartment = detectDepartment();
 
+  // Color utility functions
+  function hexToRgba(hex, alpha) {
+    const r = parseInt(hex.slice(1, 3), 16);
+    const g = parseInt(hex.slice(3, 5), 16);
+    const b = parseInt(hex.slice(5, 7), 16);
+    return `rgba(${r}, ${g}, ${b}, ${alpha})`;
+  }
+
+  function shadeColor(color, percent) {
+    const num = parseInt(color.replace("#",""), 16);
+    const amt = Math.round(2.55 * percent);
+    const R = (num >> 16) + amt;
+    const G = (num >> 8 & 0x00FF) + amt;
+    const B = (num & 0x0000FF) + amt;
+    return "#" + (0x1000000 + (R<255?R<1?0:R:255)*0x10000 +
+      (G<255?G<1?0:G:255)*0x100 + (B<255?B<1?0:B:255))
+      .toString(16).slice(1);
+  }
+
   // Create chat widget
   function createChatWidget() {
+    // Get department-specific color or use default
+    const primaryColor = currentDepartment ? currentDepartment.color : '#1d4ed8';
+    const darkColor = shadeColor(primaryColor, -20);
+
     // Add styles
     const styles = document.createElement('style');
     styles.textContent = `
@@ -102,9 +138,9 @@
         width: 60px;
         height: 60px;
         border-radius: 50%;
-        background: linear-gradient(135deg, #1d4ed8 0%, #1e3a8a 100%);
+        background: linear-gradient(135deg, ${primaryColor} 0%, ${darkColor} 100%);
         border: none;
-        box-shadow: 0 4px 12px rgba(29, 78, 216, 0.4), 0 2px 4px rgba(0, 0, 0, 0.1);
+        box-shadow: 0 4px 12px ${hexToRgba(primaryColor, 0.4)}, 0 2px 4px rgba(0, 0, 0, 0.1);
         cursor: pointer;
         display: flex;
         align-items: center;
@@ -116,7 +152,7 @@
 
       #praya-chat-button:hover {
         transform: scale(1.1);
-        box-shadow: 0 6px 16px rgba(29, 78, 216, 0.5), 0 4px 8px rgba(0, 0, 0, 0.15);
+        box-shadow: 0 6px 16px ${hexToRgba(primaryColor, 0.5)}, 0 4px 8px rgba(0, 0, 0, 0.15);
       }
 
       #praya-chat-button:active {
@@ -151,7 +187,7 @@
       }
 
       .chat-header {
-        background: linear-gradient(135deg, #1d4ed8 0%, #1e3a8a 100%);
+        background: linear-gradient(135deg, ${primaryColor} 0%, ${darkColor} 100%);
         color: white;
         padding: 20px;
         display: flex;
@@ -234,7 +270,7 @@
       }
 
       .chat-message.bot .message-avatar {
-        background: linear-gradient(135deg, #1d4ed8 0%, #1e3a8a 100%);
+        background: linear-gradient(135deg, ${primaryColor} 0%, ${darkColor} 100%);
         color: white;
       }
 
@@ -249,6 +285,7 @@
         border-radius: 12px;
         font-size: 14px;
         line-height: 1.5;
+        word-wrap: break-word;
       }
 
       .chat-message.bot .message-bubble {
@@ -258,7 +295,7 @@
       }
 
       .chat-message.user .message-bubble {
-        background: #1d4ed8;
+        background: ${primaryColor};
         color: white;
         border-bottom-right-radius: 4px;
       }
@@ -285,14 +322,14 @@
       }
 
       .chat-input:focus {
-        border-color: #1d4ed8;
+        border-color: ${primaryColor};
       }
 
       .chat-send {
         width: 40px;
         height: 40px;
         border-radius: 50%;
-        background: linear-gradient(135deg, #1d4ed8 0%, #1e3a8a 100%);
+        background: linear-gradient(135deg, ${primaryColor} 0%, ${darkColor} 100%);
         border: none;
         color: white;
         cursor: pointer;
@@ -356,8 +393,8 @@
         #praya-chat-button {
           width: 56px;
           height: 56px;
-          bottom: 20px;
-          right: 20px;
+          bottom: 16px;
+          right: 16px;
         }
 
         #praya-chat-button svg {
@@ -366,10 +403,44 @@
         }
 
         #praya-chat-widget {
-          bottom: 90px;
-          right: 20px;
-          width: calc(100vw - 40px);
-          height: calc(100vh - 140px);
+          position: fixed;
+          bottom: 0;
+          right: 0;
+          left: 0;
+          top: 0;
+          width: 100%;
+          height: 100%;
+          max-width: 100%;
+          max-height: 100%;
+          border-radius: 0;
+        }
+
+        .chat-header {
+          padding: 16px;
+        }
+
+        .message-bubble {
+          max-width: 85%;
+        }
+
+        .chat-input-container {
+          padding: 12px;
+        }
+      }
+
+      @media (max-width: 480px) {
+        .chat-header-text h3 {
+          font-size: 14px;
+        }
+
+        .chat-header-text p {
+          font-size: 11px;
+        }
+
+        .chat-avatar {
+          width: 36px;
+          height: 36px;
+          font-size: 14px;
         }
       }
     `;
@@ -393,10 +464,10 @@
     widget.innerHTML = `
       <div class="chat-header">
         <div class="chat-header-info">
-          <div class="chat-avatar">${currentDepartment ? currentDepartment.abbrev : 'GP'}</div>
+          <div class="chat-avatar">${currentDepartment ? currentDepartment.abbrev : 'CS'}</div>
           <div class="chat-header-text">
-            <h3>${currentDepartment ? currentDepartment.name : 'GOV.PRAYA'} Assistant</h3>
-            <p>Ask me anything</p>
+            <h3>Citizen Services</h3>
+            <p>${currentDepartment ? currentDepartment.name : 'GOV.PRAYA'}</p>
           </div>
         </div>
         <button class="chat-close" aria-label="Close chat">
@@ -408,11 +479,11 @@
       </div>
       <div class="chat-messages" id="chat-messages">
         <div class="chat-message bot">
-          <div class="message-avatar">${currentDepartment ? currentDepartment.abbrev : 'GP'}</div>
+          <div class="message-avatar">${currentDepartment ? currentDepartment.abbrev : 'CS'}</div>
           <div class="message-bubble">
             ${currentDepartment
-              ? `Welcome to the ${currentDepartment.name}! I'm here to help you navigate our services. How can I assist you today?`
-              : 'Welcome to GOV.PRAYA! How can I help you today?'
+              ? `Welcome to ${currentDepartment.name} Citizen Services! I'm here to help you navigate our services. How can I assist you today?`
+              : 'Welcome to GOV.PRAYA Citizen Services! How can I help you today?'
             }
           </div>
         </div>
@@ -465,7 +536,7 @@
     const messageDiv = document.createElement('div');
     messageDiv.className = `chat-message ${isUser ? 'user' : 'bot'}`;
 
-    const avatar = currentDepartment ? currentDepartment.abbrev : 'GP';
+    const avatar = currentDepartment ? currentDepartment.abbrev : 'CS';
     messageDiv.innerHTML = `
       <div class="message-avatar">${isUser ? 'You' : avatar}</div>
       <div class="message-bubble">${escapeHtml(text)}</div>
@@ -481,7 +552,7 @@
     typingDiv.className = 'chat-message bot';
     typingDiv.id = 'typing-indicator';
 
-    const avatar = currentDepartment ? currentDepartment.abbrev : 'GP';
+    const avatar = currentDepartment ? currentDepartment.abbrev : 'CS';
     typingDiv.innerHTML = `
       <div class="message-avatar">${avatar}</div>
       <div class="message-bubble typing-indicator">
@@ -566,18 +637,113 @@
   }
 
   async function callGeminiAPI(userMessage, systemPrompt) {
-    // Note: This requires the Gemini API key to be set in GitHub Actions
-    // For now, we'll provide a fallback message
-    const apiKey = 'GEMINI_API_KEY_PLACEHOLDER'; // Will be replaced by build process
+    // API key will be injected during build from GitHub secrets
+    const apiKey = 'GEMINI_API_KEY_PLACEHOLDER';
 
     if (!apiKey || apiKey === 'GEMINI_API_KEY_PLACEHOLDER') {
       // Provide helpful fallback responses
       return getFallbackResponse(userMessage);
     }
 
-    // Call Gemini API (implementation would go here)
-    // This is a placeholder - actual implementation would require API integration
-    throw new Error('Gemini API integration pending. Please visit the main portal for full chat support.');
+    try {
+      // Build the full request with conversation history
+      const contents = [
+        {
+          role: 'user',
+          parts: [{ text: systemPrompt }]
+        },
+        {
+          role: 'model',
+          parts: [{ text: 'I understand. I will help users with government services for this department, keeping responses concise and professional.' }]
+        }
+      ];
+
+      // Add conversation history (last 4 exchanges)
+      const recentHistory = conversationHistory.slice(-8);
+      recentHistory.forEach(msg => {
+        contents.push({
+          role: msg.role,
+          parts: [{ text: msg.text }]
+        });
+      });
+
+      // Add current user message
+      contents.push({
+        role: 'user',
+        parts: [{ text: userMessage }]
+      });
+
+      // Call Gemini API
+      const response = await fetch(
+        `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-lite:generateContent?key=${apiKey}`,
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            contents: contents,
+            generationConfig: {
+              temperature: 0.7,
+              maxOutputTokens: 1500,
+              topP: 0.95,
+              topK: 40,
+            },
+            safetySettings: [
+              {
+                category: 'HARM_CATEGORY_HARASSMENT',
+                threshold: 'BLOCK_MEDIUM_AND_ABOVE',
+              },
+              {
+                category: 'HARM_CATEGORY_HATE_SPEECH',
+                threshold: 'BLOCK_MEDIUM_AND_ABOVE',
+              },
+              {
+                category: 'HARM_CATEGORY_SEXUALLY_EXPLICIT',
+                threshold: 'BLOCK_MEDIUM_AND_ABOVE',
+              },
+              {
+                category: 'HARM_CATEGORY_DANGEROUS_CONTENT',
+                threshold: 'BLOCK_MEDIUM_AND_ABOVE',
+              },
+            ],
+          }),
+        }
+      );
+
+      if (!response.ok) {
+        const errorData = await response.json().catch(() => ({}));
+        console.error('Gemini API error:', errorData);
+
+        if (response.status === 429) {
+          throw new Error('API quota exceeded. Please try again later.');
+        } else if (response.status === 400 && errorData.error?.message?.includes('safety')) {
+          throw new Error('Response blocked due to safety filters. Please rephrase your question.');
+        } else {
+          throw new Error('Failed to get response. Please try again.');
+        }
+      }
+
+      const data = await response.json();
+
+      if (!data.candidates || data.candidates.length === 0) {
+        throw new Error('No response generated. Please try rephrasing your question.');
+      }
+
+      const candidate = data.candidates[0];
+      if (!candidate.content || !candidate.content.parts || candidate.content.parts.length === 0) {
+        throw new Error('Invalid response format. Please try again.');
+      }
+
+      return candidate.content.parts[0].text;
+    } catch (error) {
+      console.error('Gemini API call failed:', error);
+      // Fall back to basic responses if API fails
+      if (error.message.includes('quota') || error.message.includes('safety') || error.message.includes('rephras')) {
+        throw error;
+      }
+      return getFallbackResponse(userMessage);
+    }
   }
 
   function getFallbackResponse(message) {
