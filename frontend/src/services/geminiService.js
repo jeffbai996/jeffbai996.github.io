@@ -1,4 +1,5 @@
 import { GoogleGenerativeAI } from '@google/generative-ai';
+import { generateNationalStatusContext } from '../utils/nationalStatus';
 
 /**
  * Direct Gemini API Service for Frontend
@@ -9,6 +10,7 @@ import { GoogleGenerativeAI } from '@google/generative-ai';
  * - User expertise level adaptation
  * - Conversation summary injection
  * - Proactive suggestion generation
+ * - Real-time national status (AQI, Security Level)
  */
 class GeminiService {
   constructor() {
@@ -350,6 +352,8 @@ The Republic of Praya is a nation of 2.4 million citizens with a modern, digital
     • Elderly care, disability support
     • Quick Links: [Apply for Benefits](/swd/benefits) | [Family Services](/swd/family) | [Elderly Care](/swd/elderly) | [Disability Support](/swd/disability)
     • Hours: Mon-Fri 8AM-5PM, Emergency services 24/7
+
+${generateNationalStatusContext()}
 
 ${departmentContext}
 ${dynamicContext}
