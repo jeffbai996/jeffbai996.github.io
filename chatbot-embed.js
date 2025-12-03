@@ -868,8 +868,13 @@ The user is currently on the ${currentDepartment.name} page. Prioritize informat
     // API key will be injected during build from GitHub secrets
     const apiKey = 'GEMINI_API_KEY_PLACEHOLDER';
 
-    if (!apiKey || apiKey === 'GEMINI_API_KEY_PLACEHOLDER') {
-      // Provide helpful fallback responses
+    // Debug logging (will be visible in browser console)
+    const isPlaceholder = !apiKey || apiKey === 'GEMINI_API_KEY_PLACEHOLDER';
+    console.log('[GOV.PRAYA Chat] API Status:', isPlaceholder ? 'Using fallback (no API key)' : 'API key configured');
+
+    if (isPlaceholder) {
+      // Provide helpful fallback responses when API key not available
+      console.log('[GOV.PRAYA Chat] Falling back to static responses');
       return getFallbackResponse(userMessage);
     }
 
@@ -941,12 +946,21 @@ The user is currently on the ${currentDepartment.name} page. Prioritize informat
 
       if (!response.ok) {
         const errorData = await response.json().catch(() => ({}));
-        console.error('Gemini API error:', errorData);
+        console.error('[GOV.PRAYA Chat] Gemini API error:', response.status, errorData);
 
         if (response.status === 429) {
           throw new Error('API quota exceeded. Please try again later.');
-        } else if (response.status === 400 && errorData.error?.message?.includes('safety')) {
-          throw new Error('Response blocked due to safety filters. Please rephrase your question.');
+        } else if (response.status === 400) {
+          if (errorData.error?.message?.includes('safety')) {
+            throw new Error('Response blocked due to safety filters. Please rephrase your question.');
+          } else if (errorData.error?.message?.includes('API key')) {
+            console.error('[GOV.PRAYA Chat] API key error - falling back to static responses');
+            return getFallbackResponse(userMessage);
+          }
+          throw new Error('Request error. Please try again.');
+        } else if (response.status === 403) {
+          console.error('[GOV.PRAYA Chat] API key invalid or expired');
+          return getFallbackResponse(userMessage);
         } else {
           throw new Error('Failed to get response. Please try again.');
         }
@@ -965,11 +979,12 @@ The user is currently on the ${currentDepartment.name} page. Prioritize informat
 
       return candidate.content.parts[0].text;
     } catch (error) {
-      console.error('Gemini API call failed:', error);
-      // Fall back to basic responses if API fails
-      if (error.message.includes('quota') || error.message.includes('safety') || error.message.includes('rephras')) {
+      console.error('[GOV.PRAYA Chat] API call failed:', error.message);
+      // Fall back to basic responses if API fails (except for user-facing errors)
+      if (error.message.includes('quota') || error.message.includes('safety') || error.message.includes('rephras') || error.message.includes('blocked')) {
         throw error;
       }
+      console.log('[GOV.PRAYA Chat] Falling back to static response due to error');
       return getFallbackResponse(userMessage);
     }
   }
@@ -1004,8 +1019,16 @@ The user is currently on the ${currentDepartment.name} page. Prioritize informat
 
   // Initialize when DOM is ready
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', createChatWidget);
+    document.addEventListener('DOMContentLoaded', () => {
+      console.log('[GOV.PRAYA Chat] Initializing chatbot widget...');
+      console.log('[GOV.PRAYA Chat] Current department:', currentDepartment ? currentDepartment.name : 'General Portal');
+      createChatWidget();
+      console.log('[GOV.PRAYA Chat] Widget initialized successfully');
+    });
   } else {
+    console.log('[GOV.PRAYA Chat] Initializing chatbot widget...');
+    console.log('[GOV.PRAYA Chat] Current department:', currentDepartment ? currentDepartment.name : 'General Portal');
     createChatWidget();
+    console.log('[GOV.PRAYA Chat] Widget initialized successfully');
   }
 })();
