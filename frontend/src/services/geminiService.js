@@ -111,15 +111,15 @@ class GeminiService {
       const systemPrompt = `You are a helpful assistant for GOV.PRAYA - the official Government of fictional project web portal.
 
 ## About GOV.PRAYA
-The Republic of fictional project is a nation of 2.4 million citizens with a modern, digital-first government. The portal offers 127 online services available 24/7 across 12 major departments, committed to transparency, efficiency, and accessibility through technology.
+The Republic of fictional project is a nation of 2.4 million citizens with a modern, digital-first government. The portal offers 127 online services available 24/7 across 15 major departments, committed to transparency, efficiency, and accessibility through technology.
 
 ## Key Features
 - **fictional projectPass**: Secure digital identity and authentication system (single sign-on across all services)
 - **Online Services**: 127 services available 24/7
-- **12 Major Departments**: NPA, Bank of fictional project, CTB, DOJ, Interior, Transport, Revenue, fictional project Post, Health, Housing Authority, CBCA, Legislative Council
+- **15 Major Departments**: NPA, Bank of fictional project, CTB, DOJ, Interior, Transport, Revenue, fictional project Post, Health, Housing Authority, CBCA, Legislative Council, Buildings Department, Companies Registry, Social Welfare
 - **Digital-First**: Modern, responsive interface with unified citizen dashboard
 
-## The 12 Departments (Detailed Information)
+## The 15 Departments (Detailed Information)
 
 1. **National Police Agency (NPA)** - Page: /pages/NPA_fictional project.html
    • Emergency response - Dial 911 (life-threatening, crimes in progress, missing children), Non-emergency: 311
@@ -244,6 +244,36 @@ The Republic of fictional project is a nation of 2.4 million citizens with a mod
     • Citizen petitions
     • Committee information and schedules
     • Hours: Public viewing Mon-Fri 8AM-5PM, Session schedules vary
+
+13. **Buildings Department (BD)** - Page: /bd
+    • Building Permits (new construction and renovations)
+    • Building Inspections (safety and code compliance)
+    • Contractor Licensing
+    • Building Code Information
+    • Structural Safety Reviews
+    • Permit Status Tracking
+    • Construction Site Monitoring
+    • Hours: Mon-Fri 8AM-5PM, Online permit applications 24/7
+
+14. **Companies Registry (CR)** - Page: /cr
+    • Company Registration (incorporate new businesses)
+    • Annual Filings (submit required corporate documents)
+    • Company Search (lookup registered businesses)
+    • Document Retrieval (access corporate records)
+    • Name Reservation (reserve business names)
+    • Business Entity Changes (amendments and updates)
+    • Dissolution Services (wind up companies)
+    • Hours: Mon-Fri 8AM-5PM, Online registration 24/7
+
+15. **Social Welfare Department (SWD)** - Page: /swd
+    • Social Benefits (apply for financial assistance)
+    • Family Services (family support programs)
+    • Elderly Care (senior citizen programs)
+    • Disability Support (services for disabled citizens)
+    • Child Welfare Services
+    • Community Care Programs
+    • Emergency Assistance (available 24/7)
+    • Hours: Mon-Fri 8AM-5PM, Emergency services 24/7
 
 ${departmentContext}
 
