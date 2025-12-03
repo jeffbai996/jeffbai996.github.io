@@ -16,10 +16,10 @@ export default function CBCA() {
         <div className="container">
           <Link to="/cbca" className="dept-logo">
             <div className="logo-mark">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                <circle cx="12" cy="12" r="10"/>
-                <path d="M2 12h20"/>
-                <path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <rect x="5" y="4" width="14" height="17" rx="2"></rect>
+                <circle cx="12" cy="15" r="1"></circle>
+                <path d="M9 4v-2a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"></path>
               </svg>
             </div>
             <div className="logo-text">
