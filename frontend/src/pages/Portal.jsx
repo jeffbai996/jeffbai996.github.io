@@ -83,6 +83,24 @@ const departmentIcons = {
       <path d="M9 3v18"></path>
       <path d="M3 9h18"></path>
     </svg>
+  ),
+  bd: (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M3 21h18M5 21V7l7-4 7 4v14M9 21v-6h6v6M9 9h.01M15 9h.01M9 13h.01M15 13h.01"/>
+    </svg>
+  ),
+  cr: (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/>
+      <circle cx="9" cy="7" r="4"/>
+      <path d="M22 21v-2a4 4 0 0 0-3-3.87"/>
+      <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+    </svg>
+  ),
+  swd: (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+    </svg>
   )
 }
 
@@ -194,6 +212,33 @@ const departments = [
     description: 'The unicameral legislature of Praya, responsible for enacting laws and providing oversight.',
     color: '#6366f1',
     services: ['View Legislation', 'Council Members', 'Session Calendar', 'Public Comment']
+  },
+  {
+    id: 'bd',
+    name: 'Buildings Department',
+    abbrev: 'BD',
+    url: '/bd',
+    description: 'Building permits, construction safety, inspections, and enforcement of building codes.',
+    color: '#d97706',
+    services: ['Building Permits', 'Inspections', 'Building Codes', 'Contractor Licensing']
+  },
+  {
+    id: 'cr',
+    name: 'Companies Registry',
+    abbrev: 'CR',
+    url: '/cr',
+    description: 'Business incorporation, company registration, and corporate filing services.',
+    color: '#3b82f6',
+    services: ['Company Registration', 'Annual Filings', 'Company Search', 'Document Retrieval']
+  },
+  {
+    id: 'swd',
+    name: 'Social Welfare Department',
+    abbrev: 'SWD',
+    url: '/swd',
+    description: 'Social benefits, family services, elderly care, and support for vulnerable citizens.',
+    color: '#ec4899',
+    services: ['Social Benefits', 'Family Services', 'Elderly Care', 'Disability Support']
   }
 ]
 
@@ -242,6 +287,21 @@ const priorities = [
     title: 'Legislative Oversight',
     detail: 'View bills, contact council members, and participate in the democratic process.',
     link: '/pages/LC_Praya.html'
+  },
+  {
+    title: 'Building Permits',
+    detail: 'Construction permits, building inspections, and code compliance for all property development.',
+    link: '/bd'
+  },
+  {
+    title: 'Business Registration',
+    detail: 'Incorporate companies, file annual returns, and search the companies register.',
+    link: '/cr'
+  },
+  {
+    title: 'Social Welfare',
+    detail: 'Benefits, family services, elderly care, and support programs for vulnerable citizens.',
+    link: '/swd'
   }
 ]
 
@@ -362,7 +422,7 @@ export default function Portal() {
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                   <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
                 </svg>
-                <span>12 major departments & agencies</span>
+                <span>15 major departments & agencies</span>
               </div>
             </div>
             <div className="hero-actions">
@@ -775,6 +835,9 @@ export default function Portal() {
                 <li><a href="/pages/Housing_Authority_Praya.html">Housing Authority</a></li>
                 <li><a href="/pages/CBCA_Praya.html">Customs & Border Control</a></li>
                 <li><a href="/pages/LC_Praya.html">Legislative Council</a></li>
+                <li><Link to="/bd">Buildings Department</Link></li>
+                <li><Link to="/cr">Companies Registry</Link></li>
+                <li><Link to="/swd">Social Welfare</Link></li>
               </ul>
             </div>
             <div className="footer-section">
