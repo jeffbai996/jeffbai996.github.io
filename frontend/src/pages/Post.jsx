@@ -40,8 +40,8 @@ export default function Post() {
       <Routes>
         <Route index element={<PostHome navigate={navigate} />} />
         <Route path="track" element={<TrackPackage />} />
-        <Route path="shipping" element={<ComingSoon title="Shipping Rates & Services" />} />
-        <Route path="stamps" element={<ComingSoon title="Stamps & Collectibles" />} />
+        <Route path="shipping" element={<Shipping />} />
+        <Route path="stamps" element={<Stamps />} />
       </Routes>
 
       <footer className="dept-footer">
@@ -55,16 +55,16 @@ export default function Post() {
               <h5>Services</h5>
               <ul>
                 <li><Link to="/post/track">Track Package</Link></li>
-                <li><a href="#">Calculate Postage</a></li>
-                <li><a href="#">Schedule Pickup</a></li>
+                <li><Link to="/post/shipping">Shipping Rates</Link></li>
+                <li><Link to="/post/stamps">Buy Stamps</Link></li>
               </ul>
             </div>
             <div className="footer-section">
               <h5>Support</h5>
               <ul>
                 <li><a href="tel:1-800-POST-PY">1-800-POST-PY</a></li>
-                <li><a href="#">Find Post Office</a></li>
-                <li><a href="#">File Claim</a></li>
+                <li><a href="mailto:support@prayapost.gov.py">Email Support</a></li>
+                <li><a href="tel:1-800-POST-PY">File Claim</a></li>
               </ul>
             </div>
             <div className="footer-section">
@@ -344,6 +344,372 @@ function TrackPackage() {
           <div className="info-box" style={{ marginTop: '24px' }}>
             <h4>International Tracking</h4>
             <p>International packages may have limited tracking once they leave the Republic of Praya. Contact the destination country's postal service for updates once the package arrives.</p>
+          </div>
+        </div>
+      </div>
+    </main>
+  )
+}
+
+function Shipping() {
+  return (
+    <main className="main">
+      <div className="page-header">
+        <div className="container">
+          <div className="breadcrumb">
+            <Link to="/post">Home</Link> / Shipping
+          </div>
+          <h1>Shipping Rates & Services</h1>
+          <p className="subtitle">Choose the right shipping option for your needs</p>
+        </div>
+      </div>
+      <div className="container">
+        <div className="content-text">
+          <h3>Domestic Shipping Services</h3>
+
+          <div className="card" style={{ marginTop: '20px' }}>
+            <h4 className="card-title">First Class Mail</h4>
+            <p style={{ color: 'var(--text-muted)', marginBottom: '12px' }}>Affordable option for letters, cards, and small packages.</p>
+            <ul style={{ marginBottom: '12px' }}>
+              <li><strong>Weight limit:</strong> Up to 500g (1.1 lbs)</li>
+              <li><strong>Delivery time:</strong> 2-5 business days</li>
+              <li><strong>Pricing:</strong> Starting at ¤0.85 for letters</li>
+              <li><strong>Tracking:</strong> Not included (available for ¤1.50 extra)</li>
+              <li><strong>Insurance:</strong> Available up to ¤100</li>
+            </ul>
+            <div style={{ fontSize: '13px', color: 'var(--text-secondary)' }}>
+              <strong>Best for:</strong> Personal correspondence, bills, small lightweight items
+            </div>
+          </div>
+
+          <div className="card">
+            <h4 className="card-title">Priority Mail</h4>
+            <p style={{ color: 'var(--text-muted)', marginBottom: '12px' }}>Fast, reliable service with tracking included.</p>
+            <ul style={{ marginBottom: '12px' }}>
+              <li><strong>Weight limit:</strong> Up to 30kg (66 lbs)</li>
+              <li><strong>Delivery time:</strong> 1-3 business days</li>
+              <li><strong>Pricing:</strong> Starting at ¤9.50 (varies by weight and distance)</li>
+              <li><strong>Tracking:</strong> Free tracking included</li>
+              <li><strong>Insurance:</strong> Up to ¤100 included, additional coverage available</li>
+              <li><strong>Features:</strong> Free packaging supplies at post office</li>
+            </ul>
+            <div style={{ fontSize: '13px', color: 'var(--text-secondary)' }}>
+              <strong>Best for:</strong> Packages that need to arrive quickly with tracking
+            </div>
+          </div>
+
+          <div className="card">
+            <h4 className="card-title">Express Mail</h4>
+            <p style={{ color: 'var(--text-muted)', marginBottom: '12px' }}>Fastest delivery with money-back guarantee.</p>
+            <ul style={{ marginBottom: '12px' }}>
+              <li><strong>Weight limit:</strong> Up to 30kg (66 lbs)</li>
+              <li><strong>Delivery time:</strong> Next business day by noon</li>
+              <li><strong>Pricing:</strong> Starting at ¤24.95</li>
+              <li><strong>Tracking:</strong> Real-time tracking included</li>
+              <li><strong>Insurance:</strong> Up to ¤200 included</li>
+              <li><strong>Guarantee:</strong> Money-back guarantee if not delivered on time</li>
+            </ul>
+            <div style={{ fontSize: '13px', color: 'var(--text-secondary)' }}>
+              <strong>Best for:</strong> Urgent deliveries, time-sensitive documents
+            </div>
+          </div>
+
+          <div className="card">
+            <h4 className="card-title">Flat Rate Shipping</h4>
+            <p style={{ color: 'var(--text-muted)', marginBottom: '12px' }}>One price regardless of weight - pack as much as you can fit!</p>
+            <ul>
+              <li><strong>Small Box:</strong> ¤8.50 (22cm x 14cm x 6cm)</li>
+              <li><strong>Medium Box:</strong> ¤15.00 (28cm x 22cm x 15cm)</li>
+              <li><strong>Large Box:</strong> ¤21.50 (30cm x 30cm x 30cm)</li>
+              <li><strong>Delivery time:</strong> 2-3 business days</li>
+              <li><strong>Free boxes:</strong> Available at any post office</li>
+            </ul>
+          </div>
+
+          <h3 style={{ marginTop: '32px' }}>International Shipping</h3>
+
+          <div className="card">
+            <h4 className="card-title">International First Class</h4>
+            <p style={{ color: 'var(--text-muted)', marginBottom: '12px' }}>Economical international shipping for lightweight packages.</p>
+            <ul>
+              <li><strong>Weight limit:</strong> Up to 2kg (4.4 lbs)</li>
+              <li><strong>Delivery time:</strong> 7-21 business days</li>
+              <li><strong>Pricing:</strong> Starting at ¤15.00 (varies by destination)</li>
+              <li><strong>Tracking:</strong> Limited tracking to border</li>
+            </ul>
+          </div>
+
+          <div className="card">
+            <h4 className="card-title">International Priority</h4>
+            <p style={{ color: 'var(--text-muted)', marginBottom: '12px' }}>Faster international delivery with full tracking.</p>
+            <ul>
+              <li><strong>Weight limit:</strong> Up to 30kg (66 lbs)</li>
+              <li><strong>Delivery time:</strong> 6-10 business days</li>
+              <li><strong>Pricing:</strong> Starting at ¤45.00</li>
+              <li><strong>Tracking:</strong> Full international tracking</li>
+              <li><strong>Insurance:</strong> Available up to ¤1,000</li>
+            </ul>
+          </div>
+
+          <div className="card">
+            <h4 className="card-title">International Express</h4>
+            <p style={{ color: 'var(--text-muted)', marginBottom: '12px' }}>Premium international shipping service.</p>
+            <ul>
+              <li><strong>Weight limit:</strong> Up to 30kg (66 lbs)</li>
+              <li><strong>Delivery time:</strong> 3-5 business days</li>
+              <li><strong>Pricing:</strong> Starting at ¤85.00</li>
+              <li><strong>Customs clearance:</strong> Expedited processing</li>
+            </ul>
+          </div>
+
+          <h3 style={{ marginTop: '32px' }}>Specialty Services</h3>
+
+          <div className="card">
+            <h4 className="card-title">Registered Mail</h4>
+            <p style={{ color: 'var(--text-muted)', marginBottom: '12px' }}>Maximum security for valuable items.</p>
+            <ul>
+              <li>Chain of custody with signature at each step</li>
+              <li>Insurance up to ¤50,000</li>
+              <li>Additional fee: ¤15.00 plus postage</li>
+              <li>Delivery time: Same as service selected plus 1-2 days</li>
+            </ul>
+          </div>
+
+          <div className="card">
+            <h4 className="card-title">Certified Mail</h4>
+            <p style={{ color: 'var(--text-muted)', marginBottom: '12px' }}>Proof of mailing and delivery for important documents.</p>
+            <ul>
+              <li>Proof of mailing receipt</li>
+              <li>Proof of delivery signature</li>
+              <li>Additional fee: ¤3.75 plus postage</li>
+              <li>Electronic delivery confirmation</li>
+            </ul>
+          </div>
+
+          <h3 style={{ marginTop: '32px' }}>Additional Services</h3>
+          <ul>
+            <li><strong>Signature Confirmation:</strong> ¤3.00 - Requires recipient signature</li>
+            <li><strong>Adult Signature:</strong> ¤6.50 - Requires signature from adult (18+)</li>
+            <li><strong>Collect on Delivery (COD):</strong> ¤8.00 - Collect payment upon delivery</li>
+            <li><strong>Return Receipt:</strong> ¤2.85 - Proof of delivery signature</li>
+            <li><strong>Insurance:</strong> ¤2.50 per ¤100 of value</li>
+            <li><strong>Special Handling:</strong> ¤11.95 - For fragile or perishable items</li>
+          </ul>
+
+          <div className="info-box" style={{ marginTop: '24px' }}>
+            <h4>Calculate Your Postage</h4>
+            <p>Visit any Praya Post location to calculate exact postage for your package, or use our online postage calculator (coming soon). Postal staff can help you choose the best shipping option for your needs.</p>
+          </div>
+
+          <div className="card" style={{ marginTop: '20px' }}>
+            <h4 className="card-title">Packaging Tips</h4>
+            <ul>
+              <li>Use sturdy boxes appropriate for item weight</li>
+              <li>Wrap fragile items individually with bubble wrap</li>
+              <li>Fill empty spaces with packing material to prevent shifting</li>
+              <li>Seal all seams with strong packing tape</li>
+              <li>Address labels should be clear and legible</li>
+              <li>Include return address on all packages</li>
+              <li>For international shipments, complete customs forms accurately</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </main>
+  )
+}
+
+function Stamps() {
+  return (
+    <main className="main">
+      <div className="page-header">
+        <div className="container">
+          <div className="breadcrumb">
+            <Link to="/post">Home</Link> / Stamps
+          </div>
+          <h1>Stamps & Collectibles</h1>
+          <p className="subtitle">Explore our stamp collection and purchase postage</p>
+        </div>
+      </div>
+      <div className="container">
+        <div className="content-text">
+          <h3>Current Stamp Offerings</h3>
+
+          <div className="card" style={{ marginTop: '20px' }}>
+            <h4 className="card-title">First Class Stamps</h4>
+            <p style={{ color: 'var(--text-muted)', marginBottom: '12px' }}>Standard postage for letters and cards.</p>
+            <ul style={{ marginBottom: '12px' }}>
+              <li><strong>Price:</strong> ¤0.85 each</li>
+              <li><strong>Valid for:</strong> Letters up to 50g domestically</li>
+              <li><strong>Purchase options:</strong> Book of 20 (¤17.00), Roll of 100 (¤85.00)</li>
+              <li><strong>Designs:</strong> Available in Flag of Praya, National Landmarks, and Wildlife series</li>
+            </ul>
+            <div style={{ fontSize: '13px', color: 'var(--text-secondary)' }}>
+              Forever stamps: These stamps retain their value even if postage rates increase
+            </div>
+          </div>
+
+          <div className="card">
+            <h4 className="card-title">Additional Ounce Stamps</h4>
+            <p style={{ color: 'var(--text-muted)', marginBottom: '12px' }}>For heavier letters requiring extra postage.</p>
+            <ul>
+              <li><strong>Price:</strong> ¤0.25 each</li>
+              <li><strong>Use with:</strong> First class stamp for letters over 50g</li>
+              <li><strong>Available in:</strong> Books of 10 (¤2.50)</li>
+            </ul>
+          </div>
+
+          <div className="card">
+            <h4 className="card-title">Postcard Stamps</h4>
+            <p style={{ color: 'var(--text-muted)', marginBottom: '12px' }}>Special rate for standard-size postcards.</p>
+            <ul>
+              <li><strong>Price:</strong> ¤0.55 each</li>
+              <li><strong>Size limit:</strong> Standard postcard (10cm x 15cm)</li>
+              <li><strong>Designs:</strong> Seasonal and tourist destination themes</li>
+            </ul>
+          </div>
+
+          <h3 style={{ marginTop: '32px' }}>Commemorative Stamps</h3>
+
+          <div className="card">
+            <h4 className="card-title">2024 Commemorative Series</h4>
+            <p style={{ color: 'var(--text-muted)', marginBottom: '12px' }}>Limited edition stamps celebrating Praya's heritage and achievements.</p>
+            <ul>
+              <li><strong>Republic Founding Anniversary</strong> - ¤0.85 (Released January 2024)
+                <ul style={{ marginLeft: '20px', marginTop: '8px' }}>
+                  <li>Features: Historical buildings and founding fathers</li>
+                  <li>Sheet of 12: ¤10.20</li>
+                </ul>
+              </li>
+              <li><strong>Praya National Parks</strong> - ¤0.85 (Released March 2024)
+                <ul style={{ marginLeft: '20px', marginTop: '8px' }}>
+                  <li>Features: 8 national parks across the republic</li>
+                  <li>Complete set of 8: ¤6.80</li>
+                </ul>
+              </li>
+              <li><strong>Endangered Species Series</strong> - ¤1.25 (Released June 2024)
+                <ul style={{ marginLeft: '20px', marginTop: '8px' }}>
+                  <li>Features: Native endangered wildlife</li>
+                  <li>Premium stamps with detailed artwork</li>
+                  <li>Sheet of 6: ¤7.50</li>
+                </ul>
+              </li>
+              <li><strong>Cultural Festivals</strong> - ¤0.85 (Released September 2024)
+                <ul style={{ marginLeft: '20px', marginTop: '8px' }}>
+                  <li>Features: Traditional celebrations and costumes</li>
+                  <li>Set of 4: ¤3.40</li>
+                </ul>
+              </li>
+              <li><strong>Holiday Season</strong> - ¤0.85 (Released November 2024)
+                <ul style={{ marginLeft: '20px', marginTop: '8px' }}>
+                  <li>Features: Winter scenes and holiday traditions</li>
+                  <li>Book of 20: ¤17.00</li>
+                </ul>
+              </li>
+            </ul>
+          </div>
+
+          <h3 style={{ marginTop: '32px' }}>Collector's Items</h3>
+
+          <div className="card">
+            <h4 className="card-title">First Day Covers</h4>
+            <p style={{ color: 'var(--text-muted)', marginBottom: '12px' }}>Envelopes bearing new stamps postmarked on their first day of issue.</p>
+            <ul>
+              <li><strong>Price:</strong> ¤4.50 - ¤12.00 depending on stamp</li>
+              <li><strong>Features:</strong> Special cancellation mark, commemorative cachet</li>
+              <li><strong>Availability:</strong> Limited quantities, sold at major post offices</li>
+              <li><strong>Subscription:</strong> Available for all new commemorative releases</li>
+            </ul>
+          </div>
+
+          <div className="card">
+            <h4 className="card-title">Mint Stamp Sheets</h4>
+            <p style={{ color: 'var(--text-muted)', marginBottom: '12px' }}>Complete uncut sheets for serious collectors.</p>
+            <ul>
+              <li><strong>Standard sheet:</strong> 50 stamps</li>
+              <li><strong>Limited editions:</strong> Numbered and authenticated</li>
+              <li><strong>Pricing:</strong> Face value plus ¤5.00 premium</li>
+              <li><strong>Popular series:</strong> Annual commemoratives, special events</li>
+            </ul>
+          </div>
+
+          <div className="card">
+            <h4 className="card-title">Stamp Yearbooks</h4>
+            <p style={{ color: 'var(--text-muted)', marginBottom: '12px' }}>Complete collection of all stamps issued in a calendar year.</p>
+            <ul>
+              <li><strong>Includes:</strong> All commemorative and definitive stamps</li>
+              <li><strong>Presentation:</strong> Hardcover album with protective mounts</li>
+              <li><strong>Details:</strong> Historical context and design information</li>
+              <li><strong>2024 Yearbook:</strong> ¤75.00 (pre-order available)</li>
+            </ul>
+          </div>
+
+          <h3 style={{ marginTop: '32px' }}>How to Purchase</h3>
+
+          <div className="card">
+            <h4 className="card-title">In Person</h4>
+            <ul>
+              <li>Visit any Praya Post office</li>
+              <li>All locations stock standard stamps</li>
+              <li>Larger offices have commemorative and collector items</li>
+              <li>Authorized retailers also sell basic postage stamps</li>
+            </ul>
+          </div>
+
+          <div className="card">
+            <h4 className="card-title">Online (Coming Soon)</h4>
+            <ul>
+              <li>Order stamps delivered to your door</li>
+              <li>Browse full catalog of commemoratives</li>
+              <li>Manage collector subscriptions</li>
+              <li>Track your stamp collection</li>
+            </ul>
+          </div>
+
+          <div className="card">
+            <h4 className="card-title">Subscription Service</h4>
+            <p style={{ color: 'var(--text-muted)', marginBottom: '12px' }}>Automatically receive new commemorative stamps.</p>
+            <ul>
+              <li>Never miss a new release</li>
+              <li>Choose: All commemoratives, specific themes, or first day covers</li>
+              <li>Quarterly billing</li>
+              <li>Cancel anytime</li>
+              <li><strong>Sign up:</strong> At any post office or call 1-800-POST-PY</li>
+            </ul>
+          </div>
+
+          <h3 style={{ marginTop: '32px' }}>Stamp Collecting Resources</h3>
+
+          <div className="card">
+            <h4 className="card-title">For Beginners</h4>
+            <ul>
+              <li><strong>Starter Kit:</strong> ¤19.95 - Includes album, mounting supplies, and guide</li>
+              <li><strong>Free resources:</strong> Collecting guide available at post offices</li>
+              <li><strong>Workshops:</strong> Monthly stamp collecting classes at select locations</li>
+              <li><strong>Youth program:</strong> Free program for collectors under 18</li>
+            </ul>
+          </div>
+
+          <div className="card">
+            <h4 className="card-title">Praya Philatelic Society</h4>
+            <p style={{ color: 'var(--text-muted)', marginBottom: '12px' }}>Join fellow stamp enthusiasts.</p>
+            <ul>
+              <li><strong>Membership:</strong> ¤35/year</li>
+              <li><strong>Benefits:</strong> Quarterly magazine, trading events, exhibitions</li>
+              <li><strong>Events:</strong> Annual stamp show and monthly meetings</li>
+              <li><strong>Contact:</strong> philately@prayapost.gov.py</li>
+            </ul>
+          </div>
+
+          <div className="info-box" style={{ marginTop: '24px' }}>
+            <h4>Stamp Care Tips</h4>
+            <ul style={{ marginBottom: 0 }}>
+              <li>Store stamps in a cool, dry place away from direct sunlight</li>
+              <li>Use stamp tongs, never handle stamps with bare fingers</li>
+              <li>Keep stamps in acid-free albums or stock books</li>
+              <li>Avoid exposing stamps to humidity or temperature fluctuations</li>
+              <li>For valuable stamps, consider professional appraisal and insurance</li>
+            </ul>
           </div>
         </div>
       </div>
