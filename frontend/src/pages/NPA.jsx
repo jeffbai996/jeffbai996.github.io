@@ -16,8 +16,10 @@ export default function NPA() {
         <div className="container">
           <Link to="/npa" className="dept-logo">
             <div className="logo-mark">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M12 2l7 4v6c0 5-4 9-7 10-3-1-7-5-7-10V6z"></path>
+                <path d="M9 12h6"></path>
+                <path d="M12 9v6"></path>
               </svg>
             </div>
             <div className="logo-text">
