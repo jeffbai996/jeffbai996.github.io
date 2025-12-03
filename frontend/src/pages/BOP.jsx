@@ -69,6 +69,7 @@ export default function BOP() {
               <h5>Government</h5>
               <ul>
                 <li><Link to="/">Gov Portal</Link></li>
+                <li><Link to="/pse">Stock Exchange</Link></li>
                 <li><a href="#">Monetary Policy</a></li>
                 <li><a href="#">Economic Reports</a></li>
               </ul>
@@ -228,6 +229,14 @@ function BOPHome({ navigate }) {
                     </svg>
                   </span>
                   Apply for Loan
+                </div>
+                <div className="quick-link" onClick={() => navigate('/pse')}>
+                  <span className="icon">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                      <polyline points="22,12 18,12 15,21 9,3 6,12 2,12"/>
+                    </svg>
+                  </span>
+                  Stock Exchange
                 </div>
                 <div className="quick-link">
                   <span className="icon">
