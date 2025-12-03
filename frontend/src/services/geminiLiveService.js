@@ -5,6 +5,13 @@
 
 const GEMINI_LIVE_API_KEY = import.meta.env.VITE_GEMINI_API_KEY
 const GEMINI_LIVE_MODEL = 'gemini-2.0-flash-exp'
+
+// Validate API key is present
+if (!GEMINI_LIVE_API_KEY) {
+  console.error('VITE_GEMINI_API_KEY is not configured. Voice chat will not work.')
+  console.error('Please set VITE_GEMINI_API_KEY in your GitHub repository secrets.')
+}
+
 // Use v1alpha endpoint which supports the Live API
 const WEBSOCKET_URL = `wss://generativelanguage.googleapis.com/ws/google.ai.generativelanguage.v1alpha.GenerativeService.BidiGenerateContent?key=${GEMINI_LIVE_API_KEY}`
 
@@ -78,6 +85,14 @@ class GeminiLiveService {
    */
   async connect() {
     return new Promise((resolve, reject) => {
+      // Validate API key is configured
+      if (!GEMINI_LIVE_API_KEY) {
+        const error = new Error('Gemini API key not configured. Please set VITE_GEMINI_API_KEY in your environment or GitHub secrets.')
+        this.emit('error', error)
+        reject(error)
+        return
+      }
+
       if (this.ws && this.ws.readyState === WebSocket.OPEN) {
         resolve()
         return
