@@ -95,13 +95,28 @@ function CBCAHome({ navigate }) {
         <div className="hero-bg">
           <div className="hero-bg-shape"></div>
           <div className="hero-bg-shape"></div>
+          <div className="hero-bg-shape"></div>
         </div>
+        <div className="hero-pattern"></div>
         <div className="container">
           <div className="hero-content">
+            <div className="hero-badge">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <rect x="5" y="4" width="14" height="17" rx="2"></rect>
+                <circle cx="12" cy="15" r="1"></circle>
+                <path d="M9 4v-2a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"></path>
+              </svg>
+              Border Security
+            </div>
             <h2>Securing Our <span>Borders</span></h2>
-            <p>CBCA facilitates lawful international travel and trade while protecting the Republic's borders through effective customs enforcement and immigration control.</p>
+            <p>CBCA facilitates lawful international travel and trade while protecting the Republic's borders through effective customs enforcement and immigration control for a safe nation.</p>
             <div className="hero-actions">
               <button className="btn btn-primary" onClick={() => navigate('/cbca/customs')}>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
+                  <line x1="3" y1="9" x2="21" y2="9"/>
+                  <line x1="9" y1="21" x2="9" y2="9"/>
+                </svg>
                 Customs Information
               </button>
               <button className="btn btn-secondary" onClick={() => navigate('/cbca/travel')}>
