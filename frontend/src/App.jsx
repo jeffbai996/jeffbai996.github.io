@@ -1,14 +1,24 @@
-import { Routes, Route, Navigate } from 'react-router-dom'
+import { Routes, Route } from 'react-router-dom'
 import { ThemeProvider } from './utils/ThemeContext'
 import { AuthProvider } from './utils/AuthContext'
 import Layout from './components/Layout'
 import Portal from './pages/Portal'
+import NPA from './pages/NPA'
+import BOP from './pages/BOP'
 import DOJ from './pages/DOJ'
 import CTB from './pages/CTB'
 import Interior from './pages/Interior'
 import BD from './pages/BD'
 import CR from './pages/CR'
 import SWD from './pages/SWD'
+import Post from './pages/Post'
+import CBCA from './pages/CBCA'
+import Health from './pages/Health'
+import Housing from './pages/Housing'
+import Revenue from './pages/Revenue'
+import Transport from './pages/Transport'
+import LC from './pages/LC'
+import PSE from './pages/PSE'
 import NotFound from './pages/NotFound'
 
 // Auth pages
@@ -29,16 +39,24 @@ function App() {
         <Routes>
           <Route path="/" element={<Layout />}>
             <Route index element={<Portal />} />
-            <Route path="npa/*" element={<Navigate to="/pages/NPA_Praya.html" replace />} />
-            <Route path="bop/*" element={<Navigate to="/pages/BOP_Praya.html" replace />} />
+
+            {/* Department Pages */}
+            <Route path="npa/*" element={<NPA />} />
+            <Route path="bop/*" element={<BOP />} />
             <Route path="ctb/*" element={<CTB />} />
             <Route path="doj/*" element={<DOJ />} />
             <Route path="bd/*" element={<BD />} />
             <Route path="cr/*" element={<CR />} />
             <Route path="swd/*" element={<SWD />} />
             <Route path="interior/*" element={<Interior />} />
-            <Route path="post/*" element={<Navigate to="/pages/Praya_Post.html" replace />} />
-            <Route path="cbca/*" element={<Navigate to="/pages/CBCA_Praya.html" replace />} />
+            <Route path="post/*" element={<Post />} />
+            <Route path="cbca/*" element={<CBCA />} />
+            <Route path="health/*" element={<Health />} />
+            <Route path="housing/*" element={<Housing />} />
+            <Route path="revenue/*" element={<Revenue />} />
+            <Route path="transport/*" element={<Transport />} />
+            <Route path="lc/*" element={<LC />} />
+            <Route path="pse/*" element={<PSE />} />
 
             {/* Auth Routes */}
             <Route path="login" element={<Login />} />
