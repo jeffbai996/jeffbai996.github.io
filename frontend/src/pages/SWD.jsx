@@ -95,13 +95,25 @@ function SWDHome({ navigate }) {
         <div className="hero-bg">
           <div className="hero-bg-shape"></div>
           <div className="hero-bg-shape"></div>
+          <div className="hero-bg-shape"></div>
         </div>
+        <div className="hero-pattern"></div>
         <div className="container">
           <div className="hero-content">
+            <div className="hero-badge">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+              </svg>
+              Social Services
+            </div>
             <h2>Caring for <span>Every Citizen</span></h2>
-            <p>The Social Welfare Department provides essential support services, financial assistance, and care programs for families, children, elderly, and vulnerable citizens of the Republic of Praya.</p>
+            <p>The Social Welfare Department provides essential support services, financial assistance, and care programs for families, children, elderly, and vulnerable citizens throughout the Republic of Praya.</p>
             <div className="hero-actions">
               <button className="btn btn-primary" onClick={() => navigate('/swd/benefits')}>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/>
+                  <polyline points="14,2 14,8 20,8"/>
+                </svg>
                 Apply for Benefits
               </button>
               <button className="btn btn-secondary" onClick={() => navigate('/swd/services')}>

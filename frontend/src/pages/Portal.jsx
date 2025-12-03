@@ -183,7 +183,7 @@ const departments = [
     abbrev: 'HD',
     url: '/health',
     description: 'Public health services, disease control, healthcare licensing, and health statistics.',
-    color: '#dc2626',
+    color: '#0d9488',
     services: ['Public Health', 'Disease Control', 'Healthcare Licensing', 'Health Statistics']
   },
   {

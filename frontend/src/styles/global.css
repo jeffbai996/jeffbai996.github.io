@@ -44,12 +44,14 @@ body.theme-ctb {
   --primary-glow: rgba(45, 134, 89, 0.25);
 }
 
-/* Department of Justice - Dark Red */
+/* Department of Justice - Dark Red with Gold accents */
 body.theme-doj {
   --primary: #991b1b;
   --primary-dark: #7f1d1d;
   --primary-light: rgba(153, 27, 27, 0.1);
   --primary-glow: rgba(153, 27, 27, 0.25);
+  --accent: #f59e0b;
+  --accent-light: rgba(245, 158, 11, 0.1);
 }
 
 body.theme-interior {
@@ -88,20 +90,29 @@ body.theme-npa {
   --primary-glow: rgba(29, 78, 216, 0.25);
 }
 
-/* Bank of Praya - Sky Blue */
+/* Bank of Praya - Sky Blue with Financial theme */
 body.theme-bop {
   --primary: #0ea5e9;
   --primary-dark: #0284c7;
-  --primary-light: rgba(14, 165, 233, 0.1);
+  --primary-light: rgba(14, 165, 233, 0.12);
   --primary-glow: rgba(14, 165, 233, 0.25);
+  --accent: #06b6d4;
+  --accent-light: rgba(6, 182, 212, 0.12);
+  --bg-dark: #0b1020;
+  --bg-card: #101726;
+  --bg-elevated: #0f172a;
+  --border: #1f2937;
+  --border-subtle: #0f172a;
 }
 
-/* Health Department - Red */
+/* Health Department - Teal (Medical/Healthcare theme) */
 body.theme-health {
-  --primary: #dc2626;
-  --primary-dark: #b91c1c;
-  --primary-light: rgba(220, 38, 38, 0.1);
-  --primary-glow: rgba(220, 38, 38, 0.25);
+  --primary: #0d9488;
+  --primary-dark: #0f766e;
+  --primary-light: rgba(13, 148, 136, 0.1);
+  --primary-glow: rgba(13, 148, 136, 0.25);
+  --accent: #f43f5e;
+  --accent-light: rgba(244, 63, 94, 0.1);
 }
 
 /* Housing Authority - Dark Orange */
