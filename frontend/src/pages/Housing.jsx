@@ -94,13 +94,26 @@ function HousingHome({ navigate }) {
         <div className="hero-bg">
           <div className="hero-bg-shape"></div>
           <div className="hero-bg-shape"></div>
+          <div className="hero-bg-shape"></div>
         </div>
+        <div className="hero-pattern"></div>
         <div className="container">
           <div className="hero-content">
+            <div className="hero-badge">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                <polyline points="9 22 9 12 15 12 15 22"></polyline>
+              </svg>
+              Public Housing
+            </div>
             <h2>Housing for <span>Everyone</span></h2>
-            <p>The Housing Authority provides affordable housing programs, rental assistance, and tenant support services to ensure every resident has access to safe, quality housing.</p>
+            <p>The Housing Authority provides affordable housing programs, rental assistance, and tenant support services to ensure every resident has access to safe, quality housing across the Republic.</p>
             <div className="hero-actions">
               <button className="btn btn-primary" onClick={() => navigate('/housing/applications')}>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/>
+                  <polyline points="14,2 14,8 20,8"/>
+                </svg>
                 Apply for Housing
               </button>
               <button className="btn btn-secondary" onClick={() => navigate('/housing/tenants')}>

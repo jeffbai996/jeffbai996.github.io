@@ -30,6 +30,7 @@ export default function Health() {
             <Link to="/health/insurance" className="nav-link">Insurance</Link>
             <Link to="/health/vaccinations" className="nav-link">Vaccinations</Link>
             <Link to="/health/providers" className="nav-link">Find Provider</Link>
+            <Link to="/health/alerts" className="nav-link">Health Alerts</Link>
           </nav>
         </div>
       </header>
@@ -39,6 +40,7 @@ export default function Health() {
         <Route path="insurance" element={<HealthInsurance />} />
         <Route path="vaccinations" element={<ComingSoon title="Vaccination Services" />} />
         <Route path="providers" element={<ComingSoon title="Healthcare Providers" />} />
+        <Route path="alerts" element={<ComingSoon title="Health Alerts" />} />
       </Routes>
 
       <footer className="dept-footer">
@@ -93,13 +95,25 @@ function HealthHome({ navigate }) {
         <div className="hero-bg">
           <div className="hero-bg-shape"></div>
           <div className="hero-bg-shape"></div>
+          <div className="hero-bg-shape"></div>
         </div>
+        <div className="hero-pattern"></div>
         <div className="container">
           <div className="hero-content">
+            <div className="hero-badge">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <path d="M22 12h-4l-3 9L9 3l-3 9H2"></path>
+              </svg>
+              Public Health Services
+            </div>
             <h2>Health for <span>Everyone</span></h2>
-            <p>The Department of Health ensures access to quality healthcare services, promotes public health initiatives, and protects the well-being of all Praya residents.</p>
+            <p>The Department of Health ensures access to quality healthcare services, promotes public health initiatives, and protects the well-being of all Praya residents through comprehensive medical programs.</p>
             <div className="hero-actions">
               <button className="btn btn-primary" onClick={() => navigate('/health/insurance')}>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <rect x="1" y="4" width="22" height="16" rx="2" ry="2"/>
+                  <line x1="1" y1="10" x2="23" y2="10"/>
+                </svg>
                 Health Insurance
               </button>
               <button className="btn btn-secondary" onClick={() => navigate('/health/providers')}>
@@ -246,8 +260,8 @@ function HealthHome({ navigate }) {
                 <p><strong>Poison Control:</strong> 1-800-POISON</p>
               </div>
 
-              <div className="card" style={{ background: 'linear-gradient(135deg, #dc2626 0%, #b91c1c 100%)', color: 'white', border: 'none' }}>
-                <h4 style={{ color: 'white', marginBottom: '8px' }}>When to Call 911</h4>
+              <div className="card emergency-card">
+                <h4>When to Call 911</h4>
                 <div style={{ fontSize: '13px', lineHeight: '1.6', opacity: 0.95 }}>
                   <p style={{ marginBottom: '6px' }}>• Chest pain or difficulty breathing</p>
                   <p style={{ marginBottom: '6px' }}>• Severe bleeding or injuries</p>
@@ -387,6 +401,12 @@ function ComingSoon({ title }) {
           description: 'Find doctors, specialists, hospitals, and clinics in your area.',
           services: ['Doctor Search by Specialty', 'Hospital Directory', 'Clinic Locations', 'Provider Ratings & Reviews'],
           contact: 'For provider referrals: Contact your insurance or call 1-800-HEALTH-PY'
+        };
+      case 'Health Alerts':
+        return {
+          description: 'Stay informed about public health advisories, disease outbreaks, and safety recommendations.',
+          services: ['Disease Outbreak Alerts', 'Air Quality Advisories', 'Food Safety Recalls', 'Seasonal Health Tips'],
+          contact: 'For emergency health information: Call 1-800-HEALTH-PY or tune to emergency broadcast'
         };
       default:
         return {
