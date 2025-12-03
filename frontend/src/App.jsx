@@ -4,6 +4,8 @@ import { AuthProvider } from './utils/AuthContext'
 import Layout from './components/Layout'
 import Portal from './pages/Portal'
 import DOJ from './pages/DOJ'
+import CTB from './pages/CTB'
+import Interior from './pages/Interior'
 import BD from './pages/BD'
 import CR from './pages/CR'
 import SWD from './pages/SWD'
@@ -29,12 +31,12 @@ function App() {
             <Route index element={<Portal />} />
             <Route path="npa/*" element={<Navigate to="/pages/NPA_Praya.html" replace />} />
             <Route path="bop/*" element={<Navigate to="/pages/BOP_Praya.html" replace />} />
-            <Route path="ctb/*" element={<Navigate to="/pages/CTB_Praya.html" replace />} />
+            <Route path="ctb/*" element={<CTB />} />
             <Route path="doj/*" element={<DOJ />} />
             <Route path="bd/*" element={<BD />} />
             <Route path="cr/*" element={<CR />} />
             <Route path="swd/*" element={<SWD />} />
-            <Route path="interior/*" element={<Navigate to="/pages/ID_Praya.html" replace />} />
+            <Route path="interior/*" element={<Interior />} />
             <Route path="post/*" element={<Navigate to="/pages/Praya_Post.html" replace />} />
             <Route path="cbca/*" element={<Navigate to="/pages/CBCA_Praya.html" replace />} />
 
