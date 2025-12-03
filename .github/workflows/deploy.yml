@@ -56,6 +56,10 @@ jobs:
           VITE_GEMINI_ENABLED: true
           VITE_GEMINI_API_KEY: ${{ secrets.VITE_GEMINI_API_KEY }}
 
+      - name: Inject Gemini API key into chatbot-embed.js
+        run: |
+          sed -i "s/GEMINI_API_KEY_PLACEHOLDER/${{ secrets.VITE_GEMINI_API_KEY }}/g" chatbot-embed.js
+
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
