@@ -356,6 +356,19 @@ body.light .portal-header {
   background: var(--bg-elevated);
 }
 
+.stat-item-link {
+  text-decoration: none;
+  display: block;
+}
+
+.stat-item-link:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.stat-item-link:hover .stat-label {
+  color: var(--primary);
+}
+
 /* Featured Services */
 .featured-services {
   padding: 48px 0;
