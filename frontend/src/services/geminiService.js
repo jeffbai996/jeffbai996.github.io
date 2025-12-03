@@ -1,5 +1,16 @@
 import { GoogleGenerativeAI } from '@google/generative-ai';
 import { generateNationalStatusContext } from '../utils/nationalStatus';
+import {
+  generatePredictiveSuggestions,
+  getTimeSensitiveAlerts,
+  analyzeForPredictions
+} from '../utils/predictiveSuggestions';
+import {
+  searchForms,
+  generateFormSummary,
+  generateFormHelp,
+  getFormById
+} from '../utils/formKnowledge';
 
 /**
  * Direct Gemini API Service for Frontend
@@ -11,6 +22,9 @@ import { generateNationalStatusContext } from '../utils/nationalStatus';
  * - Conversation summary injection
  * - Proactive suggestion generation
  * - Real-time national status (AQI, Security Level)
+ * - Semantic search with embeddings
+ * - Document/form knowledge base
+ * - Predictive suggestions engine
  */
 class GeminiService {
   constructor() {
@@ -114,55 +128,102 @@ class GeminiService {
 
   /**
    * Generate proactive suggestions based on context
+   * Uses the enhanced predictive suggestions engine
    * @param {string} response - The generated response
    * @param {object} enhancedContext - Conversation context
-   * @returns {string[]} - Array of suggestion strings
+   * @returns {object[]} - Array of suggestion objects with text and query
    */
   generateProactiveSuggestions(response, enhancedContext = {}) {
-    const suggestions = [];
-
-    // Based on apparent goal, suggest next steps
-    const goalSuggestions = {
-      'completing an application': [
-        'Would you like to know the required documents?',
-        'Should I explain the processing timeline?'
-      ],
-      'tracking a status': [
-        'Want me to explain what each status means?',
-        'Would you like contact information for follow-up?'
-      ],
-      'understanding costs': [
-        'Are you interested in payment plan options?',
-        'Would you like to know about fee waivers?'
-      ],
-      'understanding a process': [
-        'Should I provide a step-by-step checklist?',
-        'Would you like to know common mistakes to avoid?'
-      ]
+    // Use the new predictive suggestions engine
+    const predictionContext = {
+      lastIntent: enhancedContext.lastIntent,
+      lastMessage: enhancedContext.lastMessage || '',
+      sentiment: enhancedContext.sentiment,
+      entities: enhancedContext.entities || {},
+      discussedTopics: enhancedContext.topics || enhancedContext.currentTopics || [],
+      currentService: enhancedContext.currentService
     };
 
-    if (enhancedContext.apparentGoal && goalSuggestions[enhancedContext.apparentGoal]) {
-      suggestions.push(...goalSuggestions[enhancedContext.apparentGoal]);
+    const predictions = generatePredictiveSuggestions(predictionContext);
+
+    // Also check for time-sensitive alerts
+    const alerts = getTimeSensitiveAlerts();
+    if (alerts.length > 0) {
+      // Add high-priority alerts as suggestions
+      alerts.forEach(alert => {
+        if (alert.urgency === 'critical' || alert.urgency === 'high') {
+          predictions.unshift({
+            text: alert.message,
+            query: alert.action,
+            priority: 'high',
+            type: 'alert'
+          });
+        }
+      });
     }
 
-    // Based on current topics
-    if (enhancedContext.currentTopics) {
-      const topicSuggestions = {
-        police: ['Do you need information about police station locations?'],
-        taxes: ['Would you like to know about common deductions?'],
-        transport: ['Do you need to schedule a driving test?'],
-        health: ['Want to find healthcare providers in your area?'],
-        housing: ['Are you interested in rental assistance programs?']
-      };
+    // Return top 3 suggestions
+    return predictions.slice(0, 3);
+  }
 
-      for (const topic of enhancedContext.currentTopics) {
-        if (topicSuggestions[topic] && !suggestions.includes(topicSuggestions[topic][0])) {
-          suggestions.push(...topicSuggestions[topic]);
-        }
+  /**
+   * Detect if message is asking about forms/documents
+   * @param {string} message - User message
+   * @returns {object|null} - Form info if found, null otherwise
+   */
+  detectFormQuery(message) {
+    const formPatterns = [
+      /what (documents?|forms?|papers?) (do i |should i |to )?need/i,
+      /how (do i|to) (fill|complete|submit)/i,
+      /what('s| is) required for/i,
+      /step[- ]?by[- ]?step/i,
+      /common mistakes?/i,
+      /requirements? for/i,
+      /checklist for/i
+    ];
+
+    const isFormQuery = formPatterns.some(pattern => pattern.test(message));
+
+    if (isFormQuery) {
+      const matchedForms = searchForms(message);
+      if (matchedForms.length > 0) {
+        return {
+          form: matchedForms[0],
+          type: 'form-query'
+        };
       }
     }
 
-    return suggestions.slice(0, 2); // Return max 2 suggestions
+    return null;
+  }
+
+  /**
+   * Generate form-specific response
+   * @param {object} form - Form object from formKnowledge
+   * @param {string} message - Original user message
+   * @returns {string} - Formatted form response
+   */
+  generateFormResponse(form, message) {
+    const messageLower = message.toLowerCase();
+
+    if (messageLower.includes('step') || messageLower.includes('how to') || messageLower.includes('process')) {
+      return generateFormHelp(form.id, 'steps');
+    }
+
+    if (messageLower.includes('mistake') || messageLower.includes('error') || messageLower.includes('wrong')) {
+      return generateFormHelp(form.id, 'mistakes');
+    }
+
+    if (messageLower.includes('document') || messageLower.includes('need') || messageLower.includes('required')) {
+      return generateFormHelp(form.id, 'requirements');
+    }
+
+    if (messageLower.includes('tip') || messageLower.includes('advice')) {
+      return generateFormHelp(form.id, 'tips');
+    }
+
+    // Default: provide summary
+    return generateFormSummary(form.id);
   }
 
   /**
@@ -228,6 +289,29 @@ class GeminiService {
     }
 
     try {
+      // Check if this is a form-specific query
+      const formQuery = this.detectFormQuery(userMessage);
+      if (formQuery && formQuery.form) {
+        const formResponse = this.generateFormResponse(formQuery.form, userMessage);
+        const suggestions = this.generateProactiveSuggestions(formResponse, {
+          ...enhancedContext,
+          lastMessage: userMessage,
+          currentService: formQuery.form.id
+        });
+
+        return {
+          success: true,
+          response: formResponse,
+          suggestions,
+          source: 'form-knowledge',
+          formInfo: {
+            formId: formQuery.form.id,
+            formName: formQuery.form.name,
+            url: formQuery.form.url
+          }
+        };
+      }
+
       // Build the system context
       const departmentContext = this.buildContext(relevantDepartments);
 
