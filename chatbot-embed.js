@@ -124,6 +124,33 @@
       services: ['Market Data', 'Stock Listings', 'Investment Information', 'Broker Registration', 'Trading Rules'],
       hours: 'Trading: Mon-Fri 9AM-4PM',
       contact: '+854 140 0000'
+    },
+    'bd': {
+      name: 'Buildings Department',
+      abbrev: 'BD',
+      color: '#d97706',
+      focus: 'You are helping users with Buildings Department services including building permits, construction safety, inspections, and enforcement of building codes.',
+      services: ['Building Permits', 'Building Inspections', 'Contractor Licensing', 'Building Code Information', 'Structural Safety Reviews', 'Permit Status Tracking'],
+      hours: 'Mon-Fri 8AM-5PM',
+      contact: '+854 150 0000'
+    },
+    'cr': {
+      name: 'Companies Registry',
+      abbrev: 'CR',
+      color: '#3b82f6',
+      focus: 'You are helping users with Companies Registry services including business incorporation, company registration, and corporate filing services.',
+      services: ['Company Registration', 'Annual Filings', 'Company Search', 'Document Retrieval', 'Name Reservation', 'Business Entity Changes'],
+      hours: 'Mon-Fri 8AM-5PM',
+      contact: '+854 160 0000'
+    },
+    'swd': {
+      name: 'Social Welfare Department',
+      abbrev: 'SWD',
+      color: '#ec4899',
+      focus: 'You are helping users with Social Welfare Department services including social benefits, family services, elderly care, and support for vulnerable citizens.',
+      services: ['Social Benefits', 'Family Services', 'Elderly Care', 'Disability Support', 'Child Welfare Services', 'Community Care Programs'],
+      hours: 'Mon-Fri 8AM-5PM',
+      contact: '+854 170 0000'
     }
   };
 
