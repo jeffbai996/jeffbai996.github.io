@@ -1,555 +1,704 @@
-import React, { useEffect } from 'react'
-import { Routes, Route, Link, useNavigate } from 'react-router-dom'
-import './Department.css'
+import React, { useEffect, useState, useRef } from 'react'
+import { Link } from 'react-router-dom'
+import './PSE.css'
+
+// Generate realistic market data with technical indicators
+const generateMarketData = (days = 60) => {
+  const data = []
+  let basePrice = 8500
+  const now = Date.now()
+  const dayMs = 24 * 60 * 60 * 1000
+
+  for (let i = days - 1; i >= 0; i--) {
+    const timestamp = now - (i * dayMs)
+    const change = (Math.random() - 0.48) * 100
+    basePrice += change
+    const open = basePrice
+    const close = basePrice + (Math.random() - 0.5) * 50
+    const high = Math.max(open, close) + Math.random() * 30
+    const low = Math.min(open, close) - Math.random() * 30
+    const volume = Math.floor(Math.random() * 5000000 + 2000000)
+
+    data.push({
+      timestamp,
+      open,
+      high,
+      low,
+      close,
+      volume
+    })
+  }
+
+  return data
+}
+
+// Calculate RSI
+const calculateRSI = (data, period = 14) => {
+  const rsi = []
+  for (let i = 0; i < data.length; i++) {
+    if (i < period) {
+      rsi.push(null)
+      continue
+    }
+
+    let gains = 0
+    let losses = 0
+
+    for (let j = i - period + 1; j <= i; j++) {
+      const change = data[j].close - data[j - 1].close
+      if (change > 0) gains += change
+      else losses -= change
+    }
+
+    const avgGain = gains / period
+    const avgLoss = losses / period
+    const rs = avgGain / (avgLoss || 1)
+    const rsiValue = 100 - (100 / (1 + rs))
+
+    rsi.push(rsiValue)
+  }
+
+  return rsi
+}
+
+// Calculate MACD
+const calculateMACD = (data, fastPeriod = 12, slowPeriod = 26, signalPeriod = 9) => {
+  const prices = data.map(d => d.close)
+
+  // Calculate EMA
+  const calculateEMA = (prices, period) => {
+    const k = 2 / (period + 1)
+    const ema = [prices[0]]
+
+    for (let i = 1; i < prices.length; i++) {
+      ema.push(prices[i] * k + ema[i - 1] * (1 - k))
+    }
+
+    return ema
+  }
+
+  const fastEMA = calculateEMA(prices, fastPeriod)
+  const slowEMA = calculateEMA(prices, slowPeriod)
+
+  const macdLine = fastEMA.map((fast, i) => fast - slowEMA[i])
+  const signalLine = calculateEMA(macdLine, signalPeriod)
+  const histogram = macdLine.map((macd, i) => macd - signalLine[i])
+
+  return { macdLine, signalLine, histogram }
+}
 
 export default function PSE() {
-  const navigate = useNavigate()
+  const [marketData] = useState(() => generateMarketData(60))
+  const [selectedStock, setSelectedStock] = useState('PSE')
+  const [timeframe, setTimeframe] = useState('1D')
+  const mainChartRef = useRef(null)
+  const rsiChartRef = useRef(null)
+  const macdChartRef = useRef(null)
+
+  const currentPrice = marketData[marketData.length - 1]?.close || 8742
+  const previousPrice = marketData[marketData.length - 2]?.close || 8637
+  const priceChange = currentPrice - previousPrice
+  const priceChangePercent = (priceChange / previousPrice) * 100
+
+  const watchlist = [
+    { symbol: 'PNB', name: 'Praya National Bank', price: 142.50, change: 2.4 },
+    { symbol: 'TECH', name: 'Praya Technologies', price: 87.32, change: -1.2 },
+    { symbol: 'INDU', name: 'Industrial Group', price: 215.80, change: 3.1 },
+    { symbol: 'ENER', name: 'Praya Energy Corp', price: 52.15, change: -0.8 },
+    { symbol: 'CONS', name: 'Consumer Goods Ltd', price: 98.44, change: 1.5 }
+  ]
+
+  const topMovers = [
+    { rank: 1, symbol: 'INDU', name: 'Industrial Group', percent: 3.1, value: 215.80 },
+    { rank: 2, symbol: 'PNB', name: 'Praya National Bank', percent: 2.4, value: 142.50 },
+    { rank: 3, symbol: 'CONS', name: 'Consumer Goods', percent: 1.5, value: 98.44 }
+  ]
+
+  const news = [
+    { time: '2h ago', tag: 'MARKETS', title: 'PSE Composite hits new record high', excerpt: 'Index surges past 8,750 on strong financial sector performance.' },
+    { time: '4h ago', tag: 'EARNINGS', title: 'Praya National Bank reports Q4 earnings beat', excerpt: 'Net profit up 18% YoY as lending activity accelerates.' },
+    { time: '6h ago', tag: 'IPO', title: 'Tech startup TechCorp files for IPO', excerpt: 'Company seeks to raise ¤500M in early 2025 listing.' }
+  ]
 
   useEffect(() => {
-    document.body.classList.add('theme-pse')
-    return () => document.body.classList.remove('theme-pse')
+    // Initialize main price chart
+    if (mainChartRef.current && typeof window !== 'undefined') {
+      const ctx = mainChartRef.current.getContext('2d')
+
+      if (window.mainChart) {
+        window.mainChart.destroy()
+      }
+
+      const gradient = ctx.createLinearGradient(0, 0, 0, 400)
+      gradient.addColorStop(0, 'rgba(59, 130, 246, 0.3)')
+      gradient.addColorStop(1, 'rgba(59, 130, 246, 0)')
+
+      window.mainChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+          labels: marketData.map((d, i) => {
+            const date = new Date(d.timestamp)
+            return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' })
+          }),
+          datasets: [{
+            label: 'PSE Composite Index',
+            data: marketData.map(d => d.close),
+            borderColor: '#3b82f6',
+            backgroundColor: gradient,
+            borderWidth: 2,
+            fill: true,
+            tension: 0.4,
+            pointRadius: 0,
+            pointHoverRadius: 6,
+            pointHoverBackgroundColor: '#3b82f6',
+            pointHoverBorderColor: '#fff',
+            pointHoverBorderWidth: 2
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          interaction: {
+            intersect: false,
+            mode: 'index'
+          },
+          plugins: {
+            legend: {
+              display: false
+            },
+            tooltip: {
+              backgroundColor: 'rgba(16, 24, 37, 0.95)',
+              titleColor: '#e8ecf2',
+              bodyColor: '#9ca3af',
+              borderColor: '#2a3544',
+              borderWidth: 1,
+              padding: 12,
+              displayColors: false,
+              callbacks: {
+                label: function(context) {
+                  return 'Index: ' + context.parsed.y.toFixed(2)
+                }
+              }
+            }
+          },
+          scales: {
+            x: {
+              grid: {
+                display: false,
+                drawBorder: false
+              },
+              ticks: {
+                color: '#6b7280',
+                font: {
+                  size: 11
+                },
+                maxRotation: 0
+              }
+            },
+            y: {
+              position: 'right',
+              grid: {
+                color: 'rgba(156, 163, 175, 0.1)',
+                drawBorder: false
+              },
+              ticks: {
+                color: '#6b7280',
+                font: {
+                  size: 11
+                },
+                callback: function(value) {
+                  return value.toLocaleString()
+                }
+              }
+            }
+          }
+        }
+      })
+    }
+
+    // Initialize RSI chart
+    if (rsiChartRef.current && typeof window !== 'undefined') {
+      const ctx = rsiChartRef.current.getContext('2d')
+
+      if (window.rsiChart) {
+        window.rsiChart.destroy()
+      }
+
+      const rsiData = calculateRSI(marketData)
+
+      window.rsiChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+          labels: marketData.map((d, i) => i),
+          datasets: [{
+            label: 'RSI',
+            data: rsiData,
+            borderColor: '#f59e0b',
+            backgroundColor: 'rgba(245, 158, 11, 0.1)',
+            borderWidth: 2,
+            fill: true,
+            tension: 0.4,
+            pointRadius: 0,
+            pointHoverRadius: 4
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          interaction: {
+            intersect: false,
+            mode: 'index'
+          },
+          plugins: {
+            legend: {
+              display: false
+            },
+            tooltip: {
+              backgroundColor: 'rgba(16, 24, 37, 0.95)',
+              titleColor: '#e8ecf2',
+              bodyColor: '#9ca3af',
+              borderColor: '#2a3544',
+              borderWidth: 1,
+              padding: 8,
+              displayColors: false,
+              callbacks: {
+                title: () => '',
+                label: function(context) {
+                  return 'RSI: ' + (context.parsed.y || 0).toFixed(2)
+                }
+              }
+            }
+          },
+          scales: {
+            x: {
+              display: false
+            },
+            y: {
+              position: 'right',
+              min: 0,
+              max: 100,
+              grid: {
+                color: 'rgba(156, 163, 175, 0.1)',
+                drawBorder: false
+              },
+              ticks: {
+                color: '#6b7280',
+                font: {
+                  size: 10
+                },
+                stepSize: 50
+              }
+            }
+          }
+        }
+      })
+
+      // Add reference lines for overbought/oversold
+      const chartArea = window.rsiChart.chartArea
+      if (chartArea) {
+        const yAxis = window.rsiChart.scales.y
+        ctx.save()
+        ctx.strokeStyle = 'rgba(239, 68, 68, 0.3)'
+        ctx.lineWidth = 1
+        ctx.setLineDash([5, 5])
+
+        // Overbought line (70)
+        const y70 = yAxis.getPixelForValue(70)
+        ctx.beginPath()
+        ctx.moveTo(chartArea.left, y70)
+        ctx.lineTo(chartArea.right, y70)
+        ctx.stroke()
+
+        // Oversold line (30)
+        const y30 = yAxis.getPixelForValue(30)
+        ctx.beginPath()
+        ctx.moveTo(chartArea.left, y30)
+        ctx.lineTo(chartArea.right, y30)
+        ctx.stroke()
+
+        ctx.restore()
+      }
+    }
+
+    // Initialize MACD chart
+    if (macdChartRef.current && typeof window !== 'undefined') {
+      const ctx = macdChartRef.current.getContext('2d')
+
+      if (window.macdChart) {
+        window.macdChart.destroy()
+      }
+
+      const { macdLine, signalLine, histogram } = calculateMACD(marketData)
+
+      window.macdChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+          labels: marketData.map((d, i) => i),
+          datasets: [
+            {
+              type: 'bar',
+              label: 'Histogram',
+              data: histogram,
+              backgroundColor: histogram.map(h => h >= 0 ? 'rgba(16, 185, 129, 0.5)' : 'rgba(239, 68, 68, 0.5)'),
+              borderWidth: 0
+            },
+            {
+              type: 'line',
+              label: 'MACD',
+              data: macdLine,
+              borderColor: '#3b82f6',
+              borderWidth: 2,
+              pointRadius: 0,
+              fill: false,
+              tension: 0.4
+            },
+            {
+              type: 'line',
+              label: 'Signal',
+              data: signalLine,
+              borderColor: '#ef4444',
+              borderWidth: 2,
+              pointRadius: 0,
+              fill: false,
+              tension: 0.4
+            }
+          ]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          interaction: {
+            intersect: false,
+            mode: 'index'
+          },
+          plugins: {
+            legend: {
+              display: false
+            },
+            tooltip: {
+              backgroundColor: 'rgba(16, 24, 37, 0.95)',
+              titleColor: '#e8ecf2',
+              bodyColor: '#9ca3af',
+              borderColor: '#2a3544',
+              borderWidth: 1,
+              padding: 8,
+              displayColors: true,
+              callbacks: {
+                title: () => '',
+                label: function(context) {
+                  return context.dataset.label + ': ' + context.parsed.y.toFixed(2)
+                }
+              }
+            }
+          },
+          scales: {
+            x: {
+              display: false
+            },
+            y: {
+              position: 'right',
+              grid: {
+                color: 'rgba(156, 163, 175, 0.1)',
+                drawBorder: false
+              },
+              ticks: {
+                color: '#6b7280',
+                font: {
+                  size: 10
+                }
+              }
+            }
+          }
+        }
+      })
+    }
+
+    return () => {
+      if (window.mainChart) window.mainChart.destroy()
+      if (window.rsiChart) window.rsiChart.destroy()
+      if (window.macdChart) window.macdChart.destroy()
+    }
+  }, [marketData])
+
+  // Load Chart.js
+  useEffect(() => {
+    if (typeof window !== 'undefined' && !window.Chart) {
+      const script = document.createElement('script')
+      script.src = 'https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js'
+      script.async = true
+      document.head.appendChild(script)
+    }
   }, [])
 
   return (
-    <>
-      <header className="dept-header">
-        <div className="container">
-          <Link to="/pse" className="dept-logo">
-            <div className="logo-mark">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+    <div className="pse-container">
+      {/* Header */}
+      <header className="pse-header">
+        <div className="pse-header-content">
+          <Link to="/pse" className="pse-logo">
+            <div className="pse-logo-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
                 <polyline points="22,12 18,12 15,21 9,3 6,12 2,12"/>
               </svg>
             </div>
-            <div className="logo-text">
+            <div className="pse-logo-text">
               <h1>Praya Stock Exchange</h1>
-              <span className="tagline">Republic of Praya</span>
+              <span>Professional Trading Platform</span>
             </div>
           </Link>
-          <nav className="nav">
-            <Link to="/pse" className="nav-link">Home</Link>
-            <Link to="/pse/markets" className="nav-link">Markets</Link>
-            <Link to="/pse/listed" className="nav-link">Listed Companies</Link>
-            <Link to="/pse/investors" className="nav-link">Investors</Link>
+          <nav className="pse-nav">
+            <Link to="/pse" className="pse-nav-link active">Markets</Link>
+            <Link to="/pse" className="pse-nav-link">Analysis</Link>
+            <Link to="/pse" className="pse-nav-link">News</Link>
+            <Link to="/bop" className="pse-link-bop">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <rect x="1" y="4" width="22" height="16" rx="2" ry="2"/>
+                <line x1="1" y1="10" x2="23" y2="10"/>
+              </svg>
+              Bank of Praya
+            </Link>
           </nav>
         </div>
       </header>
 
-      <Routes>
-        <Route index element={<PSEHome navigate={navigate} />} />
-        <Route path="markets" element={<Markets />} />
-        <Route path="listed" element={<ComingSoon title="Listed Companies" />} />
-        <Route path="investors" element={<ComingSoon title="Investor Resources" />} />
-      </Routes>
+      {/* Market Status Bar */}
+      <div className="pse-status-bar">
+        <div className="pse-status-content">
+          <div className="pse-status-item">
+            <span className="pse-status-label">Market Status</span>
+            <span className="pse-status-badge">
+              <span className="pse-status-pulse"></span>
+              OPEN
+            </span>
+          </div>
+          <div className="pse-status-item">
+            <span className="pse-status-label">PSE Index</span>
+            <span className="pse-status-value">{currentPrice.toFixed(2)}</span>
+            <span className={`pse-status-change ${priceChange >= 0 ? 'positive' : 'negative'}`}>
+              {priceChange >= 0 ? '+' : ''}{priceChange.toFixed(2)} ({priceChangePercent >= 0 ? '+' : ''}{priceChangePercent.toFixed(2)}%)
+            </span>
+          </div>
+          <div className="pse-status-item">
+            <span className="pse-status-label">Market Cap</span>
+            <span className="pse-status-value">¤892B</span>
+            <span className="pse-status-change" style={{ color: 'var(--pse-text-muted)' }}>Total Value</span>
+          </div>
+          <div className="pse-status-item">
+            <span className="pse-status-label">Volume</span>
+            <span className="pse-status-value">¤3.2B</span>
+            <span className="pse-status-change" style={{ color: 'var(--pse-text-muted)' }}>Today</span>
+          </div>
+          <div className="pse-status-item">
+            <span className="pse-status-label">Trades</span>
+            <span className="pse-status-value">124K</span>
+            <span className="pse-status-change" style={{ color: 'var(--pse-text-muted)' }}>Today</span>
+          </div>
+        </div>
+      </div>
 
-      <footer className="dept-footer">
-        <div className="container">
-          <div className="footer-grid">
-            <div className="footer-brand">
-              <h4>Praya Stock Exchange</h4>
-              <p>The primary securities exchange of the Republic of Praya, facilitating capital formation and providing a transparent marketplace for investors.</p>
+      {/* Main Content */}
+      <main className="pse-main">
+        <div className="pse-grid">
+          {/* Left Column - Charts */}
+          <div>
+            {/* Main Price Chart */}
+            <div className="pse-card" style={{ marginBottom: '20px' }}>
+              <div className="pse-card-header">
+                <div>
+                  <h2 className="pse-card-title">PSE Composite Index</h2>
+                  <p className="pse-card-subtitle">Real-time market performance</p>
+                </div>
+                <div className="pse-card-actions">
+                  <button className={`pse-card-action ${timeframe === '1D' ? 'active' : ''}`} onClick={() => setTimeframe('1D')}>1D</button>
+                  <button className={`pse-card-action ${timeframe === '1W' ? 'active' : ''}`} onClick={() => setTimeframe('1W')}>1W</button>
+                  <button className={`pse-card-action ${timeframe === '1M' ? 'active' : ''}`} onClick={() => setTimeframe('1M')}>1M</button>
+                  <button className={`pse-card-action ${timeframe === '1Y' ? 'active' : ''}`} onClick={() => setTimeframe('1Y')}>1Y</button>
+                </div>
+              </div>
+              <div className="pse-card-body">
+                <div className="pse-chart-container">
+                  <canvas ref={mainChartRef}></canvas>
+                </div>
+              </div>
             </div>
-            <div className="footer-section">
+
+            {/* Technical Indicators */}
+            <div className="pse-card" style={{ marginBottom: '20px' }}>
+              <div className="pse-card-header">
+                <h3 className="pse-card-title">Technical Indicators</h3>
+              </div>
+              <div className="pse-card-body">
+                {/* RSI Indicator */}
+                <div style={{ marginBottom: '24px' }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px' }}>
+                    <span style={{ fontSize: '13px', fontWeight: '600', color: 'var(--pse-text-primary)' }}>
+                      Relative Strength Index (RSI)
+                    </span>
+                    <span style={{ fontSize: '12px', color: 'var(--pse-text-muted)' }}>
+                      Period: 14
+                    </span>
+                  </div>
+                  <div className="pse-indicator-chart">
+                    <canvas ref={rsiChartRef}></canvas>
+                  </div>
+                </div>
+
+                {/* MACD Indicator */}
+                <div>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px' }}>
+                    <span style={{ fontSize: '13px', fontWeight: '600', color: 'var(--pse-text-primary)' }}>
+                      MACD (Moving Average Convergence Divergence)
+                    </span>
+                    <span style={{ fontSize: '12px', color: 'var(--pse-text-muted)' }}>
+                      12, 26, 9
+                    </span>
+                  </div>
+                  <div className="pse-indicator-chart">
+                    <canvas ref={macdChartRef}></canvas>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Market News */}
+            <div className="pse-card">
+              <div className="pse-card-header">
+                <h3 className="pse-card-title">Market News</h3>
+              </div>
+              {news.map((item, i) => (
+                <div key={i} className="pse-news-item">
+                  <div className="pse-news-meta">
+                    <span className="pse-news-time">{item.time}</span>
+                    <span className="pse-news-tag">{item.tag}</span>
+                  </div>
+                  <h4 className="pse-news-title">{item.title}</h4>
+                  <p className="pse-news-excerpt">{item.excerpt}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Right Column - Sidebar */}
+          <div>
+            {/* Watchlist */}
+            <div className="pse-card" style={{ marginBottom: '20px' }}>
+              <div className="pse-card-header">
+                <h3 className="pse-card-title">Watchlist</h3>
+              </div>
+              <div className="pse-watchlist">
+                {watchlist.map((stock, i) => (
+                  <div key={i} className="pse-watchlist-item" onClick={() => setSelectedStock(stock.symbol)}>
+                    <div>
+                      <div className="pse-watchlist-symbol">{stock.symbol}</div>
+                      <div className="pse-watchlist-name">{stock.name}</div>
+                    </div>
+                    <div className="pse-watchlist-price">
+                      <div className="pse-watchlist-value">¤{stock.price.toFixed(2)}</div>
+                      <div className={`pse-watchlist-change ${stock.change >= 0 ? 'text-success' : 'text-danger'}`}>
+                        {stock.change >= 0 ? '+' : ''}{stock.change.toFixed(1)}%
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Top Movers */}
+            <div className="pse-card" style={{ marginBottom: '20px' }}>
+              <div className="pse-card-header">
+                <h3 className="pse-card-title">Top Gainers</h3>
+              </div>
+              <div className="pse-card-body">
+                <div className="pse-movers">
+                  {topMovers.map((mover) => (
+                    <div key={mover.rank} className="pse-mover-item">
+                      <div className="pse-mover-info">
+                        <div className="pse-mover-rank">{mover.rank}</div>
+                        <div>
+                          <div className="pse-mover-symbol">{mover.symbol}</div>
+                          <div className="pse-mover-name">{mover.name}</div>
+                        </div>
+                      </div>
+                      <div className="pse-mover-change">
+                        <div className="pse-mover-percent text-success">+{mover.percent}%</div>
+                        <div className="pse-mover-value">¤{mover.value.toFixed(2)}</div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            {/* Market Info */}
+            <div className="pse-info-panel">
+              <h4>Trading Information</h4>
+              <div className="pse-info-row">
+                <span className="pse-info-label">Market Opens</span>
+                <span className="pse-info-value">9:30 AM</span>
+              </div>
+              <div className="pse-info-row">
+                <span className="pse-info-label">Market Closes</span>
+                <span className="pse-info-value">4:00 PM</span>
+              </div>
+              <div className="pse-info-row">
+                <span className="pse-info-label">After Hours</span>
+                <span className="pse-info-value">4:00 - 6:30 PM</span>
+              </div>
+              <div className="pse-info-row">
+                <span className="pse-info-label">Settlement</span>
+                <span className="pse-info-value">T+2</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
+
+      {/* Footer */}
+      <footer className="pse-footer">
+        <div className="pse-footer-content">
+          <div className="pse-footer-grid">
+            <div className="pse-footer-brand">
+              <h4>Praya Stock Exchange</h4>
+              <p>The primary securities exchange of the Republic of Praya, facilitating capital formation and providing a transparent marketplace for investors and traders worldwide.</p>
+            </div>
+            <div className="pse-footer-section">
               <h5>Trading</h5>
               <ul>
                 <li><a href="#">Market Data</a></li>
-                <li><a href="#">Trading Hours</a></li>
-                <li><a href="#">Indices</a></li>
+                <li><a href="#">Trading Platform</a></li>
+                <li><a href="#">Order Types</a></li>
+                <li><a href="#">Fees &amp; Commissions</a></li>
               </ul>
             </div>
-            <div className="footer-section">
+            <div className="pse-footer-section">
               <h5>Resources</h5>
               <ul>
-                <li><a href="#">Investor Education</a></li>
-                <li><a href="#">IPO Calendar</a></li>
-                <li><a href="#">Research Reports</a></li>
+                <li><a href="#">Education Center</a></li>
+                <li><a href="#">API Documentation</a></li>
+                <li><a href="#">Market Reports</a></li>
+                <li><a href="#">Research</a></li>
               </ul>
             </div>
-            <div className="footer-section">
-              <h5>Government</h5>
+            <div className="pse-footer-section">
+              <h5>Related</h5>
               <ul>
-                <li><Link to="/">Gov Portal</Link></li>
-                <li><a href="#">Securities Regulations</a></li>
-                <li><a href="#">Financial Oversight</a></li>
+                <li><Link to="/bop">Bank of Praya</Link></li>
+                <li><Link to="/">Government Portal</Link></li>
+                <li><a href="#">Securities Commission</a></li>
+                <li><a href="#">Economic Data</a></li>
               </ul>
             </div>
           </div>
-          <div className="footer-bottom">
+          <div className="pse-footer-bottom">
             <span>&copy; 2024 Republic of Praya. Praya Stock Exchange.</span>
-            <div className="footer-legal">
-              <a href="#">Terms</a>
-              <a href="#">Privacy</a>
+            <div className="pse-footer-legal">
+              <a href="#">Terms of Service</a>
+              <a href="#">Privacy Policy</a>
+              <a href="#">Disclosures</a>
             </div>
           </div>
         </div>
       </footer>
-    </>
-  )
-}
-
-function PSEHome({ navigate }) {
-  return (
-    <>
-      <section className="hero">
-        <div className="hero-bg">
-          <div className="hero-bg-shape"></div>
-          <div className="hero-bg-shape"></div>
-        </div>
-        <div className="container">
-          <div className="hero-content">
-            <h2>Powering <span>Economic Growth</span></h2>
-            <p>The Praya Stock Exchange is the nation's premier securities marketplace, connecting investors with growth opportunities and helping companies raise capital for expansion.</p>
-            <div className="hero-actions">
-              <button className="btn btn-primary" onClick={() => navigate('/pse/markets')}>
-                Market Data
-              </button>
-              <button className="btn btn-secondary" onClick={() => navigate('/pse/investors')}>
-                Investor Resources
-              </button>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section className="stats-bar">
-        <div className="container">
-          <div className="stats-grid">
-            <div className="stat-item">
-              <span className="stat-label">PSE Index</span>
-              <span className="stat-value">8,742</span>
-              <span className="stat-change">+1.2% Today</span>
-            </div>
-            <div className="stat-item">
-              <span className="stat-label">Market Cap</span>
-              <span className="stat-value">¤892B</span>
-              <span className="stat-change">Total Value</span>
-            </div>
-            <div className="stat-item">
-              <span className="stat-label">Listed Companies</span>
-              <span className="stat-value">347</span>
-              <span className="stat-change">Active</span>
-            </div>
-            <div className="stat-item">
-              <span className="stat-label">Daily Volume</span>
-              <span className="stat-value">¤3.2B</span>
-              <span className="stat-change">Traded</span>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <main className="main">
-        <div className="container">
-          <div className="content-grid">
-            <div className="main-content">
-              <div className="card">
-                <div className="card-header">
-                  <h3 className="card-title">Market Overview</h3>
-                  <Link to="/pse/markets" className="card-link">Full Data</Link>
-                </div>
-                <div className="content-text">
-                  <h4>Major Indices</h4>
-                  <ul>
-                    <li><strong>PSE Composite Index:</strong> Broad market index tracking all listed companies</li>
-                    <li><strong>PSE 50:</strong> Top 50 companies by market capitalization</li>
-                    <li><strong>PSE Industrial Index:</strong> Manufacturing and industrial sector</li>
-                    <li><strong>PSE Financial Index:</strong> Banks, insurance, and financial services</li>
-                    <li><strong>PSE Technology Index:</strong> Tech and telecommunications companies</li>
-                  </ul>
-                  <h4 style={{ marginTop: '20px' }}>Trading Information</h4>
-                  <ul>
-                    <li><strong>Trading hours:</strong> Monday-Friday, 9:30 AM - 4:00 PM</li>
-                    <li><strong>Pre-market:</strong> 8:00 AM - 9:30 AM</li>
-                    <li><strong>After-hours:</strong> 4:00 PM - 6:30 PM</li>
-                    <li><strong>Settlement:</strong> T+2 (trade date plus 2 business days)</li>
-                  </ul>
-                </div>
-              </div>
-
-              <div className="card">
-                <div className="card-header">
-                  <h3 className="card-title">Listing Requirements</h3>
-                </div>
-                <div className="content-text">
-                  <h4>Main Board Listing</h4>
-                  <ul>
-                    <li><strong>Operating history:</strong> Minimum 3 years</li>
-                    <li><strong>Market capitalization:</strong> Minimum ¤500 million</li>
-                    <li><strong>Public float:</strong> At least 25% of shares</li>
-                    <li><strong>Shareholders:</strong> Minimum 1,000 public shareholders</li>
-                    <li><strong>Financial performance:</strong> Profitable for 2 of last 3 years</li>
-                  </ul>
-                  <h4 style={{ marginTop: '20px' }}>Growth Board (Emerging Companies)</h4>
-                  <ul>
-                    <li><strong>Operating history:</strong> Minimum 1 year</li>
-                    <li><strong>Market capitalization:</strong> Minimum ¤100 million</li>
-                    <li><strong>Public float:</strong> At least 20% of shares</li>
-                    <li><strong>Focus:</strong> High-growth technology and innovation companies</li>
-                  </ul>
-                </div>
-              </div>
-
-              <div className="card">
-                <div className="card-header">
-                  <h3 className="card-title">Market News</h3>
-                </div>
-                <div className="news-item">
-                  <span className="news-date">Dec 2, 2024</span>
-                  <h4 className="news-title">PSE Composite Reaches Record High</h4>
-                  <p className="news-excerpt">Index closes at 8,742, up 1.2% on strong financial sector performance.</p>
-                </div>
-                <div className="news-item">
-                  <span className="news-date">Nov 28, 2024</span>
-                  <h4 className="news-title">TechCorp Announces IPO Plans</h4>
-                  <p className="news-excerpt">Leading software company to list on Growth Board in Q1 2025.</p>
-                </div>
-                <div className="news-item">
-                  <span className="news-date">Nov 25, 2024</span>
-                  <h4 className="news-title">New Trading Platform Launch</h4>
-                  <p className="news-excerpt">Enhanced trading system offers faster execution and improved features.</p>
-                </div>
-              </div>
-            </div>
-
-            <aside className="sidebar">
-              <div className="card" style={{ background: 'linear-gradient(135deg, #059669 0%, #047857 100%)', color: 'white', border: 'none' }}>
-                <h4 style={{ color: 'white', marginBottom: '8px' }}>Market Status</h4>
-                <div style={{ fontSize: '32px', fontWeight: '800', marginBottom: '4px' }}>OPEN</div>
-                <div style={{ fontSize: '13px', opacity: 0.9, marginBottom: '16px' }}>Trading in Progress</div>
-                <div style={{ paddingTop: '16px', borderTop: '1px solid rgba(255,255,255,0.2)' }}>
-                  <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '8px' }}>
-                    <span style={{ fontSize: '13px' }}>Opens</span>
-                    <span style={{ fontSize: '13px', fontWeight: '600' }}>9:30 AM</span>
-                  </div>
-                  <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                    <span style={{ fontSize: '13px' }}>Closes</span>
-                    <span style={{ fontSize: '13px', fontWeight: '600' }}>4:00 PM</span>
-                  </div>
-                </div>
-              </div>
-
-              <div className="card">
-                <h4 className="card-title">Quick Links</h4>
-                <div className="quick-link" onClick={() => navigate('/pse/markets')}>
-                  <span className="icon">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                      <polyline points="22,12 18,12 15,21 9,3 6,12 2,12"/>
-                    </svg>
-                  </span>
-                  Real-Time Market Data
-                </div>
-                <div className="quick-link" onClick={() => navigate('/pse/listed')}>
-                  <span className="icon">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                      <path d="M3 9h18v10a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"/>
-                      <path d="M3 9V7a2 2 0 012-2h14a2 2 0 012 2v2"/>
-                    </svg>
-                  </span>
-                  Company Directory
-                </div>
-                <div className="quick-link">
-                  <span className="icon">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                      <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
-                      <line x1="16" y1="2" x2="16" y2="6"/>
-                      <line x1="8" y1="2" x2="8" y2="6"/>
-                      <line x1="3" y1="10" x2="21" y2="10"/>
-                    </svg>
-                  </span>
-                  IPO Calendar
-                </div>
-                <div className="quick-link" onClick={() => navigate('/pse/investors')}>
-                  <span className="icon">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                      <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/>
-                      <polyline points="14,2 14,8 20,8"/>
-                    </svg>
-                  </span>
-                  Investor Education
-                </div>
-              </div>
-
-              <div className="info-box">
-                <h4>Market Information</h4>
-                <p><strong>Phone:</strong> 1-800-PSE-INFO</p>
-                <p><strong>Email:</strong> info@pse.gov.py</p>
-                <p><strong>Trading Support:</strong> trading@pse.gov.py</p>
-              </div>
-
-              <div className="card">
-                <h4 className="card-title">Sector Performance</h4>
-                <div style={{ fontSize: '13px', color: 'var(--text-muted)', marginTop: '12px' }}>
-                  <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '8px' }}>
-                    <span>Financials</span>
-                    <span style={{ color: '#059669', fontWeight: '600' }}>+2.4%</span>
-                  </div>
-                  <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '8px' }}>
-                    <span>Technology</span>
-                    <span style={{ color: '#059669', fontWeight: '600' }}>+1.8%</span>
-                  </div>
-                  <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '8px' }}>
-                    <span>Industrials</span>
-                    <span style={{ color: '#059669', fontWeight: '600' }}>+0.9%</span>
-                  </div>
-                  <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                    <span>Energy</span>
-                    <span style={{ color: '#dc2626', fontWeight: '600' }}>-0.5%</span>
-                  </div>
-                </div>
-              </div>
-            </aside>
-          </div>
-        </div>
-      </main>
-    </>
-  )
-}
-
-function Markets() {
-  return (
-    <main className="main">
-      <div className="page-header">
-        <div className="container">
-          <div className="breadcrumb">
-            <Link to="/pse">Home</Link> / Markets
-          </div>
-          <h1>Market Data & Indices</h1>
-          <p className="subtitle">Real-time information on the Praya securities market</p>
-        </div>
-      </div>
-      <div className="container">
-        <div className="content-text">
-          <h3>Praya Stock Exchange Indices</h3>
-          <p>The PSE maintains several benchmark indices to track market performance across different sectors and company sizes.</p>
-
-          <div className="card" style={{ marginTop: '20px' }}>
-            <h4 className="card-title">PSE Composite Index</h4>
-            <p style={{ color: 'var(--text-muted)', marginBottom: '12px' }}>The primary benchmark of the Praya stock market:</p>
-            <ul style={{ marginBottom: '12px' }}>
-              <li><strong>Components:</strong> All 347 companies listed on the exchange</li>
-              <li><strong>Weighting:</strong> Market capitalization-weighted</li>
-              <li><strong>Base date:</strong> January 1, 2000 (Base value: 1,000)</li>
-              <li><strong>Current level:</strong> 8,742 (+1.2% today)</li>
-              <li><strong>52-week range:</strong> 7,845 - 8,850</li>
-              <li><strong>Rebalancing:</strong> Quarterly</li>
-            </ul>
-            <div style={{ fontSize: '13px', color: 'var(--text-secondary)' }}>
-              <strong>Most widely followed</strong> market indicator for the Praya economy
-            </div>
-          </div>
-
-          <div className="card">
-            <h4 className="card-title">PSE 50 Index</h4>
-            <p style={{ color: 'var(--text-muted)', marginBottom: '12px' }}>Blue-chip index of the largest companies:</p>
-            <ul>
-              <li><strong>Components:</strong> 50 largest companies by market cap</li>
-              <li><strong>Selection criteria:</strong> Size, liquidity, sector representation</li>
-              <li><strong>Minimum market cap:</strong> ¤5 billion for inclusion</li>
-              <li><strong>Represents:</strong> Approximately 75% of total market value</li>
-              <li><strong>Review:</strong> Semi-annually (June and December)</li>
-            </ul>
-          </div>
-
-          <div className="card">
-            <h4 className="card-title">Sector Indices</h4>
-            <p style={{ color: 'var(--text-muted)', marginBottom: '12px' }}>Track performance by industry sector:</p>
-            <ul>
-              <li><strong>PSE Financial Index:</strong> Banks, insurance, investment firms (42 companies)</li>
-              <li><strong>PSE Technology Index:</strong> Software, hardware, IT services (38 companies)</li>
-              <li><strong>PSE Industrial Index:</strong> Manufacturing, construction, aerospace (54 companies)</li>
-              <li><strong>PSE Consumer Index:</strong> Retail, food & beverage, consumer goods (48 companies)</li>
-              <li><strong>PSE Energy Index:</strong> Oil, gas, renewable energy (22 companies)</li>
-              <li><strong>PSE Healthcare Index:</strong> Pharmaceuticals, medical devices, services (28 companies)</li>
-              <li><strong>PSE Real Estate Index:</strong> REITs, property developers (31 companies)</li>
-            </ul>
-          </div>
-
-          <h3 style={{ marginTop: '32px' }}>Trading Mechanisms</h3>
-
-          <div className="card">
-            <h4 className="card-title">Order Types</h4>
-            <ul>
-              <li><strong>Market order:</strong> Executes immediately at current market price</li>
-              <li><strong>Limit order:</strong> Executes only at specified price or better</li>
-              <li><strong>Stop order:</strong> Triggers market order when stop price reached</li>
-              <li><strong>Stop-limit order:</strong> Combines stop and limit order features</li>
-              <li><strong>Good-til-cancelled (GTC):</strong> Remains active until executed or cancelled</li>
-              <li><strong>Day order:</strong> Expires if not executed by market close</li>
-            </ul>
-          </div>
-
-          <div className="card">
-            <h4 className="card-title">Trading Sessions</h4>
-            <p style={{ color: 'var(--text-muted)', marginBottom: '12px' }}>Daily trading schedule:</p>
-            <ul>
-              <li><strong>Pre-opening (8:00-9:30 AM):</strong> Order entry, no execution</li>
-              <li><strong>Opening call auction (9:30 AM):</strong> Opening price determination</li>
-              <li><strong>Continuous trading (9:30 AM-3:50 PM):</strong> Regular trading</li>
-              <li><strong>Pre-closing (3:50-4:00 PM):</strong> Final order entry</li>
-              <li><strong>Closing call auction (4:00 PM):</strong> Closing price determination</li>
-              <li><strong>After-hours trading (4:00-6:30 PM):</strong> Extended hours (limited liquidity)</li>
-            </ul>
-          </div>
-
-          <h3 style={{ marginTop: '32px' }}>Market Regulations</h3>
-
-          <div className="card">
-            <h4 className="card-title">Price Limits & Circuit Breakers</h4>
-            <ul>
-              <li><strong>Daily price limits:</strong> ±10% for individual stocks</li>
-              <li><strong>Market-wide circuit breaker:</strong> Trading halts if PSE Composite drops:
-                <ul style={{ marginTop: '8px', marginLeft: '20px' }}>
-                  <li>Level 1: 7% decline - 15 minute halt</li>
-                  <li>Level 2: 13% decline - 30 minute halt</li>
-                  <li>Level 3: 20% decline - trading suspended for the day</li>
-                </ul>
-              </li>
-              <li><strong>Volatility halt:</strong> Individual stock trading paused for 5 minutes if price moves ±5% in 5 minutes</li>
-            </ul>
-          </div>
-
-          <div className="card">
-            <h4 className="card-title">Disclosure Requirements</h4>
-            <ul>
-              <li><strong>Quarterly reports:</strong> Financial statements within 45 days of quarter end</li>
-              <li><strong>Annual reports:</strong> Audited financials within 90 days of fiscal year end</li>
-              <li><strong>Material events:</strong> Immediate disclosure of market-moving information</li>
-              <li><strong>Insider trading reports:</strong> Directors/officers must report trades within 2 days</li>
-              <li><strong>Shareholder meetings:</strong> 21 days' advance notice required</li>
-            </ul>
-          </div>
-
-          <h3 style={{ marginTop: '32px' }}>Market Statistics</h3>
-          <ul>
-            <li><strong>Total market capitalization:</strong> ¤892 billion</li>
-            <li><strong>Average daily trading volume:</strong> ¤3.2 billion</li>
-            <li><strong>Number of trades per day:</strong> ~120,000</li>
-            <li><strong>Most traded stock:</strong> Praya National Bank (¤285M daily avg)</li>
-            <li><strong>IPOs this year:</strong> 18 companies</li>
-            <li><strong>Total capital raised (YTD):</strong> ¤12.4 billion</li>
-          </ul>
-
-          <div className="info-box" style={{ marginTop: '24px' }}>
-            <h4>Market Data Services</h4>
-            <p>Real-time and historical market data available through PSE Data Portal. Free delayed quotes (15 minutes) or subscribe to real-time data feeds for professional use.</p>
-          </div>
-        </div>
-      </div>
-    </main>
-  )
-}
-
-function ComingSoon({ title }) {
-  const navigate = useNavigate();
-
-  const getServiceInfo = () => {
-    switch(title) {
-      case 'Listed Companies':
-        return {
-          description: 'Directory of all companies trading on the Praya Stock Exchange.',
-          services: ['Company Profiles', 'Financial Statements', 'Corporate Actions', 'Shareholder Information'],
-          contact: 'For company information: info@pse.gov.py or call 1-800-PSE-INFO'
-        };
-      case 'Investor Resources':
-        return {
-          description: 'Educational resources and tools for investors.',
-          services: ['Investment Guides', 'Market Tutorials', 'Research Tools', 'Account Management'],
-          contact: 'For investor support: investors@pse.gov.py or call 1-800-PSE-INFO'
-        };
-      default:
-        return {
-          description: 'This service is being developed to serve you better.',
-          services: [],
-          contact: 'For assistance, contact the Praya Stock Exchange'
-        };
-    }
-  };
-
-  const info = getServiceInfo();
-
-  return (
-    <main className="main">
-      <div className="page-header">
-        <div className="container">
-          <div className="breadcrumb">
-            <Link to="/pse">Home</Link> / {title}
-          </div>
-          <h1>{title}</h1>
-          <p className="subtitle">{info.description}</p>
-        </div>
-      </div>
-      <div className="container">
-        <div className="card">
-          <div style={{ padding: '20px', textAlign: 'center' }}>
-            <div style={{
-              width: '64px',
-              height: '64px',
-              background: 'linear-gradient(135deg, rgba(5, 150, 105, 0.1) 0%, rgba(5, 150, 105, 0.2) 100%)',
-              borderRadius: '50%',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              margin: '0 auto 20px'
-            }}>
-              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                <circle cx="12" cy="12" r="10"/>
-                <path d="M12 16v-4M12 8h.01"/>
-              </svg>
-            </div>
-            <h3 style={{ marginBottom: '12px' }}>Service Under Development</h3>
-            <p style={{ color: 'var(--text-muted)', maxWidth: '500px', margin: '0 auto 24px' }}>
-              We're working to bring this service online. In the meantime, you can access market information through traditional channels.
-            </p>
-
-            {info.services.length > 0 && (
-              <div style={{ marginTop: '24px', textAlign: 'left', maxWidth: '400px', margin: '24px auto 0' }}>
-                <h4 style={{ fontSize: '14px', marginBottom: '12px' }}>Available Services:</h4>
-                <ul style={{ color: 'var(--text-secondary)', fontSize: '14px' }}>
-                  {info.services.map(service => (
-                    <li key={service} style={{ marginBottom: '8px' }}>{service}</li>
-                  ))}
-                </ul>
-              </div>
-            )}
-
-            <div style={{
-              marginTop: '32px',
-              padding: '16px',
-              background: 'rgba(5, 150, 105, 0.05)',
-              borderRadius: '10px',
-              fontSize: '13px',
-              color: 'var(--text-muted)'
-            }}>
-              {info.contact}
-            </div>
-
-            <div style={{ marginTop: '32px' }}>
-              <h4 style={{ fontSize: '14px', marginBottom: '12px' }}>Related Services</h4>
-              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '12px' }}>
-                <Link to="/pse/markets" style={{
-                  padding: '14px',
-                  background: 'var(--bg-elevated)',
-                  border: '1px solid var(--border-subtle)',
-                  borderRadius: '10px',
-                  textDecoration: 'none',
-                  fontSize: '13px',
-                  fontWeight: '500',
-                  color: 'var(--text-primary)',
-                  transition: 'all 0.2s'
-                }}>
-                  Market Data
-                </Link>
-                <button
-                  onClick={() => navigate('/pse')}
-                  className="btn btn-secondary"
-                  style={{ fontSize: '13px', padding: '14px' }}
-                >
-                  Return to PSE Home
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </main>
+    </div>
   )
 }
