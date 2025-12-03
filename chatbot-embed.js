@@ -75,10 +75,59 @@
       name: 'Praya Post',
       abbrev: 'PP',
       color: '#f97316',
-      focus: 'You are helping users with Praya Post services including package delivery, international mail, and P.O. box rentals.',
-      services: ['Package Tracking', 'Domestic Mail', 'International Shipping', 'P.O. Box Rentals', 'Certified Mail'],
-      hours: 'Mon-Fri 8AM-6PM | Sat 9AM-1PM',
-      contact: '+854 900 0000'
+      focus: 'You are helping users with Praya Post services. Praya Post is the national postal service delivering 1.8M packages daily through 842 post offices nationwide, with 96.4% on-time delivery and 2.1-day average domestic delivery. You can help with package tracking, shipping rates, delivery services, and postal inquiries.',
+      services: [
+        'Package Tracking - Track packages using PP/EX/IN/RM tracking numbers',
+        'First Class Mail - 1-3 business days delivery',
+        'Priority Mail - 1-2 day delivery with tracking and insurance up to ¤100',
+        'Express Mail - Overnight delivery with guaranteed service',
+        'Standard Post - Economical 2-8 days delivery',
+        'International Shipping - Global Express (3-5 days), Priority (6-10 days), Economy (2-4 weeks)',
+        'Package Insurance - Up to ¤5,000 coverage available',
+        'Signature Confirmation - For important deliveries',
+        'P.O. Box Rentals - Secure mailbox services',
+        'Stamps & Postage - First Class ¤0.68, Postcard ¤0.48, International ¤1.45'
+      ],
+      hours: 'Mon-Fri 8AM-6PM | Extended holiday hours through Dec 24',
+      contact: '1-800-POST-PY | help@post.gov.py',
+      additionalInfo: `
+**Tracking Number Formats:**
+- Priority Mail: PP1234567890PY (starts with PP)
+- Express Mail: EX9876543210PY (starts with EX)
+- International: IN4567891234PY (starts with IN)
+- Registered Mail: RM3456789012PY (starts with RM)
+
+**Postage Rates:**
+- First Class Letter: ¤0.68
+- Postcard: ¤0.48
+- International Letter: ¤1.45
+- Roll of 100 stamps: ¤68.00
+
+**International Shipping:**
+- Global Express: 3-5 business days to major cities
+- International Priority: 6-10 business days
+- Economy International: 2-4 weeks (most affordable)
+- Customs declaration forms required for international shipments
+
+**Service Statistics:**
+- Daily deliveries: 1.8M packages
+- Post offices: 842 nationwide
+- On-time delivery rate: 96.4% this month
+- Average domestic delivery: 2.1 days
+
+**Delivery Status Updates:**
+- Accepted: Package received at post office
+- In Transit: Moving through postal network
+- Arrived at Facility: At regional distribution center
+- Out for Delivery: On delivery vehicle
+- Delivered: Package delivered to recipient
+- Available for Pickup: Held at post office
+
+**New Features:**
+- Package lockers now available at 50 locations in Praya City
+- Extended holiday hours through December 24
+- Online stamp purchasing coming soon
+`
     },
     'health': {
       name: 'Health Department',
@@ -889,6 +938,8 @@ ${currentDepartment.hours}
 ### Contact:
 ${currentDepartment.contact}
 
+${currentDepartment.additionalInfo ? `### Additional Information:\n${currentDepartment.additionalInfo}` : ''}
+
 The user is currently on the ${currentDepartment.name} page. Prioritize information relevant to this department while still being helpful with general government questions. Be conversational but professional.`;
       }
 
@@ -1060,6 +1111,16 @@ The user is currently on the ${currentDepartment.name} page. Prioritize informat
       // Services
       if (lowerMessage.includes('service') || lowerMessage.includes('help') || lowerMessage.includes('what can') || lowerMessage.includes('do you')) {
         return `**${currentDepartment.name} Services:**\n\n${currentDepartment.services.map(s => '• ' + s).join('\n')}\n\nHow can I help you with any of these services?`;
+      }
+
+      // Tracking-specific queries for Praya Post
+      if (currentDepartment.abbrev === 'PP' && (lowerMessage.includes('track') || lowerMessage.includes('tracking'))) {
+        return `**Package Tracking at Praya Post:**\n\nEnter your tracking number on our tracking page. Formats:\n• Priority Mail: PP1234567890PY\n• Express Mail: EX9876543210PY\n• International: IN4567891234PY\n• Registered Mail: RM3456789012PY\n\nTracking updates every few hours as your package moves through our network.`;
+      }
+
+      // Rates/pricing queries for Praya Post
+      if (currentDepartment.abbrev === 'PP' && (lowerMessage.includes('rate') || lowerMessage.includes('price') || lowerMessage.includes('cost') || lowerMessage.includes('stamp'))) {
+        return `**Praya Post Rates:**\n\n• First Class Letter: ¤0.68\n• Postcard: ¤0.48\n• International Letter: ¤1.45\n• Roll of 100 stamps: ¤68.00\n\n**Shipping Options:**\n• Priority Mail (1-2 days): Tracking + ¤100 insurance\n• Express Mail: Overnight guaranteed\n• Standard Post: Most economical (2-8 days)\n\nVisit any of our 842 post offices for detailed pricing!`;
       }
 
       // Generic department help
