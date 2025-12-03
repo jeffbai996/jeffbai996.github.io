@@ -181,9 +181,17 @@ class GeminiLiveService {
   /**
    * Handle incoming WebSocket messages
    */
-  handleMessage(event) {
+  async handleMessage(event) {
     try {
-      const data = JSON.parse(event.data)
+      // Handle both text and Blob messages
+      let messageText
+      if (event.data instanceof Blob) {
+        messageText = await event.data.text()
+      } else {
+        messageText = event.data
+      }
+
+      const data = JSON.parse(messageText)
 
       // Setup complete acknowledgment
       if (data.setupComplete) {
