@@ -59,12 +59,22 @@ jobs:
       - name: Inject Gemini API key into chatbot-embed.js
         run: |
           # Use perl for safer substitution (handles special characters in API key)
-          perl -i -pe "s/GEMINI_API_KEY_PLACEHOLDER/$ENV{GEMINI_KEY}/g" chatbot-embed.js
+          # IMPORTANT: Use single quotes so bash doesn't expand $ENV before perl runs
+          perl -i -pe 's|GEMINI_API_KEY_PLACEHOLDER|$ENV{GEMINI_KEY}|g' chatbot-embed.js
+
           # Verify injection was successful
           if grep -q "GEMINI_API_KEY_PLACEHOLDER" chatbot-embed.js; then
-            echo "WARNING: API key injection may have failed"
-          else
+            echo "ERROR: API key placeholder still present - injection failed"
+            exit 1
+          fi
+
+          # Verify a valid API key was actually injected (Gemini keys start with AIza)
+          if grep -q "apiKey = 'AIza" chatbot-embed.js; then
             echo "API key injected successfully"
+          else
+            echo "ERROR: API key injection produced invalid result"
+            echo "Check that VITE_GEMINI_API_KEY secret is set correctly"
+            exit 1
           fi
         env:
           GEMINI_KEY: ${{ secrets.VITE_GEMINI_API_KEY }}
