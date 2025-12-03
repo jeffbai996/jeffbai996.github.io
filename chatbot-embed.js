@@ -103,6 +103,18 @@
   let isOpen = false;
   const currentDepartment = detectDepartment();
 
+  // Extract department icon from page logo-mark
+  function getDepartmentIcon() {
+    const logoMark = document.querySelector('.logo-mark svg');
+    if (logoMark) {
+      return logoMark.outerHTML;
+    }
+    // Fallback to text abbreviation
+    return null;
+  }
+
+  const departmentIcon = getDepartmentIcon();
+
   // Color utility functions
   function hexToRgba(hex, alpha) {
     const r = parseInt(hex.slice(1, 3), 16);
@@ -213,6 +225,12 @@
         font-size: 16px;
       }
 
+      .chat-avatar svg {
+        width: 20px;
+        height: 20px;
+        color: white;
+      }
+
       .chat-header-text h3 {
         margin: 0;
         font-size: 16px;
@@ -267,6 +285,12 @@
         font-size: 14px;
         font-weight: 600;
         flex-shrink: 0;
+      }
+
+      .message-avatar svg {
+        width: 16px;
+        height: 16px;
+        color: white;
       }
 
       .chat-message.bot .message-avatar {
@@ -391,28 +415,28 @@
 
       @media (max-width: 768px) {
         #praya-chat-button {
-          width: 56px;
-          height: 56px;
-          bottom: 16px;
-          right: 16px;
+          width: 60px;
+          height: 60px;
+          bottom: 24px;
+          right: 24px;
         }
 
         #praya-chat-button svg {
-          width: 24px;
-          height: 24px;
+          width: 28px;
+          height: 28px;
         }
 
         #praya-chat-widget {
           position: fixed;
-          bottom: 0;
-          right: 0;
-          left: 0;
-          top: 0;
-          width: 100%;
-          height: 100%;
-          max-width: 100%;
-          max-height: 100%;
-          border-radius: 0;
+          bottom: 100px;
+          right: 16px;
+          left: 16px;
+          top: auto;
+          width: calc(100% - 32px);
+          height: 500px;
+          max-width: calc(100% - 32px);
+          max-height: calc(100vh - 150px);
+          border-radius: 16px;
         }
 
         .chat-header {
@@ -464,7 +488,7 @@
     widget.innerHTML = `
       <div class="chat-header">
         <div class="chat-header-info">
-          <div class="chat-avatar">${currentDepartment ? currentDepartment.abbrev : 'CS'}</div>
+          <div class="chat-avatar">${departmentIcon || (currentDepartment ? currentDepartment.abbrev : 'CS')}</div>
           <div class="chat-header-text">
             <h3>Citizen Services</h3>
             <p>${currentDepartment ? currentDepartment.name : 'GOV.PRAYA'}</p>
@@ -479,7 +503,7 @@
       </div>
       <div class="chat-messages" id="chat-messages">
         <div class="chat-message bot">
-          <div class="message-avatar">${currentDepartment ? currentDepartment.abbrev : 'CS'}</div>
+          <div class="message-avatar">${departmentIcon || (currentDepartment ? currentDepartment.abbrev : 'CS')}</div>
           <div class="message-bubble">
             ${currentDepartment
               ? `Welcome to ${currentDepartment.name} Citizen Services! I'm here to help you navigate our services. How can I assist you today?`
@@ -536,7 +560,7 @@
     const messageDiv = document.createElement('div');
     messageDiv.className = `chat-message ${isUser ? 'user' : 'bot'}`;
 
-    const avatar = currentDepartment ? currentDepartment.abbrev : 'CS';
+    const avatar = departmentIcon || (currentDepartment ? currentDepartment.abbrev : 'CS');
     messageDiv.innerHTML = `
       <div class="message-avatar">${isUser ? 'You' : avatar}</div>
       <div class="message-bubble">${escapeHtml(text)}</div>
@@ -552,7 +576,7 @@
     typingDiv.className = 'chat-message bot';
     typingDiv.id = 'typing-indicator';
 
-    const avatar = currentDepartment ? currentDepartment.abbrev : 'CS';
+    const avatar = departmentIcon || (currentDepartment ? currentDepartment.abbrev : 'CS');
     typingDiv.innerHTML = `
       <div class="message-avatar">${avatar}</div>
       <div class="message-bubble typing-indicator">
