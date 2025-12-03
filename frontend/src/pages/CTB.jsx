@@ -19,9 +19,11 @@ export default function CTB() {
         <div className="container">
           <Link to="/ctb" className="dept-logo">
             <div className="logo-mark">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                <circle cx="12" cy="12" r="10"/>
-                <path d="M12 6v6l4 2"/>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinejoin="round">
+                <path d="M12 3.5 6 6.75v3.6c0 3.12 2.52 6.25 6 7.9 3.48-1.65 6-4.78 6-7.9v-3.6z"/>
+                <path d="M12 6.5c-.8 1.45-1.26 3.11-1.26 4.74 0 .53.03 1.05.1 1.56"/>
+                <path d="M12 6.5c.8 1.45 1.26 3.11 1.26 4.74 0 .53-.03 1.05-.1 1.56"/>
+                <path d="M9.75 12.4c.7.34 1.46.53 2.25.53.79 0 1.55-.19 2.25-.53"/>
               </svg>
             </div>
             <div className="logo-text">
@@ -99,13 +101,25 @@ function CTBHome({ navigate }) {
         <div className="hero-bg">
           <div className="hero-bg-shape"></div>
           <div className="hero-bg-shape"></div>
+          <div className="hero-bg-shape"></div>
         </div>
+        <div className="hero-pattern"></div>
         <div className="container">
           <div className="hero-content">
+            <div className="hero-badge">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <path d="M12 3.5 6 6.75v3.6c0 3.12 2.52 6.25 6 7.9 3.48-1.65 6-4.78 6-7.9v-3.6z"/>
+              </svg>
+              Cannabis Regulation
+            </div>
             <h2>Regulating Cannabis for a <span>Better Tomorrow</span></h2>
-            <p>The Cannabis Tax Bureau oversees all licensing, taxation, and compliance for the legal cannabis industry in the Republic of Praya.</p>
+            <p>The Cannabis Tax Bureau oversees all licensing, taxation, and compliance for the legal cannabis industry in the Republic of Praya, ensuring safe and regulated access.</p>
             <div className="hero-actions">
               <button className="btn btn-primary" onClick={() => navigate('/ctb/licensing')}>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
+                  <line x1="3" y1="9" x2="21" y2="9"/>
+                </svg>
                 Apply for License
               </button>
               <button className="btn btn-secondary" onClick={() => navigate('/ctb/taxation')}>

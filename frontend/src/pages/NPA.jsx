@@ -95,13 +95,27 @@ function NPAHome({ navigate }) {
         <div className="hero-bg">
           <div className="hero-bg-shape"></div>
           <div className="hero-bg-shape"></div>
+          <div className="hero-bg-shape"></div>
         </div>
+        <div className="hero-pattern"></div>
         <div className="container">
           <div className="hero-content">
+            <div className="hero-badge">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <path d="M12 2l7 4v6c0 5-4 9-7 10-3-1-7-5-7-10V6z"></path>
+                <path d="M9 12h6"></path>
+                <path d="M12 9v6"></path>
+              </svg>
+              Public Safety
+            </div>
             <h2>Protecting <span>Our Community</span></h2>
-            <p>The National Police Agency is committed to maintaining public safety, preventing crime, and serving the citizens of Praya with professionalism and integrity.</p>
+            <p>The National Police Agency is committed to maintaining public safety, preventing crime, and serving the citizens of Praya with professionalism and integrity. Keeping our nation secure 24/7.</p>
             <div className="hero-actions">
               <button className="btn btn-primary" onClick={() => navigate('/npa/report')}>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/>
+                  <polyline points="14,2 14,8 20,8"/>
+                </svg>
                 File Police Report
               </button>
               <button className="btn btn-secondary" onClick={() => navigate('/npa/services')}>
