@@ -220,6 +220,60 @@ export const departmentData = [
     ],
     hours: 'Public viewing hours: Mon-Fri 8AM-5PM. Session schedules vary',
     contact: 'Find your representative through LC portal'
+  },
+  {
+    id: 'bd',
+    name: 'Buildings Department',
+    abbrev: 'BD',
+    keywords: ['building', 'construction', 'permit', 'inspection', 'contractor', 'building code', 'safety', 'architecture', 'renovation', 'development', 'structural'],
+    description: 'Building permits, construction safety, inspections, and enforcement of building codes.',
+    services: [
+      'Building Permits - new construction and renovations',
+      'Building Inspections - safety and code compliance',
+      'Contractor Licensing',
+      'Building Code Information',
+      'Structural Safety Reviews',
+      'Permit Status Tracking',
+      'Construction Site Monitoring'
+    ],
+    hours: 'Mon-Fri 8AM-5PM. Online permit applications available 24/7',
+    contact: 'Visit Buildings Department office or submit applications online'
+  },
+  {
+    id: 'cr',
+    name: 'Companies Registry',
+    abbrev: 'CR',
+    keywords: ['company', 'business', 'incorporation', 'register', 'corporate', 'llc', 'corporation', 'business registration', 'company search', 'annual filing', 'articles of incorporation'],
+    description: 'Business incorporation, company registration, and corporate filing services.',
+    services: [
+      'Company Registration - incorporate new businesses',
+      'Annual Filings - submit required corporate documents',
+      'Company Search - lookup registered businesses',
+      'Document Retrieval - access corporate records',
+      'Name Reservation - reserve business names',
+      'Business Entity Changes - amendments and updates',
+      'Dissolution Services - wind up companies'
+    ],
+    hours: 'Mon-Fri 8AM-5PM. Online registration available 24/7',
+    contact: 'Register online or visit Companies Registry office'
+  },
+  {
+    id: 'swd',
+    name: 'Social Welfare Department',
+    abbrev: 'SWD',
+    keywords: ['social', 'welfare', 'benefits', 'assistance', 'family', 'elderly', 'disability', 'support', 'care', 'subsidy', 'allowance', 'social services'],
+    description: 'Social benefits, family services, elderly care, and support for vulnerable citizens.',
+    services: [
+      'Social Benefits - apply for financial assistance',
+      'Family Services - family support programs',
+      'Elderly Care - senior citizen programs',
+      'Disability Support - services for disabled citizens',
+      'Child Welfare Services',
+      'Community Care Programs',
+      'Emergency Assistance'
+    ],
+    hours: 'Mon-Fri 8AM-5PM. Emergency services available 24/7',
+    contact: 'Visit SWD office or call hotline for assistance'
   }
 ];
 

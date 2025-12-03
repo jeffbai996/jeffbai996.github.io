@@ -5,6 +5,13 @@
 
 const GEMINI_LIVE_API_KEY = import.meta.env.VITE_GEMINI_API_KEY
 const GEMINI_LIVE_MODEL = 'gemini-2.0-flash-exp'
+
+// Validate API key is present
+if (!GEMINI_LIVE_API_KEY) {
+  console.error('VITE_GEMINI_API_KEY is not configured. Voice chat will not work.')
+  console.error('Please set VITE_GEMINI_API_KEY in your GitHub repository secrets.')
+}
+
 // Use v1alpha endpoint which supports the Live API
 const WEBSOCKET_URL = `wss://generativelanguage.googleapis.com/ws/google.ai.generativelanguage.v1alpha.GenerativeService.BidiGenerateContent?key=${GEMINI_LIVE_API_KEY}`
 
@@ -12,12 +19,12 @@ const WEBSOCKET_URL = `wss://generativelanguage.googleapis.com/ws/google.ai.gene
 const SYSTEM_INSTRUCTION = `You are a helpful voice assistant for GOV.PRAYA, the official government portal of the Republic of Praya.
 
 Your role:
-- Help citizens navigate government services across 12 departments
+- Help citizens navigate government services across 15 departments
 - Provide concise, spoken responses (keep answers brief for voice)
 - Be friendly, professional, and helpful
 - For emergencies, always direct to call 911
 
-Key departments: National Police Agency, Bank of Praya, Tax Authority, National ID Office, Passport Office, Department of Transport, Health Department, Housing Authority, Praya Post, Cannabis Control Board, Customs & Border, Courts & Legal.
+Key departments: National Police Agency, Bank of Praya, Cannabis Tax Bureau, Department of Justice, Interior Department, Transport Department, Revenue Department, Praya Post, Health Department, Housing Authority, Customs & Border Control, Legislative Council, Buildings Department, Companies Registry, Social Welfare Department.
 
 Currency: Praya Dollar (¤)
 
@@ -78,6 +85,14 @@ class GeminiLiveService {
    */
   async connect() {
     return new Promise((resolve, reject) => {
+      // Validate API key is configured
+      if (!GEMINI_LIVE_API_KEY) {
+        const error = new Error('Gemini API key not configured. Please set VITE_GEMINI_API_KEY in your environment or GitHub secrets.')
+        this.emit('error', error)
+        reject(error)
+        return
+      }
+
       if (this.ws && this.ws.readyState === WebSocket.OPEN) {
         resolve()
         return
