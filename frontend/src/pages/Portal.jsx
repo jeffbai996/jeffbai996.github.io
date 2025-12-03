@@ -436,16 +436,16 @@ export default function Portal() {
       <section className="portal-stats">
         <div className="container">
           <div className="stats-grid">
-            <div className="stat-item">
+            <Link to="/air-quality" className="stat-item stat-item-link">
               <span className="stat-label">Air Quality Index</span>
               <span className="stat-value" style={{color: '#10b981'}}>42</span>
               <span className="stat-change">Good • Updated 1hr ago</span>
-            </div>
-            <div className="stat-item">
+            </Link>
+            <Link to="/national-security" className="stat-item stat-item-link">
               <span className="stat-label">National Security Level</span>
               <span className="stat-value" style={{color: '#0ea5e9'}}>2</span>
               <span className="stat-change">Elevated • Routine vigilance</span>
-            </div>
+            </Link>
             <div className="stat-item">
               <span className="stat-label">Citizens Served</span>
               <span className="stat-value">2.4M</span>

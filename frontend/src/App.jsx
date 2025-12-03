@@ -19,6 +19,8 @@ import Revenue from './pages/Revenue'
 import Transport from './pages/Transport'
 import LC from './pages/LC'
 import PSE from './pages/PSE'
+import AirQuality from './pages/AirQuality'
+import NationalSecurity from './pages/NationalSecurity'
 import NotFound from './pages/NotFound'
 
 // Auth pages
@@ -57,6 +59,8 @@ function App() {
             <Route path="transport/*" element={<Transport />} />
             <Route path="lc/*" element={<LC />} />
             <Route path="pse/*" element={<PSE />} />
+            <Route path="air-quality" element={<AirQuality />} />
+            <Route path="national-security" element={<NationalSecurity />} />
 
             {/* Auth Routes */}
             <Route path="login" element={<Login />} />
