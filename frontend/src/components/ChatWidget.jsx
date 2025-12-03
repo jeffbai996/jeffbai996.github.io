@@ -267,20 +267,52 @@ function generateQuestionGuidance(questionType, message) {
   return guidance[questionType] || guidance.default
 }
 
-// Parse markdown-style bold (**text**) and return React elements
+// Parse markdown-style formatting (bold, links) and return React elements
 function parseFormattedText(text) {
   const parts = []
-  const regex = /\*\*([^*]+)\*\*/g
+  // Combined regex for bold (**text**), markdown links [text](url), and plain URLs
+  const regex = /(\*\*([^*]+)\*\*)|(\[([^\]]+)\]\(([^)]+)\))|(https?:\/\/[^\s<>"\)]+)/g
   let lastIndex = 0
   let match
+  let keyIndex = 0
 
   while ((match = regex.exec(text)) !== null) {
     // Add text before the match
     if (match.index > lastIndex) {
       parts.push(text.slice(lastIndex, match.index))
     }
-    // Add bold text
-    parts.push(<strong key={match.index}>{match[1]}</strong>)
+
+    if (match[1]) {
+      // Bold text: **text**
+      parts.push(<strong key={`bold-${keyIndex++}`}>{match[2]}</strong>)
+    } else if (match[3]) {
+      // Markdown link: [text](url)
+      parts.push(
+        <a
+          key={`link-${keyIndex++}`}
+          href={match[5]}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="chat-link"
+        >
+          {match[4]}
+        </a>
+      )
+    } else if (match[6]) {
+      // Plain URL
+      parts.push(
+        <a
+          key={`url-${keyIndex++}`}
+          href={match[6]}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="chat-link"
+        >
+          {match[6]}
+        </a>
+      )
+    }
+
     lastIndex = regex.lastIndex
   }
 
