@@ -8,7 +8,7 @@
 
   // Department context mapping based on page URL
   const DEPARTMENT_CONTEXTS = {
-    'NPA_Praya.html': {
+    'npa': {
       name: 'National Police Agency',
       abbrev: 'NPA',
       color: '#1d4ed8',
@@ -17,7 +17,7 @@
       hours: 'Emergency: 24/7 | Walk-in: Mon-Fri 8AM-6PM',
       contact: 'Emergency: 911 | Non-emergency: 311'
     },
-    'BOP_Praya.html': {
+    'bop': {
       name: 'Bank of Praya',
       abbrev: 'BOP',
       color: '#0ea5e9',
@@ -26,7 +26,7 @@
       hours: 'Mon-Fri 9AM-5PM | Sat 9AM-1PM',
       contact: '+854 300 0000'
     },
-    'CTB_Praya.html': {
+    'ctb': {
       name: 'Cannabis Tax Bureau',
       abbrev: 'CTB',
       color: '#2d8659',
@@ -35,7 +35,7 @@
       hours: 'Mon-Fri 8AM-5PM',
       contact: '+854 400 0000'
     },
-    'DOJ_Praya.html': {
+    'doj': {
       name: 'Department of Justice',
       abbrev: 'DOJ',
       color: '#991b1b',
@@ -44,7 +44,7 @@
       hours: 'Mon-Fri 8AM-5PM',
       contact: '+854 500 0000'
     },
-    'ID_Praya.html': {
+    'interior': {
       name: 'Interior Department',
       abbrev: 'ID',
       color: '#78716c',
@@ -53,7 +53,7 @@
       hours: 'Mon-Fri 8AM-5PM | Sat 9AM-1PM',
       contact: '+854 600 0000'
     },
-    'TD_Praya.html': {
+    'transport': {
       name: 'Transport Department',
       abbrev: 'TD',
       color: '#0d9488',
@@ -62,7 +62,7 @@
       hours: 'Mon-Fri 8AM-5PM',
       contact: '+854 700 0000'
     },
-    'RD_Praya.html': {
+    'revenue': {
       name: 'Revenue Department',
       abbrev: 'RD',
       color: '#0ea5e9',
@@ -71,7 +71,7 @@
       hours: 'Mon-Fri 8AM-5PM',
       contact: '+854 800 0000'
     },
-    'Praya_Post.html': {
+    'post': {
       name: 'Praya Post',
       abbrev: 'PP',
       color: '#f97316',
@@ -80,7 +80,7 @@
       hours: 'Mon-Fri 8AM-6PM | Sat 9AM-1PM',
       contact: '+854 900 0000'
     },
-    'Health_Praya.html': {
+    'health': {
       name: 'Health Department',
       abbrev: 'HD',
       color: '#dc2626',
@@ -89,7 +89,7 @@
       hours: 'Mon-Fri 8AM-5PM',
       contact: '+854 100 0000'
     },
-    'Housing_Authority_Praya.html': {
+    'housing': {
       name: 'Housing Authority',
       abbrev: 'HA',
       color: '#ea580c',
@@ -98,7 +98,7 @@
       hours: 'Mon-Fri 8AM-5PM',
       contact: '+854 110 0000'
     },
-    'CBCA_Praya.html': {
+    'cbca': {
       name: 'Customs & Border Control Agency',
       abbrev: 'CBCA',
       color: '#0891b2',
@@ -107,7 +107,7 @@
       hours: 'Border: 24/7 | Office: Mon-Fri 8AM-5PM',
       contact: '+854 120 0000'
     },
-    'LC_Praya.html': {
+    'lc': {
       name: 'Legislative Council',
       abbrev: 'LC',
       color: '#6366f1',
@@ -116,7 +116,7 @@
       hours: 'Mon-Fri 9AM-5PM',
       contact: '+854 130 0000'
     },
-    'PSE_Praya.html': {
+    'pse': {
       name: 'Praya Stock Exchange',
       abbrev: 'PSE',
       color: '#0ea5e9',

@@ -70,8 +70,8 @@ export default function BD() {
               <h5>Government</h5>
               <ul>
                 <li><Link to="/">Gov Portal</Link></li>
-                <li><a href="/pages/ID_Praya.html">Interior Dept.</a></li>
-                <li><a href="/pages/Housing_Authority_Praya.html">Housing Authority</a></li>
+                <li><a href="/interior">Interior Dept.</a></li>
+                <li><a href="/housing">Housing Authority</a></li>
               </ul>
             </div>
           </div>

@@ -73,8 +73,8 @@ export default function CR() {
               <h5>Government</h5>
               <ul>
                 <li><Link to="/">Gov Portal</Link></li>
-                <li><a href="/pages/RD_Praya.html">Revenue Dept.</a></li>
-                <li><a href="/pages/CTB_Praya.html">Cannabis Tax Bureau</a></li>
+                <li><a href="/revenue">Revenue Dept.</a></li>
+                <li><a href="/ctb">Cannabis Tax Bureau</a></li>
               </ul>
             </div>
           </div>
