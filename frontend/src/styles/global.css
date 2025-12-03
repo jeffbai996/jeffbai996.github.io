@@ -44,11 +44,12 @@ body.theme-ctb {
   --primary-glow: rgba(45, 134, 89, 0.25);
 }
 
+/* Department of Justice - Dark Red */
 body.theme-doj {
-  --primary: #7c3aed;
-  --primary-dark: #6d28d9;
-  --primary-light: rgba(124, 58, 237, 0.1);
-  --primary-glow: rgba(124, 58, 237, 0.25);
+  --primary: #991b1b;
+  --primary-dark: #7f1d1d;
+  --primary-light: rgba(153, 27, 27, 0.1);
+  --primary-glow: rgba(153, 27, 27, 0.25);
 }
 
 body.theme-interior {
@@ -77,6 +78,78 @@ body.theme-swd {
   --primary-dark: #db2777;
   --primary-light: rgba(236, 72, 153, 0.1);
   --primary-glow: rgba(236, 72, 153, 0.25);
+}
+
+/* National Police Agency - Blue */
+body.theme-npa {
+  --primary: #1d4ed8;
+  --primary-dark: #1e40af;
+  --primary-light: rgba(29, 78, 216, 0.1);
+  --primary-glow: rgba(29, 78, 216, 0.25);
+}
+
+/* Bank of Praya - Sky Blue */
+body.theme-bop {
+  --primary: #0ea5e9;
+  --primary-dark: #0284c7;
+  --primary-light: rgba(14, 165, 233, 0.1);
+  --primary-glow: rgba(14, 165, 233, 0.25);
+}
+
+/* Health Department - Red */
+body.theme-health {
+  --primary: #dc2626;
+  --primary-dark: #b91c1c;
+  --primary-light: rgba(220, 38, 38, 0.1);
+  --primary-glow: rgba(220, 38, 38, 0.25);
+}
+
+/* Housing Authority - Dark Orange */
+body.theme-housing {
+  --primary: #ea580c;
+  --primary-dark: #c2410c;
+  --primary-light: rgba(234, 88, 12, 0.1);
+  --primary-glow: rgba(234, 88, 12, 0.25);
+}
+
+/* Transport Department - Teal */
+body.theme-transport {
+  --primary: #0d9488;
+  --primary-dark: #0f766e;
+  --primary-light: rgba(13, 148, 136, 0.1);
+  --primary-glow: rgba(13, 148, 136, 0.25);
+}
+
+/* Revenue Department - Sky Blue */
+body.theme-revenue {
+  --primary: #0ea5e9;
+  --primary-dark: #0284c7;
+  --primary-light: rgba(14, 165, 233, 0.1);
+  --primary-glow: rgba(14, 165, 233, 0.25);
+}
+
+/* Praya Post - Orange */
+body.theme-post {
+  --primary: #f97316;
+  --primary-dark: #ea580c;
+  --primary-light: rgba(249, 115, 22, 0.1);
+  --primary-glow: rgba(249, 115, 22, 0.25);
+}
+
+/* Customs & Border Control Agency - Cyan */
+body.theme-cbca {
+  --primary: #0891b2;
+  --primary-dark: #0e7490;
+  --primary-light: rgba(8, 145, 178, 0.1);
+  --primary-glow: rgba(8, 145, 178, 0.25);
+}
+
+/* Legislative Council - Indigo */
+body.theme-lc {
+  --primary: #6366f1;
+  --primary-dark: #4f46e5;
+  --primary-light: rgba(99, 102, 241, 0.1);
+  --primary-glow: rgba(99, 102, 241, 0.25);
 }
 
 /* Animations */
