@@ -423,6 +423,30 @@
         text-align: right;
       }
 
+      /* Link styling in chat messages */
+      .message-bubble .chat-link {
+        color: ${primaryColor};
+        text-decoration: underline;
+        text-underline-offset: 2px;
+        transition: color 0.2s;
+        word-break: break-word;
+      }
+
+      .message-bubble .chat-link:hover {
+        color: ${darkColor};
+        text-decoration-thickness: 2px;
+      }
+
+      .chat-message.user .message-bubble .chat-link {
+        color: white;
+        text-decoration-color: rgba(255, 255, 255, 0.7);
+      }
+
+      .chat-message.user .message-bubble .chat-link:hover {
+        color: white;
+        text-decoration-color: white;
+      }
+
       .chat-input-container {
         padding: 12px 16px;
         background: ${bgCard};
@@ -772,11 +796,13 @@
     const messageDiv = document.createElement('div');
     messageDiv.className = `chat-message ${isUser ? 'user' : 'bot'}`;
 
-    // Format text with line breaks and bold
+    // Format text with line breaks, bold, italic, and links
     const formattedText = text
       .replace(/\n/g, '<br>')
       .replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>')
-      .replace(/\*([^*]+)\*/g, '<em>$1</em>');
+      .replace(/\*([^*]+)\*/g, '<em>$1</em>')
+      .replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank" rel="noopener noreferrer" class="chat-link">$1</a>')
+      .replace(/(^|[^"'>])(https?:\/\/[^\s<>")\]]+)/g, '$1<a href="$2" target="_blank" rel="noopener noreferrer" class="chat-link">$2</a>');
 
     messageDiv.innerHTML = `
       <div class="message-bubble">${formattedText}</div>
