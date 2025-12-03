@@ -38,9 +38,9 @@ export default function BD() {
       <Routes>
         <Route index element={<BDHome navigate={navigate} />} />
         <Route path="permits" element={<BDPermits />} />
-        <Route path="inspections" element={<ComingSoon title="Building Inspections" />} />
-        <Route path="codes" element={<ComingSoon title="Building Codes" />} />
-        <Route path="services" element={<ComingSoon title="Online Services" />} />
+        <Route path="inspections" element={<BDInspections />} />
+        <Route path="codes" element={<BDCodes />} />
+        <Route path="services" element={<BDServices />} />
       </Routes>
 
       <footer className="dept-footer">
@@ -297,121 +297,374 @@ function BDPermits() {
   )
 }
 
-function ComingSoon({ title }) {
-  const navigate = useNavigate();
-
-  const getServiceInfo = () => {
-    switch(title) {
-      case 'Building Inspections':
-        return {
-          description: 'Schedule and manage building inspections throughout the construction process.',
-          services: ['Pre-Construction Inspection', 'Foundation Inspection', 'Framing Inspection', 'Final Inspection'],
-          contact: 'For inspection inquiries, contact the Inspections Division at 1-800-PRAYA-INSPECT'
-        };
-      case 'Building Codes':
-        return {
-          description: 'Access the complete Building Code of the Republic of Praya and construction standards.',
-          services: ['Structural Codes', 'Fire Safety Standards', 'Accessibility Requirements', 'Energy Efficiency Codes'],
-          contact: 'Code interpretation assistance available at codes@buildings.gov.py'
-        };
-      case 'Online Services':
-        return {
-          description: 'Digital services for permit applications, status tracking, and document submissions.',
-          services: ['Permit Status Lookup', 'Online Applications', 'Document Upload', 'Fee Payment'],
-          contact: 'Technical support: 1-800-PRAYA-BUILD or support@buildings.gov.py'
-        };
-      default:
-        return {
-          description: 'This service is being developed to better serve construction needs in Praya.',
-          services: [],
-          contact: 'For assistance, contact the Buildings Department at info@buildings.gov.py'
-        };
-    }
-  };
-
-  const info = getServiceInfo();
-
+function BDInspections() {
   return (
     <main className="main">
       <div className="page-header">
         <div className="container">
           <div className="breadcrumb">
-            <Link to="/bd">Home</Link> / {title}
+            <Link to="/bd">Home</Link> / Building Inspections
           </div>
-          <h1>{title}</h1>
-          <p className="subtitle">{info.description}</p>
+          <h1>Building Inspections</h1>
+          <p className="subtitle">Schedule and manage inspections throughout your construction project</p>
         </div>
       </div>
       <div className="container">
-        <div className="card">
-          <div style={{ padding: '20px', textAlign: 'center' }}>
-            <div style={{
-              width: '64px',
-              height: '64px',
-              background: 'linear-gradient(135deg, rgba(217, 119, 6, 0.1) 0%, rgba(217, 119, 6, 0.2) 100%)',
-              borderRadius: '50%',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              margin: '0 auto 20px'
-            }}>
-              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                <circle cx="12" cy="12" r="10"/>
-                <path d="M12 16v-4M12 8h.01"/>
-              </svg>
-            </div>
-            <h3 style={{ marginBottom: '12px' }}>Service Under Development</h3>
-            <p style={{ color: 'var(--text-muted)', maxWidth: '500px', margin: '0 auto 24px' }}>
-              We're working to bring this service online. In the meantime, you can access these services through traditional channels.
-            </p>
+        <div className="content-text">
+          <div className="info-box" style={{ marginBottom: '24px', background: 'rgba(217, 119, 6, 0.05)' }}>
+            <h4>Important Notice</h4>
+            <p>All construction work must be inspected and approved at specific stages. Proceeding without approval may result in fines and requirement to undo work.</p>
+          </div>
 
-            {info.services.length > 0 && (
-              <div style={{ marginTop: '24px', textAlign: 'left', maxWidth: '400px', margin: '24px auto 0' }}>
-                <h4 style={{ fontSize: '14px', marginBottom: '12px' }}>Available Services:</h4>
-                <ul style={{ color: 'var(--text-secondary)', fontSize: '14px' }}>
-                  {info.services.map(service => (
-                    <li key={service} style={{ marginBottom: '8px' }}>{service}</li>
-                  ))}
-                </ul>
-              </div>
-            )}
+          <h3>Inspection Types</h3>
+          <p>Our inspectors verify compliance with building codes at critical stages of construction:</p>
 
-            <div style={{
-              marginTop: '32px',
-              padding: '16px',
-              background: 'rgba(217, 119, 6, 0.05)',
-              borderRadius: '10px',
-              fontSize: '13px',
-              color: 'var(--text-muted)'
-            }}>
-              {info.contact}
+          <div className="card" style={{ marginTop: '20px' }}>
+            <h4 className="card-title">Pre-Construction Inspection</h4>
+            <p style={{ color: 'var(--text-muted)', marginBottom: '12px' }}>Site preparation review before breaking ground. Verifies property boundaries, utilities access, and compliance with zoning requirements.</p>
+            <div style={{ fontSize: '13px', color: 'var(--text-secondary)', marginBottom: '8px' }}>
+              <strong>When to Schedule:</strong> After permit approval, before any excavation or construction begins
             </div>
+            <div style={{ fontSize: '13px', color: 'var(--text-secondary)' }}>
+              <strong>What We Check:</strong> Site survey accuracy, erosion control measures, temporary facilities placement
+            </div>
+          </div>
 
-            <div style={{ marginTop: '32px' }}>
-              <h4 style={{ fontSize: '14px', marginBottom: '12px' }}>Related Services</h4>
-              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '12px' }}>
-                <Link to="/bd/permits" style={{
-                  padding: '14px',
-                  background: 'var(--bg-elevated)',
-                  border: '1px solid var(--border-subtle)',
-                  borderRadius: '10px',
-                  textDecoration: 'none',
-                  fontSize: '13px',
-                  fontWeight: '500',
-                  color: 'var(--text-primary)',
-                  transition: 'all 0.2s'
-                }}>
-                  Building Permits
-                </Link>
-                <button
-                  onClick={() => navigate('/bd')}
-                  className="btn btn-secondary"
-                  style={{ fontSize: '13px', padding: '14px' }}
-                >
-                  Return to BD Home
-                </button>
-              </div>
+          <div className="card">
+            <h4 className="card-title">Foundation Inspection</h4>
+            <p style={{ color: 'var(--text-muted)', marginBottom: '12px' }}>Critical inspection of foundation excavation, reinforcement placement, and formwork before concrete pouring.</p>
+            <div style={{ fontSize: '13px', color: 'var(--text-secondary)', marginBottom: '8px' }}>
+              <strong>When to Schedule:</strong> After excavation and rebar placement, before concrete pour
             </div>
+            <div style={{ fontSize: '13px', color: 'var(--text-secondary)' }}>
+              <strong>What We Check:</strong> Excavation depth, soil conditions, rebar size and spacing, anchor bolts, drainage systems
+            </div>
+          </div>
+
+          <div className="card">
+            <h4 className="card-title">Framing Inspection</h4>
+            <p style={{ color: 'var(--text-muted)', marginBottom: '12px' }}>Structural framing verification including wall studs, joists, beams, and roof trusses before walls are closed.</p>
+            <div style={{ fontSize: '13px', color: 'var(--text-secondary)', marginBottom: '8px' }}>
+              <strong>When to Schedule:</strong> After framing complete, before insulation or drywall installation
+            </div>
+            <div style={{ fontSize: '13px', color: 'var(--text-secondary)' }}>
+              <strong>What We Check:</strong> Member sizes, spacing, connections, fire blocking, shear walls, roof structure
+            </div>
+          </div>
+
+          <div className="card">
+            <h4 className="card-title">Rough-In Inspection</h4>
+            <p style={{ color: 'var(--text-muted)', marginBottom: '12px' }}>Review of electrical, plumbing, and HVAC systems installed in walls and ceilings before they are concealed.</p>
+            <div style={{ fontSize: '13px', color: 'var(--text-secondary)', marginBottom: '8px' }}>
+              <strong>When to Schedule:</strong> After systems installed, before walls are closed up
+            </div>
+            <div style={{ fontSize: '13px', color: 'var(--text-secondary)' }}>
+              <strong>What We Check:</strong> Pipe materials and sizes, electrical wiring and boxes, HVAC ductwork, gas lines
+            </div>
+          </div>
+
+          <div className="card">
+            <h4 className="card-title">Insulation Inspection</h4>
+            <p style={{ color: 'var(--text-muted)', marginBottom: '12px' }}>Verification of proper insulation installation and vapor barriers to meet energy efficiency requirements.</p>
+            <div style={{ fontSize: '13px', color: 'var(--text-secondary)', marginBottom: '8px' }}>
+              <strong>When to Schedule:</strong> After insulation installed, before interior finish work
+            </div>
+            <div style={{ fontSize: '13px', color: 'var(--text-secondary)' }}>
+              <strong>What We Check:</strong> R-values, coverage, vapor barriers, air sealing, ventilation clearances
+            </div>
+          </div>
+
+          <div className="card">
+            <h4 className="card-title">Final Inspection</h4>
+            <p style={{ color: 'var(--text-muted)', marginBottom: '12px' }}>Comprehensive inspection of completed building to verify all work meets code requirements and approved plans.</p>
+            <div style={{ fontSize: '13px', color: 'var(--text-secondary)', marginBottom: '8px' }}>
+              <strong>When to Schedule:</strong> After all construction work is complete
+            </div>
+            <div style={{ fontSize: '13px', color: 'var(--text-secondary)' }}>
+              <strong>What We Check:</strong> All systems operational, safety features, accessibility compliance, certificate of occupancy eligibility
+            </div>
+          </div>
+
+          <h3>Scheduling Inspections</h3>
+          <div className="card" style={{ background: 'var(--bg-elevated)' }}>
+            <h4 className="card-title">How to Request an Inspection</h4>
+            <ol style={{ marginBottom: '16px' }}>
+              <li>Call the inspection line at 1-800-PRAYA-INSPECT at least 48 hours before needed date</li>
+              <li>Provide your permit number and site address</li>
+              <li>Specify which inspection type you need</li>
+              <li>Receive confirmation with inspector name and time window</li>
+              <li>Ensure site is ready and accessible during scheduled window</li>
+            </ol>
+            <div style={{ padding: '12px', background: 'rgba(217, 119, 6, 0.1)', borderRadius: '8px', fontSize: '13px' }}>
+              <strong>Note:</strong> Inspections are typically conducted Monday-Friday, 8:00 AM - 4:00 PM. Rush inspections available for additional fee.
+            </div>
+          </div>
+
+          <h3>Inspection Results</h3>
+          <ul>
+            <li><strong>Approved:</strong> Work meets code requirements. You may proceed to next phase.</li>
+            <li><strong>Approved with Comments:</strong> Minor issues noted but work may proceed. Address comments before final inspection.</li>
+            <li><strong>Corrections Required:</strong> Deficiencies must be fixed. Re-inspection required after corrections made.</li>
+            <li><strong>Failed:</strong> Major code violations. Work must be corrected and re-inspected before proceeding.</li>
+          </ul>
+
+          <div className="info-box" style={{ marginTop: '24px' }}>
+            <h4>Failed Inspection?</h4>
+            <p>Don't worry! Our inspectors will provide detailed notes on what needs correction. You can schedule a re-inspection once issues are addressed. Re-inspection fee: ¤75</p>
+          </div>
+        </div>
+      </div>
+    </main>
+  )
+}
+
+function BDCodes() {
+  return (
+    <main className="main">
+      <div className="page-header">
+        <div className="container">
+          <div className="breadcrumb">
+            <Link to="/bd">Home</Link> / Building Codes
+          </div>
+          <h1>Building Codes & Standards</h1>
+          <p className="subtitle">Construction regulations ensuring safety and quality in the Republic of Praya</p>
+        </div>
+      </div>
+      <div className="container">
+        <div className="content-text">
+          <h3>Building Code Overview</h3>
+          <p>The Republic of Praya Building Code (RPBC) establishes minimum requirements for construction safety, structural integrity, fire protection, and public health. All new construction, alterations, and additions must comply with current code provisions.</p>
+
+          <div className="info-box" style={{ marginTop: '20px', marginBottom: '24px' }}>
+            <h4>Current Code Version</h4>
+            <p>RPBC 2024 Edition - Effective January 1, 2024. Includes updated energy efficiency standards and seismic design requirements.</p>
+          </div>
+
+          <h3>Code Categories</h3>
+
+          <div className="card" style={{ marginTop: '20px' }}>
+            <h4 className="card-title">Structural Code</h4>
+            <p style={{ color: 'var(--text-muted)', marginBottom: '16px' }}>Governs the design and construction of building structural systems including foundations, walls, floors, and roofs.</p>
+            <h5 style={{ fontSize: '14px', marginBottom: '8px' }}>Key Requirements:</h5>
+            <ul style={{ fontSize: '14px', color: 'var(--text-secondary)' }}>
+              <li>Dead and live load calculations based on building use</li>
+              <li>Seismic design requirements for Risk Zone 3 areas</li>
+              <li>Wind load resistance for coastal construction</li>
+              <li>Soil bearing capacity and foundation design standards</li>
+              <li>Structural steel and concrete specifications</li>
+            </ul>
+          </div>
+
+          <div className="card">
+            <h4 className="card-title">Fire Safety Code</h4>
+            <p style={{ color: 'var(--text-muted)', marginBottom: '16px' }}>Establishes fire-resistive construction requirements, egress systems, and fire protection measures.</p>
+            <h5 style={{ fontSize: '14px', marginBottom: '8px' }}>Key Requirements:</h5>
+            <ul style={{ fontSize: '14px', color: 'var(--text-secondary)' }}>
+              <li>Fire-rated assemblies for walls, floors, and doors based on occupancy type</li>
+              <li>Minimum egress width and exit signage requirements</li>
+              <li>Automatic sprinkler system requirements for buildings over 3 stories</li>
+              <li>Fire alarm and detection system specifications</li>
+              <li>Smoke control and ventilation systems for enclosed spaces</li>
+            </ul>
+          </div>
+
+          <div className="card">
+            <h4 className="card-title">Energy Efficiency Code</h4>
+            <p style={{ color: 'var(--text-muted)', marginBottom: '16px' }}>Mandates minimum energy performance standards for building envelope and mechanical systems.</p>
+            <h5 style={{ fontSize: '14px', marginBottom: '8px' }}>Key Requirements:</h5>
+            <ul style={{ fontSize: '14px', color: 'var(--text-secondary)' }}>
+              <li>Minimum R-values for insulation: R-30 roofs, R-19 walls, R-13 foundations</li>
+              <li>Maximum U-factor 0.30 for windows and doors</li>
+              <li>HVAC efficiency minimums: 16 SEER cooling, 95 AFUE heating</li>
+              <li>LED lighting required for 90% of fixtures in commercial buildings</li>
+              <li>Solar-ready roof design for new residential construction</li>
+            </ul>
+          </div>
+
+          <div className="card">
+            <h4 className="card-title">Accessibility Code</h4>
+            <p style={{ color: 'var(--text-muted)', marginBottom: '16px' }}>Ensures buildings are accessible to persons with disabilities in accordance with Universal Design principles.</p>
+            <h5 style={{ fontSize: '14px', marginBottom: '8px' }}>Key Requirements:</h5>
+            <ul style={{ fontSize: '14px', color: 'var(--text-secondary)' }}>
+              <li>Accessible routes from parking to building entrances</li>
+              <li>Minimum doorway width of 36 inches, 32 inches clear opening</li>
+              <li>Ramps with maximum 1:12 slope and handrails both sides</li>
+              <li>Elevator required for buildings over 3 stories or 3,000 sq ft per floor</li>
+              <li>Accessible bathrooms with proper clearances and grab bars</li>
+            </ul>
+          </div>
+
+          <div className="card">
+            <h4 className="card-title">Plumbing Code</h4>
+            <p style={{ color: 'var(--text-muted)', marginBottom: '16px' }}>Regulates water supply, drainage systems, and plumbing fixtures for health and safety.</p>
+            <h5 style={{ fontSize: '14px', marginBottom: '8px' }}>Key Requirements:</h5>
+            <ul style={{ fontSize: '14px', color: 'var(--text-secondary)' }}>
+              <li>Approved pipe materials: copper, PEX, CPVC for supply; PVC, cast iron for drainage</li>
+              <li>Backflow prevention devices on all potable water connections</li>
+              <li>Proper venting for all drainage fixtures</li>
+              <li>Low-flow fixtures: 1.6 GPF toilets, 2.0 GPM showerheads</li>
+              <li>Water heater temperature and pressure relief valves</li>
+            </ul>
+          </div>
+
+          <div className="card">
+            <h4 className="card-title">Electrical Code</h4>
+            <p style={{ color: 'var(--text-muted)', marginBottom: '16px' }}>Based on National Electrical Code (NEC) with Prayan amendments for safe electrical installations.</p>
+            <h5 style={{ fontSize: '14px', marginBottom: '8px' }}>Key Requirements:</h5>
+            <ul style={{ fontSize: '14px', color: 'var(--text-secondary)' }}>
+              <li>GFCI protection for bathrooms, kitchens, outdoors, and wet locations</li>
+              <li>AFCI protection for all bedroom circuits</li>
+              <li>Service panel sizing: minimum 200 amps for new residential</li>
+              <li>Dedicated circuits for major appliances</li>
+              <li>Proper grounding and bonding of electrical systems</li>
+            </ul>
+          </div>
+
+          <h3>Code Compliance Resources</h3>
+          <div className="card" style={{ background: 'var(--bg-elevated)' }}>
+            <h4 className="card-title">Getting Help with Code Requirements</h4>
+            <ul>
+              <li><strong>Code Interpretation Service:</strong> Email specific questions to codes@buildings.gov.py for official interpretation</li>
+              <li><strong>Plan Review Pre-Consultation:</strong> Schedule meeting with plan reviewers before submission (¤150/hour)</li>
+              <li><strong>Code Reference Library:</strong> Free access at all BD offices - complete code books and reference materials</li>
+              <li><strong>Online Code Search:</strong> Search code sections at www.buildings.gov.py/codes</li>
+              <li><strong>Educational Workshops:</strong> Monthly code training sessions for contractors and designers</li>
+            </ul>
+          </div>
+
+          <h3>Common Code Violations</h3>
+          <p>Avoid these frequent issues that delay approval:</p>
+          <ul>
+            <li>Missing or undersized structural members</li>
+            <li>Inadequate egress width or travel distance to exits</li>
+            <li>Improper fire-rated assemblies between units or occupancies</li>
+            <li>Insufficient insulation or air sealing</li>
+            <li>Missing GFCI or AFCI protection on required circuits</li>
+            <li>Improper drainage venting or trap configurations</li>
+            <li>Non-compliant accessibility features</li>
+          </ul>
+        </div>
+      </div>
+    </main>
+  )
+}
+
+function BDServices() {
+  return (
+    <main className="main">
+      <div className="page-header">
+        <div className="container">
+          <div className="breadcrumb">
+            <Link to="/bd">Home</Link> / Online Services
+          </div>
+          <h1>Online Services</h1>
+          <p className="subtitle">Digital tools for permit management and building information</p>
+        </div>
+      </div>
+      <div className="container">
+        <div className="content-text">
+          <h3>Available Online Services</h3>
+          <p>Access building department services 24/7 through our digital platform:</p>
+
+          <div className="card" style={{ marginTop: '20px' }}>
+            <h4 className="card-title">Permit Status Lookup</h4>
+            <p style={{ color: 'var(--text-muted)', marginBottom: '12px' }}>Track your permit application in real-time from submission through approval. View inspection results and conditions of approval.</p>
+            <div style={{ padding: '16px', background: 'var(--bg-elevated)', borderRadius: '8px', marginTop: '12px' }}>
+              <p style={{ fontSize: '13px', marginBottom: '8px', color: 'var(--text-secondary)' }}><strong>Search by:</strong></p>
+              <ul style={{ fontSize: '13px', color: 'var(--text-secondary)', marginBottom: 0 }}>
+                <li>Permit number</li>
+                <li>Property address</li>
+                <li>Parcel number</li>
+                <li>Applicant name</li>
+              </ul>
+            </div>
+          </div>
+
+          <div className="card">
+            <h4 className="card-title">Online Permit Applications</h4>
+            <p style={{ color: 'var(--text-muted)', marginBottom: '12px' }}>Submit permit applications electronically with digital plan upload. Automated plan check for qualifying projects provides same-day approval.</p>
+            <div style={{ padding: '16px', background: 'var(--bg-elevated)', borderRadius: '8px', marginTop: '12px' }}>
+              <p style={{ fontSize: '13px', marginBottom: '8px', color: 'var(--text-secondary)' }}><strong>Eligible for expedited review:</strong></p>
+              <ul style={{ fontSize: '13px', color: 'var(--text-secondary)', marginBottom: 0 }}>
+                <li>Residential re-roofing (no structural changes)</li>
+                <li>Residential water heater replacement</li>
+                <li>Standard residential solar panel installation</li>
+                <li>Fence installation (under 6 feet height)</li>
+                <li>Minor electrical and plumbing repairs</li>
+              </ul>
+            </div>
+          </div>
+
+          <div className="card">
+            <h4 className="card-title">Document Upload Portal</h4>
+            <p style={{ color: 'var(--text-muted)', marginBottom: '12px' }}>Submit required documents, revised plans, and inspection-related materials electronically. Accepted formats: PDF, DWG, DXF, JPG.</p>
+            <div style={{ fontSize: '13px', color: 'var(--text-secondary)', marginTop: '12px' }}>
+              <strong>Maximum file size:</strong> 50MB per upload | <strong>Storage:</strong> Documents retained for 7 years
+            </div>
+          </div>
+
+          <div className="card">
+            <h4 className="card-title">Inspection Scheduling</h4>
+            <p style={{ color: 'var(--text-muted)', marginBottom: '12px' }}>Schedule inspections online with real-time availability. Receive email and SMS notifications of inspector arrival time.</p>
+            <div style={{ padding: '16px', background: 'var(--bg-elevated)', borderRadius: '8px', marginTop: '12px' }}>
+              <p style={{ fontSize: '13px', color: 'var(--text-secondary)' }}>
+                <strong>Scheduling window:</strong> Request inspections up to 14 days in advance. Same-day requests must be submitted before 9:00 AM. Cancel or reschedule up to 2 hours before appointment.
+              </p>
+            </div>
+          </div>
+
+          <div className="card">
+            <h4 className="card-title">Fee Payment System</h4>
+            <p style={{ color: 'var(--text-muted)', marginBottom: '12px' }}>Pay permit fees, inspection fees, and penalties online using credit card, debit card, or electronic bank transfer.</p>
+            <div style={{ fontSize: '13px', color: 'var(--text-secondary)', marginTop: '12px' }}>
+              <strong>Payment methods:</strong> Visa, Mastercard, Praya Debit, direct bank transfer | <strong>Processing:</strong> Instant confirmation
+            </div>
+          </div>
+
+          <div className="card">
+            <h4 className="card-title">Code Violation Search</h4>
+            <p style={{ color: 'var(--text-muted)', marginBottom: '12px' }}>Research code violations and compliance orders on any property. Essential for due diligence before property purchase.</p>
+            <div style={{ padding: '16px', background: 'rgba(217, 119, 6, 0.1)', borderRadius: '8px', marginTop: '12px', fontSize: '13px' }}>
+              <strong>Public Records:</strong> Violation database includes open violations, compliance history, and certificate of occupancy status for all properties in Praya.
+            </div>
+          </div>
+
+          <div className="card">
+            <h4 className="card-title">Property Reports</h4>
+            <p style={{ color: 'var(--text-muted)', marginBottom: '12px' }}>Generate comprehensive reports showing all permits, inspections, and approvals for any property address.</p>
+            <div style={{ fontSize: '13px', color: 'var(--text-secondary)', marginTop: '12px' }}>
+              <strong>Report includes:</strong> Permit history, inspection records, certificates of occupancy, zoning information | <strong>Fee:</strong> ¤25 per report
+            </div>
+          </div>
+
+          <h3>Account Features</h3>
+          <div className="card" style={{ background: 'var(--bg-elevated)' }}>
+            <h4 className="card-title">Create a Buildings Department Account</h4>
+            <p style={{ marginBottom: '12px' }}>Register for a free account to access enhanced features:</p>
+            <ul style={{ marginBottom: '16px' }}>
+              <li>Save and track multiple permit applications</li>
+              <li>Set up email alerts for application status changes</li>
+              <li>Store payment methods for quick fee payment</li>
+              <li>Access digital copies of approved permits and certificates</li>
+              <li>Schedule recurring inspections for ongoing projects</li>
+              <li>View personalized dashboard with all your projects</li>
+            </ul>
+            <div style={{ padding: '12px', background: 'rgba(217, 119, 6, 0.1)', borderRadius: '8px', fontSize: '13px' }}>
+              <strong>Registration:</strong> Create account at www.buildings.gov.py/register with valid email and ID verification
+            </div>
+          </div>
+
+          <h3>System Requirements</h3>
+          <ul>
+            <li><strong>Browsers:</strong> Chrome 90+, Firefox 88+, Safari 14+, Edge 90+</li>
+            <li><strong>Internet:</strong> Minimum 2 Mbps connection for plan uploads</li>
+            <li><strong>PDF Viewer:</strong> Adobe Reader or browser built-in viewer</li>
+            <li><strong>CAD Files:</strong> AutoCAD 2018 or later for DWG uploads</li>
+          </ul>
+
+          <div className="info-box" style={{ marginTop: '24px' }}>
+            <h4>Need Technical Support?</h4>
+            <p>For help with online services, contact our technical support team at support@buildings.gov.py or call 1-800-PRAYA-BUILD, Monday-Friday 8:00 AM - 6:00 PM.</p>
           </div>
         </div>
       </div>
