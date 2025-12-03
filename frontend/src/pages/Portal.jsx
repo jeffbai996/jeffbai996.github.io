@@ -1,6 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import { useAuth } from '../utils/AuthContext'
+import { getCurrentAQI, getCurrentSecurityLevel } from '../utils/nationalStatus'
 import './Portal.css'
 
 // Department icon components
@@ -318,6 +319,10 @@ export default function Portal() {
   const [servicesOpen, setServicesOpen] = React.useState(false);
   const { user, isAuthenticated, loading } = useAuth();
 
+  // Get current national status
+  const currentAQI = getCurrentAQI();
+  const currentSecurity = getCurrentSecurityLevel();
+
   return (
     <>
       <header className="portal-header">
@@ -438,13 +443,13 @@ export default function Portal() {
           <div className="stats-grid">
             <Link to="/air-quality" className="stat-item stat-item-link">
               <span className="stat-label">Air Quality Index</span>
-              <span className="stat-value" style={{color: '#10b981'}}>42</span>
-              <span className="stat-change">Good • Updated 1hr ago</span>
+              <span className="stat-value" style={{color: currentAQI.color}}>{currentAQI.value}</span>
+              <span className="stat-change">{currentAQI.label} • Updated {currentAQI.lastUpdated}</span>
             </Link>
             <Link to="/national-security" className="stat-item stat-item-link">
               <span className="stat-label">National Security Level</span>
-              <span className="stat-value" style={{color: '#0ea5e9'}}>2</span>
-              <span className="stat-change">Elevated • Routine vigilance</span>
+              <span className="stat-value" style={{color: currentSecurity.color}}>{currentSecurity.level}</span>
+              <span className="stat-change">{currentSecurity.name} • Routine vigilance</span>
             </Link>
             <div className="stat-item">
               <span className="stat-label">Citizens Served</span>
