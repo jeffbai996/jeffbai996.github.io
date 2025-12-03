@@ -38,9 +38,9 @@ export default function SWD() {
       <Routes>
         <Route index element={<SWDHome navigate={navigate} />} />
         <Route path="benefits" element={<SWDBenefits />} />
-        <Route path="family" element={<ComingSoon title="Family Services" />} />
-        <Route path="elderly" element={<ComingSoon title="Elderly Care" />} />
-        <Route path="services" element={<ComingSoon title="Online Services" />} />
+        <Route path="family" element={<SWDFamily />} />
+        <Route path="elderly" element={<SWDElderly />} />
+        <Route path="services" element={<SWDServices />} />
       </Routes>
 
       <footer className="dept-footer">
@@ -295,121 +295,560 @@ function SWDBenefits() {
   )
 }
 
-function ComingSoon({ title }) {
-  const navigate = useNavigate();
-
-  const getServiceInfo = () => {
-    switch(title) {
-      case 'Family Services':
-        return {
-          description: 'Support programs for families, including child protection, foster care, and family counseling.',
-          services: ['Child Protection Services', 'Foster Care Programs', 'Family Counseling', 'Adoption Services'],
-          contact: 'For family service inquiries, contact 1-800-PRAYA-FAMILY'
-        };
-      case 'Elderly Care':
-        return {
-          description: 'Comprehensive care services for senior citizens, including home care and day centers.',
-          services: ['Home Care Services', 'Day Care Centers', 'Meals on Wheels', 'Senior Activity Programs'],
-          contact: 'Elderly services hotline: 1-800-PRAYA-SENIOR'
-        };
-      case 'Online Services':
-        return {
-          description: 'Digital services for benefit applications, status tracking, and appointment scheduling.',
-          services: ['Online Applications', 'Benefit Status Check', 'Document Upload', 'Appointment Booking'],
-          contact: 'Technical support: 1-800-PRAYA-HELP or support@swd.gov.py'
-        };
-      default:
-        return {
-          description: 'This service is being developed to better serve citizens in need.',
-          services: [],
-          contact: 'For assistance, contact the Social Welfare Department at info@swd.gov.py'
-        };
-    }
-  };
-
-  const info = getServiceInfo();
-
+function SWDFamily() {
   return (
     <main className="main">
       <div className="page-header">
         <div className="container">
           <div className="breadcrumb">
-            <Link to="/swd">Home</Link> / {title}
+            <Link to="/swd">Home</Link> / Family Services
           </div>
-          <h1>{title}</h1>
-          <p className="subtitle">{info.description}</p>
+          <h1>Family Services</h1>
+          <p className="subtitle">Support programs for children, families, and child protection</p>
         </div>
       </div>
       <div className="container">
-        <div className="card">
-          <div style={{ padding: '20px', textAlign: 'center' }}>
-            <div style={{
-              width: '64px',
-              height: '64px',
-              background: 'linear-gradient(135deg, rgba(236, 72, 153, 0.1) 0%, rgba(236, 72, 153, 0.2) 100%)',
-              borderRadius: '50%',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              margin: '0 auto 20px'
-            }}>
-              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                <circle cx="12" cy="12" r="10"/>
-                <path d="M12 16v-4M12 8h.01"/>
-              </svg>
-            </div>
-            <h3 style={{ marginBottom: '12px' }}>Service Under Development</h3>
-            <p style={{ color: 'var(--text-muted)', maxWidth: '500px', margin: '0 auto 24px' }}>
-              We're working to bring this service online. In the meantime, you can access these services through traditional channels.
-            </p>
+        <div className="content-text">
+          <div className="info-box" style={{ marginBottom: '24px', background: 'rgba(236, 72, 153, 0.05)' }}>
+            <h4>Our Commitment to Families</h4>
+            <p>The Family Services Division provides comprehensive support to strengthen families, protect vulnerable children, and promote child welfare across the Republic of Praya.</p>
+          </div>
 
-            {info.services.length > 0 && (
-              <div style={{ marginTop: '24px', textAlign: 'left', maxWidth: '400px', margin: '24px auto 0' }}>
-                <h4 style={{ fontSize: '14px', marginBottom: '12px' }}>Available Services:</h4>
-                <ul style={{ color: 'var(--text-secondary)', fontSize: '14px' }}>
-                  {info.services.map(service => (
-                    <li key={service} style={{ marginBottom: '8px' }}>{service}</li>
-                  ))}
-                </ul>
+          <h3>Child Protection Services</h3>
+          <p>Safeguarding children from abuse, neglect, and exploitation:</p>
+
+          <div className="card" style={{ marginTop: '20px' }}>
+            <h4 className="card-title">Child Abuse Reporting & Investigation</h4>
+            <p style={{ color: 'var(--text-muted)', marginBottom: '12px' }}>24/7 hotline for reporting suspected child abuse or neglect. Trained social workers investigate all reports and take immediate action to protect at-risk children.</p>
+            <div style={{ padding: '16px', background: 'rgba(239, 68, 68, 0.1)', borderRadius: '8px', marginTop: '12px', border: '1px solid rgba(239, 68, 68, 0.2)' }}>
+              <p style={{ fontSize: '14px', fontWeight: '600', marginBottom: '8px' }}>Emergency Hotline: 1-800-CHILD-HELP (1-800-24453-4357)</p>
+              <p style={{ fontSize: '13px', color: 'var(--text-secondary)', marginBottom: 0 }}>
+                Available 24 hours a day, 7 days a week. All reports are confidential. Mandatory reporting for teachers, doctors, and childcare workers.
+              </p>
+            </div>
+          </div>
+
+          <div className="card">
+            <h4 className="card-title">In-Home Family Support</h4>
+            <p style={{ color: 'var(--text-muted)', marginBottom: '12px' }}>Intensive support services delivered in the family home to address challenges and prevent child removal when safe to do so.</p>
+            <div style={{ fontSize: '13px', color: 'var(--text-secondary)' }}>
+              <strong>Services include:</strong> Parenting skills training, budgeting assistance, substance abuse support referrals, mental health counseling, crisis intervention
+            </div>
+          </div>
+
+          <div className="card">
+            <h4 className="card-title">Out-of-Home Care</h4>
+            <p style={{ color: 'var(--text-muted)', marginBottom: '12px' }}>When children cannot safely remain at home, we provide temporary care arrangements while working toward family reunification.</p>
+            <div style={{ fontSize: '13px', color: 'var(--text-secondary)' }}>
+              <strong>Placement options:</strong> Kinship care (relatives), licensed foster homes, group homes, residential treatment facilities
+            </div>
+          </div>
+
+          <h3>Foster Care Programs</h3>
+          <p>Recruiting, training, and supporting foster families to provide safe, nurturing homes:</p>
+
+          <div className="card" style={{ marginTop: '20px' }}>
+            <h4 className="card-title">Become a Foster Parent</h4>
+            <p style={{ color: 'var(--text-muted)', marginBottom: '12px' }}>Open your home to children in need. We provide comprehensive training, ongoing support, and monthly financial assistance.</p>
+            <div style={{ padding: '12px', background: 'var(--bg-elevated)', borderRadius: '8px', marginTop: '12px', fontSize: '13px' }}>
+              <strong>Requirements:</strong>
+              <ul style={{ marginTop: '8px', marginBottom: '8px' }}>
+                <li>At least 21 years old</li>
+                <li>Stable housing with adequate space</li>
+                <li>Reliable income (employment or benefits)</li>
+                <li>Pass background checks and home safety inspection</li>
+                <li>Complete 30 hours of pre-service training</li>
+              </ul>
+              <strong>Support provided:</strong> Monthly stipend (¤400-800 per child), 24/7 caseworker support, respite care, medical coverage for children
+            </div>
+          </div>
+
+          <div className="card">
+            <h4 className="card-title">Foster Parent Training</h4>
+            <p style={{ color: 'var(--text-muted)', marginBottom: '12px' }}>Comprehensive pre-service training covering trauma-informed care, child development, behavior management, and working with birth families.</p>
+            <div style={{ fontSize: '13px', color: 'var(--text-secondary)' }}>
+              <strong>Training schedule:</strong> Evening and weekend classes available. Online modules for flexible learning. Ongoing education required annually.
+            </div>
+          </div>
+
+          <div className="card">
+            <h4 className="card-title">Kinship Care Support</h4>
+            <p style={{ color: 'var(--text-muted)', marginBottom: '12px' }}>Financial and support services for relatives caring for children who cannot live with their parents.</p>
+            <div style={{ fontSize: '13px', color: 'var(--text-secondary)' }}>
+              <strong>Benefits:</strong> Monthly allowance, child care subsidies, free legal assistance, support groups, emergency funds for clothing and supplies
+            </div>
+          </div>
+
+          <h3>Adoption Services</h3>
+          <p>Helping children find permanent, loving families:</p>
+
+          <div className="card" style={{ marginTop: '20px' }}>
+            <h4 className="card-title">Domestic Adoption</h4>
+            <p style={{ color: 'var(--text-muted)', marginBottom: '12px' }}>Adoption of children in foster care whose parents' rights have been terminated and who need permanent homes.</p>
+            <div style={{ padding: '12px', background: 'var(--bg-elevated)', borderRadius: '8px', marginTop: '12px', fontSize: '13px' }}>
+              <strong>Process:</strong>
+              <ol style={{ marginTop: '8px', marginBottom: '8px' }}>
+                <li>Attend orientation session (free, no obligation)</li>
+                <li>Submit adoption application and background checks</li>
+                <li>Complete home study assessment (6-9 months)</li>
+                <li>Review child profiles and matching</li>
+                <li>Pre-placement visits and transition period</li>
+                <li>Finalization hearing (6-12 months after placement)</li>
+              </ol>
+              <strong>Cost:</strong> Free for foster care adoptions. Financial assistance available for children with special needs.
+            </div>
+          </div>
+
+          <div className="card">
+            <h4 className="card-title">International Adoption</h4>
+            <p style={{ color: 'var(--text-muted)', marginBottom: '12px' }}>Support for Prayan families adopting children from other countries, including home studies and post-placement supervision.</p>
+            <div style={{ fontSize: '13px', color: 'var(--text-secondary)' }}>
+              <strong>Services:</strong> Home study preparation (¤2,000), Hague Convention compliance, immigration support, cultural integration resources
+            </div>
+          </div>
+
+          <div className="card">
+            <h4 className="card-title">Post-Adoption Support</h4>
+            <p style={{ color: 'var(--text-muted)', marginBottom: '12px' }}>Ongoing services for adoptive families including counseling, support groups, and crisis intervention.</p>
+            <div style={{ fontSize: '13px', color: 'var(--text-secondary)' }}>
+              <strong>Available support:</strong> Therapy referrals, adoption-competent counselors, monthly support groups, educational workshops, search/reunion services
+            </div>
+          </div>
+
+          <h3>Family Counseling & Support</h3>
+          <div className="card" style={{ marginTop: '20px' }}>
+            <h4 className="card-title">Family Counseling Services</h4>
+            <p style={{ marginBottom: '12px' }}>Free or low-cost counseling for families facing challenges:</p>
+            <ul style={{ marginBottom: '16px', fontSize: '14px', color: 'var(--text-secondary)' }}>
+              <li><strong>Parent-Child Conflict:</strong> Mediation and communication skills for troubled relationships</li>
+              <li><strong>Divorce Support:</strong> Helping children and parents navigate separation</li>
+              <li><strong>Grief Counseling:</strong> Supporting families after loss of a family member</li>
+              <li><strong>Behavioral Issues:</strong> Managing challenging child behavior and mental health concerns</li>
+              <li><strong>Substance Abuse Impact:</strong> Family therapy when addiction affects the household</li>
+            </ul>
+            <div style={{ padding: '12px', background: 'rgba(236, 72, 153, 0.1)', borderRadius: '8px', fontSize: '13px' }}>
+              <strong>Access:</strong> Call 1-800-PRAYA-FAMILY to schedule intake appointment. Services provided by licensed therapists. Sliding fee scale based on income.
+            </div>
+          </div>
+
+          <div className="card">
+            <h4 className="card-title">Parenting Education Programs</h4>
+            <p style={{ marginBottom: '12px' }}>Evidence-based parenting classes offered throughout Praya:</p>
+            <ul style={{ fontSize: '14px', color: 'var(--text-secondary)' }}>
+              <li><strong>Triple P (Positive Parenting Program):</strong> Skills for managing behavior and building positive relationships</li>
+              <li><strong>Incredible Years:</strong> Program for parents of young children (ages 0-5)</li>
+              <li><strong>Teen Parenting 101:</strong> Support for adolescent parents</li>
+              <li><strong>Co-Parenting After Divorce:</strong> Putting children first during separation</li>
+            </ul>
+            <div style={{ marginTop: '12px', fontSize: '13px', color: 'var(--text-secondary)' }}>
+              <strong>Format:</strong> 6-8 week courses, evening and weekend options, childcare provided, completion certificates available
+            </div>
+          </div>
+
+          <h3>Child Care Assistance</h3>
+          <div className="card" style={{ background: 'var(--bg-elevated)' }}>
+            <h4 className="card-title">Child Care Subsidy Program</h4>
+            <p style={{ marginBottom: '12px' }}>Financial assistance for working families to access quality child care:</p>
+            <div style={{ fontSize: '14px', color: 'var(--text-secondary)' }}>
+              <strong>Eligibility:</strong>
+              <ul>
+                <li>Parents working at least 20 hours per week or in school/training</li>
+                <li>Income below 200% of poverty level (¤36,000 for family of 3)</li>
+                <li>Child under age 13 (or under 18 if disabled)</li>
+              </ul>
+              <strong>Benefit:</strong> Covers up to 80% of child care costs at licensed providers. Family pays co-payment based on income (¤10-200 per week).
+              <div style={{ marginTop: '12px', padding: '12px', background: 'white', borderRadius: '8px', fontSize: '13px' }}>
+                <strong>How to apply:</strong> Complete online application at www.swd.gov.py/childcare or visit local service center. Processing time 15 business days.
               </div>
-            )}
-
-            <div style={{
-              marginTop: '32px',
-              padding: '16px',
-              background: 'rgba(236, 72, 153, 0.05)',
-              borderRadius: '10px',
-              fontSize: '13px',
-              color: 'var(--text-muted)'
-            }}>
-              {info.contact}
             </div>
+          </div>
 
-            <div style={{ marginTop: '32px' }}>
-              <h4 style={{ fontSize: '14px', marginBottom: '12px' }}>Related Services</h4>
-              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '12px' }}>
-                <Link to="/swd/benefits" style={{
-                  padding: '14px',
-                  background: 'var(--bg-elevated)',
-                  border: '1px solid var(--border-subtle)',
-                  borderRadius: '10px',
-                  textDecoration: 'none',
-                  fontSize: '13px',
-                  fontWeight: '500',
-                  color: 'var(--text-primary)',
-                  transition: 'all 0.2s'
-                }}>
-                  Social Benefits
-                </Link>
-                <button
-                  onClick={() => navigate('/swd')}
-                  className="btn btn-secondary"
-                  style={{ fontSize: '13px', padding: '14px' }}
-                >
-                  Return to SWD Home
-                </button>
+          <div className="info-box" style={{ marginTop: '24px' }}>
+            <h4>Family Services Contact</h4>
+            <p>For information about family support programs, foster care, or adoption services, call our Family Services Division at 1-800-PRAYA-FAMILY (1-800-77292-326459) or email family@swd.gov.py. Offices open Monday-Friday 8:00 AM - 6:00 PM. Emergency child protection line available 24/7.</p>
+          </div>
+        </div>
+      </div>
+    </main>
+  )
+}
+
+function SWDElderly() {
+  return (
+    <main className="main">
+      <div className="page-header">
+        <div className="container">
+          <div className="breadcrumb">
+            <Link to="/swd">Home</Link> / Elderly Care
+          </div>
+          <h1>Elderly Care Services</h1>
+          <p className="subtitle">Support and care programs for senior citizens aged 65 and older</p>
+        </div>
+      </div>
+      <div className="container">
+        <div className="content-text">
+          <div className="info-box" style={{ marginBottom: '24px', background: 'rgba(236, 72, 153, 0.05)' }}>
+            <h4>Supporting Our Seniors</h4>
+            <p>The Elderly Services Division helps older Prayans live independently with dignity through home care, day programs, and residential services.</p>
+          </div>
+
+          <h3>Home Care Services</h3>
+          <p>Support services delivered in seniors' homes to maintain independence:</p>
+
+          <div className="card" style={{ marginTop: '20px' }}>
+            <h4 className="card-title">Personal Care Assistance</h4>
+            <p style={{ color: 'var(--text-muted)', marginBottom: '12px' }}>Trained home care aides help with daily living activities including bathing, dressing, grooming, and mobility assistance.</p>
+            <div style={{ padding: '12px', background: 'var(--bg-elevated)', borderRadius: '8px', marginTop: '12px', fontSize: '13px' }}>
+              <strong>Service levels:</strong>
+              <ul style={{ marginTop: '8px', marginBottom: 0 }}>
+                <li><strong>Basic care:</strong> 2-4 hours per day, 2-3 days per week (¤20/hour, subsidized to ¤5 for low-income)</li>
+                <li><strong>Moderate care:</strong> 4-6 hours per day, 5 days per week (¤18/hour with subsidy)</li>
+                <li><strong>Intensive care:</strong> 8+ hours per day or overnight care (¤15/hour with subsidy)</li>
+              </ul>
+            </div>
+          </div>
+
+          <div className="card">
+            <h4 className="card-title">Homemaker Services</h4>
+            <p style={{ color: 'var(--text-muted)', marginBottom: '12px' }}>Assistance with household tasks including light housekeeping, laundry, meal preparation, and grocery shopping.</p>
+            <div style={{ fontSize: '13px', color: 'var(--text-secondary)' }}>
+              <strong>Hours:</strong> 2-6 hours per week | <strong>Cost:</strong> ¤15/hour (subsidized to ¤3 for eligible seniors)
+            </div>
+          </div>
+
+          <div className="card">
+            <h4 className="card-title">Nursing Care at Home</h4>
+            <p style={{ color: 'var(--text-muted)', marginBottom: '12px' }}>Registered nurses provide medical care including medication management, wound care, chronic disease monitoring, and post-hospital recovery support.</p>
+            <div style={{ fontSize: '13px', color: 'var(--text-secondary)' }}>
+              <strong>Services:</strong> Vital signs monitoring, insulin injections, catheter care, physical therapy exercises | <strong>Availability:</strong> Daily visits or as prescribed
+            </div>
+          </div>
+
+          <div className="card">
+            <h4 className="card-title">Emergency Response System</h4>
+            <p style={{ color: 'var(--text-muted)', marginBottom: '12px' }}>Personal emergency button worn as pendant or wristband connects directly to 24/7 response center for immediate help.</p>
+            <div style={{ fontSize: '13px', color: 'var(--text-secondary)' }}>
+              <strong>Features:</strong> Two-way voice communication, automatic fall detection, GPS tracking (mobile version) | <strong>Cost:</strong> ¤30/month (free for low-income seniors)
+            </div>
+          </div>
+
+          <h3>Day Care Centers</h3>
+          <p>Social and therapeutic programs in community settings:</p>
+
+          <div className="card" style={{ marginTop: '20px' }}>
+            <h4 className="card-title">Adult Day Care Programs</h4>
+            <p style={{ color: 'var(--text-muted)', marginBottom: '12px' }}>Supervised daytime programs providing social activities, meals, and personal care in a community center setting. Gives family caregivers respite while seniors enjoy companionship.</p>
+            <div style={{ padding: '12px', background: 'var(--bg-elevated)', borderRadius: '8px', marginTop: '12px', fontSize: '13px' }}>
+              <strong>Daily schedule:</strong>
+              <ul style={{ marginTop: '8px', marginBottom: '8px' }}>
+                <li>8:00 AM - 9:00 AM: Arrival and breakfast</li>
+                <li>9:00 AM - 12:00 PM: Morning activities (exercise, crafts, games, outings)</li>
+                <li>12:00 PM - 1:00 PM: Hot lunch and social time</li>
+                <li>1:00 PM - 3:00 PM: Afternoon programs (music, educational talks, hobbies)</li>
+                <li>3:00 PM - 4:00 PM: Snack and departure</li>
+              </ul>
+              <strong>Cost:</strong> ¤40 per day (includes meals, transportation, activities). Subsidized rate ¤10 for eligible seniors.
+            </div>
+          </div>
+
+          <div className="card">
+            <h4 className="card-title">Memory Care Day Program</h4>
+            <p style={{ color: 'var(--text-muted)', marginBottom: '12px' }}>Specialized program for seniors with Alzheimer's disease or dementia in secure, structured environment with trained staff.</p>
+            <div style={{ fontSize: '13px', color: 'var(--text-secondary)' }}>
+              <strong>Features:</strong> Small group settings, memory-enhancing activities, sensory stimulation, wandering prevention, respite for caregivers | <strong>Ratio:</strong> 1 staff per 4 participants
+            </div>
+          </div>
+
+          <div className="card">
+            <h4 className="card-title">Transportation Services</h4>
+            <p style={{ color: 'var(--text-muted)', marginBottom: '12px' }}>Door-to-door accessible van service for seniors attending day programs or needing transport to medical appointments.</p>
+            <div style={{ fontSize: '13px', color: 'var(--text-secondary)' }}>
+              <strong>Service area:</strong> All urban and suburban regions | <strong>Features:</strong> Wheelchair accessible, trained drivers, assistance to door | <strong>Cost:</strong> Free for day program participants
+            </div>
+          </div>
+
+          <h3>Meals Programs</h3>
+          <div className="card" style={{ marginTop: '20px' }}>
+            <h4 className="card-title">Meals on Wheels</h4>
+            <p style={{ color: 'var(--text-muted)', marginBottom: '12px' }}>Hot, nutritious meals delivered to homebound seniors' residences five days per week.</p>
+            <div style={{ padding: '12px', background: 'var(--bg-elevated)', borderRadius: '8px', marginTop: '12px', fontSize: '13px' }}>
+              <strong>What's included:</strong> Hot lunch delivered by noon, cold dinner to be heated later, diet modifications available (diabetic, low-sodium, pureed)
+              <div style={{ marginTop: '8px' }}>
+                <strong>Eligibility:</strong> Age 65+, homebound or unable to prepare meals | <strong>Cost:</strong> Suggested donation ¤5 per meal (no one denied for inability to pay)
               </div>
             </div>
+          </div>
+
+          <div className="card">
+            <h4 className="card-title">Congregate Meals</h4>
+            <p style={{ color: 'var(--text-muted)', marginBottom: '12px' }}>Hot lunch served at senior centers and community locations. Social dining experience with nutrition education and health screenings.</p>
+            <div style={{ fontSize: '13px', color: 'var(--text-secondary)' }}>
+              <strong>Locations:</strong> 45 sites across Praya | <strong>Time:</strong> 11:30 AM - 12:30 PM, Monday-Friday | <strong>Cost:</strong> Suggested donation ¤3
+            </div>
+          </div>
+
+          <h3>Senior Activity Centers</h3>
+          <div className="card" style={{ marginTop: '20px' }}>
+            <h4 className="card-title">Community Senior Centers</h4>
+            <p style={{ marginBottom: '12px' }}>Vibrant community hubs offering activities, classes, and social opportunities for active seniors:</p>
+            <ul style={{ marginBottom: '16px', fontSize: '14px', color: 'var(--text-secondary)' }}>
+              <li><strong>Fitness classes:</strong> Yoga, tai chi, water aerobics, strength training, walking clubs</li>
+              <li><strong>Arts & crafts:</strong> Painting, pottery, woodworking, knitting, quilting</li>
+              <li><strong>Educational programs:</strong> Computer classes, language lessons, history lectures, book clubs</li>
+              <li><strong>Social events:</strong> Dances, card games, bingo, movie nights, holiday celebrations</li>
+              <li><strong>Volunteer opportunities:</strong> Mentoring youth, community service, peer support</li>
+            </ul>
+            <div style={{ padding: '12px', background: 'rgba(236, 72, 153, 0.1)', borderRadius: '8px', fontSize: '13px' }}>
+              <strong>Membership:</strong> Free for age 60+. Centers open Monday-Saturday 8:00 AM - 6:00 PM. Find your nearest center at www.swd.gov.py/seniors
+            </div>
+          </div>
+
+          <h3>Residential Care Options</h3>
+          <div className="card" style={{ marginTop: '20px' }}>
+            <h4 className="card-title">Assisted Living Facilities</h4>
+            <p style={{ color: 'var(--text-muted)', marginBottom: '12px' }}>Licensed facilities providing housing, meals, personal care, and 24-hour supervision for seniors who can no longer live independently.</p>
+            <div style={{ fontSize: '13px', color: 'var(--text-secondary)' }}>
+              <strong>Services:</strong> Private or semi-private rooms, three meals daily, medication management, activities, housekeeping | <strong>Cost:</strong> ¤2,500-4,500/month
+            </div>
+          </div>
+
+          <div className="card">
+            <h4 className="card-title">Nursing Homes</h4>
+            <p style={{ color: 'var(--text-muted)', marginBottom: '12px' }}>Skilled nursing facilities for seniors requiring round-the-clock medical care and supervision.</p>
+            <div style={{ fontSize: '13px', color: 'var(--text-secondary)' }}>
+              <strong>Care provided:</strong> 24/7 nursing staff, physician services, rehabilitation therapy, specialized dementia care | <strong>Funding:</strong> Private pay or Social Welfare subsidy for eligible low-income seniors
+            </div>
+          </div>
+
+          <h3>Caregiver Support</h3>
+          <div className="card" style={{ background: 'var(--bg-elevated)' }}>
+            <h4 className="card-title">Family Caregiver Resources</h4>
+            <p style={{ marginBottom: '12px' }}>Support for family members caring for aging relatives:</p>
+            <ul style={{ marginBottom: '16px' }}>
+              <li><strong>Respite Care:</strong> Temporary relief for caregivers (in-home or day program, up to 30 days per year, subsidized)</li>
+              <li><strong>Caregiver Training:</strong> Free workshops on elder care, dementia care, transfer techniques, stress management</li>
+              <li><strong>Support Groups:</strong> Monthly meetings connecting caregivers facing similar challenges</li>
+              <li><strong>Counseling Services:</strong> Individual counseling for caregiver stress and burnout</li>
+              <li><strong>Financial Assistance:</strong> Small stipends (up to ¤200/month) for low-income family caregivers</li>
+            </ul>
+          </div>
+
+          <h3>Elder Abuse Prevention</h3>
+          <div className="card" style={{ marginTop: '20px', background: 'rgba(239, 68, 68, 0.05)', border: '1px solid rgba(239, 68, 68, 0.2)' }}>
+            <h4 className="card-title">Report Elder Abuse</h4>
+            <p style={{ marginBottom: '12px' }}>Elder abuse, neglect, or financial exploitation is a crime. Report suspected abuse immediately:</p>
+            <div style={{ padding: '16px', background: 'white', borderRadius: '8px', fontSize: '14px' }}>
+              <p style={{ fontWeight: '600', marginBottom: '8px' }}>Elder Abuse Hotline: 1-800-ELDER-HELP (1-800-35337-4357)</p>
+              <p style={{ fontSize: '13px', color: 'var(--text-secondary)', marginBottom: '8px' }}>
+                Available 24/7. All reports investigated by Adult Protective Services. Confidential and anonymous reporting accepted.
+              </p>
+              <strong style={{ fontSize: '13px' }}>Signs of abuse:</strong>
+              <ul style={{ fontSize: '13px', marginTop: '4px' }}>
+                <li>Unexplained injuries, bruises, or fractures</li>
+                <li>Poor hygiene, malnutrition, or dehydration</li>
+                <li>Sudden changes in financial situation</li>
+                <li>Withdrawal, depression, or unusual behavior</li>
+              </ul>
+            </div>
+          </div>
+
+          <div className="info-box" style={{ marginTop: '24px' }}>
+            <h4>Elderly Services Contact</h4>
+            <p>For information about home care, day programs, or senior centers, call our Elderly Services Division at 1-800-PRAYA-SENIOR (1-800-77292-736467) or email elderly@swd.gov.py. Information specialists available Monday-Friday 8:00 AM - 6:00 PM.</p>
+          </div>
+        </div>
+      </div>
+    </main>
+  )
+}
+
+function SWDServices() {
+  return (
+    <main className="main">
+      <div className="page-header">
+        <div className="container">
+          <div className="breadcrumb">
+            <Link to="/swd">Home</Link> / Online Services
+          </div>
+          <h1>Online Services</h1>
+          <p className="subtitle">Digital tools for benefit applications, case management, and service access</p>
+        </div>
+      </div>
+      <div className="container">
+        <div className="content-text">
+          <h3>Available Online Services</h3>
+          <p>Access Social Welfare services from the comfort of your home:</p>
+
+          <div className="card" style={{ marginTop: '20px' }}>
+            <h4 className="card-title">Online Benefit Applications</h4>
+            <p style={{ color: 'var(--text-muted)', marginBottom: '12px' }}>Apply for financial assistance and social benefits through our secure online portal. Save your progress and return anytime to complete.</p>
+            <div style={{ padding: '16px', background: 'var(--bg-elevated)', borderRadius: '8px', marginTop: '12px' }}>
+              <p style={{ fontSize: '13px', marginBottom: '8px', color: 'var(--text-secondary)' }}><strong>Available applications:</strong></p>
+              <ul style={{ fontSize: '13px', color: 'var(--text-secondary)', marginBottom: 0 }}>
+                <li>Comprehensive Social Assistance (CSA)</li>
+                <li>Child Benefit Allowance</li>
+                <li>Disability Support Allowance</li>
+                <li>Old Age Pension Supplement</li>
+                <li>Emergency Financial Assistance</li>
+                <li>Child Care Subsidy</li>
+              </ul>
+            </div>
+          </div>
+
+          <div className="card">
+            <h4 className="card-title">Application Status Tracking</h4>
+            <p style={{ color: 'var(--text-muted)', marginBottom: '12px' }}>Check the status of your benefit application in real-time. Receive notifications when your application is approved or if additional documentation is needed.</p>
+            <div style={{ fontSize: '13px', color: 'var(--text-secondary)', marginTop: '12px' }}>
+              <strong>Track by:</strong> Application reference number, national ID, or email address | <strong>Updates:</strong> Status refreshed daily
+            </div>
+          </div>
+
+          <div className="card">
+            <h4 className="card-title">Document Upload Portal</h4>
+            <p style={{ color: 'var(--text-muted)', marginBottom: '12px' }}>Upload required documents electronically including proof of income, identification, bank statements, and medical certificates.</p>
+            <div style={{ fontSize: '13px', color: 'var(--text-secondary)', marginTop: '12px' }}>
+              <strong>Accepted formats:</strong> PDF, JPG, PNG | <strong>Max size:</strong> 10MB per file | <strong>Security:</strong> 256-bit encryption for all uploads
+            </div>
+          </div>
+
+          <div className="card">
+            <h4 className="card-title">Benefit Payment History</h4>
+            <p style={{ color: 'var(--text-muted)', marginBottom: '12px' }}>View complete history of benefit payments including dates, amounts, and payment methods. Download statements for record keeping.</p>
+            <div style={{ fontSize: '13px', color: 'var(--text-secondary)', marginTop: '12px' }}>
+              <strong>Available records:</strong> Current year plus past 7 years | <strong>Export options:</strong> PDF, CSV, print-friendly format
+            </div>
+          </div>
+
+          <div className="card">
+            <h4 className="card-title">Eligibility Calculator</h4>
+            <p style={{ color: 'var(--text-muted)', marginBottom: '12px' }}>Anonymous tool to check which benefits you may qualify for based on your circumstances. No personal information required.</p>
+            <div style={{ padding: '16px', background: 'var(--bg-elevated)', borderRadius: '8px', marginTop: '12px', fontSize: '13px' }}>
+              <strong>How it works:</strong> Answer questions about household size, income, employment, disability, and children. Receive instant results showing potential benefits and estimated amounts. Results are confidential and not stored.
+            </div>
+          </div>
+
+          <div className="card">
+            <h4 className="card-title">Case Manager Messaging</h4>
+            <p style={{ color: 'var(--text-muted)', marginBottom: '12px' }}>Secure messaging with your assigned social worker or case manager. Send questions, request appointments, and receive updates.</p>
+            <div style={{ fontSize: '13px', color: 'var(--text-secondary)', marginTop: '12px' }}>
+              <strong>Response time:</strong> Messages answered within 2 business days | <strong>Availability:</strong> 24/7 message sending, office hours for responses
+            </div>
+          </div>
+
+          <div className="card">
+            <h4 className="card-title">Appointment Scheduling</h4>
+            <p style={{ color: 'var(--text-muted)', marginBottom: '12px' }}>Book appointments with social workers, benefit counselors, or program specialists online. View available time slots and receive confirmation.</p>
+            <div style={{ fontSize: '13px', color: 'var(--text-secondary)', marginTop: '12px' }}>
+              <strong>Appointment types:</strong> Initial assessment, benefit review, appeal hearing, program enrollment | <strong>Reminders:</strong> Email and SMS 48 hours before
+            </div>
+          </div>
+
+          <h3>Mobile Application</h3>
+          <div className="card" style={{ marginTop: '20px' }}>
+            <h4 className="card-title">Social Welfare Mobile App</h4>
+            <p style={{ marginBottom: '12px' }}>Manage your benefits on your smartphone or tablet:</p>
+            <ul style={{ fontSize: '14px', color: 'var(--text-secondary)', marginBottom: '12px' }}>
+              <li><strong>Quick apply:</strong> Start benefit applications from your phone</li>
+              <li><strong>Document scanning:</strong> Use phone camera to upload required documents</li>
+              <li><strong>Payment alerts:</strong> Push notifications when benefits are deposited</li>
+              <li><strong>Case updates:</strong> Real-time status updates on your case</li>
+              <li><strong>Service locator:</strong> Find nearest SWD office or service center with GPS</li>
+              <li><strong>Emergency assistance:</strong> Fast-track application for urgent needs</li>
+            </ul>
+            <div style={{ padding: '12px', background: 'rgba(236, 72, 153, 0.1)', borderRadius: '8px', fontSize: '13px' }}>
+              <strong>Download:</strong> Free on iOS App Store and Google Play Store. Search "Praya Social Welfare"
+            </div>
+          </div>
+
+          <h3>Account Management</h3>
+          <div className="card" style={{ background: 'var(--bg-elevated)' }}>
+            <h4 className="card-title">Create Your SWD Account</h4>
+            <p style={{ marginBottom: '12px' }}>Register for a free account to access all online services:</p>
+            <ul style={{ marginBottom: '16px' }}>
+              <li><strong>Personal dashboard:</strong> See all your applications, benefits, and appointments</li>
+              <li><strong>Saved applications:</strong> Complete applications at your own pace</li>
+              <li><strong>Document library:</strong> Store copies of uploaded documents securely</li>
+              <li><strong>Family accounts:</strong> Add dependents and manage family benefits</li>
+              <li><strong>Notification preferences:</strong> Choose how to receive updates (email, SMS, mail)</li>
+              <li><strong>Authorized representatives:</strong> Grant access to advocates or family members</li>
+            </ul>
+            <div style={{ padding: '12px', background: 'rgba(236, 72, 153, 0.1)', borderRadius: '8px', fontSize: '13px' }}>
+              <strong>Registration:</strong> Sign up at www.swd.gov.py/myaccount using national ID or residency permit. Email verification required. Two-factor authentication available for enhanced security.
+            </div>
+          </div>
+
+          <h3>Report Changes</h3>
+          <div className="card" style={{ marginTop: '20px' }}>
+            <h4 className="card-title">Change Reporting Portal</h4>
+            <p style={{ color: 'var(--text-muted)', marginBottom: '12px' }}>Report changes in circumstances that may affect your benefits online. Required within 10 days of change.</p>
+            <div style={{ padding: '12px', background: 'var(--bg-elevated)', borderRadius: '8px', marginTop: '12px', fontSize: '13px' }}>
+              <strong>Report these changes online:</strong>
+              <ul style={{ marginTop: '8px', marginBottom: 0 }}>
+                <li>Change of address or phone number</li>
+                <li>Change in income or employment status</li>
+                <li>Change in household composition (birth, marriage, divorce, death)</li>
+                <li>Change in disability status or medical condition</li>
+                <li>Change in child care arrangements or costs</li>
+                <li>Bank account changes for direct deposit</li>
+              </ul>
+            </div>
+          </div>
+
+          <h3>Virtual Services</h3>
+          <div className="card" style={{ marginTop: '20px' }}>
+            <h4 className="card-title">Video Appointments</h4>
+            <p style={{ color: 'var(--text-muted)', marginBottom: '12px' }}>Meet with social workers via secure video call. No need to travel to office for routine appointments.</p>
+            <div style={{ fontSize: '13px', color: 'var(--text-secondary)' }}>
+              <strong>Requirements:</strong> Device with camera and microphone, internet connection | <strong>Platform:</strong> Browser-based, no software download needed
+            </div>
+          </div>
+
+          <div className="card">
+            <h4 className="card-title">Live Chat Support</h4>
+            <p style={{ color: 'var(--text-muted)', marginBottom: '12px' }}>Chat with benefit specialists in real-time for quick questions and application assistance.</p>
+            <div style={{ fontSize: '13px', color: 'var(--text-secondary)' }}>
+              <strong>Hours:</strong> Monday-Friday 8:00 AM - 6:00 PM, Saturday 9:00 AM - 1:00 PM | <strong>Languages:</strong> English, Spanish, Prayan dialects
+            </div>
+          </div>
+
+          <h3>Resource Library</h3>
+          <div className="card" style={{ background: 'var(--bg-elevated)' }}>
+            <h4 className="card-title">Self-Service Resources</h4>
+            <p style={{ marginBottom: '12px' }}>Access information and tools 24/7:</p>
+            <ul style={{ marginBottom: 0 }}>
+              <li><strong>FAQ Database:</strong> Answers to common questions about benefits and programs</li>
+              <li><strong>Form Library:</strong> Download printable application forms and worksheets</li>
+              <li><strong>Video Tutorials:</strong> Step-by-step guides for online services</li>
+              <li><strong>Benefits Handbook:</strong> Complete guide to all SWD programs and eligibility</li>
+              <li><strong>Community Resources:</strong> Directory of partner agencies and support services</li>
+            </ul>
+          </div>
+
+          <h3>Accessibility Features</h3>
+          <div className="card" style={{ marginTop: '20px' }}>
+            <h4 className="card-title">Accessible Online Services</h4>
+            <p style={{ marginBottom: '12px' }}>Our website and services are designed for all users:</p>
+            <ul style={{ fontSize: '14px', color: 'var(--text-secondary)' }}>
+              <li>Screen reader compatible (WCAG 2.1 Level AA)</li>
+              <li>Keyboard navigation support</li>
+              <li>Adjustable text size and high contrast mode</li>
+              <li>Multilingual support (12 languages)</li>
+              <li>Plain language option for forms and content</li>
+              <li>Audio versions of written materials</li>
+            </ul>
+          </div>
+
+          <h3>System Requirements</h3>
+          <ul>
+            <li><strong>Browsers:</strong> Chrome 90+, Firefox 88+, Safari 14+, Edge 90+ (Internet Explorer not supported)</li>
+            <li><strong>Connection:</strong> Minimum 1 Mbps internet speed recommended</li>
+            <li><strong>Devices:</strong> Desktop, laptop, tablet, or smartphone</li>
+            <li><strong>Operating Systems:</strong> Windows 10+, macOS 11+, iOS 14+, Android 10+</li>
+          </ul>
+
+          <div className="info-box" style={{ marginTop: '24px' }}>
+            <h4>Need Help with Online Services?</h4>
+            <p>Technical support available at 1-800-PRAYA-HELP or techsupport@swd.gov.py. For assistance with applications or eligibility questions, contact your local service center or call our helpline Monday-Friday 7:00 AM - 7:00 PM. Language interpretation available.</p>
           </div>
         </div>
       </div>
