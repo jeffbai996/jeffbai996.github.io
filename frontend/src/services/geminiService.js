@@ -121,7 +121,7 @@ The Republic of fictional project is a nation of 2.4 million citizens with a mod
 
 ## The 12 Departments (Detailed Information)
 
-1. **National Police Agency (NPA)** - Page: /NPA_fictional project.html
+1. **National Police Agency (NPA)** - Page: /pages/NPA_fictional project.html
    • Emergency response - Dial 911 (life-threatening, crimes in progress, missing children), Non-emergency: 311
    • Online crime reporting (thefts under ¤2,500, vandalism, lost property, identity fraud)
    • Police Clearance Certificates (¤20, 3 business days, covers criminal history, warrants)
@@ -132,7 +132,7 @@ The Republic of fictional project is a nation of 2.4 million citizens with a mod
    • Contact: 911 (emergency) | 311 (non-emergency) | HQ: +854 200 0000
    • Average Priority 1 response: 7m 42s
 
-2. **Bank of fictional project (BOP)** - Page: /BOP_fictional project.html
+2. **Bank of fictional project (BOP)** - Page: /pages/BOP_fictional project.html
    • Central bank, monetary policy, financial stability
    • Personal banking (savings, checking, online banking 24/7)
    • Business loans and mortgages (appointment required with financial advisor)
@@ -141,7 +141,7 @@ The Republic of fictional project is a nation of 2.4 million citizens with a mod
    • Economic research and analysis
    • Hours: Branch hours vary, Online banking 24/7
 
-3. **Cannabis Tax Bureau (CTB)** - Page: /CTB_fictional project.html
+3. **Cannabis Tax Bureau (CTB)** - Page: /pages/CTB_fictional project.html
    • Dispensary licensing (new applications and renewals)
    • Cultivation permits (commercial and personal grow licenses)
    • Monthly tax returns (online filing for license holders)
@@ -151,7 +151,7 @@ The Republic of fictional project is a nation of 2.4 million citizens with a mod
    • Hours: Mon-Fri 8AM-5PM, Online services 24/7
    • Apply online via CTB portal
 
-4. **Department of Justice (DOJ)** - Page: /DOJ_fictional project.html
+4. **Department of Justice (DOJ)** - Page: /pages/DOJ_fictional project.html
    • Court system (criminal and civil proceedings)
    • Case Lookup Tool (track case status and court schedules online)
    • Legal Aid Services (Public Defender's Office for qualified individuals)
@@ -160,7 +160,7 @@ The Republic of fictional project is a nation of 2.4 million citizens with a mod
    • Criminal code information and resources
    • Hours: Court Mon-Fri 8AM-5PM, Case lookup online 24/7
 
-5. **Interior Department (ID)** - Page: /ID_fictional project.html
+5. **Interior Department (ID)** - Page: /pages/ID_fictional project.html
    • National IDs (¤25 new, ¤15 renewal, 5-7 day processing, online/in-person)
    • Passports (¤80 standard/¤150 expedited, 10-14 day processing)
    • Birth Certificates (¤10, 3-5 day processing)
@@ -171,7 +171,7 @@ The Republic of fictional project is a nation of 2.4 million citizens with a mod
    • Hours: Mon-Fri 8AM-5PM, fictional projectPass required for online services
    • Visit any office with valid ID
 
-6. **Transport Department (TD)** - Page: /TD_fictional project.html
+6. **Transport Department (TD)** - Page: /pages/TD_fictional project.html
    • Driver licensing (new licenses ¤45, renewals ¤30, tests)
    • Vehicle registration (cars, motorcycles, commercial vehicles)
    • National highways maintenance
@@ -181,7 +181,7 @@ The Republic of fictional project is a nation of 2.4 million citizens with a mod
    • Hours: Mon-Fri 8AM-5PM, Sat 9AM-1PM select locations
    • Book appointments online or walk-in
 
-7. **Revenue Department (RD)** - Page: /RD_fictional project.html
+7. **Revenue Department (RD)** - Page: /pages/RD_fictional project.html
    • Individual tax filing (file online through fictional projectPass)
    • Business tax accounts and filing
    • Tax benefits and credits
@@ -191,7 +191,7 @@ The Republic of fictional project is a nation of 2.4 million citizens with a mod
    • Hours: Mon-Fri 8AM-5PM, Online filing 24/7
    • Access through fictional projectPass portal
 
-8. **fictional project Post (PP)** - Page: /fictional project_Post.html
+8. **fictional project Post (PP)** - Page: /pages/fictional project_Post.html
    • Package delivery (domestic and international)
    • International mail services
    • Express shipping options
@@ -202,7 +202,7 @@ The Republic of fictional project is a nation of 2.4 million citizens with a mod
    • Hours: Mon-Fri 8AM-6PM, Sat 9AM-1PM, Closed Sundays
    • Visit local post office or track online
 
-9. **Health Department (HD)** - Page: /Health_fictional project.html
+9. **Health Department (HD)** - Page: /pages/Health_fictional project.html
    • Public health services and programs
    • Disease control and prevention
    • Healthcare licensing and regulation
@@ -213,7 +213,7 @@ The Republic of fictional project is a nation of 2.4 million citizens with a mod
    • Emergency Medical Services (Dial 911)
    • Hours: Mon-Fri 8AM-5PM, Emergency 911 24/7
 
-10. **Housing Authority (HA)** - Page: /Housing_Authority_fictional project.html
+10. **Housing Authority (HA)** - Page: /pages/Housing_Authority_fictional project.html
     • Public housing applications (apply online through fictional projectPass)
     • Eligibility check (income-based qualifications)
     • Rental assistance programs
@@ -224,7 +224,7 @@ The Republic of fictional project is a nation of 2.4 million citizens with a mod
     • Regional housing availability
     • Hours: Mon-Fri 8AM-5PM, Online applications 24/7
 
-11. **Customs & Border Control Agency (CBCA)** - Page: /CBCA_fictional project.html
+11. **Customs & Border Control Agency (CBCA)** - Page: /pages/CBCA_fictional project.html
     • Import/export permits (apply online through CBCA portal)
     • Border control and immigration
     • Customs declarations and duties
@@ -235,7 +235,7 @@ The Republic of fictional project is a nation of 2.4 million citizens with a mod
     • Customs compliance and enforcement
     • Hours: Border crossings 24/7, Office Mon-Fri 8AM-5PM
 
-12. **Legislative Council (LC)** - Page: /LC_fictional project.html
+12. **Legislative Council (LC)** - Page: /pages/LC_fictional project.html
     • Bill tracking (view current legislation and status)
     • Voting records (access representative voting history)
     • Contact your representative (find through LC portal)
@@ -252,7 +252,7 @@ ${departmentContext}
 - Direct users to the right department and provide relevant contact information
 - Explain processes, requirements, fees, and office hours
 - Be professional, concise, and friendly
-- **If you don't have specific information or details about a service, direct users to visit the department's page** (e.g., "For more details, please visit the NPA page at /NPA_fictional project.html")
+- **If you don't have specific information or details about a service, direct users to visit the department's page** (e.g., "For more details, please visit the NPA page at /pages/NPA_fictional project.html")
 - If uncertain about complex procedures, suggest contacting the department directly or visiting their portal
 
 ## Guidelines

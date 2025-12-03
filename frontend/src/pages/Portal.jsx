@@ -91,7 +91,7 @@ const departments = [
     id: 'npa',
     name: 'National Police Agency',
     abbrev: 'NPA',
-    url: '/NPA_fictional project.html',
+    url: '/pages/NPA_fictional project.html',
     description: 'National policing, emergency response, and community safety services across fictional project.',
     color: '#1d4ed8',
     services: ['Emergency Response', 'Public Safety', 'Licensing', 'Community Programs']
@@ -100,7 +100,7 @@ const departments = [
     id: 'bop',
     name: 'Bank of fictional project',
     abbrev: 'BOP',
-    url: '/BOP_fictional project.html',
+    url: '/pages/BOP_fictional project.html',
     description: 'Central bank responsible for monetary policy, financial stability, and banking supervision.',
     color: '#0ea5e9',
     services: ['Monetary Policy', 'Banking Supervision', 'Currency Services', 'Economic Research']
@@ -109,7 +109,7 @@ const departments = [
     id: 'ctb',
     name: 'Cannabis Tax Bureau',
     abbrev: 'CTB',
-    url: '/CTB_fictional project.html',
+    url: '/pages/CTB_fictional project.html',
     description: 'Licensing, taxation, and regulation of cannabis industry in the Republic of fictional project.',
     color: '#2d8659',
     services: ['Business Licensing', 'Tax Filing', 'Compliance', 'Research']
@@ -118,7 +118,7 @@ const departments = [
     id: 'doj',
     name: 'Justice Department',
     abbrev: 'DOJ',
-    url: '/DOJ_fictional project.html',
+    url: '/pages/DOJ_fictional project.html',
     description: 'Court system, prosecution services, and legal resources for citizens of fictional project.',
     color: '#991b1b',
     services: ['Court Services', 'Case Lookup', 'Legal Aid', 'Criminal Code']
@@ -127,7 +127,7 @@ const departments = [
     id: 'interior',
     name: 'Interior Department',
     abbrev: 'ID',
-    url: '/ID_fictional project.html',
+    url: '/pages/ID_fictional project.html',
     description: 'Land registry, building permits, civil records, and parks management.',
     color: '#71717a',
     services: ['Land Registry', 'Building Permits', 'Civil Records', 'Parks & Reserves']
@@ -136,7 +136,7 @@ const departments = [
     id: 'transport',
     name: 'Transport Department',
     abbrev: 'TD',
-    url: '/TD_fictional project.html',
+    url: '/pages/TD_fictional project.html',
     description: 'Driver licensing, vehicle registration, and management of national highways.',
     color: '#0d9488',
     services: ['Driver Licensing', 'Vehicle Registration', 'National Highways', 'Road Safety']
@@ -145,7 +145,7 @@ const departments = [
     id: 'revenue',
     name: 'Revenue Department',
     abbrev: 'RD',
-    url: '/RD_fictional project.html',
+    url: '/pages/RD_fictional project.html',
     description: 'Tax collection, benefits, and financial services for individuals and businesses.',
     color: '#0ea5e9',
     services: ['Tax Filing', 'Business Accounts', 'Benefits', 'Compliance']
@@ -154,7 +154,7 @@ const departments = [
     id: 'post',
     name: 'fictional project Post',
     abbrev: 'PP',
-    url: '/fictional project_Post.html',
+    url: '/pages/fictional project_Post.html',
     description: 'National postal service providing domestic and international mail and package delivery.',
     color: '#f97316',
     services: ['Package Delivery', 'International Mail', 'Express Shipping', 'P.O. Boxes']
@@ -163,7 +163,7 @@ const departments = [
     id: 'health',
     name: 'Health Department',
     abbrev: 'HD',
-    url: '/Health_fictional project.html',
+    url: '/pages/Health_fictional project.html',
     description: 'Public health services, disease control, healthcare licensing, and health statistics.',
     color: '#dc2626',
     services: ['Public Health', 'Disease Control', 'Healthcare Licensing', 'Health Statistics']
@@ -172,7 +172,7 @@ const departments = [
     id: 'housing',
     name: 'Housing Authority',
     abbrev: 'HA',
-    url: '/Housing_Authority_fictional project.html',
+    url: '/pages/Housing_Authority_fictional project.html',
     description: 'Affordable public housing programs and subsidized rental assistance for eligible citizens.',
     color: '#ea580c',
     services: ['Housing Applications', 'Eligibility Check', 'Regional Availability', 'Tenant Resources']
@@ -181,7 +181,7 @@ const departments = [
     id: 'cbca',
     name: 'Customs & Border Control',
     abbrev: 'CBCA',
-    url: '/CBCA_fictional project.html',
+    url: '/pages/CBCA_fictional project.html',
     description: 'Border security, customs duties, immigration services, and trade facilitation for the Republic.',
     color: '#0891b2',
     services: ['Customs Declarations', 'Immigration & Visas', 'Border Enforcement', 'Traveler Information']
@@ -190,7 +190,7 @@ const departments = [
     id: 'legislative',
     name: 'Legislative Council',
     abbrev: 'LC',
-    url: '/LC_fictional project.html',
+    url: '/pages/LC_fictional project.html',
     description: 'The unicameral legislature of fictional project, responsible for enacting laws and providing oversight.',
     color: '#6366f1',
     services: ['View Legislation', 'Council Members', 'Session Calendar', 'Public Comment']
@@ -201,57 +201,57 @@ const priorities = [
   {
     title: 'Safety & Justice',
     detail: 'Fast access to courts, case lookup, and policing resources for every district.',
-    link: '/DOJ_fictional project.html'
+    link: '/pages/DOJ_fictional project.html'
   },
   {
     title: 'Land, Housing & Parks',
     detail: 'Land registry searches, building permits, and protected areas managed by Interior.',
-    link: '/ID_fictional project.html'
+    link: '/pages/ID_fictional project.html'
   },
   {
     title: 'Business & Tax',
     detail: 'Licensing, tax filings, and compliance guidance for entrepreneurs and companies.',
-    link: '/RD_fictional project.html'
+    link: '/pages/RD_fictional project.html'
   },
   {
     title: 'Public Health',
     detail: 'Disease surveillance, healthcare licensing, and health statistics for all citizens.',
-    link: '/Health_fictional project.html'
+    link: '/pages/Health_fictional project.html'
   },
   {
     title: 'Financial Stability',
     detail: 'Central banking, monetary policy, and economic research from the Bank of fictional project.',
-    link: '/BOP_fictional project.html'
+    link: '/pages/BOP_fictional project.html'
   },
   {
     title: 'Cannabis Regulation',
     detail: 'Industry licensing, tax filing, and compliance for legal cannabis businesses.',
-    link: '/CTB_fictional project.html'
+    link: '/pages/CTB_fictional project.html'
   },
   {
     title: 'Customs & Border',
     detail: 'Import duties, immigration visas, and border control for travelers and traders.',
-    link: '/CBCA_fictional project.html'
+    link: '/pages/CBCA_fictional project.html'
   },
   {
     title: 'Postal Services',
     detail: 'Domestic and international mail delivery, package shipping, and P.O. box services nationwide.',
-    link: '/fictional project_Post.html'
+    link: '/pages/fictional project_Post.html'
   },
   {
     title: 'Legislative Oversight',
     detail: 'View bills, contact council members, and participate in the democratic process.',
-    link: '/LC_fictional project.html'
+    link: '/pages/LC_fictional project.html'
   }
 ]
 
 const quickLinks = [
-  { label: 'Report an incident', href: '/NPA_fictional project.html#report' },
-  { label: 'File cannabis taxes', href: '/CTB_fictional project.html#taxes' },
-  { label: 'Book a court date', href: '/DOJ_fictional project.html#courts' },
-  { label: 'Check land records', href: '/ID_fictional project.html#land' },
-  { label: 'Submit business returns', href: '/RD_fictional project.html#business' },
-  { label: 'View government notices', href: '/DOJ_fictional project.html#news' }
+  { label: 'Report an incident', href: '/pages/NPA_fictional project.html#report' },
+  { label: 'File cannabis taxes', href: '/pages/CTB_fictional project.html#taxes' },
+  { label: 'Book a court date', href: '/pages/DOJ_fictional project.html#courts' },
+  { label: 'Check land records', href: '/pages/ID_fictional project.html#land' },
+  { label: 'Submit business returns', href: '/pages/RD_fictional project.html#business' },
+  { label: 'View government notices', href: '/pages/DOJ_fictional project.html#news' }
 ]
 
 export default function Portal() {
@@ -410,7 +410,7 @@ export default function Portal() {
             </div>
           </div>
           <div className="featured-grid">
-            <a href="/BOP_fictional project.html" className="featured-card featured-large">
+            <a href="/pages/BOP_fictional project.html" className="featured-card featured-large">
               <div className="featured-badge">Central Banking</div>
               <div className="featured-icon">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -441,7 +441,7 @@ export default function Portal() {
                 </svg>
               </span>
             </a>
-            <a href="/fictional project_Post.html" className="featured-card">
+            <a href="/pages/fictional project_Post.html" className="featured-card">
               <div className="featured-badge">Postal Services</div>
               <div className="featured-icon featured-icon-sm">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -461,7 +461,7 @@ export default function Portal() {
                 </svg>
               </span>
             </a>
-            <a href="/Housing_Authority_fictional project.html" className="featured-card">
+            <a href="/pages/Housing_Authority_fictional project.html" className="featured-card">
               <div className="featured-badge">Public Housing</div>
               <div className="featured-icon featured-icon-sm">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -482,7 +482,7 @@ export default function Portal() {
                 </svg>
               </span>
             </a>
-            <a href="/NPA_fictional project.html" className="featured-card">
+            <a href="/pages/NPA_fictional project.html" className="featured-card">
               <div className="featured-badge">Public Safety</div>
               <div className="featured-icon featured-icon-sm">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -502,7 +502,7 @@ export default function Portal() {
                 </svg>
               </span>
             </a>
-            <a href="/Health_fictional project.html" className="featured-card">
+            <a href="/pages/Health_fictional project.html" className="featured-card">
               <div className="featured-badge">Public Health</div>
               <div className="featured-icon featured-icon-sm">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -522,7 +522,7 @@ export default function Portal() {
                 </svg>
               </span>
             </a>
-            <a href="/DOJ_fictional project.html" className="featured-card">
+            <a href="/pages/DOJ_fictional project.html" className="featured-card">
               <div className="featured-badge">Justice System</div>
               <div className="featured-icon featured-icon-sm">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -635,7 +635,7 @@ export default function Portal() {
               <span className="announcement-date">November 28, 2024</span>
               <h3>New Housing Subsidy Program Expanded</h3>
               <p>The Housing Authority announces expansion of rental assistance programs to include middle-income families. Applications now open for eligible households earning up to ¤65,000 annually.</p>
-              <a href="/Housing_Authority_fictional project.html" className="announcement-link">
+              <a href="/pages/Housing_Authority_fictional project.html" className="announcement-link">
                 Read full announcement
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                   <path d="M5 12h14M12 5l7 7-7 7"/>
@@ -647,7 +647,7 @@ export default function Portal() {
               <span className="announcement-date">November 25, 2024</span>
               <h3>Digital ID Cards Now Available</h3>
               <p>Apply for your digital government ID through the Interior Department portal. Accepted at all government facilities and participating businesses.</p>
-              <a href="/ID_fictional project.html" className="announcement-link">
+              <a href="/pages/ID_fictional project.html" className="announcement-link">
                 Learn more
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                   <path d="M5 12h14M12 5l7 7-7 7"/>
@@ -659,7 +659,7 @@ export default function Portal() {
               <span className="announcement-date">November 20, 2024</span>
               <h3>2025 Tax Filing Season Opens January 15</h3>
               <p>Revenue Department reminds citizens that tax returns for 2024 are due by April 15, 2025. Early filers may receive refunds within 10 business days.</p>
-              <a href="/RD_fictional project.html" className="announcement-link">
+              <a href="/pages/RD_fictional project.html" className="announcement-link">
                 Tax information
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                   <path d="M5 12h14M12 5l7 7-7 7"/>
@@ -763,18 +763,18 @@ export default function Portal() {
             <div className="footer-section">
               <h5>Departments</h5>
               <ul>
-                <li><a href="/NPA_fictional project.html">National Police Agency</a></li>
-                <li><a href="/BOP_fictional project.html">Bank of fictional project</a></li>
-                <li><a href="/CTB_fictional project.html">Cannabis Tax Bureau</a></li>
-                <li><a href="/DOJ_fictional project.html">Justice Department</a></li>
-                <li><a href="/ID_fictional project.html">Interior Department</a></li>
-                <li><a href="/TD_fictional project.html">Transport Department</a></li>
-                <li><a href="/RD_fictional project.html">Revenue Department</a></li>
-                <li><a href="/fictional project_Post.html">fictional project Post</a></li>
-                <li><a href="/Health_fictional project.html">Health Department</a></li>
-                <li><a href="/Housing_Authority_fictional project.html">Housing Authority</a></li>
-                <li><a href="/CBCA_fictional project.html">Customs & Border Control</a></li>
-                <li><a href="/LC_fictional project.html">Legislative Council</a></li>
+                <li><a href="/pages/NPA_fictional project.html">National Police Agency</a></li>
+                <li><a href="/pages/BOP_fictional project.html">Bank of fictional project</a></li>
+                <li><a href="/pages/CTB_fictional project.html">Cannabis Tax Bureau</a></li>
+                <li><a href="/pages/DOJ_fictional project.html">Justice Department</a></li>
+                <li><a href="/pages/ID_fictional project.html">Interior Department</a></li>
+                <li><a href="/pages/TD_fictional project.html">Transport Department</a></li>
+                <li><a href="/pages/RD_fictional project.html">Revenue Department</a></li>
+                <li><a href="/pages/fictional project_Post.html">fictional project Post</a></li>
+                <li><a href="/pages/Health_fictional project.html">Health Department</a></li>
+                <li><a href="/pages/Housing_Authority_fictional project.html">Housing Authority</a></li>
+                <li><a href="/pages/CBCA_fictional project.html">Customs & Border Control</a></li>
+                <li><a href="/pages/LC_fictional project.html">Legislative Council</a></li>
               </ul>
             </div>
             <div className="footer-section">
