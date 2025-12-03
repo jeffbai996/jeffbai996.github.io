@@ -58,7 +58,16 @@ jobs:
 
       - name: Inject Gemini API key into chatbot-embed.js
         run: |
-          sed -i "s/GEMINI_API_KEY_PLACEHOLDER/${{ secrets.VITE_GEMINI_API_KEY }}/g" chatbot-embed.js
+          # Use perl for safer substitution (handles special characters in API key)
+          perl -i -pe "s/GEMINI_API_KEY_PLACEHOLDER/$ENV{GEMINI_KEY}/g" chatbot-embed.js
+          # Verify injection was successful
+          if grep -q "GEMINI_API_KEY_PLACEHOLDER" chatbot-embed.js; then
+            echo "WARNING: API key injection may have failed"
+          else
+            echo "API key injected successfully"
+          fi
+        env:
+          GEMINI_KEY: ${{ secrets.VITE_GEMINI_API_KEY }}
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
