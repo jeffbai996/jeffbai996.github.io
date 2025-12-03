@@ -17,10 +17,7 @@ export default function Transport() {
           <Link to="/transport" className="dept-logo">
             <div className="logo-mark">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                <path d="M5 17H4a2 2 0 01-2-2V5a2 2 0 012-2h16a2 2 0 012 2v10a2 2 0 01-2 2h-1"/>
-                <polygon points="12,8 12,13 8,13 12,8"/>
-                <circle cx="7" cy="17" r="2"/>
-                <circle cx="17" cy="17" r="2"/>
+                <path d="M3 18h18M3 6h18M5 18V6M19 18V6M9 10h6M9 14h6"/>
               </svg>
             </div>
             <div className="logo-text">
