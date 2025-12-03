@@ -16,9 +16,11 @@ export default function LC() {
         <div className="container">
           <Link to="/lc" className="dept-logo">
             <div className="logo-mark">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/>
-                <polyline points="9,22 9,12 15,12 15,22"/>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M3 21h18"></path>
+                <path d="M3 3h18v14H3z"></path>
+                <path d="M9 3v18"></path>
+                <path d="M3 9h18"></path>
               </svg>
             </div>
             <div className="logo-text">
