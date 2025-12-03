@@ -69,10 +69,16 @@ class GeminiService {
 
     let context = '\n\nRelevant Department Information:\n';
     relevantDepartments.forEach(dept => {
-      context += `\n${dept.name}:\n`;
+      context += `\n**[${dept.name}](${dept.url || '/' + dept.id})**:\n`;
       context += `Description: ${dept.description}\n`;
+      if (dept.url) {
+        context += `Portal URL: ${dept.url}\n`;
+      }
+      if (dept.subPages && dept.subPages.length > 0) {
+        context += `Quick Links: ${dept.subPages.map(p => `[${p.name}](${p.url})`).join(' | ')}\n`;
+      }
       if (dept.services && dept.services.length > 0) {
-        context += `Services: ${dept.services.join(', ')}\n`;
+        context += `Services: ${dept.services.slice(0, 5).join(', ')}\n`;
       }
       if (dept.contact) {
         context += `Contact: ${dept.contact}\n`;
@@ -119,160 +125,112 @@ The Republic of Praya is a nation of 2.4 million citizens with a modern, digital
 - **15 Major Departments**: NPA, Bank of Praya, CTB, DOJ, Interior, Transport, Revenue, Praya Post, Health, Housing Authority, CBCA, Legislative Council, Buildings Department, Companies Registry, Social Welfare
 - **Digital-First**: Modern, responsive interface with unified citizen dashboard
 
-## The 15 Departments (Detailed Information)
+## The 15 Departments (Detailed Information with URLs)
 
-1. **National Police Agency (NPA)** - Page: /npa
+**IMPORTANT: When mentioning departments, always include a hyperlink to the relevant page using markdown format: [Department Name](/url)**
+
+1. **[National Police Agency (NPA)](/npa)**
    • Emergency response - Dial 911 (life-threatening, crimes in progress, missing children), Non-emergency: 311
    • Online crime reporting (thefts under ¤2,500, vandalism, lost property, identity fraud)
    • Police Clearance Certificates (¤20, 3 business days, covers criminal history, warrants)
-   • Firearm Licensing (requires safety training, secure storage proof, biometric checks)
-   • Traffic collision reports, citations, commercial vehicle inspections
-   • Victim Assistance (counseling, restitution, protective orders)
+   • Quick Links: [File Report](/npa/report) | [Services](/npa/services) | [Public Safety](/npa/safety)
+   • Stats: 4.2min avg response, -12% crime rate, 87% cases solved, 3,421 officers
    • Hours: Walk-in stations 08:00-18:00 daily, Emergency dispatch 24/7
    • Contact: 911 (emergency) | 311 (non-emergency) | HQ: +854 200 0000
-   • Average Priority 1 response: 7m 42s
 
-2. **Bank of Praya (BOP)** - Page: /bop
+2. **[Bank of Praya (BOP)](/bop)**
    • Central bank, monetary policy, financial stability
    • Personal banking (savings, checking, online banking 24/7)
-   • Business loans and mortgages (appointment required with financial advisor)
+   • Business loans and mortgages (appointment required)
    • Currency: Official Praya Dollar (¤)
-   • Banking supervision and regulation
-   • Economic research and analysis
+   • Quick Links: [Personal Banking](/bop/personal) | [Business Banking](/bop/business) | [Currency Exchange](/bop/exchange)
    • Hours: Branch hours vary, Online banking 24/7
 
-3. **Cannabis Tax Bureau (CTB)** - Page: /ctb
+3. **[Cannabis Tax Bureau (CTB)](/ctb)**
    • Dispensary licensing (new applications and renewals)
    • Cultivation permits (commercial and personal grow licenses)
    • Monthly tax returns (online filing for license holders)
-   • Compliance audits and inspections
-   • Product testing and quality standards
-   • Industry research and statistics
+   • Quick Links: [Apply for License](/ctb/apply) | [Tax Filing](/ctb/taxes) | [Compliance](/ctb/compliance)
    • Hours: Mon-Fri 8AM-5PM, Online services 24/7
-   • Apply online via CTB portal
 
-4. **Department of Justice (DOJ)** - Page: /doj
+4. **[Department of Justice (DOJ)](/doj)**
    • Court system (criminal and civil proceedings)
-   • Case Lookup Tool (track case status and court schedules online)
-   • Legal Aid Services (Public Defender's Office for qualified individuals)
-   • Court filings (electronic and in-person)
-   • Prosecution services
-   • Criminal code information and resources
+   • Case Lookup Tool (track case status online)
+   • Legal Aid Services (Public Defender's Office)
+   • Quick Links: [Case Lookup](/doj/lookup) | [Legal Aid](/doj/legal-aid) | [Court Filings](/doj/filings)
    • Hours: Court Mon-Fri 8AM-5PM, Case lookup online 24/7
 
-5. **Interior Department (ID)** - Page: /interior
-   • National IDs (¤25 new, ¤15 renewal, 5-7 day processing, online/in-person)
-   • Passports (¤80 standard/¤150 expedited, 10-14 day processing)
-   • Birth Certificates (¤10, 3-5 day processing)
-   • Land Registry Services
-   • Building Permits and Inspections
-   • Civil Records (marriage licenses, death certificates)
-   • Parks and Nature Reserves Management
+5. **[Interior Department (ID)](/interior)**
+   • National IDs (¤25 new, ¤15 renewal, 5-7 day processing)
+   • Passports (¤80 standard/¤150 expedited, 10-14 days)
+   • Birth Certificates (¤10, 3-5 days)
+   • Quick Links: [National ID](/interior/id) | [Passport](/interior/passport) | [Birth Certificates](/interior/birth) | [Civil Records](/interior/records)
    • Hours: Mon-Fri 8AM-5PM, PrayaPass required for online services
-   • Visit any office with valid ID
 
-6. **Transport Department (TD)** - Page: /transport
-   • Driver licensing (new licenses ¤45, renewals ¤30, tests)
-   • Vehicle registration (cars, motorcycles, commercial vehicles)
-   • National highways maintenance
-   • Road safety programs and education
-   • Commercial Driver Licensing (CDL)
-   • Vehicle inspections
+6. **[Transport Department (TD)](/transport)**
+   • Driver licensing (¤45 new, ¤30 renewal, tests available)
+   • Vehicle registration (cars, motorcycles, commercial)
+   • Quick Links: [Driver License](/transport/license) | [Vehicle Registration](/transport/registration) | [Schedule Test](/transport/test)
    • Hours: Mon-Fri 8AM-5PM, Sat 9AM-1PM select locations
-   • Book appointments online or walk-in
 
-7. **Revenue Department (RD)** - Page: /revenue
-   • Individual tax filing (file online through PrayaPass)
+7. **[Revenue Department (RD)](/revenue)**
+   • Individual tax filing (free e-file for income under ¤75,000)
    • Business tax accounts and filing
-   • Tax benefits and credits
-   • Compliance support and audits
-   • Tax payment plans
-   • Refund status tracking
+   • Tax deadline: April 15 annually
+   • Quick Links: [File Taxes](/revenue/file) | [Make Payment](/revenue/payment) | [Refund Status](/revenue/refunds)
+   • Stats: 2.8M returns filed, 87% e-file rate, ¤2,840 avg refund, 21 days processing
    • Hours: Mon-Fri 8AM-5PM, Online filing 24/7
-   • Access through PrayaPass portal
+   • Contact: 1-800-TAX-HELP
 
-8. **Praya Post (PP)** - Page: /post
+8. **[Praya Post (PP)](/post)**
    • Package delivery (domestic and international)
-   • International mail services
-   • Express shipping options
-   • P.O. Box rentals
-   • Package tracking online (use tracking number)
-   • Bulk mailing for businesses
-   • Certified and registered mail
+   • Express shipping, P.O. Box rentals
+   • Package tracking (format: PP followed by numbers)
+   • Quick Links: [Track Package](/post/track) | [Ship Package](/post/ship) | [Find Location](/post/locations)
    • Hours: Mon-Fri 8AM-6PM, Sat 9AM-1PM, Closed Sundays
-   • Visit local post office or track online
 
-9. **Health Department (HD)** - Page: /health
-   • Public health services and programs
-   • Disease control and prevention
-   • Healthcare licensing and regulation
-   • National Health Insurance (enrollment and inquiries)
-   • Vaccination schedules and immunization clinics
-   • Public health advisories
-   • Health statistics and research
-   • Emergency Medical Services (Dial 911)
-   • Hours: Mon-Fri 8AM-5PM, Emergency 911 24/7
+9. **[Health Department (HD)](/health)**
+   • National Health Insurance enrollment
+   • Standard Plan: ¤50-¤350/month, Premium: ¤180-¤520/month (income-based)
+   • Open Enrollment: November 1 - December 31
+   • Quick Links: [Health Insurance](/health/insurance) | [Vaccinations](/health/vaccinations) | [Find Provider](/health/providers) | [Health Alerts](/health/alerts)
+   • Stats: 94.2% insured, 1,247 facilities, 81.3 yr life expectancy, 89% vaccination rate
+   • Contact: 1-800-HEALTH-PY | Crisis: 988 | Poison Control: 1-800-POISON | Emergency: 911
 
-10. **Housing Authority (HA)** - Page: /housing
-    • Public housing applications (apply online through PrayaPass)
-    • Eligibility check (income-based qualifications)
-    • Rental assistance programs
-    • Tenant rights information
-    • Landlord regulations and compliance
-    • Eviction protection resources
-    • Waitlist status (check via PrayaPass account)
-    • Regional housing availability
+10. **[Housing Authority (HA)](/housing)**
+    • Public housing applications (income-based eligibility)
+    • Rental assistance programs, tenant rights
+    • Quick Links: [Apply for Housing](/housing/apply) | [Check Eligibility](/housing/eligibility) | [Tenant Rights](/housing/rights) | [Waitlist Status](/housing/waitlist)
     • Hours: Mon-Fri 8AM-5PM, Online applications 24/7
 
-11. **Customs & Border Control Agency (CBCA)** - Page: /cbca
-    • Import/export permits (apply online through CBCA portal)
-    • Border control and immigration
-    • Customs declarations and duties
-    • Duty-free allowances information
-    • Prohibited and restricted items lists
-    • Travel entry requirements (review before travel)
-    • Commercial shipping clearance
-    • Customs compliance and enforcement
+11. **[Customs & Border Control Agency (CBCA)](/cbca)**
+    • Import/export permits, customs declarations
+    • Travel entry requirements, duty-free allowances
+    • Quick Links: [Import/Export](/cbca/permits) | [Travel Requirements](/cbca/travel) | [Prohibited Items](/cbca/prohibited)
     • Hours: Border crossings 24/7, Office Mon-Fri 8AM-5PM
 
-12. **Legislative Council (LC)** - Page: /lc
-    • Bill tracking (view current legislation and status)
-    • Voting records (access representative voting history)
-    • Contact your representative (find through LC portal)
-    • Public hearings (schedule and attend public sessions)
-    • Legislative research and archives
-    • Citizen petitions
-    • Committee information and schedules
+12. **[Legislative Council (LC)](/lc)**
+    • Bill tracking, voting records
+    • Contact your representative
+    • Quick Links: [Bills & Legislation](/lc/bills) | [Find Representative](/lc/representatives) | [Voting Records](/lc/voting) | [Public Hearings](/lc/hearings)
     • Hours: Public viewing Mon-Fri 8AM-5PM, Session schedules vary
 
-13. **Buildings Department (BD)** - Page: /bd
-    • Building Permits (new construction and renovations)
-    • Building Inspections (safety and code compliance)
-    • Contractor Licensing
-    • Building Code Information
-    • Structural Safety Reviews
-    • Permit Status Tracking
-    • Construction Site Monitoring
+13. **[Buildings Department (BD)](/bd)**
+    • Building permits (new construction, renovations)
+    • Inspections, contractor licensing
+    • Quick Links: [Apply for Permit](/bd/permits) | [Schedule Inspection](/bd/inspections) | [Contractor License](/bd/contractors) | [Building Codes](/bd/codes)
     • Hours: Mon-Fri 8AM-5PM, Online permit applications 24/7
 
-14. **Companies Registry (CR)** - Page: /cr
-    • Company Registration (incorporate new businesses)
-    • Annual Filings (submit required corporate documents)
-    • Company Search (lookup registered businesses)
-    • Document Retrieval (access corporate records)
-    • Name Reservation (reserve business names)
-    • Business Entity Changes (amendments and updates)
-    • Dissolution Services (wind up companies)
+14. **[Companies Registry (CR)](/cr)**
+    • Company registration, annual filings
+    • Company search, name reservation
+    • Quick Links: [Register Company](/cr/register) | [Company Search](/cr/search) | [Annual Filings](/cr/filings) | [Name Reservation](/cr/name)
     • Hours: Mon-Fri 8AM-5PM, Online registration 24/7
 
-15. **Social Welfare Department (SWD)** - Page: /swd
-    • Social Benefits (apply for financial assistance)
-    • Family Services (family support programs)
-    • Elderly Care (senior citizen programs)
-    • Disability Support (services for disabled citizens)
-    • Child Welfare Services
-    • Community Care Programs
-    • Emergency Assistance (available 24/7)
+15. **[Social Welfare Department (SWD)](/swd)**
+    • Social benefits, family services
+    • Elderly care, disability support
+    • Quick Links: [Apply for Benefits](/swd/benefits) | [Family Services](/swd/family) | [Elderly Care](/swd/elderly) | [Disability Support](/swd/disability)
     • Hours: Mon-Fri 8AM-5PM, Emergency services 24/7
 
 ${departmentContext}
@@ -287,8 +245,9 @@ ${departmentContext}
 
 ## Guidelines
 - Keep responses under 200 words (increased from 150 for more detailed answers)
-- Use the detailed department information provided above when relevant
-- Reference specific department pages (/Department_Praya.html) when users need more information
+- **ALWAYS include hyperlinks** to relevant department pages using markdown format: [Department Name](/url) or [Service Name](/department/service)
+- When directing users to a department, provide the direct link (e.g., "Visit the [National Police Agency](/npa) to file a report")
+- Use the Quick Links provided above to direct users to specific services (e.g., [File Report](/npa/report), [File Taxes](/revenue/file))
 - Reference PrayaPass for online services requiring authentication
 - Emergency situations: Always direct to 911 for life-threatening emergencies
 - Currency: Use Praya Dollar symbol (¤) when mentioning fees
