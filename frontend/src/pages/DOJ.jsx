@@ -84,7 +84,7 @@ export default function DOJ() {
 
 function DOJHome({ navigate }) {
   return (
-    <>
+    <div className="layout-civic">
       <section className="hero">
         <div className="hero-bg">
           <div className="hero-bg-shape"></div>
@@ -231,7 +231,7 @@ function DOJHome({ navigate }) {
           </div>
         </div>
       </main>
-    </>
+    </div>
   )
 }
 
