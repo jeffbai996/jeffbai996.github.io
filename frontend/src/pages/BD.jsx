@@ -90,7 +90,7 @@ export default function BD() {
 
 function BDHome({ navigate }) {
   return (
-    <>
+    <div className="layout-social">
       <section className="hero">
         <div className="hero-bg">
           <div className="hero-bg-shape"></div>
@@ -119,6 +119,16 @@ function BDHome({ navigate }) {
               <button className="btn btn-secondary" onClick={() => navigate('/bd/inspections')}>
                 Schedule Inspection
               </button>
+            </div>
+          </div>
+          <div className="hero-image">
+            <div className="hero-image-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <path d="M3 21h18M5 21V7l7-4 7 4v14M9 21v-6h6v6M9 9h.01M15 9h.01M9 13h.01M15 13h.01"/>
+              </svg>
+            </div>
+            <div className="hero-image-text">
+              Ensuring safe, sustainable construction across the Republic
             </div>
           </div>
         </div>
@@ -241,7 +251,7 @@ function BDHome({ navigate }) {
           </div>
         </div>
       </main>
-    </>
+    </div>
   )
 }
 

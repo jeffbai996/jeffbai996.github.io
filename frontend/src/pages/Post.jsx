@@ -90,8 +90,10 @@ export default function Post() {
 }
 
 function PostHome({ navigate }) {
+  const [trackingNumber, setTrackingNumber] = React.useState('')
+
   return (
-    <>
+    <div className="layout-utility">
       <section className="hero">
         <div className="hero-bg">
           <div className="hero-bg-shape"></div>
@@ -101,25 +103,46 @@ function PostHome({ navigate }) {
         <div className="hero-pattern"></div>
         <div className="container">
           <div className="hero-content">
-            <div className="hero-badge">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
-              </svg>
-              Postal Services
+            <div className="hero-top">
+              <div className="hero-text">
+                <div className="hero-badge">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                    <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
+                  </svg>
+                  Postal Services
+                </div>
+                <h2>Delivering <span>Connections</span></h2>
+                <p>Praya Post provides fast, reliable mail and package delivery services to every corner of the Republic. Track shipments, buy stamps, and access postal services online nationwide.</p>
+              </div>
+              <div className="hero-actions">
+                <button className="btn btn-primary" onClick={() => navigate('/post/shipping')}>
+                  Shipping Rates
+                </button>
+                <button className="btn btn-secondary" onClick={() => navigate('/post/stamps')}>
+                  Buy Stamps
+                </button>
+              </div>
             </div>
-            <h2>Delivering <span>Connections</span></h2>
-            <p>Praya Post provides fast, reliable mail and package delivery services to every corner of the Republic. Track shipments, buy stamps, and access postal services online nationwide.</p>
-            <div className="hero-actions">
-              <button className="btn btn-primary" onClick={() => navigate('/post/track')}>
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+            <div className="quick-search">
+              <div className="search-title">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                   <circle cx="11" cy="11" r="8"/>
                   <line x1="21" y1="21" x2="16.65" y2="16.65"/>
                 </svg>
-                Track Package
-              </button>
-              <button className="btn btn-secondary" onClick={() => navigate('/post/shipping')}>
-                Shipping Rates
-              </button>
+                Track Your Package
+              </div>
+              <div className="search-form">
+                <input
+                  type="text"
+                  className="search-input"
+                  placeholder="Enter tracking number (e.g., PY1234567890)"
+                  value={trackingNumber}
+                  onChange={(e) => setTrackingNumber(e.target.value)}
+                />
+                <button className="search-button" onClick={() => navigate('/post/track')}>
+                  Track Package
+                </button>
+              </div>
             </div>
           </div>
         </div>
@@ -273,7 +296,7 @@ function PostHome({ navigate }) {
           </div>
         </div>
       </main>
-    </>
+    </div>
   )
 }
 

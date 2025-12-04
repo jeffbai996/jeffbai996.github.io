@@ -90,7 +90,7 @@ export default function Health() {
 
 function HealthHome({ navigate }) {
   return (
-    <>
+    <div className="layout-emergency">
       <section className="hero">
         <div className="hero-bg">
           <div className="hero-bg-shape"></div>
@@ -99,7 +99,7 @@ function HealthHome({ navigate }) {
         </div>
         <div className="hero-pattern"></div>
         <div className="container">
-          <div className="hero-content">
+          <div className="hero-main">
             <div className="hero-badge">
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                 <path d="M22 12h-4l-3 9L9 3l-3 9H2"></path>
@@ -119,6 +119,27 @@ function HealthHome({ navigate }) {
               <button className="btn btn-secondary" onClick={() => navigate('/health/providers')}>
                 Find Healthcare Provider
               </button>
+            </div>
+          </div>
+          <div className="hero-emergency">
+            <div className="emergency-title">HEALTH EMERGENCY</div>
+            <div className="emergency-numbers">
+              <a href="tel:911" className="emergency-number">
+                <div className="emergency-label">Medical Emergency</div>
+                <div className="emergency-phone">911</div>
+              </a>
+              <a href="tel:988" className="emergency-number">
+                <div className="emergency-label">Mental Health Crisis</div>
+                <div className="emergency-phone">988</div>
+              </a>
+              <a href="tel:1-800-HEALTH-PY" className="emergency-number">
+                <div className="emergency-label">Health Information</div>
+                <div className="emergency-phone">1-800-HEALTH-PY</div>
+              </a>
+              <a href="tel:1-800-POISON" className="emergency-number">
+                <div className="emergency-label">Poison Control</div>
+                <div className="emergency-phone">1-800-POISON</div>
+              </a>
             </div>
           </div>
         </div>
@@ -274,7 +295,7 @@ function HealthHome({ navigate }) {
           </div>
         </div>
       </main>
-    </>
+    </div>
   )
 }
 
