@@ -1,0 +1,388 @@
+/* Horizontal Progress Tracker */
+.progress-tracker.horizontal {
+  display: flex;
+  align-items: flex-start;
+  width: 100%;
+  padding: 20px 0;
+}
+
+.progress-tracker.horizontal .tracker-step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex: 1;
+  position: relative;
+}
+
+.progress-tracker.horizontal .step-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f1f5f9;
+  border: 3px solid #e2e8f0;
+  color: #94a3b8;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  z-index: 2;
+  position: relative;
+}
+
+.progress-tracker.horizontal .tracker-step.completed .step-icon {
+  background: #10b981;
+  border-color: #10b981;
+  color: white;
+}
+
+.progress-tracker.horizontal .tracker-step.active .step-icon {
+  background: #3b82f6;
+  border-color: #3b82f6;
+  color: white;
+  box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.2);
+}
+
+.progress-tracker.horizontal .step-connector {
+  flex: 1;
+  height: 3px;
+  margin: 0 -10px;
+  padding: 22px 10px;
+  position: relative;
+  z-index: 1;
+}
+
+.progress-tracker.horizontal .connector-line {
+  height: 3px;
+  background: #e2e8f0;
+  position: relative;
+  overflow: hidden;
+}
+
+.progress-tracker.horizontal .step-connector.completed .connector-line {
+  background: #10b981;
+}
+
+.progress-tracker.horizontal .step-content {
+  margin-top: 12px;
+  text-align: center;
+}
+
+.progress-tracker.horizontal .step-label {
+  font-size: 13px;
+  font-weight: 600;
+  color: #64748b;
+  margin-bottom: 4px;
+}
+
+.progress-tracker.horizontal .tracker-step.completed .step-label {
+  color: #10b981;
+}
+
+.progress-tracker.horizontal .tracker-step.active .step-label {
+  color: #3b82f6;
+}
+
+.progress-tracker.horizontal .step-description {
+  font-size: 12px;
+  color: #94a3b8;
+  max-width: 120px;
+  line-height: 1.4;
+}
+
+.progress-tracker.horizontal .step-date {
+  font-size: 11px;
+  color: #cbd5e1;
+  margin-top: 4px;
+}
+
+/* Vertical Progress Tracker */
+.progress-tracker.vertical {
+  display: flex;
+  flex-direction: column;
+  padding: 10px 0;
+}
+
+.progress-tracker.vertical .tracker-step {
+  display: flex;
+  gap: 16px;
+  min-height: 60px;
+  position: relative;
+}
+
+.progress-tracker.vertical .step-indicator {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+}
+
+.progress-tracker.vertical .step-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f1f5f9;
+  border: 3px solid #e2e8f0;
+  color: #94a3b8;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  z-index: 2;
+  position: relative;
+  flex-shrink: 0;
+}
+
+.progress-tracker.vertical .tracker-step.completed .step-icon {
+  background: #10b981;
+  border-color: #10b981;
+  color: white;
+}
+
+.progress-tracker.vertical .tracker-step.active .step-icon {
+  background: #3b82f6;
+  border-color: #3b82f6;
+  color: white;
+  box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.2);
+}
+
+.progress-tracker.vertical .step-connector {
+  width: 3px;
+  flex: 1;
+  background: #e2e8f0;
+  margin: 4px 0;
+  min-height: 20px;
+}
+
+.progress-tracker.vertical .tracker-step.completed .step-connector {
+  background: #10b981;
+}
+
+.progress-tracker.vertical .step-content {
+  flex: 1;
+  padding: 8px 0;
+}
+
+.progress-tracker.vertical .step-label {
+  font-size: 14px;
+  font-weight: 600;
+  color: #475569;
+  margin-bottom: 4px;
+}
+
+.progress-tracker.vertical .tracker-step.completed .step-label {
+  color: #10b981;
+}
+
+.progress-tracker.vertical .tracker-step.active .step-label {
+  color: #3b82f6;
+}
+
+.progress-tracker.vertical .step-description {
+  font-size: 13px;
+  color: #64748b;
+  line-height: 1.5;
+  margin-bottom: 4px;
+}
+
+.progress-tracker.vertical .step-date {
+  font-size: 12px;
+  color: #94a3b8;
+}
+
+/* Step number style */
+.step-number {
+  font-size: 16px;
+  font-weight: 700;
+}
+
+/* Timeline Tracker */
+.timeline-tracker {
+  background: white;
+  border-radius: 12px;
+  padding: 24px;
+}
+
+.timeline-tracker.compact {
+  padding: 16px;
+}
+
+.timeline-title {
+  font-size: 18px;
+  font-weight: 700;
+  color: #1e293b;
+  margin: 0 0 24px 0;
+}
+
+.timeline-events {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.timeline-event {
+  display: flex;
+  gap: 16px;
+  position: relative;
+}
+
+.event-indicator {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.event-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f1f5f9;
+  border: 2px solid #e2e8f0;
+  color: #64748b;
+  z-index: 2;
+  position: relative;
+}
+
+.timeline-event.completed .event-icon {
+  background: #d1fae5;
+  border-color: #10b981;
+  color: #10b981;
+}
+
+.timeline-event.pending .event-icon {
+  background: #fef3c7;
+  border-color: #f59e0b;
+  color: #f59e0b;
+}
+
+.timeline-event.cancelled .event-icon,
+.timeline-event.rejected .event-icon {
+  background: #fee2e2;
+  border-color: #ef4444;
+  color: #ef4444;
+}
+
+.event-connector {
+  width: 2px;
+  flex: 1;
+  background: #e2e8f0;
+  margin: 4px 0;
+  min-height: 20px;
+}
+
+.timeline-event.completed .event-connector {
+  background: #10b981;
+}
+
+.event-content {
+  flex: 1;
+  padding: 4px 0 20px 0;
+}
+
+.event-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 6px;
+  gap: 12px;
+}
+
+.event-title {
+  font-size: 15px;
+  font-weight: 600;
+  color: #1e293b;
+  line-height: 1.4;
+}
+
+.event-time {
+  font-size: 12px;
+  color: #94a3b8;
+  white-space: nowrap;
+}
+
+.event-description {
+  font-size: 13px;
+  color: #64748b;
+  line-height: 1.6;
+  margin-bottom: 8px;
+}
+
+.event-metadata {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 8px;
+}
+
+.metadata-item {
+  font-size: 12px;
+}
+
+.metadata-key {
+  color: #94a3b8;
+  font-weight: 600;
+  margin-right: 4px;
+}
+
+.metadata-value {
+  color: #475569;
+}
+
+/* Status Badge */
+.status-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 10px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: capitalize;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .progress-tracker.horizontal {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .progress-tracker.horizontal .tracker-step {
+    flex-direction: row;
+    align-items: center;
+    width: 100%;
+  }
+
+  .progress-tracker.horizontal .step-content {
+    margin-top: 0;
+    margin-left: 16px;
+    text-align: left;
+  }
+
+  .progress-tracker.horizontal .step-connector {
+    display: none;
+  }
+
+  .progress-tracker.horizontal .tracker-step::after {
+    content: '';
+    position: absolute;
+    left: 23px;
+    top: 48px;
+    width: 2px;
+    height: calc(100% - 48px);
+    background: #e2e8f0;
+    z-index: 1;
+  }
+
+  .progress-tracker.horizontal .tracker-step:last-child::after {
+    display: none;
+  }
+
+  .progress-tracker.horizontal .tracker-step.completed::after {
+    background: #10b981;
+  }
+}

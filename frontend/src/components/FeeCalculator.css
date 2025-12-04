@@ -1,0 +1,284 @@
+.fee-calculator {
+  background: white;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+.calculator-header {
+  padding: 20px 24px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+}
+
+.calculator-title {
+  font-size: 20px;
+  font-weight: 700;
+  margin: 0;
+}
+
+.calculator-body {
+  padding: 24px;
+}
+
+.calculator-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.form-field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.field-label {
+  font-size: 14px;
+  font-weight: 600;
+  color: #1e293b;
+}
+
+.required-mark {
+  color: #ef4444;
+  margin-left: 4px;
+}
+
+.field-description {
+  font-size: 13px;
+  color: #64748b;
+  margin-top: -4px;
+}
+
+.calculator-input {
+  width: 100%;
+  padding: 10px 14px;
+  font-size: 14px;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  transition: all 0.2s;
+  font-family: inherit;
+}
+
+.calculator-input:focus {
+  outline: none;
+  border-color: #667eea;
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+.calculator-input.error {
+  border-color: #ef4444;
+}
+
+.calculator-input.error:focus {
+  box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1);
+}
+
+.field-error {
+  font-size: 13px;
+  color: #ef4444;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.radio-group {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.radio-option {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  padding: 10px;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  transition: all 0.2s;
+}
+
+.radio-option:hover {
+  background: #f8fafc;
+  border-color: #cbd5e1;
+}
+
+.radio-option input[type="radio"] {
+  cursor: pointer;
+  width: 16px;
+  height: 16px;
+  margin: 0;
+}
+
+.radio-label {
+  font-size: 14px;
+  color: #475569;
+  cursor: pointer;
+}
+
+.checkbox-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  padding: 10px;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  transition: all 0.2s;
+}
+
+.checkbox-label:hover {
+  background: #f8fafc;
+  border-color: #cbd5e1;
+}
+
+.checkbox-label input[type="checkbox"] {
+  cursor: pointer;
+  width: 16px;
+  height: 16px;
+  margin: 0;
+}
+
+.calculator-actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 8px;
+}
+
+.calculator-btn {
+  flex: 1;
+  padding: 12px 24px;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.calculator-result {
+  margin-top: 32px;
+  padding: 24px;
+  background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+  border-radius: 12px;
+  border: 1px solid #bae6fd;
+}
+
+.result-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.result-header svg {
+  color: #0ea5e9;
+}
+
+.result-header h4 {
+  font-size: 18px;
+  font-weight: 700;
+  color: #0c4a6e;
+  margin: 0;
+}
+
+.result-total {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 20px;
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  margin-bottom: 20px;
+}
+
+.result-label {
+  font-size: 16px;
+  font-weight: 600;
+  color: #1e293b;
+}
+
+.result-amount {
+  font-size: 28px;
+  font-weight: 700;
+  color: #0ea5e9;
+}
+
+.result-breakdown {
+  background: white;
+  border-radius: 10px;
+  padding: 16px;
+  margin-bottom: 16px;
+}
+
+.breakdown-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: #475569;
+  margin-bottom: 12px;
+}
+
+.breakdown-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 0;
+  border-bottom: 1px solid #f1f5f9;
+}
+
+.breakdown-item:last-child {
+  border-bottom: none;
+}
+
+.breakdown-label {
+  font-size: 14px;
+  color: #64748b;
+}
+
+.breakdown-value {
+  font-size: 14px;
+  font-weight: 600;
+  color: #1e293b;
+}
+
+.result-notes {
+  background: white;
+  border-radius: 10px;
+  padding: 16px;
+  font-size: 13px;
+  color: #475569;
+}
+
+.result-notes strong {
+  color: #1e293b;
+  display: block;
+  margin-bottom: 8px;
+}
+
+.result-notes ul {
+  margin: 0;
+  padding-left: 20px;
+}
+
+.result-notes li {
+  margin-bottom: 4px;
+  line-height: 1.5;
+}
+
+@media (max-width: 768px) {
+  .calculator-actions {
+    flex-direction: column;
+  }
+
+  .calculator-btn {
+    width: 100%;
+  }
+
+  .result-amount {
+    font-size: 24px;
+  }
+
+  .result-total {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+}
