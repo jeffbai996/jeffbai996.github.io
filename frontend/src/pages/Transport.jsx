@@ -87,8 +87,10 @@ export default function Transport() {
 }
 
 function TransportHome({ navigate }) {
+  const [searchQuery, setSearchQuery] = React.useState('')
+
   return (
-    <>
+    <div className="layout-utility">
       <section className="hero">
         <div className="hero-bg">
           <div className="hero-bg-shape"></div>
@@ -98,25 +100,46 @@ function TransportHome({ navigate }) {
         <div className="hero-pattern"></div>
         <div className="container">
           <div className="hero-content">
-            <div className="hero-badge">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                <path d="M3 18h18M3 6h18M5 18V6M19 18V6M9 10h6M9 14h6"/>
-              </svg>
-              Transportation Services
+            <div className="hero-top">
+              <div className="hero-text">
+                <div className="hero-badge">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                    <path d="M3 18h18M3 6h18M5 18V6M19 18V6M9 10h6M9 14h6"/>
+                  </svg>
+                  Transportation Services
+                </div>
+                <h2>Safe Roads for <span>Everyone</span></h2>
+                <p>The Transport Department manages driver licensing, vehicle registration, and transportation safety programs to keep Praya's roads safe and efficient for all travelers.</p>
+              </div>
+              <div className="hero-actions">
+                <button className="btn btn-primary" onClick={() => navigate('/transport/license')}>
+                  Driver's License
+                </button>
+                <button className="btn btn-secondary" onClick={() => navigate('/transport/registration')}>
+                  Register Vehicle
+                </button>
+              </div>
             </div>
-            <h2>Safe Roads for <span>Everyone</span></h2>
-            <p>The Transport Department manages driver licensing, vehicle registration, and transportation safety programs to keep Praya's roads safe and efficient for all travelers.</p>
-            <div className="hero-actions">
-              <button className="btn btn-primary" onClick={() => navigate('/transport/license')}>
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                  <rect x="1" y="4" width="22" height="16" rx="2" ry="2"/>
-                  <line x1="1" y1="10" x2="23" y2="10"/>
+            <div className="quick-search">
+              <div className="search-title">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <circle cx="11" cy="11" r="8"/>
+                  <line x1="21" y1="21" x2="16.65" y2="16.65"/>
                 </svg>
-                Driver's License
-              </button>
-              <button className="btn btn-secondary" onClick={() => navigate('/transport/registration')}>
-                Register Vehicle
-              </button>
+                Look Up License or Registration
+              </div>
+              <div className="search-form">
+                <input
+                  type="text"
+                  className="search-input"
+                  placeholder="Enter license or vehicle plate number"
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                />
+                <button className="search-button" onClick={() => navigate('/transport/license')}>
+                  Search
+                </button>
+              </div>
             </div>
           </div>
         </div>
@@ -277,7 +300,7 @@ function TransportHome({ navigate }) {
           </div>
         </div>
       </main>
-    </>
+    </div>
   )
 }
 

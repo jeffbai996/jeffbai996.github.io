@@ -93,7 +93,7 @@ export default function CR() {
 
 function CRHome({ navigate }) {
   return (
-    <>
+    <div className="layout-social">
       <section className="hero">
         <div className="hero-bg">
           <div className="hero-bg-shape"></div>
@@ -125,6 +125,17 @@ function CRHome({ navigate }) {
               <button className="btn btn-secondary" onClick={() => navigate('/cr/search')}>
                 Search Companies
               </button>
+            </div>
+          </div>
+          <div className="hero-image">
+            <div className="hero-image-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <rect x="2" y="7" width="20" height="14" rx="2" ry="2"/>
+                <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/>
+              </svg>
+            </div>
+            <div className="hero-image-text">
+              Empowering entrepreneurs and businesses across the Republic of Praya
             </div>
           </div>
         </div>
@@ -247,7 +258,7 @@ function CRHome({ navigate }) {
           </div>
         </div>
       </main>
-    </>
+    </div>
   )
 }
 
