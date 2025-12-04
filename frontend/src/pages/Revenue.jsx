@@ -38,8 +38,8 @@ export default function Revenue() {
       <Routes>
         <Route index element={<RevenueHome navigate={navigate} />} />
         <Route path="file" element={<FileTaxes />} />
-        <Route path="payment" element={<ComingSoon title="Tax Payments" />} />
-        <Route path="refunds" element={<ComingSoon title="Refund Status" />} />
+        <Route path="payment" element={<MakePayment />} />
+        <Route path="refunds" element={<RefundStatus />} />
       </Routes>
 
       <footer className="dept-footer">
@@ -53,24 +53,24 @@ export default function Revenue() {
               <h5>Services</h5>
               <ul>
                 <li><Link to="/revenue/file">File Tax Return</Link></li>
-                <li><a href="#">Make Payment</a></li>
-                <li><a href="#">Check Refund Status</a></li>
+                <li><Link to="/revenue/payment">Make Payment</Link></li>
+                <li><Link to="/revenue/refunds">Check Refund Status</Link></li>
               </ul>
             </div>
             <div className="footer-section">
               <h5>Resources</h5>
               <ul>
-                <li><a href="#">Tax Forms & Publications</a></li>
-                <li><a href="#">Tax Calculator</a></li>
-                <li><a href="#">Free Tax Assistance</a></li>
+                <li><Link to="/revenue/file">Tax Forms & Publications</Link></li>
+                <li><Link to="/revenue/file">Tax Calculator</Link></li>
+                <li><Link to="/revenue/file">Free Tax Assistance</Link></li>
               </ul>
             </div>
             <div className="footer-section">
               <h5>Government</h5>
               <ul>
                 <li><Link to="/">Gov Portal</Link></li>
-                <li><a href="#">Tax Policy</a></li>
-                <li><a href="#">Compliance</a></li>
+                <li><Link to="/revenue">Tax Policy</Link></li>
+                <li><Link to="/revenue">Compliance</Link></li>
               </ul>
             </div>
           </div>
@@ -416,116 +416,297 @@ function FileTaxes() {
   )
 }
 
-function ComingSoon({ title }) {
-  const navigate = useNavigate();
-
-  const getServiceInfo = () => {
-    switch(title) {
-      case 'Tax Payments':
-        return {
-          description: 'Make tax payments, set up payment plans, and manage your account.',
-          services: ['Pay Online by Bank Account or Card', 'Payment Plans & Installment Agreements', 'Estimated Tax Payments', 'Payment History'],
-          contact: 'For payment assistance: Call 1-800-TAX-HELP or visit revenue.gov.py'
-        };
-      case 'Refund Status':
-        return {
-          description: 'Check the status of your tax refund and update direct deposit information.',
-          services: ['Track Refund Status', 'Update Bank Information', 'Refund Schedule', 'Amended Return Status'],
-          contact: 'For refund inquiries: Call 1-800-TAX-HELP or use online refund tracker'
-        };
-      default:
-        return {
-          description: 'This service is being developed to serve you better.',
-          services: [],
-          contact: 'For assistance, contact the Revenue Department'
-        };
-    }
-  };
-
-  const info = getServiceInfo();
+function MakePayment() {
+  const [paymentType, setPaymentType] = React.useState('current');
+  const [amount, setAmount] = React.useState('');
+  const [taxYear, setTaxYear] = React.useState('2024');
 
   return (
     <main className="main">
       <div className="page-header">
         <div className="container">
           <div className="breadcrumb">
-            <Link to="/revenue">Home</Link> / {title}
+            <Link to="/revenue">Home</Link> / Make Payment
           </div>
-          <h1>{title}</h1>
-          <p className="subtitle">{info.description}</p>
+          <h1>Make a Tax Payment</h1>
+          <p className="subtitle">Pay taxes online securely with bank account or credit/debit card</p>
         </div>
       </div>
       <div className="container">
-        <div className="card">
-          <div style={{ padding: '20px', textAlign: 'center' }}>
-            <div style={{
-              width: '64px',
-              height: '64px',
-              background: 'linear-gradient(135deg, rgba(5, 150, 105, 0.1) 0%, rgba(5, 150, 105, 0.2) 100%)',
-              borderRadius: '50%',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              margin: '0 auto 20px'
-            }}>
-              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                <circle cx="12" cy="12" r="10"/>
-                <path d="M12 16v-4M12 8h.01"/>
-              </svg>
-            </div>
-            <h3 style={{ marginBottom: '12px' }}>Service Under Development</h3>
-            <p style={{ color: 'var(--text-muted)', maxWidth: '500px', margin: '0 auto 24px' }}>
-              We're working to bring this service online. In the meantime, you can access these services through traditional channels.
-            </p>
+        <div className="content-grid">
+          <div className="main-content">
+            <div className="card">
+              <h3 className="card-title">Payment Information</h3>
+              <div className="content-text">
+                <div style={{ marginBottom: '20px' }}>
+                  <label style={{ display: 'block', marginBottom: '8px', fontWeight: '500' }}>Payment Type</label>
+                  <select
+                    value={paymentType}
+                    onChange={(e) => setPaymentType(e.target.value)}
+                    style={{ width: '100%', padding: '10px', borderRadius: '8px', border: '1px solid var(--border-subtle)' }}
+                  >
+                    <option value="current">Current Year Tax</option>
+                    <option value="estimated">Estimated Tax Payment</option>
+                    <option value="prior">Prior Year Tax</option>
+                    <option value="extension">Extension Payment</option>
+                    <option value="amended">Amended Return Payment</option>
+                  </select>
+                </div>
 
-            {info.services.length > 0 && (
-              <div style={{ marginTop: '24px', textAlign: 'left', maxWidth: '400px', margin: '24px auto 0' }}>
-                <h4 style={{ fontSize: '14px', marginBottom: '12px' }}>Available Services:</h4>
-                <ul style={{ color: 'var(--text-secondary)', fontSize: '14px' }}>
-                  {info.services.map(service => (
-                    <li key={service} style={{ marginBottom: '8px' }}>{service}</li>
-                  ))}
-                </ul>
-              </div>
-            )}
+                <div style={{ marginBottom: '20px' }}>
+                  <label style={{ display: 'block', marginBottom: '8px', fontWeight: '500' }}>Tax Year</label>
+                  <select
+                    value={taxYear}
+                    onChange={(e) => setTaxYear(e.target.value)}
+                    style={{ width: '100%', padding: '10px', borderRadius: '8px', border: '1px solid var(--border-subtle)' }}
+                  >
+                    <option value="2024">2024</option>
+                    <option value="2023">2023</option>
+                    <option value="2022">2022</option>
+                    <option value="2021">2021</option>
+                  </select>
+                </div>
 
-            <div style={{
-              marginTop: '32px',
-              padding: '16px',
-              background: 'rgba(5, 150, 105, 0.05)',
-              borderRadius: '10px',
-              fontSize: '13px',
-              color: 'var(--text-muted)'
-            }}>
-              {info.contact}
-            </div>
+                <div style={{ marginBottom: '20px' }}>
+                  <label style={{ display: 'block', marginBottom: '8px', fontWeight: '500' }}>Payment Amount (¤)</label>
+                  <input
+                    type="number"
+                    value={amount}
+                    onChange={(e) => setAmount(e.target.value)}
+                    placeholder="0.00"
+                    style={{ width: '100%', padding: '10px', borderRadius: '8px', border: '1px solid var(--border-subtle)', fontSize: '16px' }}
+                  />
+                </div>
 
-            <div style={{ marginTop: '32px' }}>
-              <h4 style={{ fontSize: '14px', marginBottom: '12px' }}>Related Services</h4>
-              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '12px' }}>
-                <Link to="/revenue/file" style={{
-                  padding: '14px',
-                  background: 'var(--bg-elevated)',
-                  border: '1px solid var(--border-subtle)',
-                  borderRadius: '10px',
-                  textDecoration: 'none',
-                  fontSize: '13px',
-                  fontWeight: '500',
-                  color: 'var(--text-primary)',
-                  transition: 'all 0.2s'
-                }}>
-                  File Tax Return
-                </Link>
-                <button
-                  onClick={() => navigate('/revenue')}
-                  className="btn btn-secondary"
-                  style={{ fontSize: '13px', padding: '14px' }}
-                >
-                  Return to Revenue Home
+                <div style={{ background: 'rgba(5, 150, 105, 0.05)', padding: '16px', borderRadius: '10px', marginTop: '24px' }}>
+                  <h4 style={{ marginBottom: '12px', fontSize: '14px' }}>Payment Methods</h4>
+                  <div style={{ display: 'grid', gap: '12px' }}>
+                    <label style={{ display: 'flex', alignItems: 'center', padding: '12px', background: 'white', border: '2px solid var(--border-subtle)', borderRadius: '8px', cursor: 'pointer' }}>
+                      <input type="radio" name="payment-method" value="bank" defaultChecked style={{ marginRight: '12px' }} />
+                      <div>
+                        <div style={{ fontWeight: '500' }}>Bank Account (ACH) - Free</div>
+                        <div style={{ fontSize: '13px', color: 'var(--text-muted)' }}>Direct debit from checking or savings</div>
+                      </div>
+                    </label>
+                    <label style={{ display: 'flex', alignItems: 'center', padding: '12px', background: 'white', border: '2px solid var(--border-subtle)', borderRadius: '8px', cursor: 'pointer' }}>
+                      <input type="radio" name="payment-method" value="card" style={{ marginRight: '12px' }} />
+                      <div>
+                        <div style={{ fontWeight: '500' }}>Credit/Debit Card - 1.99% fee</div>
+                        <div style={{ fontSize: '13px', color: 'var(--text-muted)' }}>Visa, Mastercard, American Express, Discover</div>
+                      </div>
+                    </label>
+                  </div>
+                </div>
+
+                <button className="btn btn-primary" style={{ width: '100%', marginTop: '24px', padding: '14px' }}>
+                  Continue to Payment
                 </button>
+
+                <p style={{ fontSize: '13px', color: 'var(--text-muted)', marginTop: '16px', textAlign: 'center' }}>
+                  Secure payment processing · Bank-level encryption · Confirmation via email
+                </p>
+              </div>
+            </div>
+
+            <div className="card">
+              <h3 className="card-title">Payment Plans</h3>
+              <div className="content-text">
+                <p>Can't pay in full? Set up a payment plan (installment agreement) to pay over time.</p>
+                <ul style={{ marginTop: '12px', marginBottom: '12px' }}>
+                  <li><strong>Short-term plan:</strong> Pay in 180 days or less (no setup fee)</li>
+                  <li><strong>Long-term plan:</strong> Monthly payments up to 72 months (¤31 setup fee, waived for low income)</li>
+                  <li><strong>Automatic payments:</strong> Lower setup fees with direct debit</li>
+                </ul>
+                <p style={{ marginTop: '12px' }}>Interest and penalties continue to accrue until paid in full.</p>
               </div>
             </div>
           </div>
+
+          <aside className="sidebar">
+            <div className="info-box">
+              <h4>Payment Deadlines</h4>
+              <p><strong>2024 Tax Year</strong></p>
+              <ul style={{ marginTop: '8px', fontSize: '14px' }}>
+                <li>April 15, 2025 - Annual return</li>
+                <li>April 15 - Q1 estimated</li>
+                <li>June 15 - Q2 estimated</li>
+                <li>Sept 15 - Q3 estimated</li>
+                <li>Jan 15 - Q4 estimated</li>
+              </ul>
+            </div>
+
+            <div className="card">
+              <h4 className="card-title">Payment Tips</h4>
+              <ul style={{ fontSize: '14px' }}>
+                <li>Pay electronically to get instant confirmation</li>
+                <li>Schedule payments up to 365 days in advance</li>
+                <li>View payment history in your account</li>
+                <li>No fee for bank account payments</li>
+              </ul>
+            </div>
+
+            <div className="info-box">
+              <h4>Need Help?</h4>
+              <p><strong>Phone:</strong> 1-800-TAX-HELP</p>
+              <p><strong>Hours:</strong> Mon-Fri 7AM-7PM</p>
+              <p><strong>Email:</strong> payments@revenue.gov.py</p>
+            </div>
+          </aside>
+        </div>
+      </div>
+    </main>
+  )
+}
+
+function RefundStatus() {
+  const [ssn, setSSN] = React.useState('');
+  const [filingStatus, setFilingStatus] = React.useState('single');
+  const [refundAmount, setRefundAmount] = React.useState('');
+
+  return (
+    <main className="main">
+      <div className="page-header">
+        <div className="container">
+          <div className="breadcrumb">
+            <Link to="/revenue">Home</Link> / Refund Status
+          </div>
+          <h1>Check Refund Status</h1>
+          <p className="subtitle">Track your tax refund and see when you'll receive your money</p>
+        </div>
+      </div>
+      <div className="container">
+        <div className="content-grid">
+          <div className="main-content">
+            <div className="card">
+              <h3 className="card-title">Track Your Refund</h3>
+              <div className="content-text">
+                <p style={{ marginBottom: '20px' }}>Enter your information to check your refund status. You can check status 24 hours after e-filing or 4 weeks after mailing a paper return.</p>
+
+                <div style={{ marginBottom: '20px' }}>
+                  <label style={{ display: 'block', marginBottom: '8px', fontWeight: '500' }}>Social Security Number</label>
+                  <input
+                    type="text"
+                    value={ssn}
+                    onChange={(e) => setSSN(e.target.value)}
+                    placeholder="XXX-XX-XXXX"
+                    style={{ width: '100%', padding: '10px', borderRadius: '8px', border: '1px solid var(--border-subtle)', fontSize: '16px' }}
+                  />
+                </div>
+
+                <div style={{ marginBottom: '20px' }}>
+                  <label style={{ display: 'block', marginBottom: '8px', fontWeight: '500' }}>Filing Status</label>
+                  <select
+                    value={filingStatus}
+                    onChange={(e) => setFilingStatus(e.target.value)}
+                    style={{ width: '100%', padding: '10px', borderRadius: '8px', border: '1px solid var(--border-subtle)' }}
+                  >
+                    <option value="single">Single</option>
+                    <option value="married-joint">Married Filing Jointly</option>
+                    <option value="married-separate">Married Filing Separately</option>
+                    <option value="head">Head of Household</option>
+                    <option value="widow">Qualifying Surviving Spouse</option>
+                  </select>
+                </div>
+
+                <div style={{ marginBottom: '20px' }}>
+                  <label style={{ display: 'block', marginBottom: '8px', fontWeight: '500' }}>Exact Refund Amount (¤)</label>
+                  <input
+                    type="number"
+                    value={refundAmount}
+                    onChange={(e) => setRefundAmount(e.target.value)}
+                    placeholder="0.00"
+                    style={{ width: '100%', padding: '10px', borderRadius: '8px', border: '1px solid var(--border-subtle)', fontSize: '16px' }}
+                  />
+                  <p style={{ fontSize: '13px', color: 'var(--text-muted)', marginTop: '4px' }}>Enter the exact amount shown on your tax return</p>
+                </div>
+
+                <button className="btn btn-primary" style={{ width: '100%', padding: '14px' }}>
+                  Check Status
+                </button>
+              </div>
+            </div>
+
+            <div className="card">
+              <h3 className="card-title">Refund Timeline</h3>
+              <div className="content-text">
+                <h4>When Will I Receive My Refund?</h4>
+                <ul style={{ marginTop: '12px' }}>
+                  <li><strong>E-file with direct deposit:</strong> 21 days or less</li>
+                  <li><strong>E-file with paper check:</strong> Up to 6 weeks</li>
+                  <li><strong>Paper return:</strong> Up to 8 weeks or longer</li>
+                  <li><strong>Amended returns:</strong> Up to 16 weeks</li>
+                </ul>
+
+                <h4 style={{ marginTop: '24px' }}>Refund Processing Stages</h4>
+                <div style={{ marginTop: '12px' }}>
+                  <div style={{ padding: '12px', background: 'rgba(5, 150, 105, 0.05)', borderRadius: '8px', marginBottom: '8px' }}>
+                    <strong>1. Return Received</strong>
+                    <p style={{ fontSize: '13px', color: 'var(--text-muted)', marginTop: '4px' }}>Your return has been received and is being processed</p>
+                  </div>
+                  <div style={{ padding: '12px', background: 'rgba(5, 150, 105, 0.05)', borderRadius: '8px', marginBottom: '8px' }}>
+                    <strong>2. Refund Approved</strong>
+                    <p style={{ fontSize: '13px', color: 'var(--text-muted)', marginTop: '4px' }}>Your refund has been approved and will be sent soon</p>
+                  </div>
+                  <div style={{ padding: '12px', background: 'rgba(5, 150, 105, 0.05)', borderRadius: '8px' }}>
+                    <strong>3. Refund Sent</strong>
+                    <p style={{ fontSize: '13px', color: 'var(--text-muted)', marginTop: '4px' }}>Your refund has been sent to your bank or mailed</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="card">
+              <h3 className="card-title">Why Is My Refund Delayed?</h3>
+              <div className="content-text">
+                <p>Common reasons for refund delays:</p>
+                <ul style={{ marginTop: '12px' }}>
+                  <li>Return contains errors or is incomplete</li>
+                  <li>Identity verification needed (fraud prevention)</li>
+                  <li>Claiming Earned Income Tax Credit or Child Tax Credit</li>
+                  <li>Return being reviewed for accuracy</li>
+                  <li>Amended return or injured spouse claim filed</li>
+                  <li>Offset for unpaid taxes, child support, or federal debts</li>
+                </ul>
+                <p style={{ marginTop: '12px' }}>If your refund has been delayed more than 21 days (e-file) or 6 weeks (paper), call 1-800-TAX-HELP.</p>
+              </div>
+            </div>
+          </div>
+
+          <aside className="sidebar">
+            <div className="card" style={{ background: 'linear-gradient(135deg, #059669 0%, #047857 100%)', color: 'white', border: 'none' }}>
+              <h4 style={{ color: 'white', marginBottom: '8px' }}>Average Refund</h4>
+              <div style={{ fontSize: '32px', fontWeight: '800', marginBottom: '4px' }}>¤2,840</div>
+              <div style={{ fontSize: '13px', opacity: 0.9 }}>Based on 2024 filings</div>
+            </div>
+
+            <div className="info-box">
+              <h4>Direct Deposit</h4>
+              <p>Get your refund faster with direct deposit - typically within 21 days of filing.</p>
+              <p style={{ marginTop: '8px' }}>You'll need:</p>
+              <ul style={{ fontSize: '14px', marginTop: '8px' }}>
+                <li>Bank routing number</li>
+                <li>Account number</li>
+                <li>Account type (checking/savings)</li>
+              </ul>
+            </div>
+
+            <div className="card">
+              <h4 className="card-title">Refund Options</h4>
+              <ul style={{ fontSize: '14px' }}>
+                <li><strong>Direct deposit:</strong> Fastest method</li>
+                <li><strong>Paper check:</strong> Mailed to address on return</li>
+                <li><strong>Split refund:</strong> Deposit to up to 3 accounts</li>
+                <li><strong>Buy savings bonds:</strong> Use refund to purchase bonds</li>
+              </ul>
+            </div>
+
+            <div className="info-box">
+              <h4>Need Help?</h4>
+              <p><strong>Phone:</strong> 1-800-TAX-HELP</p>
+              <p><strong>Hours:</strong> Mon-Fri 7AM-7PM</p>
+              <p><strong>Email:</strong> refunds@revenue.gov.py</p>
+            </div>
+          </aside>
         </div>
       </div>
     </main>
