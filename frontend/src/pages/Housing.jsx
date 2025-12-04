@@ -38,8 +38,8 @@ export default function Housing() {
       <Routes>
         <Route index element={<HousingHome navigate={navigate} />} />
         <Route path="applications" element={<Applications />} />
-        <Route path="tenants" element={<ComingSoon title="Tenant Resources" />} />
-        <Route path="landlords" element={<ComingSoon title="Landlord Resources" />} />
+        <Route path="tenants" element={<TenantResources />} />
+        <Route path="landlords" element={<LandlordResources />} />
       </Routes>
 
       <footer className="dept-footer">
@@ -53,32 +53,32 @@ export default function Housing() {
               <h5>Services</h5>
               <ul>
                 <li><Link to="/housing/applications">Apply for Housing</Link></li>
-                <li><a href="#">Rental Assistance</a></li>
-                <li><a href="#">Housing Vouchers</a></li>
+                <li><Link to="/housing/tenants">Tenant Resources</Link></li>
+                <li><Link to="/housing/landlords">Landlord Resources</Link></li>
               </ul>
             </div>
             <div className="footer-section">
               <h5>Resources</h5>
               <ul>
-                <li><a href="#">Tenant Rights</a></li>
-                <li><a href="#">Fair Housing</a></li>
-                <li><a href="#">Property Listings</a></li>
+                <li><Link to="/housing/tenants">Tenant Rights</Link></li>
+                <li><Link to="/housing/applications">Housing Programs</Link></li>
+                <li><Link to="/housing">Property Information</Link></li>
               </ul>
             </div>
             <div className="footer-section">
               <h5>Government</h5>
               <ul>
                 <li><Link to="/">Gov Portal</Link></li>
-                <li><a href="#">Housing Policy</a></li>
-                <li><a href="#">Development Projects</a></li>
+                <li><Link to="/housing">Housing Authority</Link></li>
+                <li><Link to="/housing/applications">Apply Now</Link></li>
               </ul>
             </div>
           </div>
           <div className="footer-bottom">
             <span>&copy; 2024 Republic of Praya. Housing Authority.</span>
             <div className="footer-legal">
-              <a href="#">Terms</a>
-              <a href="#">Privacy</a>
+              <Link to="/">Terms</Link>
+              <Link to="/">Privacy</Link>
             </div>
           </div>
         </div>
@@ -407,116 +407,693 @@ function Applications() {
   )
 }
 
-function ComingSoon({ title }) {
-  const navigate = useNavigate();
-
-  const getServiceInfo = () => {
-    switch(title) {
-      case 'Tenant Resources':
-        return {
-          description: 'Information and resources for public housing and voucher program tenants.',
-          services: ['Tenant Rights & Responsibilities', 'Rent Payment Portal', 'Maintenance Requests', 'Lease Renewals'],
-          contact: 'For tenant services: Call 1-800-HOUSE-PY or visit your property management office'
-        };
-      case 'Landlord Resources':
-        return {
-          description: 'Information for property owners interested in participating in housing programs.',
-          services: ['Landlord Portal', 'Program Requirements', 'Inspection Schedules', 'Payment Information'],
-          contact: 'For landlord inquiries: landlords@housing.gov.py or call 1-800-HOUSE-PY'
-        };
-      default:
-        return {
-          description: 'This service is being developed to serve you better.',
-          services: [],
-          contact: 'For assistance, contact the Housing Authority'
-        };
-    }
-  };
-
-  const info = getServiceInfo();
+function TenantResources() {
+  const [selectedTopic, setSelectedTopic] = React.useState('rights');
 
   return (
     <main className="main">
       <div className="page-header">
         <div className="container">
           <div className="breadcrumb">
-            <Link to="/housing">Home</Link> / {title}
+            <Link to="/housing">Home</Link> / Tenant Resources
           </div>
-          <h1>{title}</h1>
-          <p className="subtitle">{info.description}</p>
+          <h1>Tenant Resources</h1>
+          <p className="subtitle">Information and support for public housing and voucher program tenants</p>
         </div>
       </div>
       <div className="container">
-        <div className="card">
-          <div style={{ padding: '20px', textAlign: 'center' }}>
-            <div style={{
-              width: '64px',
-              height: '64px',
-              background: 'linear-gradient(135deg, rgba(59, 130, 246, 0.1) 0%, rgba(59, 130, 246, 0.2) 100%)',
-              borderRadius: '50%',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              margin: '0 auto 20px'
-            }}>
-              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                <circle cx="12" cy="12" r="10"/>
-                <path d="M12 16v-4M12 8h.01"/>
-              </svg>
-            </div>
-            <h3 style={{ marginBottom: '12px' }}>Service Under Development</h3>
-            <p style={{ color: 'var(--text-muted)', maxWidth: '500px', margin: '0 auto 24px' }}>
-              We're working to bring this service online. In the meantime, you can access these services through traditional channels.
-            </p>
-
-            {info.services.length > 0 && (
-              <div style={{ marginTop: '24px', textAlign: 'left', maxWidth: '400px', margin: '24px auto 0' }}>
-                <h4 style={{ fontSize: '14px', marginBottom: '12px' }}>Available Services:</h4>
-                <ul style={{ color: 'var(--text-secondary)', fontSize: '14px' }}>
-                  {info.services.map(service => (
-                    <li key={service} style={{ marginBottom: '8px' }}>{service}</li>
-                  ))}
-                </ul>
+        <div className="content-grid">
+          <div className="main-content">
+            <div className="card">
+              <div className="card-header">
+                <h3 className="card-title">Quick Access</h3>
               </div>
-            )}
-
-            <div style={{
-              marginTop: '32px',
-              padding: '16px',
-              background: 'rgba(59, 130, 246, 0.05)',
-              borderRadius: '10px',
-              fontSize: '13px',
-              color: 'var(--text-muted)'
-            }}>
-              {info.contact}
-            </div>
-
-            <div style={{ marginTop: '32px' }}>
-              <h4 style={{ fontSize: '14px', marginBottom: '12px' }}>Related Services</h4>
-              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '12px' }}>
-                <Link to="/housing/applications" style={{
-                  padding: '14px',
-                  background: 'var(--bg-elevated)',
-                  border: '1px solid var(--border-subtle)',
-                  borderRadius: '10px',
-                  textDecoration: 'none',
-                  fontSize: '13px',
-                  fontWeight: '500',
-                  color: 'var(--text-primary)',
-                  transition: 'all 0.2s'
-                }}>
-                  Housing Applications
-                </Link>
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(150px, 1fr))', gap: '12px', padding: '0 20px 20px' }}>
                 <button
-                  onClick={() => navigate('/housing')}
-                  className="btn btn-secondary"
-                  style={{ fontSize: '13px', padding: '14px' }}
+                  onClick={() => setSelectedTopic('rights')}
+                  className={selectedTopic === 'rights' ? 'btn btn-primary' : 'btn btn-secondary'}
+                  style={{ fontSize: '13px' }}
                 >
-                  Return to Housing Home
+                  Tenant Rights
+                </button>
+                <button
+                  onClick={() => setSelectedTopic('rent')}
+                  className={selectedTopic === 'rent' ? 'btn btn-primary' : 'btn btn-secondary'}
+                  style={{ fontSize: '13px' }}
+                >
+                  Pay Rent
+                </button>
+                <button
+                  onClick={() => setSelectedTopic('maintenance')}
+                  className={selectedTopic === 'maintenance' ? 'btn btn-primary' : 'btn btn-secondary'}
+                  style={{ fontSize: '13px' }}
+                >
+                  Maintenance
+                </button>
+                <button
+                  onClick={() => setSelectedTopic('lease')}
+                  className={selectedTopic === 'lease' ? 'btn btn-primary' : 'btn btn-secondary'}
+                  style={{ fontSize: '13px' }}
+                >
+                  Lease Info
                 </button>
               </div>
             </div>
+
+            {selectedTopic === 'rights' && (
+              <>
+                <div className="card">
+                  <div className="card-header">
+                    <h3 className="card-title">Tenant Rights & Responsibilities</h3>
+                  </div>
+                  <div className="content-text">
+                    <h4>Your Rights as a Tenant</h4>
+                    <ul>
+                      <li><strong>Safe & Habitable Housing</strong> - Unit must meet health and safety standards</li>
+                      <li><strong>Privacy</strong> - Landlord must give 24-hour notice before entering (except emergencies)</li>
+                      <li><strong>No Discrimination</strong> - Protection under Fair Housing Act</li>
+                      <li><strong>Reasonable Accommodations</strong> - Request modifications for disabilities</li>
+                      <li><strong>Grievance Process</strong> - Right to appeal Housing Authority decisions</li>
+                      <li><strong>Lease Protections</strong> - Can only be evicted for lease violations or non-payment</li>
+                    </ul>
+
+                    <h4 style={{ marginTop: '20px' }}>Your Responsibilities</h4>
+                    <ul>
+                      <li>Pay rent on time (due 1st of each month)</li>
+                      <li>Keep unit clean and sanitary</li>
+                      <li>Report maintenance issues promptly</li>
+                      <li>No unauthorized occupants or subletting</li>
+                      <li>Follow community rules and lease terms</li>
+                      <li>Report changes in income or household composition within 10 days</li>
+                      <li>Allow annual inspections</li>
+                    </ul>
+                  </div>
+                </div>
+
+                <div className="card">
+                  <div className="card-header">
+                    <h3 className="card-title">Prohibited Activities</h3>
+                  </div>
+                  <div className="content-text">
+                    <p>The following activities are grounds for lease termination:</p>
+                    <ul>
+                      <li>Criminal activity on the property</li>
+                      <li>Drug-related activity (use, possession, or sale)</li>
+                      <li>Disturbing other residents (excessive noise, threats)</li>
+                      <li>Damaging property beyond normal wear and tear</li>
+                      <li>Owning dangerous pets or unauthorized animals</li>
+                      <li>Fraudulent statements on application or recertification</li>
+                    </ul>
+                  </div>
+                </div>
+              </>
+            )}
+
+            {selectedTopic === 'rent' && (
+              <div className="card">
+                <div className="card-header">
+                  <h3 className="card-title">Rent Payment</h3>
+                </div>
+                <div className="content-text">
+                  <h4>Payment Methods</h4>
+                  <ul>
+                    <li><strong>Online Portal</strong> - Pay via credit/debit card or bank transfer (free)</li>
+                    <li><strong>Automatic Payment</strong> - Set up recurring payments from bank account</li>
+                    <li><strong>In-Person</strong> - Visit property management office (cash, check, money order)</li>
+                    <li><strong>Mail</strong> - Send check or money order to property office</li>
+                    <li><strong>Payment Kiosk</strong> - Available at select housing offices</li>
+                  </ul>
+
+                  <h4 style={{ marginTop: '20px' }}>Important Information</h4>
+                  <ul>
+                    <li><strong>Due Date:</strong> Rent is due on the 1st of each month</li>
+                    <li><strong>Grace Period:</strong> 5-day grace period (no late fee until 6th)</li>
+                    <li><strong>Late Fee:</strong> ¤25 after grace period, ¤10 per day thereafter (max ¤75)</li>
+                    <li><strong>NSF Fee:</strong> ¤35 for returned checks or failed bank transfers</li>
+                    <li><strong>Receipts:</strong> Always get/keep receipt for payments</li>
+                  </ul>
+
+                  <h4 style={{ marginTop: '20px' }}>Rent Calculation</h4>
+                  <p>Your rent is 30% of your adjusted monthly income. Adjustments include:</p>
+                  <ul>
+                    <li>¤480 deduction per dependent (under 18 or disabled)</li>
+                    <li>¤400 deduction per elderly household member (62+)</li>
+                    <li>Medical expense deduction (expenses exceeding 3% of income)</li>
+                    <li>Childcare expense deduction (for work/school)</li>
+                  </ul>
+
+                  <div className="info-box" style={{ marginTop: '20px' }}>
+                    <h4>Payment Assistance</h4>
+                    <p>If you're having trouble paying rent, contact your property manager immediately. Options may include:</p>
+                    <ul>
+                      <li>Payment plan arrangements</li>
+                      <li>Emergency rental assistance referrals</li>
+                      <li>Interim recertification if income has decreased</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {selectedTopic === 'maintenance' && (
+              <>
+                <div className="card">
+                  <div className="card-header">
+                    <h3 className="card-title">Maintenance Requests</h3>
+                  </div>
+                  <div className="content-text">
+                    <h4>How to Request Repairs</h4>
+                    <ol>
+                      <li><strong>Online Portal:</strong> Submit request through tenant portal (preferred)</li>
+                      <li><strong>Phone:</strong> Call property management office</li>
+                      <li><strong>In-Person:</strong> Visit property management office</li>
+                      <li><strong>Emergency:</strong> Call 24-hour emergency line at 1-800-HOUSE-PY</li>
+                    </ol>
+
+                    <h4 style={{ marginTop: '20px' }}>Emergency vs. Non-Emergency</h4>
+                    <p><strong>Emergencies</strong> (call immediately):</p>
+                    <ul>
+                      <li>No heat in winter (below 60°F)</li>
+                      <li>No running water</li>
+                      <li>Gas leak or gas smell</li>
+                      <li>Fire or smoke</li>
+                      <li>Broken locks or security issues</li>
+                      <li>Major water leaks or flooding</li>
+                      <li>No electricity (if caused by building issue)</li>
+                    </ul>
+
+                    <p style={{ marginTop: '12px' }}><strong>Non-Emergencies</strong> (submit normal request):</p>
+                    <ul>
+                      <li>Minor leaks (dripping faucet, toilet running)</li>
+                      <li>Appliance repairs (stove, refrigerator)</li>
+                      <li>Paint touch-ups or cosmetic issues</li>
+                      <li>Window or screen repairs</li>
+                      <li>Light fixture issues</li>
+                    </ul>
+
+                    <h4 style={{ marginTop: '20px' }}>Response Times</h4>
+                    <ul>
+                      <li><strong>Emergency:</strong> Same day (within 4 hours)</li>
+                      <li><strong>Urgent:</strong> Within 24-48 hours</li>
+                      <li><strong>Routine:</strong> Within 5-7 business days</li>
+                      <li><strong>Cosmetic:</strong> Within 30 days</li>
+                    </ul>
+                  </div>
+                </div>
+
+                <div className="card">
+                  <div className="card-header">
+                    <h3 className="card-title">Tenant Responsibilities</h3>
+                  </div>
+                  <div className="content-text">
+                    <p>Tenants are responsible for:</p>
+                    <ul>
+                      <li>Changing light bulbs and batteries (smoke detectors)</li>
+                      <li>Unclogging drains caused by misuse</li>
+                      <li>Pest control resulting from poor housekeeping</li>
+                      <li>Damage caused by tenant or guests</li>
+                      <li>HVAC filter changes (provided by property)</li>
+                    </ul>
+                  </div>
+                </div>
+              </>
+            )}
+
+            {selectedTopic === 'lease' && (
+              <>
+                <div className="card">
+                  <div className="card-header">
+                    <h3 className="card-title">Lease Information</h3>
+                  </div>
+                  <div className="content-text">
+                    <h4>Lease Terms</h4>
+                    <ul>
+                      <li><strong>Initial Lease:</strong> 12-month term</li>
+                      <li><strong>Renewals:</strong> Automatic annual renewal (unless terminated)</li>
+                      <li><strong>Notice to Vacate:</strong> 30 days written notice required</li>
+                      <li><strong>Early Termination:</strong> Must pay rent until unit re-rented or lease ends</li>
+                    </ul>
+
+                    <h4 style={{ marginTop: '20px' }}>Annual Recertification</h4>
+                    <p>Every year you must recertify your eligibility:</p>
+                    <ul>
+                      <li>Complete recertification form (mailed 90 days before due)</li>
+                      <li>Provide updated income documentation</li>
+                      <li>Report household composition changes</li>
+                      <li>Schedule and attend recertification interview</li>
+                      <li><strong>Deadline:</strong> Must complete within 30 days of notice</li>
+                    </ul>
+
+                    <h4 style={{ marginTop: '20px' }}>Interim Recertifications</h4>
+                    <p>Report these changes within 10 days:</p>
+                    <ul>
+                      <li>Household member moves in or out</li>
+                      <li>Income increase of ¤200+ per month</li>
+                      <li>Change in employment status</li>
+                      <li>Birth or adoption of child</li>
+                    </ul>
+
+                    <p style={{ marginTop: '12px' }}><em>Note: Income decreases can be reported anytime to request rent reduction.</em></p>
+
+                    <h4 style={{ marginTop: '20px' }}>Lease Violations</h4>
+                    <p>Common lease violations include:</p>
+                    <ul>
+                      <li>Non-payment of rent</li>
+                      <li>Unauthorized occupants</li>
+                      <li>Pet violations</li>
+                      <li>Noise complaints (3+ substantiated complaints)</li>
+                      <li>Failure to recertify</li>
+                    </ul>
+                  </div>
+                </div>
+
+                <div className="card">
+                  <div className="card-header">
+                    <h3 className="card-title">Unit Transfers</h3>
+                  </div>
+                  <div className="content-text">
+                    <p>You may request a transfer to another unit if:</p>
+                    <ul>
+                      <li>Unit is wrong size (overcrowded or too large)</li>
+                      <li>Medical necessity (accessibility needs)</li>
+                      <li>Domestic violence or safety concerns</li>
+                      <li>Employment relocation within Praya</li>
+                    </ul>
+                    <p style={{ marginTop: '12px' }}>Transfer requests are approved based on availability and priority. Contact your property manager for transfer application.</p>
+                  </div>
+                </div>
+              </>
+            )}
           </div>
+
+          <aside className="sidebar">
+            <div className="info-box">
+              <h4>Contact Information</h4>
+              <p><strong>Office Hours:</strong><br/>Mon-Fri: 8:00 AM - 5:00 PM</p>
+              <p><strong>Phone:</strong><br/>1-800-HOUSE-PY</p>
+              <p><strong>Emergency:</strong><br/>1-800-HOUSE-PY (24/7)</p>
+              <p><strong>Email:</strong><br/>tenants@housing.gov.py</p>
+            </div>
+
+            <div className="card">
+              <h4 className="card-title">Tenant Portal</h4>
+              <div style={{ fontSize: '13px', color: 'var(--text-muted)', marginTop: '12px', padding: '0 16px 16px' }}>
+                <p style={{ marginBottom: '12px' }}>Access your tenant portal to:</p>
+                <ul style={{ marginBottom: '16px' }}>
+                  <li>Pay rent online</li>
+                  <li>Submit maintenance requests</li>
+                  <li>View lease documents</li>
+                  <li>Update contact information</li>
+                  <li>Check account balance</li>
+                </ul>
+                <button className="btn btn-primary" style={{ width: '100%', fontSize: '13px' }}>
+                  Login to Portal
+                </button>
+              </div>
+            </div>
+
+            <div className="card">
+              <h4 className="card-title">File a Grievance</h4>
+              <div style={{ fontSize: '13px', color: 'var(--text-muted)', marginTop: '12px', padding: '0 16px 16px' }}>
+                <p>If you disagree with a Housing Authority decision, you have the right to file a grievance.</p>
+                <p style={{ marginTop: '8px', fontWeight: '500' }}>Grievance types:</p>
+                <ul style={{ margin: '8px 0' }}>
+                  <li>Rent calculations</li>
+                  <li>Lease terminations</li>
+                  <li>Unit transfers</li>
+                  <li>Maintenance issues</li>
+                </ul>
+                <p style={{ marginTop: '8px' }}><strong>Deadline:</strong> 14 days from notice</p>
+              </div>
+            </div>
+
+            <div className="info-box">
+              <h4>Helpful Resources</h4>
+              <ul style={{ fontSize: '13px', margin: '12px 0' }}>
+                <li><Link to="/housing/applications">Apply for Housing</Link></li>
+                <li><a href="#">Tenant Handbook (PDF)</a></li>
+                <li><a href="#">Community Rules</a></li>
+                <li><a href="#">Fair Housing Info</a></li>
+              </ul>
+            </div>
+          </aside>
+        </div>
+      </div>
+    </main>
+  )
+}
+
+function LandlordResources() {
+  const [programType, setProgramType] = React.useState('voucher');
+
+  return (
+    <main className="main">
+      <div className="page-header">
+        <div className="container">
+          <div className="breadcrumb">
+            <Link to="/housing">Home</Link> / Landlord Resources
+          </div>
+          <h1>Landlord Resources</h1>
+          <p className="subtitle">Information for property owners participating in housing assistance programs</p>
+        </div>
+      </div>
+      <div className="container">
+        <div className="content-grid">
+          <div className="main-content">
+            <div className="card">
+              <div className="card-header">
+                <h3 className="card-title">Program Selection</h3>
+              </div>
+              <div style={{ display: 'flex', gap: '12px', padding: '0 20px 20px' }}>
+                <button
+                  onClick={() => setProgramType('voucher')}
+                  className={programType === 'voucher' ? 'btn btn-primary' : 'btn btn-secondary'}
+                  style={{ flex: 1, fontSize: '13px' }}
+                >
+                  Voucher Program
+                </button>
+                <button
+                  onClick={() => setProgramType('public')}
+                  className={programType === 'public' ? 'btn btn-primary' : 'btn btn-secondary'}
+                  style={{ flex: 1, fontSize: '13px' }}
+                >
+                  Public Housing
+                </button>
+              </div>
+            </div>
+
+            {programType === 'voucher' && (
+              <>
+                <div className="card">
+                  <div className="card-header">
+                    <h3 className="card-title">Housing Choice Voucher Program</h3>
+                  </div>
+                  <div className="content-text">
+                    <h4>Program Overview</h4>
+                    <p>The Housing Choice Voucher Program (Section 8) allows low-income families to rent privately-owned properties. The Housing Authority pays a portion of the rent directly to the landlord, and the tenant pays the remainder.</p>
+
+                    <h4 style={{ marginTop: '20px' }}>Benefits for Landlords</h4>
+                    <ul>
+                      <li><strong>Guaranteed Rent</strong> - Housing Authority portion paid directly and on time</li>
+                      <li><strong>Steady Tenants</strong> - Families seeking stable, long-term housing</li>
+                      <li><strong>Damage Claims</strong> - File claims for damages beyond security deposit</li>
+                      <li><strong>Support Services</strong> - Mediation and support from Housing Authority staff</li>
+                      <li><strong>No Special Licenses</strong> - No additional licensing required</li>
+                    </ul>
+
+                    <h4 style={{ marginTop: '20px' }}>Landlord Responsibilities</h4>
+                    <ul>
+                      <li>Execute a Housing Assistance Payment (HAP) contract</li>
+                      <li>Maintain property to Housing Quality Standards (HQS)</li>
+                      <li>Allow annual HQS inspections</li>
+                      <li>Rent cannot exceed Fair Market Rent (FMR) limits</li>
+                      <li>Provide same lease terms as for non-subsidized tenants</li>
+                      <li>Cannot discriminate based on voucher status</li>
+                    </ul>
+
+                    <h4 style={{ marginTop: '20px' }}>Payment Process</h4>
+                    <ol>
+                      <li>Tenant finds your property and applies</li>
+                      <li>You and tenant negotiate rent (must be reasonable)</li>
+                      <li>Housing Authority inspects unit (HQS inspection)</li>
+                      <li>You sign HAP contract with Housing Authority</li>
+                      <li>Tenant signs lease with you</li>
+                      <li>Housing Authority pays its share directly to you monthly</li>
+                      <li>Tenant pays their portion to you monthly</li>
+                    </ol>
+                  </div>
+                </div>
+
+                <div className="card">
+                  <div className="card-header">
+                    <h3 className="card-title">Rent Limits & Payment Amounts</h3>
+                  </div>
+                  <div className="content-text">
+                    <h4>Fair Market Rent (FMR) Limits</h4>
+                    <p>Maximum allowable rents for voucher program:</p>
+                    <ul>
+                      <li><strong>Studio:</strong> ¤950/month</li>
+                      <li><strong>1-Bedroom:</strong> ¤1,100/month</li>
+                      <li><strong>2-Bedroom:</strong> ¤1,400/month</li>
+                      <li><strong>3-Bedroom:</strong> ¤1,850/month</li>
+                      <li><strong>4-Bedroom:</strong> ¤2,200/month</li>
+                    </ul>
+
+                    <h4 style={{ marginTop: '20px' }}>Payment Split Example</h4>
+                    <p>For a 2-bedroom apartment renting at ¤1,200/month:</p>
+                    <ul>
+                      <li>Tenant's income: ¤2,000/month</li>
+                      <li>Tenant pays: ¤600 (30% of income)</li>
+                      <li>Housing Authority pays: ¤600</li>
+                      <li>Total rent to landlord: ¤1,200</li>
+                    </ul>
+                  </div>
+                </div>
+
+                <div className="card">
+                  <div className="card-header">
+                    <h3 className="card-title">Housing Quality Standards (HQS)</h3>
+                  </div>
+                  <div className="content-text">
+                    <p>All units must meet these minimum standards:</p>
+
+                    <h4>Sanitary Facilities</h4>
+                    <ul>
+                      <li>Working flush toilet in private bathroom</li>
+                      <li>Fixed basin with hot and cold running water</li>
+                      <li>Bathtub or shower with hot and cold running water</li>
+                    </ul>
+
+                    <h4 style={{ marginTop: '16px' }}>Food Preparation</h4>
+                    <ul>
+                      <li>Cooking stove or range with oven</li>
+                      <li>Refrigerator</li>
+                      <li>Kitchen sink with hot and cold running water</li>
+                    </ul>
+
+                    <h4 style={{ marginTop: '16px' }}>Space & Security</h4>
+                    <ul>
+                      <li>At least one bedroom per 2 persons</li>
+                      <li>Living room separate from sleeping areas (except studios)</li>
+                      <li>Lockable doors and windows</li>
+                      <li>Working smoke detectors in each bedroom and common areas</li>
+                      <li>Carbon monoxide detectors (if gas/fuel heat)</li>
+                    </ul>
+
+                    <h4 style={{ marginTop: '16px' }}>Heating/Cooling</h4>
+                    <ul>
+                      <li>Adequate heating system (maintain 68°F in winter)</li>
+                      <li>Proper ventilation</li>
+                    </ul>
+
+                    <h4 style={{ marginTop: '16px' }}>Structure & Materials</h4>
+                    <ul>
+                      <li>No holes in walls, floors, or ceilings</li>
+                      <li>No peeling paint in units built before 1978</li>
+                      <li>Structurally sound roof, stairs, railings</li>
+                      <li>No evidence of rodents or vermin</li>
+                    </ul>
+                  </div>
+                </div>
+              </>
+            )}
+
+            {programType === 'public' && (
+              <>
+                <div className="card">
+                  <div className="card-header">
+                    <h3 className="card-title">Property Management Opportunities</h3>
+                  </div>
+                  <div className="content-text">
+                    <h4>Managing Public Housing Properties</h4>
+                    <p>The Housing Authority contracts with private property management companies to manage public housing units. This is a competitive procurement process.</p>
+
+                    <h4 style={{ marginTop: '20px' }}>Management Responsibilities</h4>
+                    <ul>
+                      <li>Tenant screening and lease-up</li>
+                      <li>Rent collection and accounting</li>
+                      <li>Maintenance and repairs coordination</li>
+                      <li>Property inspections (unit and grounds)</li>
+                      <li>Lease enforcement and eviction proceedings</li>
+                      <li>Recertification processing</li>
+                      <li>Budget management and reporting</li>
+                    </ul>
+
+                    <h4 style={{ marginTop: '20px' }}>Qualifications</h4>
+                    <ul>
+                      <li>Licensed property management company in Praya</li>
+                      <li>Minimum 3 years experience managing affordable housing</li>
+                      <li>Staff with relevant certifications (CPM, ARM, etc.)</li>
+                      <li>Experience with HUD regulations and compliance</li>
+                      <li>Proven track record with similar-size portfolios</li>
+                      <li>Financial stability and adequate insurance</li>
+                    </ul>
+
+                    <h4 style={{ marginTop: '20px' }}>Current Opportunities</h4>
+                    <p>The Housing Authority periodically issues Requests for Proposals (RFPs) for property management services. Check our procurement page or contact us to be added to our mailing list.</p>
+                  </div>
+                </div>
+
+                <div className="card">
+                  <div className="card-header">
+                    <h3 className="card-title">Development Opportunities</h3>
+                  </div>
+                  <div className="content-text">
+                    <h4>Affordable Housing Development</h4>
+                    <p>The Housing Authority partners with developers to create new affordable housing units through various programs:</p>
+
+                    <h4 style={{ marginTop: '20px' }}>Low-Income Housing Tax Credit (LIHTC)</h4>
+                    <ul>
+                      <li>Federal tax credits for developing affordable rental housing</li>
+                      <li>Units must remain affordable for 15-30 years</li>
+                      <li>Annual competitive application process</li>
+                      <li>Requires at least 20% of units at 50% AMI or 40% at 60% AMI</li>
+                    </ul>
+
+                    <h4 style={{ marginTop: '20px' }}>Project-Based Vouchers</h4>
+                    <ul>
+                      <li>Housing Authority commits vouchers to specific units</li>
+                      <li>Guaranteed rental income for assisted units</li>
+                      <li>Developer provides affordable housing for 15+ years</li>
+                      <li>Can combine with other financing (LIHTC, bonds, etc.)</li>
+                    </ul>
+
+                    <h4 style={{ marginTop: '20px' }}>RAD (Rental Assistance Demonstration)</h4>
+                    <ul>
+                      <li>Convert public housing to project-based Section 8</li>
+                      <li>Allows for private financing and renovation</li>
+                      <li>Long-term contracts (15-20 years)</li>
+                    </ul>
+                  </div>
+                </div>
+              </>
+            )}
+
+            <div className="card">
+              <div className="card-header">
+                <h3 className="card-title">Inspections & Compliance</h3>
+              </div>
+              <div className="content-text">
+                <h4>Inspection Schedule</h4>
+                <ul>
+                  <li><strong>Initial Inspection:</strong> Before HAP contract execution</li>
+                  <li><strong>Annual Inspection:</strong> Once per year on each unit</li>
+                  <li><strong>Special Inspections:</strong> As needed for tenant complaints</li>
+                  <li><strong>Quality Control:</strong> Random inspections by Housing Authority</li>
+                </ul>
+
+                <h4 style={{ marginTop: '20px' }}>Failed Inspection Process</h4>
+                <ol>
+                  <li>Receive inspection report listing deficiencies</li>
+                  <li>Complete repairs within 30 days (or 24 hours for life-threatening issues)</li>
+                  <li>Request re-inspection when repairs are complete</li>
+                  <li>If not repaired: HAP payments may be suspended</li>
+                  <li>Continued non-compliance: Contract termination</li>
+                </ol>
+
+                <h4 style={{ marginTop: '20px' }}>Common Inspection Failures</h4>
+                <ul>
+                  <li>Non-functioning smoke detectors</li>
+                  <li>Water leaks or moisture damage</li>
+                  <li>Inadequate heating or cooling</li>
+                  <li>Electrical hazards</li>
+                  <li>Pest infestation</li>
+                  <li>Peeling paint (pre-1978 buildings)</li>
+                  <li>Broken windows or locks</li>
+                </ul>
+              </div>
+            </div>
+
+            <div className="card">
+              <div className="card-header">
+                <h3 className="card-title">Terminating Tenancy</h3>
+              </div>
+              <div className="content-text">
+                <h4>Grounds for Termination</h4>
+                <ul>
+                  <li>Non-payment of tenant's portion of rent</li>
+                  <li>Lease violations (pets, unauthorized occupants, etc.)</li>
+                  <li>Criminal activity on the property</li>
+                  <li>Damage to the unit beyond normal wear</li>
+                </ul>
+
+                <h4 style={{ marginTop: '20px' }}>Termination Process</h4>
+                <ol>
+                  <li>Provide written notice to tenant (30 days for most violations)</li>
+                  <li>Send copy of notice to Housing Authority</li>
+                  <li>If tenant doesn't cure: File eviction action in court</li>
+                  <li>Attend court hearing</li>
+                  <li>If you prevail: HAP contract terminates with lease</li>
+                </ol>
+
+                <p style={{ marginTop: '16px' }}><strong>Important:</strong> You cannot terminate voucher tenancy for "no cause" or "owner move-in" during the initial lease term. After initial term, you may decline to renew for any legitimate reason.</p>
+              </div>
+            </div>
+          </div>
+
+          <aside className="sidebar">
+            <div className="card">
+              <h4 className="card-title">Get Started</h4>
+              <div style={{ fontSize: '13px', color: 'var(--text-muted)', marginTop: '12px', padding: '0 16px 16px' }}>
+                <p style={{ marginBottom: '12px' }}>Ready to participate in housing programs?</p>
+                <button className="btn btn-primary" style={{ width: '100%', marginBottom: '8px', fontSize: '13px' }}>
+                  Register Property
+                </button>
+                <button className="btn btn-secondary" style={{ width: '100%', fontSize: '13px' }}>
+                  Download Landlord Packet
+                </button>
+              </div>
+            </div>
+
+            <div className="info-box">
+              <h4>Landlord Support</h4>
+              <p><strong>Phone:</strong><br/>1-800-HOUSE-PY</p>
+              <p><strong>Email:</strong><br/>landlords@housing.gov.py</p>
+              <p><strong>Office Hours:</strong><br/>Mon-Fri 8:00 AM - 5:00 PM</p>
+            </div>
+
+            <div className="card">
+              <h4 className="card-title">Payment Information</h4>
+              <div style={{ fontSize: '13px', color: 'var(--text-muted)', marginTop: '12px', padding: '0 16px 16px' }}>
+                <p><strong>Payment Schedule:</strong></p>
+                <p style={{ margin: '8px 0' }}>HAP payments are made on the 1st of each month via direct deposit.</p>
+                <p style={{ marginTop: '12px' }}><strong>Setup Required:</strong></p>
+                <ul style={{ margin: '8px 0' }}>
+                  <li>W-9 form</li>
+                  <li>Direct deposit authorization</li>
+                  <li>Bank account information</li>
+                </ul>
+              </div>
+            </div>
+
+            <div className="card">
+              <h4 className="card-title">Landlord Portal</h4>
+              <div style={{ fontSize: '13px', color: 'var(--text-muted)', marginTop: '12px', padding: '0 16px 16px' }}>
+                <p style={{ marginBottom: '12px' }}>Access the portal to:</p>
+                <ul style={{ marginBottom: '16px' }}>
+                  <li>View payment history</li>
+                  <li>Submit inspection corrections</li>
+                  <li>Update property information</li>
+                  <li>Access forms and documents</li>
+                  <li>File damage claims</li>
+                </ul>
+                <button className="btn btn-primary" style={{ width: '100%', fontSize: '13px' }}>
+                  Login to Portal
+                </button>
+              </div>
+            </div>
+
+            <div className="info-box">
+              <h4>Helpful Resources</h4>
+              <ul style={{ fontSize: '13px', margin: '12px 0' }}>
+                <li><a href="#">HQS Inspection Checklist</a></li>
+                <li><a href="#">HAP Contract Template</a></li>
+                <li><a href="#">Landlord Handbook (PDF)</a></li>
+                <li><a href="#">Fair Market Rent Chart</a></li>
+                <li><a href="#">Damage Claim Form</a></li>
+              </ul>
+            </div>
+          </aside>
         </div>
       </div>
     </main>
