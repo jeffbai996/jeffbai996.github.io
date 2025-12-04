@@ -40,8 +40,8 @@ export default function LC() {
       <Routes>
         <Route index element={<LCHome navigate={navigate} />} />
         <Route path="members" element={<Members />} />
-        <Route path="bills" element={<ComingSoon title="Bills & Legislation" />} />
-        <Route path="sessions" element={<ComingSoon title="Legislative Sessions" />} />
+        <Route path="bills" element={<Bills />} />
+        <Route path="sessions" element={<Sessions />} />
       </Routes>
 
       <footer className="dept-footer">
@@ -55,32 +55,32 @@ export default function LC() {
               <h5>Legislature</h5>
               <ul>
                 <li><Link to="/lc/members">Council Members</Link></li>
-                <li><a href="#">Committees</a></li>
-                <li><a href="#">Leadership</a></li>
+                <li><Link to="/lc/members">Committees</Link></li>
+                <li><Link to="/lc/members">Leadership</Link></li>
               </ul>
             </div>
             <div className="footer-section">
               <h5>Resources</h5>
               <ul>
-                <li><a href="#">Watch Live Sessions</a></li>
-                <li><a href="#">Meeting Calendar</a></li>
-                <li><a href="#">Archives</a></li>
+                <li><Link to="/lc/sessions">Watch Live Sessions</Link></li>
+                <li><Link to="/lc/sessions">Meeting Calendar</Link></li>
+                <li><Link to="/lc/sessions">Archives</Link></li>
               </ul>
             </div>
             <div className="footer-section">
               <h5>Government</h5>
               <ul>
                 <li><Link to="/">Gov Portal</Link></li>
-                <li><a href="#">Constitution</a></li>
-                <li><a href="#">Statutes</a></li>
+                <li><Link to="/lc/bills">Legislation</Link></li>
+                <li><Link to="/lc">Legislative Council</Link></li>
               </ul>
             </div>
           </div>
           <div className="footer-bottom">
             <span>&copy; 2024 Republic of Praya. Legislative Council.</span>
             <div className="footer-legal">
-              <a href="#">Terms</a>
-              <a href="#">Privacy</a>
+              <Link to="/">Terms</Link>
+              <Link to="/">Privacy</Link>
             </div>
           </div>
         </div>
@@ -409,116 +409,592 @@ function Members() {
   )
 }
 
-function ComingSoon({ title }) {
-  const navigate = useNavigate();
-
-  const getServiceInfo = () => {
-    switch(title) {
-      case 'Bills & Legislation':
-        return {
-          description: 'Track bills, search legislation, and view voting records.',
-          services: ['Bill Search & Tracking', 'Voting Records', 'Legislative History', 'Committee Reports'],
-          contact: 'For legislative information: Call 1-800-LEG-INFO or visit lc.gov.py'
-        };
-      case 'Legislative Sessions':
-        return {
-          description: 'View session schedules, watch live proceedings, and access archives.',
-          services: ['Live Session Video', 'Session Calendar', 'Floor Proceedings', 'Meeting Archives'],
-          contact: 'For session information: info@lc.gov.py or call 1-800-LEG-INFO'
-        };
-      default:
-        return {
-          description: 'This service is being developed to serve you better.',
-          services: [],
-          contact: 'For assistance, contact the Legislative Council'
-        };
-    }
-  };
-
-  const info = getServiceInfo();
+function Bills() {
+  const [billStatus, setBillStatus] = React.useState('active');
 
   return (
     <main className="main">
       <div className="page-header">
         <div className="container">
           <div className="breadcrumb">
-            <Link to="/lc">Home</Link> / {title}
+            <Link to="/lc">Home</Link> / Bills & Legislation
           </div>
-          <h1>{title}</h1>
-          <p className="subtitle">{info.description}</p>
+          <h1>Bills & Legislation</h1>
+          <p className="subtitle">Track legislation and view voting records</p>
         </div>
       </div>
       <div className="container">
-        <div className="card">
-          <div style={{ padding: '20px', textAlign: 'center' }}>
-            <div style={{
-              width: '64px',
-              height: '64px',
-              background: 'linear-gradient(135deg, rgba(30, 64, 175, 0.1) 0%, rgba(30, 64, 175, 0.2) 100%)',
-              borderRadius: '50%',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              margin: '0 auto 20px'
-            }}>
-              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                <circle cx="12" cy="12" r="10"/>
-                <path d="M12 16v-4M12 8h.01"/>
-              </svg>
-            </div>
-            <h3 style={{ marginBottom: '12px' }}>Service Under Development</h3>
-            <p style={{ color: 'var(--text-muted)', maxWidth: '500px', margin: '0 auto 24px' }}>
-              We're working to bring this service online. In the meantime, you can access these resources through traditional channels.
-            </p>
-
-            {info.services.length > 0 && (
-              <div style={{ marginTop: '24px', textAlign: 'left', maxWidth: '400px', margin: '24px auto 0' }}>
-                <h4 style={{ fontSize: '14px', marginBottom: '12px' }}>Available Services:</h4>
-                <ul style={{ color: 'var(--text-secondary)', fontSize: '14px' }}>
-                  {info.services.map(service => (
-                    <li key={service} style={{ marginBottom: '8px' }}>{service}</li>
-                  ))}
-                </ul>
+        <div className="content-grid">
+          <div className="main-content">
+            <div className="card">
+              <div className="card-header">
+                <h3 className="card-title">Bill Status</h3>
               </div>
-            )}
-
-            <div style={{
-              marginTop: '32px',
-              padding: '16px',
-              background: 'rgba(30, 64, 175, 0.05)',
-              borderRadius: '10px',
-              fontSize: '13px',
-              color: 'var(--text-muted)'
-            }}>
-              {info.contact}
-            </div>
-
-            <div style={{ marginTop: '32px' }}>
-              <h4 style={{ fontSize: '14px', marginBottom: '12px' }}>Related Services</h4>
-              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '12px' }}>
-                <Link to="/lc/members" style={{
-                  padding: '14px',
-                  background: 'var(--bg-elevated)',
-                  border: '1px solid var(--border-subtle)',
-                  borderRadius: '10px',
-                  textDecoration: 'none',
-                  fontSize: '13px',
-                  fontWeight: '500',
-                  color: 'var(--text-primary)',
-                  transition: 'all 0.2s'
-                }}>
-                  Council Members
-                </Link>
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(140px, 1fr))', gap: '12px', padding: '0 20px 20px' }}>
                 <button
-                  onClick={() => navigate('/lc')}
-                  className="btn btn-secondary"
-                  style={{ fontSize: '13px', padding: '14px' }}
+                  onClick={() => setBillStatus('active')}
+                  className={billStatus === 'active' ? 'btn btn-primary' : 'btn btn-secondary'}
+                  style={{ fontSize: '13px' }}
                 >
-                  Return to LC Home
+                  Active Bills
+                </button>
+                <button
+                  onClick={() => setBillStatus('passed')}
+                  className={billStatus === 'passed' ? 'btn btn-primary' : 'btn btn-secondary'}
+                  style={{ fontSize: '13px' }}
+                >
+                  Passed
+                </button>
+                <button
+                  onClick={() => setBillStatus('process')}
+                  className={billStatus === 'process' ? 'btn btn-primary' : 'btn btn-secondary'}
+                  style={{ fontSize: '13px' }}
+                >
+                  How Bills Work
                 </button>
               </div>
             </div>
+
+            {billStatus === 'active' && (
+              <>
+                <div className="card">
+                  <div className="card-header">
+                    <h3 className="card-title">Bills in Committee</h3>
+                  </div>
+                  <div className="content-text">
+                    <div style={{ marginBottom: '20px', paddingBottom: '16px', borderBottom: '1px solid var(--border-subtle)' }}>
+                      <h4 style={{ marginBottom: '4px' }}>HB 2024-387: Digital Privacy Protection Act</h4>
+                      <div style={{ fontSize: '13px', color: 'var(--text-muted)', marginBottom: '8px' }}>
+                        Sponsor: Rep. Sarah Martinez | Committee: Justice & Public Safety
+                      </div>
+                      <p style={{ fontSize: '14px', marginBottom: '8px' }}>
+                        Establishes comprehensive data privacy rights for Praya residents, including right to access, deletion, and portability of personal data.
+                      </p>
+                      <div style={{ fontSize: '13px' }}>
+                        <strong>Status:</strong> <span style={{ color: 'var(--accent-warning)' }}>In Committee</span> |
+                        <strong> Next Hearing:</strong> December 12, 2024
+                      </div>
+                    </div>
+
+                    <div style={{ marginBottom: '20px', paddingBottom: '16px', borderBottom: '1px solid var(--border-subtle)' }}>
+                      <h4 style={{ marginBottom: '4px' }}>HB 2024-392: Renewable Energy Investment Act</h4>
+                      <div style={{ fontSize: '13px', color: 'var(--text-muted)', marginBottom: '8px' }}>
+                        Sponsor: Rep. Michael Chen | Committee: Environment & Natural Resources
+                      </div>
+                      <p style={{ fontSize: '14px', marginBottom: '8px' }}>
+                        Provides tax incentives for renewable energy development and sets goal of 50% renewable electricity by 2030.
+                      </p>
+                      <div style={{ fontSize: '13px' }}>
+                        <strong>Status:</strong> <span style={{ color: 'var(--accent-warning)' }}>Amended in Committee</span> |
+                        <strong> Next Action:</strong> Committee vote Dec 8
+                      </div>
+                    </div>
+
+                    <div style={{ marginBottom: '20px', paddingBottom: '16px', borderBottom: '1px solid var(--border-subtle)' }}>
+                      <h4 style={{ marginBottom: '4px' }}>SB 2024-156: Affordable Housing Development</h4>
+                      <div style={{ fontSize: '13px', color: 'var(--text-muted)', marginBottom: '8px' }}>
+                        Sponsor: Sen. James Wilson | Committee: Housing & Urban Development
+                      </div>
+                      <p style={{ fontSize: '14px', marginBottom: '8px' }}>
+                        Allocates ¤500 million for affordable housing construction and provides tax credits to developers.
+                      </p>
+                      <div style={{ fontSize: '13px' }}>
+                        <strong>Status:</strong> <span style={{ color: 'var(--accent-info)' }}>Reported out of Committee</span> |
+                        <strong> Next Action:</strong> Floor debate Dec 15
+                      </div>
+                    </div>
+
+                    <div style={{ marginBottom: '0' }}>
+                      <h4 style={{ marginBottom: '4px' }}>HB 2024-401: Education Funding Reform</h4>
+                      <div style={{ fontSize: '13px', color: 'var(--text-muted)', marginBottom: '8px' }}>
+                        Sponsor: Rep. Linda Thompson | Committee: Education & Culture
+                      </div>
+                      <p style={{ fontSize: '14px', marginBottom: '8px' }}>
+                        Revises public school funding formula to provide more equitable distribution and increases per-pupil spending by 8%.
+                      </p>
+                      <div style={{ fontSize: '13px' }}>
+                        <strong>Status:</strong> <span style={{ color: 'var(--accent-warning)' }}>Public Hearings</span> |
+                        <strong> Next Hearing:</strong> December 10, 2024
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="card">
+                  <div className="card-header">
+                    <h3 className="card-title">Bills on the Floor</h3>
+                  </div>
+                  <div className="content-text">
+                    <div style={{ marginBottom: '20px', paddingBottom: '16px', borderBottom: '1px solid var(--border-subtle)' }}>
+                      <h4 style={{ marginBottom: '4px' }}>HB 2024-365: Public Transportation Expansion</h4>
+                      <div style={{ fontSize: '13px', color: 'var(--text-muted)', marginBottom: '8px' }}>
+                        Sponsor: Rep. David Park | Floor Status: Second Reading
+                      </div>
+                      <p style={{ fontSize: '14px', marginBottom: '8px' }}>
+                        Authorizes ¤2.4 billion for light rail expansion and bus rapid transit in metropolitan areas.
+                      </p>
+                      <div style={{ fontSize: '13px' }}>
+                        <strong>Status:</strong> <span style={{ color: 'var(--accent-success)' }}>Passed Second Reading</span> (82-38) |
+                        <strong> Next:</strong> Third reading Dec 9
+                      </div>
+                    </div>
+
+                    <div style={{ marginBottom: '0' }}>
+                      <h4 style={{ marginBottom: '4px' }}>SB 2024-189: Healthcare Access Act</h4>
+                      <div style={{ fontSize: '13px', color: 'var(--text-muted)', marginBottom: '8px' }}>
+                        Sponsor: Sen. Patricia Lee | Floor Status: Third Reading
+                      </div>
+                      <p style={{ fontSize: '14px', marginBottom: '8px' }}>
+                        Expands Medicaid eligibility and creates subsidies for health insurance marketplace.
+                      </p>
+                      <div style={{ fontSize: '13px' }}>
+                        <strong>Status:</strong> <span style={{ color: 'var(--accent-info)' }}>Debate Scheduled</span> |
+                        <strong> Vote:</strong> Expected December 11
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </>
+            )}
+
+            {billStatus === 'passed' && (
+              <div className="card">
+                <div className="card-header">
+                  <h3 className="card-title">Recently Passed Legislation (2024)</h3>
+                </div>
+                <div className="content-text">
+                  <div style={{ marginBottom: '20px', paddingBottom: '16px', borderBottom: '1px solid var(--border-subtle)' }}>
+                    <h4 style={{ marginBottom: '4px' }}>HB 2024-302: Infrastructure Investment Act</h4>
+                    <div style={{ fontSize: '13px', color: 'var(--text-muted)', marginBottom: '8px' }}>
+                      Passed: November 27, 2024 | Vote: 89-31
+                    </div>
+                    <p style={{ fontSize: '14px', marginBottom: '8px' }}>
+                      ¤12 billion comprehensive infrastructure package including roads, bridges, broadband, water systems, and public buildings.
+                    </p>
+                    <div style={{ fontSize: '13px', color: 'var(--accent-success)' }}>
+                      <strong>Status:</strong> Signed into law by President | Effective: January 1, 2025
+                    </div>
+                  </div>
+
+                  <div style={{ marginBottom: '20px', paddingBottom: '16px', borderBottom: '1px solid var(--border-subtle)' }}>
+                    <h4 style={{ marginBottom: '4px' }}>SB 2024-142: Minimum Wage Adjustment</h4>
+                    <div style={{ fontSize: '13px', color: 'var(--text-muted)', marginBottom: '8px' }}>
+                      Passed: October 15, 2024 | Vote: 74-46
+                    </div>
+                    <p style={{ fontSize: '14px', marginBottom: '8px' }}>
+                      Increases minimum wage to ¤16.50/hour, with annual adjustments tied to inflation.
+                    </p>
+                    <div style={{ fontSize: '13px', color: 'var(--accent-success)' }}>
+                      <strong>Status:</strong> Signed into law | Effective: July 1, 2025
+                    </div>
+                  </div>
+
+                  <div style={{ marginBottom: '20px', paddingBottom: '16px', borderBottom: '1px solid var(--border-subtle)' }}>
+                    <h4 style={{ marginBottom: '4px' }}>HB 2024-278: Criminal Justice Reform Act</h4>
+                    <div style={{ fontSize: '13px', color: 'var(--text-muted)', marginBottom: '8px' }}>
+                      Passed: September 22, 2024 | Vote: 95-25
+                    </div>
+                    <p style={{ fontSize: '14px', marginBottom: '8px' }}>
+                      Reforms sentencing guidelines, expands diversion programs, and increases funding for rehabilitation services.
+                    </p>
+                    <div style={{ fontSize: '13px', color: 'var(--accent-success)' }}>
+                      <strong>Status:</strong> Signed into law | Effective: January 1, 2025
+                    </div>
+                  </div>
+
+                  <div style={{ marginBottom: '20px', paddingBottom: '16px', borderBottom: '1px solid var(--border-subtle)' }}>
+                    <h4 style={{ marginBottom: '4px' }}>SB 2024-118: Clean Water Protection Act</h4>
+                    <div style={{ fontSize: '13px', color: 'var(--text-muted)', marginBottom: '8px' }}>
+                      Passed: August 8, 2024 | Vote: 102-18
+                    </div>
+                    <p style={{ fontSize: '14px', marginBottom: '8px' }}>
+                      Strengthens water quality standards and provides funding for municipal water infrastructure upgrades.
+                    </p>
+                    <div style={{ fontSize: '13px', color: 'var(--accent-success)' }}>
+                      <strong>Status:</strong> Signed into law | Effective: October 1, 2024
+                    </div>
+                  </div>
+
+                  <div style={{ marginBottom: '20px', paddingBottom: '16px', borderBottom: '1px solid var(--border-subtle)' }}>
+                    <h4 style={{ marginBottom: '4px' }}>HB 2024-221: Cybersecurity Enhancement Act</h4>
+                    <div style={{ fontSize: '13px', color: 'var(--text-muted)', marginBottom: '8px' }}>
+                      Passed: July 11, 2024 | Vote: 112-8
+                    </div>
+                    <p style={{ fontSize: '14px', marginBottom: '8px' }}>
+                      Establishes state cybersecurity office and mandates security standards for government systems and critical infrastructure.
+                    </p>
+                    <div style={{ fontSize: '13px', color: 'var(--accent-success)' }}>
+                      <strong>Status:</strong> Signed into law | Effective: Immediately
+                    </div>
+                  </div>
+
+                  <div style={{ marginBottom: '0' }}>
+                    <h4 style={{ marginBottom: '4px' }}>SB 2024-095: Teacher Salary Enhancement</h4>
+                    <div style={{ fontSize: '13px', color: 'var(--text-muted)', marginBottom: '8px' }}>
+                      Passed: June 3, 2024 | Vote: 87-33
+                    </div>
+                    <p style={{ fontSize: '14px', marginBottom: '8px' }}>
+                      Provides 12% across-the-board salary increase for public school teachers and expands professional development programs.
+                    </p>
+                    <div style={{ fontSize: '13px', color: 'var(--accent-success)' }}>
+                      <strong>Status:</strong> Signed into law | Effective: School year 2024-2025
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {billStatus === 'process' && (
+              <>
+                <div className="card">
+                  <div className="card-header">
+                    <h3 className="card-title">How a Bill Becomes Law</h3>
+                  </div>
+                  <div className="content-text">
+                    <h4>The Legislative Process</h4>
+                    <ol>
+                      <li><strong>Introduction:</strong> A Council member introduces a bill by filing it with the Clerk</li>
+                      <li><strong>First Reading:</strong> Bill is read by title and assigned to a committee</li>
+                      <li><strong>Committee Review:</strong> Committee studies bill, holds hearings, and may amend it</li>
+                      <li><strong>Committee Vote:</strong> Committee votes to recommend passage, rejection, or take no action</li>
+                      <li><strong>Second Reading:</strong> Full Council debates the bill and can propose amendments</li>
+                      <li><strong>Third Reading:</strong> Final debate and vote on passage (requires simple majority)</li>
+                      <li><strong>Presidential Review:</strong> President has 14 days to sign or veto</li>
+                      <li><strong>Law:</strong> Signed bills become law on specified effective date (or veto override with 2/3 vote)</li>
+                    </ol>
+
+                    <h4 style={{ marginTop: '20px' }}>Types of Legislation</h4>
+                    <ul>
+                      <li><strong>House Bill (HB):</strong> Introduced by Council member</li>
+                      <li><strong>Senate Bill (SB):</strong> Joint proposals from multiple members</li>
+                      <li><strong>Resolution:</strong> Non-binding expression of opinion or intent</li>
+                      <li><strong>Concurrent Resolution:</strong> Joint action on procedural matters</li>
+                      <li><strong>Emergency Bill:</strong> Takes effect immediately upon signature (requires 2/3 vote)</li>
+                    </ul>
+
+                    <h4 style={{ marginTop: '20px' }}>Vote Requirements</h4>
+                    <ul>
+                      <li><strong>Regular Bill:</strong> Simple majority (61 of 120 votes)</li>
+                      <li><strong>Budget Bill:</strong> Simple majority</li>
+                      <li><strong>Constitutional Amendment:</strong> 2/3 majority (80 votes), then public referendum</li>
+                      <li><strong>Emergency Legislation:</strong> 2/3 majority (80 votes)</li>
+                      <li><strong>Veto Override:</strong> 2/3 majority (80 votes)</li>
+                      <li><strong>Treaty Ratification:</strong> 2/3 majority (80 votes)</li>
+                    </ul>
+                  </div>
+                </div>
+
+                <div className="card">
+                  <div className="card-header">
+                    <h3 className="card-title">Tracking Legislation</h3>
+                  </div>
+                  <div className="content-text">
+                    <h4>Bill Search Options</h4>
+                    <ul>
+                      <li><strong>By Number:</strong> Search for specific bill (e.g., HB 2024-387)</li>
+                      <li><strong>By Sponsor:</strong> Find all bills introduced by a member</li>
+                      <li><strong>By Subject:</strong> Browse bills by topic area</li>
+                      <li><strong>By Committee:</strong> View all bills in a committee</li>
+                      <li><strong>By Status:</strong> Filter by legislative stage</li>
+                    </ul>
+
+                    <h4 style={{ marginTop: '20px' }}>Available Information</h4>
+                    <ul>
+                      <li>Full text of bill (original and amended versions)</li>
+                      <li>Fiscal impact analysis</li>
+                      <li>Committee reports and recommendations</li>
+                      <li>Floor debate transcripts</li>
+                      <li>Voting records (how each member voted)</li>
+                      <li>Public hearing schedules and testimony</li>
+                    </ul>
+
+                    <h4 style={{ marginTop: '20px' }}>Bill Alerts</h4>
+                    <p>Sign up for email notifications when:</p>
+                    <ul>
+                      <li>Bills matching your interests are introduced</li>
+                      <li>Specific bills advance through the process</li>
+                      <li>Committee hearings are scheduled</li>
+                      <li>Floor votes are scheduled</li>
+                      <li>Bills are signed into law</li>
+                    </ul>
+                  </div>
+                </div>
+              </>
+            )}
           </div>
+
+          <aside className="sidebar">
+            <div className="card">
+              <h4 className="card-title">Bill Statistics (2024)</h4>
+              <div style={{ fontSize: '13px', color: 'var(--text-muted)', marginTop: '12px', padding: '0 16px 16px' }}>
+                <p style={{ marginBottom: '8px' }}><strong>Introduced:</strong> 1,247 bills</p>
+                <p style={{ marginBottom: '8px' }}><strong>In Committee:</strong> 342 bills</p>
+                <p style={{ marginBottom: '8px' }}><strong>Passed:</strong> 247 bills</p>
+                <p style={{ marginBottom: '8px' }}><strong>Vetoed:</strong> 12 bills</p>
+                <p style={{ marginBottom: '8px' }}><strong>Became Law:</strong> 235 bills</p>
+                <p><strong>Pass Rate:</strong> 19.8%</p>
+              </div>
+            </div>
+
+            <div className="info-box">
+              <h4>Legislative Resources</h4>
+              <ul style={{ fontSize: '13px', margin: '12px 0' }}>
+                <li><a href="#">Search Bills Database</a></li>
+                <li><a href="#">View Voting Records</a></li>
+                <li><Link to="/lc/sessions">Session Calendar</Link></li>
+                <li><a href="#">Committee Hearings</a></li>
+                <li><a href="#">Bill Drafting Guide</a></li>
+              </ul>
+            </div>
+
+            <div className="card">
+              <h4 className="card-title">Public Participation</h4>
+              <div style={{ fontSize: '13px', color: 'var(--text-muted)', marginTop: '12px', padding: '0 16px 16px' }}>
+                <p style={{ marginBottom: '12px' }}>Citizens can participate in the legislative process:</p>
+                <ul style={{ marginBottom: '16px' }}>
+                  <li>Testify at committee hearings</li>
+                  <li>Submit written comments</li>
+                  <li>Contact your representative</li>
+                  <li>Attend floor sessions</li>
+                  <li>Sign up for bill alerts</li>
+                </ul>
+                <p style={{ fontWeight: '500' }}>Contact: 1-800-LEG-INFO</p>
+              </div>
+            </div>
+          </aside>
+        </div>
+      </div>
+    </main>
+  )
+}
+
+function Sessions() {
+  return (
+    <main className="main">
+      <div className="page-header">
+        <div className="container">
+          <div className="breadcrumb">
+            <Link to="/lc">Home</Link> / Legislative Sessions
+          </div>
+          <h1>Legislative Sessions</h1>
+          <p className="subtitle">Session calendar, live proceedings, and archives</p>
+        </div>
+      </div>
+      <div className="container">
+        <div className="content-grid">
+          <div className="main-content">
+            <div className="card">
+              <div className="card-header">
+                <h3 className="card-title">Current Session: 2024-2025</h3>
+              </div>
+              <div className="content-text">
+                <p style={{ marginBottom: '16px' }}>
+                  The Legislative Council is currently in regular session. Floor sessions are held Monday through Thursday at 10:00 AM when the Council is in session.
+                </p>
+                <ul>
+                  <li><strong>Session Type:</strong> Regular Session (biennial, 2-year term)</li>
+                  <li><strong>Session Start:</strong> January 8, 2024</li>
+                  <li><strong>Session End:</strong> December 31, 2025</li>
+                  <li><strong>Days in Session (2024):</strong> 156 days</li>
+                  <li><strong>Next Recess:</strong> December 20, 2024 - January 6, 2025 (Holiday Break)</li>
+                </ul>
+              </div>
+            </div>
+
+            <div className="card">
+              <div className="card-header">
+                <h3 className="card-title">December 2024 Session Calendar</h3>
+              </div>
+              <div className="content-text">
+                <div style={{ marginBottom: '16px', paddingBottom: '12px', borderBottom: '1px solid var(--border-subtle)' }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', marginBottom: '4px' }}>
+                    <strong>Monday, December 2</strong>
+                    <span style={{ fontSize: '13px', color: 'var(--text-muted)' }}>10:00 AM</span>
+                  </div>
+                  <p style={{ fontSize: '14px', margin: 0 }}>Floor Session - Second reading of HB 2024-365 (Transportation)</p>
+                </div>
+
+                <div style={{ marginBottom: '16px', paddingBottom: '12px', borderBottom: '1px solid var(--border-subtle)' }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', marginBottom: '4px' }}>
+                    <strong>Tuesday, December 3</strong>
+                    <span style={{ fontSize: '13px', color: 'var(--text-muted)' }}>10:00 AM</span>
+                  </div>
+                  <p style={{ fontSize: '14px', margin: 0 }}>Floor Session - Committee reports, member announcements</p>
+                </div>
+
+                <div style={{ marginBottom: '16px', paddingBottom: '12px', borderBottom: '1px solid var(--border-subtle)' }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', marginBottom: '4px' }}>
+                    <strong>Wednesday, December 4</strong>
+                    <span style={{ fontSize: '13px', color: 'var(--text-muted)' }}>2:00 PM</span>
+                  </div>
+                  <p style={{ fontSize: '14px', margin: 0 }}>Finance Committee Meeting - Budget bill markup</p>
+                </div>
+
+                <div style={{ marginBottom: '16px', paddingBottom: '12px', borderBottom: '1px solid var(--border-subtle)' }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', marginBottom: '4px' }}>
+                    <strong>Thursday, December 5</strong>
+                    <span style={{ fontSize: '13px', color: 'var(--text-muted)' }}>10:00 AM</span>
+                  </div>
+                  <p style={{ fontSize: '14px', margin: 0 }}>Floor Session - Third reading votes, new bill introductions</p>
+                </div>
+
+                <div style={{ marginBottom: '16px', paddingBottom: '12px', borderBottom: '1px solid var(--border-subtle)' }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', marginBottom: '4px' }}>
+                    <strong>Monday, December 9</strong>
+                    <span style={{ fontSize: '13px', color: 'var(--text-muted)' }}>10:00 AM</span>
+                  </div>
+                  <p style={{ fontSize: '14px', margin: 0 }}>Floor Session - Third reading HB 2024-365, second reading SB 2024-189</p>
+                </div>
+
+                <div style={{ marginBottom: '16px', paddingBottom: '12px', borderBottom: '1px solid var(--border-subtle)' }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', marginBottom: '4px' }}>
+                    <strong>Tuesday, December 10</strong>
+                    <span style={{ fontSize: '13px', color: 'var(--text-muted)' }}>2:00 PM</span>
+                  </div>
+                  <p style={{ fontSize: '14px', margin: 0 }}>Education Committee Hearing - Public testimony on HB 2024-401</p>
+                </div>
+
+                <div style={{ marginBottom: '16px', paddingBottom: '12px', borderBottom: '1px solid var(--border-subtle)' }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', marginBottom: '4px' }}>
+                    <strong>Wednesday, December 11</strong>
+                    <span style={{ fontSize: '13px', color: 'var(--text-muted)' }}>10:00 AM</span>
+                  </div>
+                  <p style={{ fontSize: '14px', margin: 0 }}>Floor Session - Third reading votes on healthcare and housing bills</p>
+                </div>
+
+                <div style={{ marginBottom: '16px', paddingBottom: '12px', borderBottom: '1px solid var(--border-subtle)' }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', marginBottom: '4px' }}>
+                    <strong>Thursday, December 12</strong>
+                    <span style={{ fontSize: '13px', color: 'var(--text-muted)' }}>9:00 AM</span>
+                  </div>
+                  <p style={{ fontSize: '14px', margin: 0 }}>Justice Committee Hearing - HB 2024-387 (Digital Privacy)</p>
+                </div>
+
+                <div style={{ marginBottom: '0' }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', marginBottom: '4px' }}>
+                    <strong>Friday, December 13-19</strong>
+                    <span style={{ fontSize: '13px', color: 'var(--text-muted)' }}>No Session</span>
+                  </div>
+                  <p style={{ fontSize: '14px', margin: 0 }}>Committee work week - No floor sessions</p>
+                </div>
+              </div>
+            </div>
+
+            <div className="card">
+              <div className="card-header">
+                <h3 className="card-title">Watch Live & Archives</h3>
+              </div>
+              <div className="content-text">
+                <h4>Live Streaming</h4>
+                <p>All floor sessions and most committee meetings are broadcast live:</p>
+                <ul>
+                  <li><strong>Official Stream:</strong> Watch on lc.gov.py/live</li>
+                  <li><strong>Public TV:</strong> Praya Government Channel (Cable 12)</li>
+                  <li><strong>Audio Only:</strong> Available via phone at 1-800-LEG-INFO</li>
+                  <li><strong>Closed Captioning:</strong> Available on all video streams</li>
+                </ul>
+
+                <h4 style={{ marginTop: '20px' }}>Video Archives</h4>
+                <p>Past sessions available on demand:</p>
+                <ul>
+                  <li><strong>Floor Sessions:</strong> Full video dating back to 2018</li>
+                  <li><strong>Committee Meetings:</strong> Major hearings archived</li>
+                  <li><strong>Special Events:</strong> State of the Republic, special addresses</li>
+                  <li><strong>Searchable:</strong> Search by date, topic, or speaker</li>
+                </ul>
+
+                <h4 style={{ marginTop: '20px' }}>Transcripts</h4>
+                <ul>
+                  <li>Official transcripts published within 48 hours</li>
+                  <li>Searchable full-text archive</li>
+                  <li>Available in PDF and HTML formats</li>
+                  <li>Free download for all sessions</li>
+                </ul>
+              </div>
+            </div>
+
+            <div className="card">
+              <div className="card-header">
+                <h3 className="card-title">Attending in Person</h3>
+              </div>
+              <div className="content-text">
+                <h4>Public Galleries</h4>
+                <p>The public is welcome to observe legislative sessions in person:</p>
+                <ul>
+                  <li><strong>Location:</strong> Legislative Building, 100 Council Plaza, Praya City</li>
+                  <li><strong>Hours:</strong> Public galleries open 30 minutes before each session</li>
+                  <li><strong>Capacity:</strong> 250 seats (first-come, first-served)</li>
+                  <li><strong>Security:</strong> Bag check required, no weapons or recording devices</li>
+                  <li><strong>Accessibility:</strong> Wheelchair accessible, assistive listening devices available</li>
+                </ul>
+
+                <h4 style={{ marginTop: '20px' }}>Building Tours</h4>
+                <ul>
+                  <li>Free guided tours Monday-Friday at 10 AM, 12 PM, and 2 PM</li>
+                  <li>Self-guided tours available during business hours</li>
+                  <li>Group tours (10+) require advance reservation</li>
+                  <li>Educational programs for school groups</li>
+                </ul>
+
+                <h4 style={{ marginTop: '20px' }}>Committee Hearings</h4>
+                <p>Most committee meetings are open to the public:</p>
+                <ul>
+                  <li>Check committee schedules for times and locations</li>
+                  <li>Sign up in advance to provide public testimony</li>
+                  <li>Written testimony can be submitted without attending</li>
+                  <li>Limited seating - arrive early for contentious issues</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <aside className="sidebar">
+            <div className="card" style={{ background: 'linear-gradient(135deg, #1e40af 0%, #1e3a8a 100%)', color: 'white', border: 'none' }}>
+              <h4 style={{ color: 'white', marginBottom: '8px' }}>Next Floor Session</h4>
+              <div style={{ fontSize: '28px', fontWeight: '700', marginBottom: '4px' }}>Dec 5</div>
+              <div style={{ fontSize: '15px', opacity: 0.95, marginBottom: '16px' }}>Thursday, 10:00 AM</div>
+              <div style={{ paddingTop: '16px', borderTop: '1px solid rgba(255,255,255,0.2)', fontSize: '13px' }}>
+                <div style={{ marginBottom: '8px' }}>
+                  <strong>Agenda:</strong> Third reading votes, new bill introductions
+                </div>
+                <div>
+                  <strong>Watch Live:</strong> lc.gov.py/live
+                </div>
+              </div>
+            </div>
+
+            <div className="info-box">
+              <h4>Session Information</h4>
+              <p><strong>Phone:</strong> 1-800-LEG-INFO</p>
+              <p><strong>Email:</strong> sessions@lc.gov.py</p>
+              <p><strong>Location:</strong> Legislative Building, Praya City</p>
+            </div>
+
+            <div className="card">
+              <h4 className="card-title">2025 Session Dates</h4>
+              <div style={{ fontSize: '13px', color: 'var(--text-muted)', marginTop: '12px', padding: '0 16px 16px' }}>
+                <p style={{ marginBottom: '8px' }}><strong>Convenes:</strong> January 7, 2025</p>
+                <p style={{ marginBottom: '8px' }}><strong>Spring Recess:</strong> March 24-31</p>
+                <p style={{ marginBottom: '8px' }}><strong>Summer Recess:</strong> July 1-31</p>
+                <p style={{ marginBottom: '8px' }}><strong>Fall Recess:</strong> October 13-20</p>
+                <p><strong>Session Ends:</strong> December 31, 2025</p>
+              </div>
+            </div>
+
+            <div className="card">
+              <h4 className="card-title">Session Rules</h4>
+              <div style={{ fontSize: '13px', color: 'var(--text-muted)', marginTop: '12px', padding: '0 16px 16px' }}>
+                <p style={{ marginBottom: '12px' }}>Visitors must follow these rules:</p>
+                <ul>
+                  <li>No applause or demonstrations</li>
+                  <li>Silence all electronic devices</li>
+                  <li>No photography or recording</li>
+                  <li>Dress code: Business casual</li>
+                  <li>No food or drinks in galleries</li>
+                </ul>
+              </div>
+            </div>
+          </aside>
         </div>
       </div>
     </main>

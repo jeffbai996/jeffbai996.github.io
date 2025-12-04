@@ -336,33 +336,39 @@ The Republic of Praya is a nation of 2.4 million citizens with a modern, digital
 1. **[National Police Agency (NPA)](/npa)**
    • Emergency response - Dial 911 (life-threatening, crimes in progress, missing children), Non-emergency: 311
    • Online crime reporting (thefts under ¤2,500, vandalism, lost property, identity fraud)
-   • Police Clearance Certificates (¤20, 3 business days, covers criminal history, warrants)
-   • Quick Links: [File Report](/npa/report) | [Services](/npa/services) | [Public Safety](/npa/safety)
+   • Police Services: Clearance certificates (¤20, standard/enhanced/international), case status lookup, community programs, crime statistics
+   • Public Safety: Crime prevention tips, emergency preparedness, safety workshops, scam awareness
+   • Quick Links: [File Report](/npa/report) | [Police Services](/npa/services) | [Public Safety](/npa/safety)
    • Stats: 4.2min avg response, -12% crime rate, 87% cases solved, 3,421 officers
    • Hours: Walk-in stations 08:00-18:00 daily, Emergency dispatch 24/7
    • Contact: 911 (emergency) | 311 (non-emergency) | HQ: +854 200 0000
 
 2. **[Bank of Praya (BOP)](/bop)**
    • Central bank, monetary policy, financial stability
-   • Personal banking (savings, checking, online banking 24/7)
-   • Business loans and mortgages (appointment required)
-   • Currency: Official Praya Dollar (¤)
-   • Quick Links: [Personal Banking](/bop/personal) | [Business Banking](/bop/business) | [Currency Exchange](/bop/exchange)
-   • Hours: Branch hours vary, Online banking 24/7
+   • Loans: Mortgage (3.25%-4.75% APR), Personal (5.99%-12.99% APR), Business (4.5%-9.5% APR), Auto (3.99%-8.99% APR)
+   • Banking Services: Investment management, retirement planning (Traditional/Roth Praya IRA), insurance, wire transfers
+   • Currency: Official Praya Dollar (¤), exchange rates updated daily
+   • Quick Links: [Personal Banking](/bop/personal) | [Loans](/bop/loans) | [Services](/bop/services)
+   • Hours: Branch hours Mon-Fri 9AM-5PM, Sat 9AM-1PM, Online banking 24/7
 
 3. **[Cannabis Tax Bureau (CTB)](/ctb)**
    • Dispensary licensing (new applications and renewals)
-   • Cultivation permits (commercial and personal grow licenses)
-   • Monthly tax returns (online filing for license holders)
-   • Quick Links: [Apply for License](/ctb/apply) | [Tax Filing](/ctb/taxes) | [Compliance](/ctb/compliance)
+   • Taxation: 15% excise tax, quarterly filing, tax calculator, payment options (EFT, card, check)
+   • Compliance: Licensing requirements, routine inspections, violation penalties (Class A/B/C), best practices
+   • Research: Market stats (¤420M market, 1,247 licenses), industry reports, policy analysis, trends
+   • Quick Links: [Apply for License](/ctb/apply) | [Taxation](/ctb/taxation) | [Compliance](/ctb/compliance) | [Research](/ctb/research)
+   • Stats: ¤420M market size, 1,247 active licenses, 15% excise tax rate
    • Hours: Mon-Fri 8AM-5PM, Online services 24/7
 
 4. **[Department of Justice (DOJ)](/doj)**
-   • Court system (criminal and civil proceedings)
-   • Case Lookup Tool (track case status online)
-   • Legal Aid Services (Public Defender's Office)
-   • Quick Links: [Case Lookup](/doj/lookup) | [Legal Aid](/doj/legal-aid) | [Court Filings](/doj/filings)
-   • Hours: Court Mon-Fri 8AM-5PM, Case lookup online 24/7
+   • Court system: Supreme Court, Appeals Court (3 divisions), 24 District Courts
+   • Prosecution Services: Case status inquiry, victim services (24/7 hotline: 1-800-VICTIM-HELP), witness assistance, prosecution guidelines
+   • Criminal Code: Searchable database (8 titles), legal definitions, sentencing guidelines (felonies/misdemeanors), 2024 amendments
+   • Online Services: Case lookup, e-filing system (civil/criminal/appeals), court calendar, legal forms (234 forms across 8 categories)
+   • Quick Links: [Court System](/doj/courts) | [Prosecution](/doj/prosecution) | [Criminal Code](/doj/code) | [Online Services](/doj/services)
+   • Stats: 12,847 cases filed FY2024, 94.3% resolution rate, 24 courts, 45 days avg resolution
+   • Hours: Court Mon-Fri 8AM-5PM, Online services 24/7
+   • Contact: 1-800-PRAYA-COURT (general) | 1-800-PRAYA-DOJ (prosecution) | 1-800-WITNESS (witness assistance)
 
 5. **[Interior Department (ID)](/interior)**
    • National IDs (¤25 new, ¤15 renewal, 5-7 day processing)
@@ -373,8 +379,9 @@ The Republic of Praya is a nation of 2.4 million citizens with a modern, digital
 
 6. **[Transport Department (TD)](/transport)**
    • Driver licensing (¤45 new, ¤30 renewal, tests available)
-   • Vehicle registration (cars, motorcycles, commercial)
-   • Quick Links: [Driver License](/transport/license) | [Vehicle Registration](/transport/registration) | [Schedule Test](/transport/test)
+   • Vehicle Registration: New registration (¤80-¤150), renewals (¤60 annual), ownership transfer (¤40), plate replacement (¤25)
+   • Special Permits: Oversized vehicle permits, temporary permits, disabled parking placards, commercial transport licenses
+   • Quick Links: [Driver License](/transport/license) | [Vehicle Registration](/transport/registration) | [Special Permits](/transport/permits)
    • Hours: Mon-Fri 8AM-5PM, Sat 9AM-1PM select locations
 
 7. **[Revenue Department (RD)](/revenue)**
@@ -403,20 +410,24 @@ The Republic of Praya is a nation of 2.4 million citizens with a modern, digital
 
 10. **[Housing Authority (HA)](/housing)**
     • Public housing applications (income-based eligibility)
-    • Rental assistance programs, tenant rights
-    • Quick Links: [Apply for Housing](/housing/apply) | [Check Eligibility](/housing/eligibility) | [Tenant Rights](/housing/rights) | [Waitlist Status](/housing/waitlist)
+    • Tenant Rights: Lease agreements, repairs & maintenance, eviction protections, security deposits, fair housing laws
+    • Landlord Compliance: Property registration (¤75/year), rental standards, inspections, violation appeals, tenant screening
+    • Rental assistance programs, affordable housing waitlist
+    • Quick Links: [Apply for Housing](/housing/apply) | [Check Eligibility](/housing/eligibility) | [Tenant Rights](/housing/tenant) | [Landlord Info](/housing/landlord)
     • Hours: Mon-Fri 8AM-5PM, Online applications 24/7
 
 11. **[Customs & Border Control Agency (CBCA)](/cbca)**
-    • Import/export permits, customs declarations
-    • Travel entry requirements, duty-free allowances
-    • Quick Links: [Import/Export](/cbca/permits) | [Travel Requirements](/cbca/travel) | [Prohibited Items](/cbca/prohibited)
+    • Travel Requirements: Visa types (tourist/business/student/work), passport requirements, entry/exit procedures, travel advisories
+    • Import/Export: Import permits, export licenses, trade compliance, tariffs & duties, prohibited items
+    • Customs declarations, duty-free allowances (¤800 per person)
+    • Quick Links: [Border Crossings](/cbca/crossings) | [Travel Requirements](/cbca/travel) | [Import/Export](/cbca/import-export)
     • Hours: Border crossings 24/7, Office Mon-Fri 8AM-5PM
 
 12. **[Legislative Council (LC)](/lc)**
-    • Bill tracking, voting records
-    • Contact your representative
-    • Quick Links: [Bills & Legislation](/lc/bills) | [Find Representative](/lc/representatives) | [Voting Records](/lc/voting) | [Public Hearings](/lc/hearings)
+    • Bills & Legislation: Track active bills, browse by topic (healthcare/economy/education), view committee assignments, bill history
+    • Council Sessions: Session calendar, archived recordings, upcoming hearings, public comment periods
+    • Voting records, contact your representative (24 districts), committee information
+    • Quick Links: [Bills & Legislation](/lc/bills) | [Sessions](/lc/sessions) | [Find Representative](/lc/representatives)
     • Hours: Public viewing Mon-Fri 8AM-5PM, Session schedules vary
 
 13. **[Buildings Department (BD)](/bd)**

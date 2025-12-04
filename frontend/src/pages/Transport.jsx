@@ -37,8 +37,8 @@ export default function Transport() {
       <Routes>
         <Route index element={<TransportHome navigate={navigate} />} />
         <Route path="license" element={<DriversLicense />} />
-        <Route path="registration" element={<ComingSoon title="Vehicle Registration" />} />
-        <Route path="permits" element={<ComingSoon title="Special Permits" />} />
+        <Route path="registration" element={<VehicleRegistration />} />
+        <Route path="permits" element={<SpecialPermits />} />
       </Routes>
 
       <footer className="dept-footer">
@@ -52,24 +52,24 @@ export default function Transport() {
               <h5>Services</h5>
               <ul>
                 <li><Link to="/transport/license">Driver's License</Link></li>
-                <li><a href="#">Vehicle Registration</a></li>
-                <li><a href="#">Road Test Scheduling</a></li>
+                <li><Link to="/transport/registration">Vehicle Registration</Link></li>
+                <li><Link to="/transport/permits">Special Permits</Link></li>
               </ul>
             </div>
             <div className="footer-section">
               <h5>Resources</h5>
               <ul>
-                <li><a href="#">Driver's Manual</a></li>
-                <li><a href="#">Practice Tests</a></li>
-                <li><a href="#">Service Centers</a></li>
+                <li><Link to="/transport/license">Driver's Manual</Link></li>
+                <li><Link to="/transport/license">Practice Tests</Link></li>
+                <li><Link to="/transport">Service Centers</Link></li>
               </ul>
             </div>
             <div className="footer-section">
               <h5>Government</h5>
               <ul>
                 <li><Link to="/">Gov Portal</Link></li>
-                <li><a href="#">Traffic Safety</a></li>
-                <li><a href="#">Road Conditions</a></li>
+                <li><Link to="/transport">Traffic Safety</Link></li>
+                <li><Link to="/transport">Road Conditions</Link></li>
               </ul>
             </div>
           </div>
@@ -408,116 +408,325 @@ function DriversLicense() {
   )
 }
 
-function ComingSoon({ title }) {
-  const navigate = useNavigate();
-
-  const getServiceInfo = () => {
-    switch(title) {
-      case 'Vehicle Registration':
-        return {
-          description: 'Register new vehicles, renew registration, transfer titles, and more.',
-          services: ['New Vehicle Registration', 'Registration Renewal', 'Title Transfer', 'License Plates'],
-          contact: 'For registration help: Call 1-800-DRIVE-PY or visit a service center'
-        };
-      case 'Special Permits':
-        return {
-          description: 'Apply for commercial permits, oversized vehicle permits, and temporary permits.',
-          services: ['Commercial Vehicle Permits', 'Oversized Load Permits', 'Temporary Registration', 'Disabled Parking Permits'],
-          contact: 'For permit inquiries: permits@transport.gov.py or call 1-800-DRIVE-PY'
-        };
-      default:
-        return {
-          description: 'This service is being developed to serve you better.',
-          services: [],
-          contact: 'For assistance, contact the Transport Department'
-        };
-    }
-  };
-
-  const info = getServiceInfo();
+function VehicleRegistration() {
+  const [registrationType, setRegistrationType] = React.useState('new');
+  const [vehicleType, setVehicleType] = React.useState('passenger');
 
   return (
     <main className="main">
       <div className="page-header">
         <div className="container">
           <div className="breadcrumb">
-            <Link to="/transport">Home</Link> / {title}
+            <Link to="/transport">Home</Link> / Vehicle Registration
           </div>
-          <h1>{title}</h1>
-          <p className="subtitle">{info.description}</p>
+          <h1>Vehicle Registration & Titles</h1>
+          <p className="subtitle">Register vehicles, renew registration, and manage titles</p>
         </div>
       </div>
       <div className="container">
-        <div className="card">
-          <div style={{ padding: '20px', textAlign: 'center' }}>
-            <div style={{
-              width: '64px',
-              height: '64px',
-              background: 'linear-gradient(135deg, rgba(249, 115, 22, 0.1) 0%, rgba(249, 115, 22, 0.2) 100%)',
-              borderRadius: '50%',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              margin: '0 auto 20px'
-            }}>
-              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                <circle cx="12" cy="12" r="10"/>
-                <path d="M12 16v-4M12 8h.01"/>
-              </svg>
-            </div>
-            <h3 style={{ marginBottom: '12px' }}>Service Under Development</h3>
-            <p style={{ color: 'var(--text-muted)', maxWidth: '500px', margin: '0 auto 24px' }}>
-              We're working to bring this service online. In the meantime, you can access these services at any Transport service center.
-            </p>
+        <div className="content-grid">
+          <div className="main-content">
+            <div className="card">
+              <h3 className="card-title">Register or Renew</h3>
+              <div className="content-text">
+                <div style={{ marginBottom: '20px' }}>
+                  <label style={{ display: 'block', marginBottom: '8px', fontWeight: '500' }}>Service Type</label>
+                  <select
+                    value={registrationType}
+                    onChange={(e) => setRegistrationType(e.target.value)}
+                    style={{ width: '100%', padding: '10px', borderRadius: '8px', border: '1px solid var(--border-subtle)' }}
+                  >
+                    <option value="new">New Vehicle Registration</option>
+                    <option value="renew">Renew Registration</option>
+                    <option value="transfer">Transfer Title</option>
+                    <option value="replace">Replace Plates</option>
+                  </select>
+                </div>
 
-            {info.services.length > 0 && (
-              <div style={{ marginTop: '24px', textAlign: 'left', maxWidth: '400px', margin: '24px auto 0' }}>
-                <h4 style={{ fontSize: '14px', marginBottom: '12px' }}>Available Services:</h4>
-                <ul style={{ color: 'var(--text-secondary)', fontSize: '14px' }}>
-                  {info.services.map(service => (
-                    <li key={service} style={{ marginBottom: '8px' }}>{service}</li>
-                  ))}
-                </ul>
-              </div>
-            )}
+                <div style={{ marginBottom: '20px' }}>
+                  <label style={{ display: 'block', marginBottom: '8px', fontWeight: '500' }}>Vehicle Type</label>
+                  <select
+                    value={vehicleType}
+                    onChange={(e) => setVehicleType(e.target.value)}
+                    style={{ width: '100%', padding: '10px', borderRadius: '8px', border: '1px solid var(--border-subtle)' }}
+                  >
+                    <option value="passenger">Passenger Vehicle</option>
+                    <option value="motorcycle">Motorcycle</option>
+                    <option value="truck">Truck/Commercial</option>
+                    <option value="trailer">Trailer</option>
+                    <option value="rv">RV/Motorhome</option>
+                  </select>
+                </div>
 
-            <div style={{
-              marginTop: '32px',
-              padding: '16px',
-              background: 'rgba(249, 115, 22, 0.05)',
-              borderRadius: '10px',
-              fontSize: '13px',
-              color: 'var(--text-muted)'
-            }}>
-              {info.contact}
-            </div>
-
-            <div style={{ marginTop: '32px' }}>
-              <h4 style={{ fontSize: '14px', marginBottom: '12px' }}>Related Services</h4>
-              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '12px' }}>
-                <Link to="/transport/license" style={{
-                  padding: '14px',
-                  background: 'var(--bg-elevated)',
-                  border: '1px solid var(--border-subtle)',
-                  borderRadius: '10px',
-                  textDecoration: 'none',
-                  fontSize: '13px',
-                  fontWeight: '500',
-                  color: 'var(--text-primary)',
-                  transition: 'all 0.2s'
-                }}>
-                  Driver's License
-                </Link>
-                <button
-                  onClick={() => navigate('/transport')}
-                  className="btn btn-secondary"
-                  style={{ fontSize: '13px', padding: '14px' }}
-                >
-                  Return to Transport Home
+                <button className="btn btn-primary" style={{ width: '100%', marginTop: '16px', padding: '14px' }}>
+                  Start Application
                 </button>
               </div>
             </div>
+
+            <div className="card">
+              <h3 className="card-title">New Vehicle Registration</h3>
+              <div className="content-text">
+                <p style={{ marginBottom: '12px' }}>Register a newly purchased vehicle within 30 days:</p>
+                <h4>Documents Required:</h4>
+                <ul>
+                  <li><strong>Title:</strong> Original title signed by seller (or manufacturer's certificate of origin for new vehicles)</li>
+                  <li><strong>Proof of insurance:</strong> Valid insurance card or policy declaration</li>
+                  <li><strong>Bill of sale:</strong> Signed purchase agreement showing sale price</li>
+                  <li><strong>Odometer disclosure:</strong> Required for vehicles under 10 years old</li>
+                  <li><strong>Identification:</strong> Valid driver's license or state ID</li>
+                  <li><strong>Emissions test:</strong> If required in your area (vehicles 4+ years old)</li>
+                </ul>
+                <h4 style={{ marginTop: '16px' }}>Fees:</h4>
+                <ul>
+                  <li><strong>Title fee:</strong> ¤50</li>
+                  <li><strong>Registration fee:</strong> ¤85-¤250 (based on vehicle weight and value)</li>
+                  <li><strong>License plates:</strong> ¤25 (one-time fee)</li>
+                  <li><strong>Sales tax:</strong> 6.5% of purchase price</li>
+                </ul>
+              </div>
+            </div>
+
+            <div className="card">
+              <h3 className="card-title">Registration Renewal</h3>
+              <div className="content-text">
+                <p style={{ marginBottom: '12px' }}>Renew your registration online, by mail, or in person:</p>
+                <h4>Renewal Options:</h4>
+                <ul>
+                  <li><strong>1 year:</strong> Standard registration (¤85-¤150 based on vehicle type)</li>
+                  <li><strong>2 years:</strong> Save 5% with multi-year registration</li>
+                  <li><strong>Grace period:</strong> 30 days after expiration (¤10 late fee)</li>
+                </ul>
+                <h4 style={{ marginTop: '16px' }}>Online Renewal Eligibility:</h4>
+                <ul>
+                  <li>Renewed in person last time</li>
+                  <li>No insurance lapses</li>
+                  <li>No emissions test required this year</li>
+                  <li>Vehicle not reported stolen or salvaged</li>
+                </ul>
+                <p style={{ marginTop: '12px', fontSize: '13px', color: 'var(--text-secondary)' }}>
+                  <strong>Note:</strong> New registration sticker mailed within 7-10 business days
+                </p>
+              </div>
+            </div>
+
+            <div className="card">
+              <h3 className="card-title">Title Services</h3>
+              <div className="content-text">
+                <h4>Title Transfer (Buy/Sell)</h4>
+                <ul style={{ marginBottom: '16px' }}>
+                  <li><strong>Seller responsibilities:</strong> Sign title, provide bill of sale, odometer reading</li>
+                  <li><strong>Buyer responsibilities:</strong> Apply for new title within 30 days, pay transfer fee</li>
+                  <li><strong>Transfer fee:</strong> ¤75</li>
+                  <li><strong>Lien notation:</strong> ¤25 (if applicable)</li>
+                </ul>
+                <h4>Duplicate Title</h4>
+                <ul>
+                  <li>Apply online, by mail, or in person</li>
+                  <li>Fee: ¤50</li>
+                  <li>Processing time: 2-3 weeks</li>
+                  <li>Must show ID and proof of ownership</li>
+                </ul>
+              </div>
+            </div>
           </div>
+
+          <aside className="sidebar">
+            <div className="card" style={{ background: 'linear-gradient(135deg, #f97316 0%, #ea580c 100%)', color: 'white', border: 'none' }}>
+              <h4 style={{ color: 'white', marginBottom: '8px' }}>Registration Fees</h4>
+              <div style={{ fontSize: '13px', opacity: 0.9, marginTop: '12px' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '8px' }}>
+                  <span>Passenger Car</span>
+                  <span style={{ fontWeight: '600' }}>¤85-¤150</span>
+                </div>
+                <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '8px' }}>
+                  <span>Motorcycle</span>
+                  <span style={{ fontWeight: '600' }}>¤45</span>
+                </div>
+                <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '8px' }}>
+                  <span>Truck/Commercial</span>
+                  <span style={{ fontWeight: '600' }}>¤150-¤350</span>
+                </div>
+                <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                  <span>Trailer</span>
+                  <span style={{ fontWeight: '600' }}>¤35</span>
+                </div>
+              </div>
+            </div>
+
+            <div className="info-box">
+              <h4>Renewal Reminders</h4>
+              <p>Sign up for email or text reminders 60 days before your registration expires.</p>
+              <p style={{ marginTop: '12px', fontSize: '13px' }}>Never miss a renewal deadline!</p>
+            </div>
+
+            <div className="card">
+              <h4 className="card-title">Personalized Plates</h4>
+              <ul style={{ fontSize: '14px' }}>
+                <li>3-7 characters available</li>
+                <li>One-time fee: ¤50</li>
+                <li>Annual renewal: ¤25 extra</li>
+                <li>Check availability online</li>
+              </ul>
+            </div>
+
+            <div className="info-box">
+              <h4>Service Centers</h4>
+              <p><strong>Phone:</strong> 1-800-DRIVE-PY</p>
+              <p><strong>Hours:</strong> Mon-Fri 8AM-5PM</p>
+              <p><strong>Sat:</strong> Select locations 9AM-1PM</p>
+            </div>
+          </aside>
+        </div>
+      </div>
+    </main>
+  )
+}
+
+function SpecialPermits() {
+  return (
+    <main className="main">
+      <div className="page-header">
+        <div className="container">
+          <div className="breadcrumb">
+            <Link to="/transport">Home</Link> / Special Permits
+          </div>
+          <h1>Special Permits</h1>
+          <p className="subtitle">Commercial, oversized vehicle, and temporary permits</p>
+        </div>
+      </div>
+      <div className="container">
+        <div className="content-grid">
+          <div className="main-content">
+            <div className="card">
+              <h3 className="card-title">Commercial Vehicle Permits</h3>
+              <div className="content-text">
+                <p>Required for commercial vehicles operating in Praya:</p>
+                <ul style={{ marginTop: '12px' }}>
+                  <li><strong>Intrastate commerce:</strong> Operating only within Praya</li>
+                  <li><strong>Interstate commerce:</strong> Operating across state lines</li>
+                  <li><strong>Annual permit:</strong> ¤150-¤500 based on gross vehicle weight</li>
+                  <li><strong>Quarterly permit:</strong> ¤50-¤150 for seasonal operations</li>
+                  <li><strong>Safety inspection:</strong> Required annually for commercial vehicles</li>
+                  <li><strong>DOT number:</strong> Required for commercial carriers</li>
+                </ul>
+                <h4 style={{ marginTop: '20px' }}>Application Requirements:</h4>
+                <ul>
+                  <li>Proof of commercial insurance (minimum ¤500,000 liability)</li>
+                  <li>Vehicle registration and title</li>
+                  <li>Company business license</li>
+                  <li>Driver Class B or C commercial license</li>
+                </ul>
+              </div>
+            </div>
+
+            <div className="card">
+              <h3 className="card-title">Oversized Load Permits</h3>
+              <div className="content-text">
+                <p>Required for vehicles exceeding standard size/weight limits:</p>
+                <h4>When Permits Are Required:</h4>
+                <ul style={{ marginBottom: '16px' }}>
+                  <li><strong>Width:</strong> Over 2.6 meters (8.5 feet)</li>
+                  <li><strong>Height:</strong> Over 4.3 meters (14 feet)</li>
+                  <li><strong>Length:</strong> Over 16 meters (53 feet)</li>
+                  <li><strong>Weight:</strong> Over 36,000 kg (80,000 lbs) gross vehicle weight</li>
+                </ul>
+                <h4>Permit Types:</h4>
+                <ul style={{ marginBottom: '16px' }}>
+                  <li><strong>Single trip:</strong> ¤50-¤200 (valid for specific route and dates)</li>
+                  <li><strong>Annual superload:</strong> ¤500 (multiple trips, same route)</li>
+                  <li><strong>Emergency:</strong> ¤100 (24-hour processing for urgent loads)</li>
+                </ul>
+                <h4>Additional Requirements:</h4>
+                <ul>
+                  <li>Route survey and approval</li>
+                  <li>Escort vehicles for extremely large loads</li>
+                  <li>Travel restrictions (daylight hours, no weekends for some routes)</li>
+                  <li>Warning signs and flags</li>
+                  <li>Bond or insurance certificate</li>
+                </ul>
+              </div>
+            </div>
+
+            <div className="card">
+              <h3 className="card-title">Temporary Registration</h3>
+              <div className="content-text">
+                <p>Short-term registration for special situations:</p>
+                <ul style={{ marginTop: '12px', marginBottom: '16px' }}>
+                  <li><strong>30-day temp:</strong> ¤25 (moving to Praya, awaiting permanent registration)</li>
+                  <li><strong>90-day temp:</strong> ¤50 (for out-of-state vehicles, military personnel)</li>
+                  <li><strong>Dealer temp:</strong> ¤15 per vehicle (licensed dealers only)</li>
+                  <li><strong>Antique/collector:</strong> ¤35 (one-time event or show)</li>
+                </ul>
+                <p style={{ fontSize: '13px', color: 'var(--text-secondary)' }}>
+                  Temporary tags printed immediately at service centers or emailed for online applications
+                </p>
+              </div>
+            </div>
+
+            <div className="card">
+              <h3 className="card-title">Disabled Parking Permits</h3>
+              <div className="content-text">
+                <p>Permits for individuals with qualifying disabilities:</p>
+                <h4>Permanent Permit:</h4>
+                <ul style={{ marginBottom: '16px' }}>
+                  <li><strong>Eligibility:</strong> Mobility impairment, heart condition, lung disease, or other qualifying disability</li>
+                  <li><strong>Duration:</strong> 5 years (renewable)</li>
+                  <li><strong>Fee:</strong> Free</li>
+                  <li><strong>Required:</strong> Physician certification form</li>
+                </ul>
+                <h4>Temporary Permit:</h4>
+                <ul style={{ marginBottom: '16px' }}>
+                  <li><strong>Duration:</strong> Up to 6 months</li>
+                  <li><strong>Renewable:</strong> Once with doctor approval</li>
+                  <li><strong>Fee:</strong> Free</li>
+                </ul>
+                <h4>Organizational Permit:</h4>
+                <ul>
+                  <li>For organizations transporting disabled persons</li>
+                  <li>Annual fee: ¤25</li>
+                  <li>Requires proof of nonprofit status or licensing</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <aside className="sidebar">
+            <div className="card">
+              <h4 className="card-title">Application Process</h4>
+              <ol style={{ fontSize: '14px', paddingLeft: '20px' }}>
+                <li style={{ marginBottom: '8px' }}>Complete application form</li>
+                <li style={{ marginBottom: '8px' }}>Gather required documents</li>
+                <li style={{ marginBottom: '8px' }}>Submit online or at service center</li>
+                <li style={{ marginBottom: '8px' }}>Pay applicable fees</li>
+                <li>Receive permit (instant or 3-5 days)</li>
+              </ol>
+            </div>
+
+            <div className="info-box">
+              <h4>Processing Times</h4>
+              <p><strong>Standard:</strong> 3-5 business days</p>
+              <p><strong>Expedited:</strong> 24 hours (+¤50 fee)</p>
+              <p><strong>Emergency:</strong> Same day (+¤100 fee)</p>
+            </div>
+
+            <div className="card">
+              <h4 className="card-title">Permit Fees</h4>
+              <ul style={{ fontSize: '14px' }}>
+                <li><strong>Commercial:</strong> ¤150-¤500/year</li>
+                <li><strong>Oversized:</strong> ¤50-¤200/trip</li>
+                <li><strong>Temporary:</strong> ¤15-¤50</li>
+                <li><strong>Disabled:</strong> Free</li>
+              </ul>
+            </div>
+
+            <div className="info-box">
+              <h4>Permit Inquiries</h4>
+              <p><strong>Email:</strong> permits@transport.gov.py</p>
+              <p><strong>Phone:</strong> 1-800-DRIVE-PY</p>
+              <p><strong>Hours:</strong> Mon-Fri 8AM-5PM</p>
+            </div>
+          </aside>
         </div>
       </div>
     </main>

@@ -38,9 +38,9 @@ export default function Health() {
       <Routes>
         <Route index element={<HealthHome navigate={navigate} />} />
         <Route path="insurance" element={<HealthInsurance />} />
-        <Route path="vaccinations" element={<ComingSoon title="Vaccination Services" />} />
-        <Route path="providers" element={<ComingSoon title="Healthcare Providers" />} />
-        <Route path="alerts" element={<ComingSoon title="Health Alerts" />} />
+        <Route path="vaccinations" element={<Vaccinations />} />
+        <Route path="providers" element={<HealthcareProviders />} />
+        <Route path="alerts" element={<HealthAlerts />} />
       </Routes>
 
       <footer className="dept-footer">
@@ -54,8 +54,8 @@ export default function Health() {
               <h5>Services</h5>
               <ul>
                 <li><Link to="/health/insurance">Health Insurance</Link></li>
-                <li><a href="#">Find Doctor</a></li>
-                <li><a href="#">Prescription Assistance</a></li>
+                <li><Link to="/health/providers">Find Doctor</Link></li>
+                <li><Link to="/health/vaccinations">Vaccinations</Link></li>
               </ul>
             </div>
             <div className="footer-section">
@@ -63,15 +63,15 @@ export default function Health() {
               <ul>
                 <li><a href="tel:911">Emergency: 911</a></li>
                 <li><a href="tel:1-800-HEALTH-PY">Health Info: 1-800-HEALTH-PY</a></li>
-                <li><a href="#">Find Hospital</a></li>
+                <li><Link to="/health/providers">Find Hospital</Link></li>
               </ul>
             </div>
             <div className="footer-section">
               <h5>Government</h5>
               <ul>
                 <li><Link to="/">Gov Portal</Link></li>
-                <li><a href="#">Public Health Alerts</a></li>
-                <li><a href="#">Health Statistics</a></li>
+                <li><Link to="/health/alerts">Public Health Alerts</Link></li>
+                <li><Link to="/health">Health Statistics</Link></li>
               </ul>
             </div>
           </div>
@@ -385,122 +385,455 @@ function HealthInsurance() {
   )
 }
 
-function ComingSoon({ title }) {
-  const navigate = useNavigate();
-
-  const getServiceInfo = () => {
-    switch(title) {
-      case 'Vaccination Services':
-        return {
-          description: 'Immunization records, vaccination schedules, and clinic locations.',
-          services: ['View Vaccination Records', 'Childhood Immunization Schedule', 'Travel Vaccines', 'Flu Shot Locations'],
-          contact: 'For vaccination info: Call 1-800-HEALTH-PY or visit any public health clinic'
-        };
-      case 'Healthcare Providers':
-        return {
-          description: 'Find doctors, specialists, hospitals, and clinics in your area.',
-          services: ['Doctor Search by Specialty', 'Hospital Directory', 'Clinic Locations', 'Provider Ratings & Reviews'],
-          contact: 'For provider referrals: Contact your insurance or call 1-800-HEALTH-PY'
-        };
-      case 'Health Alerts':
-        return {
-          description: 'Stay informed about public health advisories, disease outbreaks, and safety recommendations.',
-          services: ['Disease Outbreak Alerts', 'Air Quality Advisories', 'Food Safety Recalls', 'Seasonal Health Tips'],
-          contact: 'For emergency health information: Call 1-800-HEALTH-PY or tune to emergency broadcast'
-        };
-      default:
-        return {
-          description: 'This service is being developed to serve you better.',
-          services: [],
-          contact: 'For assistance, contact the Department of Health'
-        };
-    }
-  };
-
-  const info = getServiceInfo();
+function Vaccinations() {
+  const [ageGroup, setAgeGroup] = React.useState('adult');
 
   return (
     <main className="main">
       <div className="page-header">
         <div className="container">
           <div className="breadcrumb">
-            <Link to="/health">Home</Link> / {title}
+            <Link to="/health">Home</Link> / Vaccinations
           </div>
-          <h1>{title}</h1>
-          <p className="subtitle">{info.description}</p>
+          <h1>Vaccination Services</h1>
+          <p className="subtitle">Immunization schedules, vaccine information, and clinic locations</p>
         </div>
       </div>
       <div className="container">
-        <div className="card">
-          <div style={{ padding: '20px', textAlign: 'center' }}>
-            <div style={{
-              width: '64px',
-              height: '64px',
-              background: 'linear-gradient(135deg, rgba(220, 38, 38, 0.1) 0%, rgba(220, 38, 38, 0.2) 100%)',
-              borderRadius: '50%',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              margin: '0 auto 20px'
-            }}>
-              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                <circle cx="12" cy="12" r="10"/>
-                <path d="M12 16v-4M12 8h.01"/>
-              </svg>
+        <div className="content-grid">
+          <div className="main-content">
+            <div className="card">
+              <h3 className="card-title">View Vaccination Schedule</h3>
+              <div className="content-text">
+                <div style={{ marginBottom: '20px' }}>
+                  <label style={{ display: 'block', marginBottom: '8px', fontWeight: '500' }}>Age Group</label>
+                  <select
+                    value={ageGroup}
+                    onChange={(e) => setAgeGroup(e.target.value)}
+                    style={{ width: '100%', padding: '10px', borderRadius: '8px', border: '1px solid var(--border-subtle)' }}
+                  >
+                    <option value="infant">Infants (0-2 years)</option>
+                    <option value="child">Children (2-12 years)</option>
+                    <option value="teen">Teens (13-17 years)</option>
+                    <option value="adult">Adults (18-64 years)</option>
+                    <option value="senior">Seniors (65+ years)</option>
+                  </select>
+                </div>
+              </div>
             </div>
-            <h3 style={{ marginBottom: '12px' }}>Service Under Development</h3>
-            <p style={{ color: 'var(--text-muted)', maxWidth: '500px', margin: '0 auto 24px' }}>
-              We're working to bring this service online. In the meantime, you can access these services through traditional channels.
-            </p>
 
-            {info.services.length > 0 && (
-              <div style={{ marginTop: '24px', textAlign: 'left', maxWidth: '400px', margin: '24px auto 0' }}>
-                <h4 style={{ fontSize: '14px', marginBottom: '12px' }}>Available Services:</h4>
-                <ul style={{ color: 'var(--text-secondary)', fontSize: '14px' }}>
-                  {info.services.map(service => (
-                    <li key={service} style={{ marginBottom: '8px' }}>{service}</li>
-                  ))}
+            <div className="card">
+              <h3 className="card-title">Recommended Vaccines by Age</h3>
+              <div className="content-text">
+                <h4>Infants & Children (Birth - 6 years)</h4>
+                <ul style={{ marginBottom: '16px' }}>
+                  <li><strong>Hepatitis B:</strong> Birth, 1-2 months, 6-18 months</li>
+                  <li><strong>DTaP (Diphtheria, Tetanus, Pertussis):</strong> 2, 4, 6, 15-18 months, 4-6 years</li>
+                  <li><strong>Hib (Haemophilus influenzae type b):</strong> 2, 4, 6, 12-15 months</li>
+                  <li><strong>Polio (IPV):</strong> 2, 4, 6-18 months, 4-6 years</li>
+                  <li><strong>Pneumococcal (PCV13):</strong> 2, 4, 6, 12-15 months</li>
+                  <li><strong>Rotavirus:</strong> 2, 4, 6 months</li>
+                  <li><strong>MMR (Measles, Mumps, Rubella):</strong> 12-15 months, 4-6 years</li>
+                  <li><strong>Varicella (Chickenpox):</strong> 12-15 months, 4-6 years</li>
+                  <li><strong>Hepatitis A:</strong> 12-23 months (2 doses)</li>
+                </ul>
+
+                <h4>Preteens & Teens (7-18 years)</h4>
+                <ul style={{ marginBottom: '16px' }}>
+                  <li><strong>Tdap booster:</strong> 11-12 years</li>
+                  <li><strong>HPV (Human Papillomavirus):</strong> 11-12 years (2-3 doses)</li>
+                  <li><strong>Meningococcal:</strong> 11-12 years, booster at 16</li>
+                  <li><strong>Annual flu vaccine:</strong> Recommended for all ages</li>
+                </ul>
+
+                <h4>Adults (19+ years)</h4>
+                <ul style={{ marginBottom: '16px' }}>
+                  <li><strong>Td/Tdap booster:</strong> Every 10 years</li>
+                  <li><strong>HPV:</strong> Through age 26 (catch-up)</li>
+                  <li><strong>Shingles (Zoster):</strong> Age 50+ (2 doses)</li>
+                  <li><strong>Pneumococcal:</strong> Age 65+ (PCV15/PCV20 or PPSV23)</li>
+                  <li><strong>Annual flu vaccine:</strong> All adults</li>
+                  <li><strong>COVID-19:</strong> Per current recommendations</li>
                 </ul>
               </div>
-            )}
-
-            <div style={{
-              marginTop: '32px',
-              padding: '16px',
-              background: 'rgba(220, 38, 38, 0.05)',
-              borderRadius: '10px',
-              fontSize: '13px',
-              color: 'var(--text-muted)'
-            }}>
-              {info.contact}
             </div>
 
-            <div style={{ marginTop: '32px' }}>
-              <h4 style={{ fontSize: '14px', marginBottom: '12px' }}>Related Services</h4>
-              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '12px' }}>
-                <Link to="/health/insurance" style={{
-                  padding: '14px',
-                  background: 'var(--bg-elevated)',
-                  border: '1px solid var(--border-subtle)',
-                  borderRadius: '10px',
-                  textDecoration: 'none',
-                  fontSize: '13px',
-                  fontWeight: '500',
-                  color: 'var(--text-primary)',
-                  transition: 'all 0.2s'
-                }}>
-                  Health Insurance
-                </Link>
-                <button
-                  onClick={() => navigate('/health')}
-                  className="btn btn-secondary"
-                  style={{ fontSize: '13px', padding: '14px' }}
-                >
-                  Return to Health Home
+            <div className="card">
+              <h3 className="card-title">Travel Vaccinations</h3>
+              <div className="content-text">
+                <p>Required or recommended vaccines for international travel:</p>
+                <ul style={{ marginTop: '12px' }}>
+                  <li><strong>Yellow Fever:</strong> Required for travel to certain countries in Africa and South America</li>
+                  <li><strong>Typhoid:</strong> Recommended for travel to developing countries</li>
+                  <li><strong>Japanese Encephalitis:</strong> For travel to rural areas of Asia</li>
+                  <li><strong>Rabies:</strong> For extended travel in areas with limited medical care</li>
+                  <li><strong>Hepatitis A & B:</strong> Recommended for most international travel</li>
+                  <li><strong>Meningococcal:</strong> Required for pilgrimage to Mecca (Hajj)</li>
+                </ul>
+                <p style={{ marginTop: '12px', fontSize: '13px', color: 'var(--text-secondary)' }}>
+                  <strong>Note:</strong> Schedule travel clinic appointment 4-6 weeks before departure
+                </p>
+              </div>
+            </div>
+
+            <div className="card">
+              <h3 className="card-title">Vaccination Records</h3>
+              <div className="content-text">
+                <p>Access and manage your immunization records:</p>
+                <ul style={{ marginTop: '12px' }}>
+                  <li>View complete vaccination history</li>
+                  <li>Download official immunization certificate</li>
+                  <li>Check upcoming due dates for boosters</li>
+                  <li>Submit records for school/work requirements</li>
+                  <li>Request catch-up vaccination recommendations</li>
+                </ul>
+                <button className="btn btn-primary" style={{ width: '100%', marginTop: '16px', padding: '14px' }}>
+                  Access My Records
                 </button>
               </div>
             </div>
           </div>
+
+          <aside className="sidebar">
+            <div className="card" style={{ background: 'linear-gradient(135deg, #dc2626 0%, #b91c1c 100%)', color: 'white', border: 'none' }}>
+              <h4 style={{ color: 'white', marginBottom: '8px' }}>Vaccine Safety</h4>
+              <p style={{ fontSize: '14px', opacity: 0.9, lineHeight: '1.5' }}>
+                All vaccines are rigorously tested for safety and effectiveness. Serious side effects are rare. Benefits far outweigh risks.
+              </p>
+            </div>
+
+            <div className="info-box">
+              <h4>Find a Clinic</h4>
+              <p><strong>Public Health Clinics:</strong> 87 locations nationwide</p>
+              <p><strong>Hours:</strong> Mon-Fri 8AM-5PM</p>
+              <p><strong>Walk-ins welcome</strong> for most vaccines</p>
+            </div>
+
+            <div className="card">
+              <h4 className="card-title">Vaccine Costs</h4>
+              <ul style={{ fontSize: '14px' }}>
+                <li><strong>Children:</strong> Free under National Program</li>
+                <li><strong>Adults:</strong> Covered by most insurance</li>
+                <li><strong>Travel vaccines:</strong> ¤35-¤150 per dose</li>
+                <li><strong>No insurance:</strong> Sliding scale available</li>
+              </ul>
+            </div>
+
+            <div className="info-box">
+              <h4>Questions?</h4>
+              <p><strong>Phone:</strong> 1-800-HEALTH-PY</p>
+              <p><strong>Email:</strong> vaccines@health.gov.py</p>
+              <p><strong>Hours:</strong> Mon-Fri 8AM-6PM</p>
+            </div>
+          </aside>
+        </div>
+      </div>
+    </main>
+  )
+}
+
+function HealthcareProviders() {
+  const [specialty, setSpecialty] = React.useState('');
+  const [location, setLocation] = React.useState('');
+
+  return (
+    <main className="main">
+      <div className="page-header">
+        <div className="container">
+          <div className="breadcrumb">
+            <Link to="/health">Home</Link> / Find Provider
+          </div>
+          <h1>Find Healthcare Providers</h1>
+          <p className="subtitle">Search for doctors, specialists, hospitals, and clinics</p>
+        </div>
+      </div>
+      <div className="container">
+        <div className="content-grid">
+          <div className="main-content">
+            <div className="card">
+              <h3 className="card-title">Provider Search</h3>
+              <div className="content-text">
+                <div style={{ marginBottom: '20px' }}>
+                  <label style={{ display: 'block', marginBottom: '8px', fontWeight: '500' }}>Specialty or Type</label>
+                  <select
+                    value={specialty}
+                    onChange={(e) => setSpecialty(e.target.value)}
+                    style={{ width: '100%', padding: '10px', borderRadius: '8px', border: '1px solid var(--border-subtle)' }}
+                  >
+                    <option value="">All Providers</option>
+                    <option value="primary">Primary Care Physician</option>
+                    <option value="cardiology">Cardiologist</option>
+                    <option value="dermatology">Dermatologist</option>
+                    <option value="orthopedics">Orthopedic Surgeon</option>
+                    <option value="pediatrics">Pediatrician</option>
+                    <option value="obgyn">OB/GYN</option>
+                    <option value="psychiatry">Psychiatrist</option>
+                    <option value="dentist">Dentist</option>
+                    <option value="hospital">Hospital</option>
+                    <option value="urgent">Urgent Care</option>
+                  </select>
+                </div>
+
+                <div style={{ marginBottom: '20px' }}>
+                  <label style={{ display: 'block', marginBottom: '8px', fontWeight: '500' }}>Location</label>
+                  <input
+                    type="text"
+                    value={location}
+                    onChange={(e) => setLocation(e.target.value)}
+                    placeholder="City, postal code, or address"
+                    style={{ width: '100%', padding: '10px', borderRadius: '8px', border: '1px solid var(--border-subtle)', fontSize: '16px' }}
+                  />
+                </div>
+
+                <button className="btn btn-primary" style={{ width: '100%', padding: '14px' }}>
+                  Search Providers
+                </button>
+              </div>
+            </div>
+
+            <div className="card">
+              <h3 className="card-title">Major Hospitals</h3>
+              <div className="content-text">
+                <div style={{ marginBottom: '16px' }}>
+                  <h4 style={{ marginBottom: '4px' }}>Praya General Hospital</h4>
+                  <p style={{ fontSize: '14px', color: 'var(--text-muted)', marginBottom: '4px' }}>Level 1 Trauma Center • 847 beds</p>
+                  <p style={{ fontSize: '14px' }}>1200 Medical Center Drive, Praya City • (555) 100-1000</p>
+                </div>
+                <div style={{ marginBottom: '16px' }}>
+                  <h4 style={{ marginBottom: '4px' }}>Central Medical Center</h4>
+                  <p style={{ fontSize: '14px', color: 'var(--text-muted)', marginBottom: '4px' }}>Teaching Hospital • 612 beds</p>
+                  <p style={{ fontSize: '14px' }}>450 University Ave, Praya City • (555) 200-2000</p>
+                </div>
+                <div style={{ marginBottom: '16px' }}>
+                  <h4 style={{ marginBottom: '4px' }}>Children's Hospital of Praya</h4>
+                  <p style={{ fontSize: '14px', color: 'var(--text-muted)', marginBottom: '4px' }}>Pediatric Specialty Center • 285 beds</p>
+                  <p style={{ fontSize: '14px' }}>89 Children's Way, Praya City • (555) 300-3000</p>
+                </div>
+              </div>
+            </div>
+
+            <div className="card">
+              <h3 className="card-title">Choosing a Provider</h3>
+              <div className="content-text">
+                <p>Factors to consider when selecting a healthcare provider:</p>
+                <ul style={{ marginTop: '12px' }}>
+                  <li><strong>Insurance network:</strong> Check if provider accepts your insurance</li>
+                  <li><strong>Location & hours:</strong> Convenient access and appointment availability</li>
+                  <li><strong>Board certification:</strong> Verify credentials and specialties</li>
+                  <li><strong>Hospital affiliations:</strong> Which hospitals provider uses</li>
+                  <li><strong>Languages spoken:</strong> Communication preferences</li>
+                  <li><strong>Patient reviews:</strong> Ratings and experiences from other patients</li>
+                  <li><strong>Gender preference:</strong> Some patients prefer male or female providers</li>
+                </ul>
+              </div>
+            </div>
+
+            <div className="card">
+              <h3 className="card-title">Urgent & Emergency Care</h3>
+              <div className="content-text">
+                <p><strong>When to use each:</strong></p>
+                <ul style={{ marginTop: '12px', marginBottom: '16px' }}>
+                  <li><strong>911/Emergency Room:</strong> Life-threatening conditions (chest pain, stroke, severe bleeding, major trauma)</li>
+                  <li><strong>Urgent Care:</strong> Non-life-threatening issues needing same-day care (sprains, minor cuts, flu, infections)</li>
+                  <li><strong>Telehealth:</strong> Minor issues, prescription refills, follow-ups</li>
+                  <li><strong>Primary Care:</strong> Routine checkups, chronic condition management, preventive care</li>
+                </ul>
+                <p style={{ fontSize: '13px', color: 'var(--text-secondary)' }}>
+                  <strong>Emergency:</strong> Call 911 or go to nearest ER
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <aside className="sidebar">
+            <div className="card">
+              <h4 className="card-title">Quick Access</h4>
+              <div className="quick-link">
+                <span className="icon">📋</span>
+                Verify Provider License
+              </div>
+              <div className="quick-link">
+                <span className="icon">⭐</span>
+                Read Patient Reviews
+              </div>
+              <div className="quick-link">
+                <span className="icon">📅</span>
+                Book Appointment
+              </div>
+              <div className="quick-link">
+                <span className="icon">💊</span>
+                Find Pharmacy
+              </div>
+            </div>
+
+            <div className="info-box">
+              <h4>Provider Statistics</h4>
+              <p><strong>Active Physicians:</strong> 8,450</p>
+              <p><strong>Specialists:</strong> 3,200</p>
+              <p><strong>Primary Care:</strong> 5,250</p>
+              <p><strong>Hospitals:</strong> 47</p>
+              <p><strong>Clinics:</strong> 1,200+</p>
+            </div>
+
+            <div className="card">
+              <h4 className="card-title">Need Help Choosing?</h4>
+              <p style={{ fontSize: '14px' }}>Call our Provider Referral Line for assistance finding the right doctor for your needs.</p>
+              <p style={{ fontSize: '14px', marginTop: '12px' }}><strong>1-800-FIND-DOC</strong></p>
+            </div>
+
+            <div className="info-box">
+              <h4>Report Provider Concerns</h4>
+              <p style={{ fontSize: '14px' }}>File complaints about medical care, billing, or professional conduct.</p>
+            </div>
+          </aside>
+        </div>
+      </div>
+    </main>
+  )
+}
+
+function HealthAlerts() {
+  return (
+    <main className="main">
+      <div className="page-header">
+        <div className="container">
+          <div className="breadcrumb">
+            <Link to="/health">Home</Link> / Health Alerts
+          </div>
+          <h1>Public Health Alerts</h1>
+          <p className="subtitle">Current advisories, disease outbreaks, and safety recommendations</p>
+        </div>
+      </div>
+      <div className="container">
+        <div className="content-grid">
+          <div className="main-content">
+            <div className="card" style={{ background: 'linear-gradient(135deg, rgba(220, 38, 38, 0.1) 0%, rgba(220, 38, 38, 0.05) 100%)', border: '2px solid #dc2626' }}>
+              <h3 style={{ color: '#dc2626', marginBottom: '12px' }}>⚠️ Current Alerts</h3>
+              <div style={{ fontSize: '14px' }}>
+                <div style={{ padding: '12px', background: 'white', borderRadius: '8px', marginBottom: '12px', border: '1px solid #fee2e2' }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '4px' }}>
+                    <strong>Influenza Activity Level: MODERATE</strong>
+                    <span style={{ color: '#dc2626' }}>Dec 4, 2024</span>
+                  </div>
+                  <p style={{ color: 'var(--text-muted)', fontSize: '13px' }}>Flu cases increasing across Praya. Get vaccinated if you haven't already. Practice good hand hygiene.</p>
+                </div>
+                <div style={{ padding: '12px', background: 'white', borderRadius: '8px', marginBottom: '12px', border: '1px solid #fee2e2' }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '4px' }}>
+                    <strong>Air Quality Advisory - Praya City</strong>
+                    <span style={{ color: '#dc2626' }}>Dec 3, 2024</span>
+                  </div>
+                  <p style={{ color: 'var(--text-muted)', fontSize: '13px' }}>Elevated particulate matter levels. Sensitive groups should limit outdoor activity. Expected to clear by evening.</p>
+                </div>
+              </div>
+            </div>
+
+            <div className="card">
+              <h3 className="card-title">Disease Surveillance</h3>
+              <div className="content-text">
+                <h4>Seasonal Trends</h4>
+                <ul style={{ marginBottom: '16px' }}>
+                  <li><strong>Influenza:</strong> Moderate activity, increasing trend. Peak expected in January.</li>
+                  <li><strong>COVID-19:</strong> Low community transmission. Vaccines available.</li>
+                  <li><strong>RSV:</strong> Moderate activity in children under 5. Consider vaccination for high-risk infants.</li>
+                  <li><strong>Norovirus:</strong> Typical seasonal activity. Practice hand hygiene, especially in group settings.</li>
+                </ul>
+
+                <h4>No Current Outbreaks</h4>
+                <p style={{ marginTop: '12px', fontSize: '14px', color: 'var(--text-muted)' }}>
+                  No significant disease outbreaks reported in Praya at this time. Continue routine preventive measures.
+                </p>
+              </div>
+            </div>
+
+            <div className="card">
+              <h3 className="card-title">Food Safety Recalls</h3>
+              <div className="content-text">
+                <div style={{ marginBottom: '16px' }}>
+                  <strong style={{ color: '#dc2626' }}>Dec 1, 2024:</strong> Fresh spinach recalled due to possible Salmonella contamination
+                  <p style={{ fontSize: '13px', marginTop: '4px', color: 'var(--text-muted)' }}>
+                    Brand: GreenLeaf Farms • UPC: 123456789 • Best by dates: 12/05-12/10
+                  </p>
+                </div>
+                <div style={{ marginBottom: '16px' }}>
+                  <strong style={{ color: '#dc2626' }}>Nov 28, 2024:</strong> Ground beef recalled for potential E. coli O157:H7
+                  <p style={{ fontSize: '13px', marginTop: '4px', color: 'var(--text-muted)' }}>
+                    Brand: Prime Meats • Production dates: 11/15-11/20 • Sold at major retailers
+                  </p>
+                </div>
+                <p style={{ marginTop: '16px', fontSize: '13px' }}>
+                  <strong>If you have recalled products:</strong> Do not consume. Return to store for refund or discard.
+                </p>
+              </div>
+            </div>
+
+            <div className="card">
+              <h3 className="card-title">Seasonal Health Tips</h3>
+              <div className="content-text">
+                <h4>Winter Health</h4>
+                <ul>
+                  <li><strong>Get vaccinated:</strong> Flu, COVID-19, RSV (if eligible)</li>
+                  <li><strong>Wash hands frequently:</strong> 20 seconds with soap and water</li>
+                  <li><strong>Stay home when sick:</strong> Prevent spreading illness to others</li>
+                  <li><strong>Manage chronic conditions:</strong> Cold weather can affect heart, asthma</li>
+                  <li><strong>Carbon monoxide safety:</strong> Check detectors, never use generators indoors</li>
+                  <li><strong>Winter driving:</strong> Prepare vehicle, check weather before travel</li>
+                </ul>
+              </div>
+            </div>
+
+            <div className="card">
+              <h3 className="card-title">Travel Health Notices</h3>
+              <div className="content-text">
+                <p>Current health advisories for international travelers:</p>
+                <ul style={{ marginTop: '12px' }}>
+                  <li><strong>Dengue Fever:</strong> Increased activity in Southeast Asia and Caribbean. Use insect repellent.</li>
+                  <li><strong>Measles:</strong> Outbreaks in several European countries. Ensure MMR vaccination up to date.</li>
+                  <li><strong>Yellow Fever:</strong> Ongoing transmission in parts of Africa and South America. Vaccination required.</li>
+                </ul>
+                <p style={{ marginTop: '16px', fontSize: '13px', color: 'var(--text-secondary)' }}>
+                  <strong>Before travel:</strong> Visit travel clinic 4-6 weeks before departure for vaccines and guidance.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <aside className="sidebar">
+            <div className="card">
+              <h4 className="card-title">Sign Up for Alerts</h4>
+              <p style={{ fontSize: '14px', marginBottom: '12px' }}>Receive emergency health notifications by:</p>
+              <ul style={{ fontSize: '14px' }}>
+                <li>Email</li>
+                <li>Text message (SMS)</li>
+                <li>Mobile app push notifications</li>
+              </ul>
+              <button className="btn btn-primary" style={{ width: '100%', marginTop: '12px', padding: '12px' }}>
+                Subscribe to Alerts
+              </button>
+            </div>
+
+            <div className="info-box">
+              <h4>Alert Levels</h4>
+              <div style={{ fontSize: '13px', marginTop: '8px' }}>
+                <p style={{ marginBottom: '8px' }}><strong style={{ color: '#dc2626' }}>🔴 HIGH:</strong> Immediate action needed</p>
+                <p style={{ marginBottom: '8px' }}><strong style={{ color: '#f59e0b' }}>🟠 MODERATE:</strong> Take precautions</p>
+                <p><strong style={{ color: '#10b981' }}>🟢 LOW:</strong> Routine monitoring</p>
+              </div>
+            </div>
+
+            <div className="card">
+              <h4 className="card-title">Report Public Health Concern</h4>
+              <p style={{ fontSize: '14px' }}>Report suspected disease outbreaks, foodborne illness, or environmental health hazards.</p>
+              <p style={{ fontSize: '14px', marginTop: '12px' }}><strong>24/7 Hotline:</strong></p>
+              <p style={{ fontSize: '14px' }}>1-800-REPORT-H</p>
+            </div>
+
+            <div className="info-box">
+              <h4>Emergency Resources</h4>
+              <p><strong>Poison Control:</strong> 1-800-222-1222</p>
+              <p><strong>Mental Health Crisis:</strong> 988</p>
+              <p><strong>Emergency:</strong> 911</p>
+            </div>
+          </aside>
         </div>
       </div>
     </main>
