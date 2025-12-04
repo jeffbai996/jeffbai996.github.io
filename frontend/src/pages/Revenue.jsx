@@ -89,7 +89,7 @@ export default function Revenue() {
 
 function RevenueHome({ navigate }) {
   return (
-    <>
+    <div className="layout-financial">
       <section className="hero">
         <div className="hero-bg">
           <div className="hero-bg-shape"></div>
@@ -97,28 +97,42 @@ function RevenueHome({ navigate }) {
           <div className="hero-bg-shape"></div>
         </div>
         <div className="hero-pattern"></div>
-        <div className="container">
-          <div className="hero-content">
-            <div className="hero-badge">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                <circle cx="12" cy="12" r="10"/>
-                <path d="M16 8h-6a2 2 0 1 0 0 4h4a2 2 0 1 1 0 4H8M12 18V6"/>
+        <div className="hero-content">
+          <div className="hero-badge">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              <circle cx="12" cy="12" r="10"/>
+              <path d="M16 8h-6a2 2 0 1 0 0 4h4a2 2 0 1 1 0 4H8M12 18V6"/>
+            </svg>
+            Tax Services
+          </div>
+          <h2>Simple & <span>Fair</span> Taxation</h2>
+          <p>File your taxes online, make payments, track refunds, and access tax resources through the Revenue Department's digital services. Efficient taxation for a stronger Praya.</p>
+          <div className="hero-actions">
+            <button className="btn btn-primary" onClick={() => navigate('/revenue/file')}>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/>
+                <polyline points="14,2 14,8 20,8"/>
               </svg>
-              Tax Services
-            </div>
-            <h2>Simple & <span>Fair</span> Taxation</h2>
-            <p>File your taxes online, make payments, track refunds, and access tax resources through the Revenue Department's digital services. Efficient taxation for a stronger Praya.</p>
-            <div className="hero-actions">
-              <button className="btn btn-primary" onClick={() => navigate('/revenue/file')}>
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                  <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/>
-                  <polyline points="14,2 14,8 20,8"/>
-                </svg>
-                File Tax Return
-              </button>
-              <button className="btn btn-secondary" onClick={() => navigate('/revenue/refunds')}>
-                Check Refund Status
-              </button>
+              File Tax Return
+            </button>
+            <button className="btn btn-secondary" onClick={() => navigate('/revenue/refunds')}>
+              Check Refund Status
+            </button>
+          </div>
+        </div>
+        <div className="hero-visual">
+          <div className="financial-display">
+            <div className="display-label">Returns Filed (2024)</div>
+            <div className="display-value">2.8M</div>
+            <div className="display-stats">
+              <div>
+                <div className="display-stat-label">E-File Rate</div>
+                <div className="display-stat-value">87%</div>
+              </div>
+              <div>
+                <div className="display-stat-label">Avg Refund</div>
+                <div className="display-stat-value">¤2,840</div>
+              </div>
             </div>
           </div>
         </div>
@@ -288,7 +302,7 @@ function RevenueHome({ navigate }) {
           </div>
         </div>
       </main>
-    </>
+    </div>
   )
 }
 
