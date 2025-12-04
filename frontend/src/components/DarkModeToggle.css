@@ -1,0 +1,238 @@
+/* Dark Mode Toggle */
+.dark-mode-toggle {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  background: white;
+  border: 1px solid #e2e8f0;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-size: 13px;
+  font-weight: 600;
+  color: #475569;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+.dark-mode-toggle.fixed {
+  position: fixed;
+  bottom: 80px;
+  right: 20px;
+  z-index: 999;
+}
+
+.dark-mode-toggle:hover {
+  border-color: #cbd5e1;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+}
+
+.toggle-track {
+  width: 40px;
+  height: 22px;
+  border-radius: 11px;
+  background: #cbd5e1;
+  position: relative;
+  transition: background 0.3s ease;
+}
+
+.toggle-track.dark {
+  background: #3b82f6;
+}
+
+.toggle-thumb {
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #94a3b8;
+  transition: all 0.3s ease;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+}
+
+.toggle-track.dark .toggle-thumb {
+  transform: translateX(18px);
+  color: #fbbf24;
+}
+
+.toggle-label {
+  user-select: none;
+}
+
+/* Dark Mode Selector (Dropdown) */
+.dark-mode-selector {
+  position: relative;
+  display: inline-block;
+}
+
+.selector-trigger {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  background: white;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-size: 14px;
+  font-weight: 600;
+  color: #475569;
+}
+
+.selector-trigger:hover {
+  background: #f8fafc;
+  border-color: #cbd5e1;
+}
+
+.selector-trigger svg:last-child {
+  opacity: 0.5;
+  transition: transform 0.2s;
+}
+
+.selector-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 998;
+}
+
+.selector-menu {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  min-width: 150px;
+  background: white;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  overflow: hidden;
+  z-index: 999;
+  animation: menuSlideDown 0.2s ease;
+}
+
+@keyframes menuSlideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.menu-option {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 10px 14px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  transition: background 0.2s;
+  font-size: 14px;
+  color: #475569;
+  text-align: left;
+}
+
+.menu-option:hover {
+  background: #f8fafc;
+}
+
+.menu-option.active {
+  background: #eff6ff;
+  color: #2563eb;
+}
+
+.option-icon {
+  display: flex;
+  align-items: center;
+  color: #94a3b8;
+}
+
+.menu-option.active .option-icon {
+  color: #2563eb;
+}
+
+.option-label {
+  flex: 1;
+  font-weight: 600;
+}
+
+.check-icon {
+  color: #2563eb;
+}
+
+/* Dark Mode Styles */
+.dark-mode .dark-mode-toggle {
+  background: #1e293b;
+  border-color: #334155;
+  color: #cbd5e1;
+}
+
+.dark-mode .selector-trigger {
+  background: #1e293b;
+  border-color: #334155;
+  color: #cbd5e1;
+}
+
+.dark-mode .selector-trigger:hover {
+  background: #334155;
+  border-color: #475569;
+}
+
+.dark-mode .selector-menu {
+  background: #1e293b;
+  border-color: #334155;
+}
+
+.dark-mode .menu-option {
+  color: #cbd5e1;
+}
+
+.dark-mode .menu-option:hover {
+  background: #334155;
+}
+
+.dark-mode .menu-option.active {
+  background: #1e3a8a;
+  color: #93c5fd;
+}
+
+.dark-mode .option-icon {
+  color: #64748b;
+}
+
+.dark-mode .menu-option.active .option-icon {
+  color: #93c5fd;
+}
+
+.dark-mode .check-icon {
+  color: #93c5fd;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .dark-mode-toggle.fixed {
+    bottom: 70px;
+    right: 16px;
+    padding: 6px 10px;
+  }
+
+  .toggle-label {
+    display: none;
+  }
+
+  .selector-menu {
+    right: auto;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+}
