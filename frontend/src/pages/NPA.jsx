@@ -85,7 +85,7 @@ export default function NPA() {
 
 function NPAHome({ navigate }) {
   return (
-    <>
+    <div className="layout-emergency">
       <section className="hero">
         <div className="hero-bg">
           <div className="hero-bg-shape"></div>
@@ -94,7 +94,7 @@ function NPAHome({ navigate }) {
         </div>
         <div className="hero-pattern"></div>
         <div className="container">
-          <div className="hero-content">
+          <div className="hero-main">
             <div className="hero-badge">
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                 <path d="M12 2l7 4v6c0 5-4 9-7 10-3-1-7-5-7-10V6z"></path>
@@ -116,6 +116,23 @@ function NPAHome({ navigate }) {
               <button className="btn btn-secondary" onClick={() => navigate('/npa/services')}>
                 Police Services
               </button>
+            </div>
+          </div>
+          <div className="hero-emergency">
+            <div className="emergency-title">EMERGENCY CONTACT</div>
+            <div className="emergency-numbers">
+              <a href="tel:911" className="emergency-number">
+                <div className="emergency-label">Life-Threatening Emergency</div>
+                <div className="emergency-phone">911</div>
+              </a>
+              <a href="tel:311" className="emergency-number">
+                <div className="emergency-label">Non-Emergency</div>
+                <div className="emergency-phone">311</div>
+              </a>
+              <a href="tel:1-800-CRIME-TIP" className="emergency-number">
+                <div className="emergency-label">Anonymous Tips</div>
+                <div className="emergency-phone">1-800-CRIME-TIP</div>
+              </a>
             </div>
           </div>
         </div>
@@ -257,7 +274,7 @@ function NPAHome({ navigate }) {
           </div>
         </div>
       </main>
-    </>
+    </div>
   )
 }
 
