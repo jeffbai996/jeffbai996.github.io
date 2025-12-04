@@ -94,7 +94,7 @@ export default function Interior() {
 
 function InteriorHome({ navigate }) {
   return (
-    <>
+    <div className="layout-civic">
       <section className="hero">
         <div className="hero-bg">
           <div className="hero-bg-shape"></div>
@@ -270,7 +270,7 @@ function InteriorHome({ navigate }) {
           </div>
         </div>
       </main>
-    </>
+    </div>
   )
 }
 

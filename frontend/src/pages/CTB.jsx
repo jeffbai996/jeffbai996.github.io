@@ -85,7 +85,7 @@ export default function CTB() {
 
 function CTBHome({ navigate }) {
   return (
-    <>
+    <div className="layout-financial">
       <section className="hero">
         <div className="hero-bg">
           <div className="hero-bg-shape"></div>
@@ -114,6 +114,26 @@ function CTBHome({ navigate }) {
               <button className="btn btn-secondary" onClick={() => navigate('/ctb/taxation')}>
                 File Taxes
               </button>
+            </div>
+          </div>
+          <div className="hero-visual">
+            <div className="financial-display">
+              <div className="display-label">Annual Tax Revenue</div>
+              <div className="display-value">¤84M</div>
+              <div className="display-stats">
+                <div>
+                  <div className="display-stat-label">Active Licenses</div>
+                  <div className="display-stat-value">1,247</div>
+                </div>
+                <div>
+                  <div className="display-stat-label">Compliance Rate</div>
+                  <div className="display-stat-value">97.2%</div>
+                </div>
+                <div>
+                  <div className="display-stat-label">Market Growth</div>
+                  <div className="display-stat-value">+12%</div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -243,7 +263,7 @@ function CTBHome({ navigate }) {
           </div>
         </div>
       </main>
-    </>
+    </div>
   )
 }
 
