@@ -45,21 +45,8 @@ const VOICE_ENABLED = true // Enable voice chat feature
 // Generate expanded knowledge base from department data
 const knowledgeBase = generateKnowledgeBase()
 
-// Track conversation context for follow-ups with enhanced memory
-// Note: We now use the conversationMemory module for most context tracking
-let conversationContext = {
-  lastIntent: null,
-  awaitingFollowUp: false,
-  entities: {},
-  conversationHistory: [], // Track last 5 exchanges
-  currentTopics: [], // Track current discussion topics
-  userPreferences: {}, // Track user preferences mentioned
-  clarificationCount: 0, // Track how many times we asked for clarification
-  lastResponseTime: null,
-  // Enhanced context
-  lastStrategy: null, // Track what response strategy was used
-  offeredRelated: false // Track if we offered related services
-}
+// NOTE: conversationContext and recentMessages are now managed as refs inside the ChatWidget component
+// to prevent issues with multiple instances and proper React lifecycle management
 
 // Polite responses for various edge cases with more natural language
 const edgeCaseResponses = {
@@ -80,16 +67,14 @@ const smartSuggestions = {
   license: ["Driver's License", "Cannabis License", "Vehicle Registration"]
 }
 
-// Track recent messages to detect spam/repetition
-let recentMessages = []
-
 // Find best matching response with enhanced semantic intent recognition
-function findResponse(message) {
+// Now accepts refs as parameters to avoid global state issues
+function findResponse(message, conversationContext, recentMessages) {
   const lowerMessage = message.toLowerCase().trim()
 
   // Check for profanity
   if (containsProfanity(message)) {
-    resetContext()
+    resetContext(conversationContext)
     conversationMemory.resetClarification()
     return edgeCaseResponses.profanity
   }
@@ -134,7 +119,7 @@ function findResponse(message) {
 
   // Check if user is responding to a follow-up question
   if (conversationContext.awaitingFollowUp && conversationContext.lastIntent) {
-    const followUpResult = handleFollowUpResponse(lowerMessage)
+    const followUpResult = handleFollowUpResponse(lowerMessage, conversationContext)
     if (followUpResult) {
       conversationMemory.resetClarification()
       return followUpResult
@@ -221,7 +206,7 @@ function findResponse(message) {
   }
 
   if (bestMatch && bestScore > 5) {
-    resetContext()
+    resetContext(conversationContext)
     return bestMatch.response
   }
 
@@ -235,8 +220,8 @@ function findResponse(message) {
 }
 
 // Helper function to reset conversation context
-function resetContext() {
-  conversationContext = {
+function resetContext(conversationContext) {
+  Object.assign(conversationContext, {
     lastIntent: null,
     awaitingFollowUp: false,
     entities: conversationContext.entities, // Keep entities
@@ -245,11 +230,11 @@ function resetContext() {
     userPreferences: conversationContext.userPreferences,
     clarificationCount: 0,
     lastResponseTime: Date.now()
-  }
+  })
 }
 
 // Handle follow-up responses
-function handleFollowUpResponse(lowerMessage) {
+function handleFollowUpResponse(lowerMessage, conversationContext) {
   const intent = conversationContext.lastIntent
 
   // Check for numbered selection (1-5)
@@ -537,7 +522,7 @@ function QuickActionIcon({ icon }) {
 }
 
 // Detect if a query needs Gemini AI assistance using enhanced intelligence
-function shouldUseGemini(message, intentResult, messages) {
+function shouldUseGemini(message, intentResult, messages, conversationContext) {
   if (!GEMINI_ENABLED) return { useGemini: false, strategy: ResponseStrategy.RULE_BASED }
 
   // Use intelligent router for decision making
@@ -562,7 +547,7 @@ function shouldUseGemini(message, intentResult, messages) {
 }
 
 // Call Gemini API for complex queries with enhanced context
-async function callGeminiAPI(message, messages, currentDeptData = null, useEnhancedContext = false) {
+async function callGeminiAPI(message, messages, currentDeptData = null, useEnhancedContext = false, conversationContext = {}) {
   try {
     // Prepare conversation history (last 10 messages)
     const history = messages.slice(-10).map(msg => ({
@@ -658,6 +643,24 @@ export default function ChatWidget({ currentPath = '/' }) {
   const messagesEndRef = useRef(null)
   const inputRef = useRef(null)
   const streamingRef = useRef(null)
+
+  // Track conversation context for follow-ups with enhanced memory
+  // Using useRef to persist across renders without triggering re-renders
+  const conversationContextRef = useRef({
+    lastIntent: null,
+    awaitingFollowUp: false,
+    entities: {},
+    conversationHistory: [],
+    currentTopics: [],
+    userPreferences: {},
+    clarificationCount: 0,
+    lastResponseTime: null,
+    lastStrategy: null,
+    offeredRelated: false
+  })
+
+  // Track recent messages to detect spam/repetition
+  const recentMessagesRef = useRef([])
 
   // Voice chat integration
   const {
@@ -760,7 +763,7 @@ export default function ChatWidget({ currentPath = '/' }) {
     if (linkedEntities.length > 0) {
       // Merge entities into context
       linkedEntities.forEach(entity => {
-        conversationContext.entities[entity.type] = entity.value
+        conversationContextRef.current.entities[entity.type] = entity.value
       })
     }
 
@@ -769,7 +772,7 @@ export default function ChatWidget({ currentPath = '/' }) {
 
     // Use hybrid intent classification (semantic + regex)
     const hybridResult = classifyIntentHybrid(messageText, {
-      lastIntent: conversationContext.lastIntent,
+      lastIntent: conversationContextRef.current.lastIntent,
       topics: conversationMemory.getSummary().activeTopics
     })
 
@@ -784,13 +787,13 @@ export default function ChatWidget({ currentPath = '/' }) {
     const priorityBoost = getDepartmentPriorityBoost(messageText, departmentContext.id)
 
     // Check if we should use Gemini AI using intelligent routing
-    const routingDecision = shouldUseGemini(messageText, intentResult, messages)
+    const routingDecision = shouldUseGemini(messageText, intentResult, messages, conversationContextRef.current)
 
     // Check for proactive intervention needs
     const intervention = detectProactiveIntervention(messageText, {
       topics: conversationMemory.getSummary().activeTopics,
       messageCount: conversationMemory.getSummary().messageCount,
-      offeredRelated: conversationContext.offeredRelated
+      offeredRelated: conversationContextRef.current.offeredRelated
     })
 
     if (routingDecision.useGemini) {
@@ -801,7 +804,8 @@ export default function ChatWidget({ currentPath = '/' }) {
         messageText,
         messages,
         currentDeptData,
-        routingDecision.enhancedContext
+        routingDecision.enhancedContext,
+        conversationContextRef.current
       )
 
       if (geminiResponse) {
@@ -858,7 +862,7 @@ export default function ChatWidget({ currentPath = '/' }) {
 
     // Use rule-based system with semantic enhancement
     setTimeout(() => {
-      let response = findResponse(messageText)
+      let response = findResponse(messageText, conversationContextRef.current, recentMessagesRef.current)
 
       // Add entity context if we found linked entities
       if (linkedEntities.length > 0) {
@@ -956,7 +960,7 @@ export default function ChatWidget({ currentPath = '/' }) {
             : msg
         ))
         // Reset clarification count on successful response
-        conversationContext.clarificationCount = 0
+        conversationContextRef.current.clarificationCount = 0
       }
     }
 
