@@ -133,10 +133,51 @@
       name: 'Health Department',
       abbrev: 'HD',
       color: '#dc2626',
-      focus: 'You are helping users with Health Department services including public health, disease control, healthcare licensing, and vaccination schedules.',
-      services: ['Vaccination Programs', 'Health Inspections', 'Medical Licensing', 'Disease Control', 'Public Health Alerts'],
-      hours: 'Mon-Fri 8AM-5PM',
-      contact: '+854 100 0000'
+      focus: 'You are helping users with Health Department services including national health insurance, vaccinations, healthcare provider search, and public health information. IMPORTANT: For medical emergencies, direct users to call 911. For mental health crises, direct to 988. For poison emergencies, direct to 1-800-POISON. You provide information only - NOT medical advice.',
+      services: [
+        'National Health Insurance (NHI) - Standard and Premium plans, enrollment',
+        'Vaccination Programs - Schedules for infants, children, adults, seniors, and travelers',
+        'Healthcare Provider Search - Find doctors, specialists, hospitals, clinics',
+        'Public Health Alerts - Disease surveillance, food recalls, health advisories',
+        'Health Inspections - Restaurant, facility inspections',
+        'Medical Licensing - Verify provider credentials',
+        'Emergency Health Services - 911 for medical emergencies, 988 for mental health',
+        'Poison Control - 1-800-POISON for poisoning emergencies'
+      ],
+      hours: 'Mon-Fri 8AM-5PM | Emergency: 24/7',
+      contact: 'Main: 1-800-HEALTH-PY | Emergency: 911 | Mental Health Crisis: 988 | Poison Control: 1-800-POISON',
+      additionalInfo: `
+**Emergency Numbers:**
+- Medical Emergency: 911
+- Mental Health Crisis: 988 (24/7 crisis support)
+- Poison Control: 1-800-POISON
+- Health Information: 1-800-HEALTH-PY
+
+**National Health Insurance (NHI):**
+- Standard Plan: ¤50-¤350/month (income-based, comprehensive coverage)
+- Premium Plan: ¤180-¤520/month (private rooms, shorter wait times, dental/vision)
+- Coverage: Hospitalization, outpatient care, emergency services, prescriptions, preventive care
+- Enrollment: Open enrollment Nov 1 - Dec 31 annually
+
+**Vaccination Services:**
+- Free childhood immunizations at all public health clinics
+- Adult vaccines: Flu, COVID-19, shingles, pneumococcal
+- Travel vaccines: Yellow fever, typhoid, hepatitis A/B (4-6 weeks before travel)
+- Walk-ins welcome Mon-Fri 8AM-5PM at 87 clinics nationwide
+
+**Healthcare Statistics:**
+- 94.2% insured citizens
+- 1,247 healthcare facilities nationwide
+- 81.3 years average life expectancy
+- 89% fully vaccinated population
+
+**When to Call 911:**
+- Chest pain or difficulty breathing
+- Severe bleeding or injuries
+- Loss of consciousness
+- Suspected stroke or heart attack (FAST: Face drooping, Arm weakness, Speech difficulty, Time to call 911)
+- Severe allergic reactions
+`
     },
     'housing': {
       name: 'Housing Authority',
@@ -200,6 +241,102 @@
       services: ['Social Benefits', 'Family Services', 'Elderly Care', 'Disability Support', 'Child Welfare Services', 'Community Care Programs'],
       hours: 'Mon-Fri 8AM-5PM',
       contact: '+854 170 0000'
+    },
+    'airquality': {
+      name: 'Air Quality Department',
+      abbrev: 'AQD',
+      color: '#10b981',
+      focus: 'You are helping users with Air Quality Department services including air quality monitoring, pollution reporting, health advisories, and environmental data.',
+      services: [
+        'Air Quality Index (AQI) - Real-time air quality monitoring',
+        'Health Advisories - Alerts for sensitive groups during poor air quality',
+        'Pollution Reporting - Report air quality violations and industrial emissions',
+        'Environmental Data - Access historical air quality data and trends',
+        'Public Education - Information on air pollution sources and health impacts',
+        'Regulatory Compliance - Air quality standards and enforcement'
+      ],
+      hours: 'Mon-Fri 8AM-5PM | Monitoring: 24/7',
+      contact: 'Main: +854 180 0000 | Emergency Pollution Hotline: 1-800-AIR-QUAL',
+      additionalInfo: `
+**Air Quality Index (AQI) Levels:**
+- **Good (0-50):** Air quality is satisfactory, no health concerns
+- **Moderate (51-100):** Acceptable, unusually sensitive people should limit prolonged outdoor activity
+- **Unhealthy for Sensitive Groups (101-150):** Children, elderly, people with respiratory/heart conditions should reduce outdoor exertion
+- **Unhealthy (151-200):** Everyone may experience health effects; sensitive groups should avoid outdoor activity
+- **Very Unhealthy (201-300):** Health alert - everyone should limit outdoor exertion
+- **Hazardous (301+):** Health warning - everyone should avoid outdoor activity
+
+**Current Monitoring:**
+- 24/7 real-time monitoring at 47 stations nationwide
+- Updates every hour on airquality.gov.py
+- Mobile app with location-based alerts available
+- Air quality forecasts published daily
+
+**When to Report Pollution:**
+- Visible smoke or emissions from factories
+- Strong chemical odors in your area
+- Unusual dust or particulate matter
+- Vehicle emissions violations
+
+**Health Protection:**
+- Check AQI daily, especially if you have asthma, heart disease, or are elderly
+- Stay indoors when AQI is unhealthy
+- Use air purifiers during high pollution days
+- Wear N95 masks if you must go outside during hazardous conditions
+`
+    },
+    'nationalsecurity': {
+      name: 'National Security Department',
+      abbrev: 'NSD',
+      color: '#1e293b',
+      focus: 'You are helping users with National Security Department public inquiries including security awareness, reporting suspicious activity, travel advisories, and emergency preparedness. You provide ONLY public information - operational and classified matters are not discussed.',
+      services: [
+        'Report Suspicious Activity - See Something, Say Something program',
+        'Travel Advisories - Security alerts for domestic and international travel',
+        'Emergency Preparedness - Disaster readiness guides and resources',
+        'Security Awareness Education - Public safety workshops and training',
+        'Critical Infrastructure Protection - Public information on national security',
+        'Terrorism Prevention - Community awareness and reporting'
+      ],
+      hours: 'Mon-Fri 8AM-5PM | Threat Reporting: 24/7',
+      contact: 'Main: +854 190 0000 | Threat Hotline: 1-800-SECURE-PY (24/7) | Emergency: 911',
+      additionalInfo: `
+**Report Suspicious Activity:**
+- Unattended packages or bags in public places
+- Surveillance of critical infrastructure (power plants, bridges, government buildings)
+- Unusual purchases (large quantities of chemicals, weapons)
+- Suspicious behavior near sensitive locations
+- Cybersecurity threats or hacking attempts
+
+**What to Report:**
+- Who: Description of person(s) involved
+- What: Specific suspicious behavior observed
+- When: Date and time of incident
+- Where: Exact location with landmarks
+- Why: What made it seem suspicious
+
+**DO NOT investigate yourself - report and let professionals handle it**
+
+**Travel Safety:**
+- Register trips abroad with embassy.gov.py
+- Check travel advisories before international travel
+- Sign up for emergency alerts via SMS
+- Know emergency contacts for destination countries
+
+**Emergency Preparedness:**
+- Keep 72-hour emergency kit at home (water, food, first aid, flashlight, radio)
+- Know evacuation routes for your area
+- Have family communication plan
+- Stay informed via alerts.gov.py
+
+**Cybersecurity Tips:**
+- Use strong, unique passwords
+- Enable two-factor authentication
+- Be cautious of phishing emails
+- Report government impersonation scams to cybersecurity@nsd.gov.py
+
+**IMPORTANT:** For immediate threats to life or property, call 911. The threat hotline (1-800-SECURE-PY) is for non-emergency security concerns.
+`
     }
   };
 
@@ -922,7 +1059,20 @@
 
     try {
       // Build context-aware system prompt with rich department info
-      let systemPrompt = `You are a helpful, professional AI assistant for the Republic of Praya government portal. You provide accurate, concise information about government services.`;
+      let systemPrompt = `You are an official AI assistant for the Republic of Praya government portal. You provide accurate, concise information about government services.
+
+## CRITICAL SAFETY GUIDELINES:
+- For medical emergencies: IMMEDIATELY direct users to call 911
+- For mental health crises: Direct to 988 (24/7 crisis line)
+- For police emergencies: Direct to 911
+- For poison emergencies: Direct to 1-800-POISON
+- You provide INFORMATION ONLY - NOT medical, legal, or financial advice
+- Stay professional and empathetic, especially with frustrated users
+- Remain politically neutral on all matters
+- For complex legal/medical/financial questions, refer users to qualified professionals
+- Always clarify that information may change - users should verify with departments
+
+If someone expresses thoughts of self-harm or suicide, immediately provide the 988 crisis line and encourage them to call right away.`;
 
       if (currentDepartment) {
         systemPrompt += `\n\n## Current Department: ${currentDepartment.name} (${currentDepartment.abbrev})
@@ -946,10 +1096,12 @@ The user is currently on the ${currentDepartment.name} page. Prioritize informat
       systemPrompt += `\n\n## Response Guidelines:
 - Keep responses concise (under 150 words) unless detailed info is requested
 - Use bullet points for lists of services or steps
-- Be friendly and helpful
+- Be friendly, empathetic, and helpful
 - If you don't have specific information, direct users to contact the department or visit the main portal
 - Format important terms in bold using **term**
-- Always provide actionable next steps when possible`;
+- Always provide actionable next steps when possible
+- Include relevant phone numbers and links in your responses
+- For emergencies, ALWAYS prioritize directing to 911 or appropriate emergency services first`;
 
       const response = await callGeminiAPI(message, systemPrompt);
 
