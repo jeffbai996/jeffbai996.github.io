@@ -174,13 +174,19 @@
 .theme-health .emergency-card,
 .theme-npa .emergency-card {
   background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%);
-  color: white;
+  color: #ffffff;
   border: none;
+  box-shadow: 0 4px 12px rgba(220, 38, 38, 0.25);
 }
 
 .theme-health .emergency-card h4,
 .theme-npa .emergency-card h4 {
-  color: white;
+  color: #ffffff;
+}
+
+.theme-health .emergency-card p,
+.theme-npa .emergency-card p {
+  color: #ffffff;
 }
 
 /* Gold accent for DOJ */
@@ -820,9 +826,9 @@ body.light .dept-header {
   background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%);
   border-radius: 20px;
   padding: 32px;
-  color: white;
-  box-shadow: 0 20px 40px rgba(220, 38, 38, 0.3);
-  animation: pulse 3s ease-in-out infinite;
+  color: #ffffff;
+  box-shadow: 0 20px 40px rgba(220, 38, 38, 0.4);
+  border: 2px solid rgba(220, 38, 38, 0.5);
 }
 
 .layout-emergency .emergency-title {
@@ -831,7 +837,7 @@ body.light .dept-header {
   text-transform: uppercase;
   letter-spacing: 0.1em;
   margin-bottom: 20px;
-  opacity: 0.95;
+  color: #ffffff;
 }
 
 .layout-emergency .emergency-numbers {
@@ -844,28 +850,34 @@ body.light .dept-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background: rgba(255, 255, 255, 0.15);
+  background: rgba(255, 255, 255, 0.25);
   backdrop-filter: blur(10px);
   padding: 16px 20px;
   border-radius: 12px;
   transition: all 0.2s;
   cursor: pointer;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  text-decoration: none;
+  color: #ffffff;
 }
 
 .layout-emergency .emergency-number:hover {
-  background: rgba(255, 255, 255, 0.25);
+  background: rgba(255, 255, 255, 0.35);
   transform: translateX(4px);
+  border-color: rgba(255, 255, 255, 0.5);
 }
 
 .layout-emergency .emergency-label {
   font-size: 15px;
   font-weight: 600;
+  color: #ffffff;
 }
 
 .layout-emergency .emergency-phone {
   font-size: 24px;
   font-weight: 800;
   letter-spacing: 0.02em;
+  color: #ffffff;
 }
 
 .layout-emergency .stats-bar {
