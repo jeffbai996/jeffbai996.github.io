@@ -310,6 +310,7 @@ body.light .dept-header {
   border-bottom: 1px solid var(--border);
   position: relative;
   overflow: hidden;
+  isolation: isolate;
 }
 
 .hero-bg {
@@ -317,6 +318,8 @@ body.light .dept-header {
   inset: 0;
   overflow: hidden;
   opacity: 0.15;
+  pointer-events: none;
+  z-index: 0;
 }
 
 .hero-bg-shape {
@@ -324,6 +327,9 @@ body.light .dept-header {
   border-radius: 50%;
   background: var(--primary);
   filter: blur(60px);
+  will-change: transform;
+  transform: translateZ(0);
+  backface-visibility: hidden;
 }
 
 .hero-bg-shape:nth-child(1) {
@@ -346,6 +352,7 @@ body.light .dept-header {
   max-width: 620px;
   position: relative;
   z-index: 1;
+  transform: translateZ(0);
 }
 
 .hero-badge {
