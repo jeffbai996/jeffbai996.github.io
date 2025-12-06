@@ -60,25 +60,25 @@ export default function Revenue() {
             <div className="footer-section">
               <h5>Resources</h5>
               <ul>
-                <li><Link to="/revenue/file">Tax Forms & Publications</Link></li>
-                <li><Link to="/revenue/file">Tax Calculator</Link></li>
-                <li><Link to="/revenue/file">Free Tax Assistance</Link></li>
+                <li><Link to="/revenue/forms">Tax Forms & Publications</Link></li>
+                <li><Link to="/revenue/calculator">Tax Calculator</Link></li>
+                <li><Link to="/revenue/assistance">Free Tax Assistance</Link></li>
               </ul>
             </div>
             <div className="footer-section">
               <h5>Government</h5>
               <ul>
                 <li><Link to="/">Gov Portal</Link></li>
-                <li><Link to="/revenue">Tax Policy</Link></li>
-                <li><Link to="/revenue">Compliance</Link></li>
+                <li><Link to="/revenue/policy">Tax Policy</Link></li>
+                <li><Link to="/revenue/compliance">Compliance</Link></li>
               </ul>
             </div>
           </div>
           <div className="footer-bottom">
-            <span>&copy; 2024 Republic of Praya. Revenue Department.</span>
+            <span>&copy; {new Date().getFullYear()} Republic of Praya. Revenue Department.</span>
             <div className="footer-legal">
-              <a href="#">Terms</a>
-              <a href="#">Privacy</a>
+              <a href="/terms">Terms</a>
+              <a href="/privacy">Privacy</a>
             </div>
           </div>
         </div>
@@ -122,16 +122,16 @@ function RevenueHome({ navigate }) {
         </div>
         <div className="hero-visual">
           <div className="financial-display">
-            <div className="display-label">Returns Filed (2024)</div>
-            <div className="display-value">2.8M</div>
+            <div className="display-label">Tax Filing Deadline</div>
+            <div className="display-value">Apr 15</div>
             <div className="display-stats">
               <div>
-                <div className="display-stat-label">E-File Rate</div>
-                <div className="display-stat-value">87%</div>
+                <div className="display-stat-label">Days Remaining</div>
+                <div className="display-stat-value">{Math.max(0, Math.ceil((new Date('2025-04-15') - new Date()) / (1000 * 60 * 60 * 24)))}</div>
               </div>
               <div>
-                <div className="display-stat-label">Avg Refund</div>
-                <div className="display-stat-value">¤2,840</div>
+                <div className="display-stat-label">Extension Deadline</div>
+                <div className="display-stat-value">Oct 15</div>
               </div>
             </div>
           </div>
@@ -263,7 +263,7 @@ function RevenueHome({ navigate }) {
                   </span>
                   Check Refund Status
                 </div>
-                <div className="quick-link">
+                <div className="quick-link" onClick={() => navigate('/revenue/help')}>
                   <span className="icon">
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                       <path d="M16 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/>
@@ -431,9 +431,28 @@ function FileTaxes() {
 }
 
 function MakePayment() {
+  const navigate = useNavigate();
   const [paymentType, setPaymentType] = React.useState('current');
   const [amount, setAmount] = React.useState('');
   const [taxYear, setTaxYear] = React.useState('2024');
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    // Validation
+    if (!amount || parseFloat(amount) <= 0) {
+      alert('Please enter a valid payment amount');
+      return;
+    }
+
+    // For now, just show a confirmation
+    alert(`Payment of ¤${amount} for ${taxYear} ${paymentType} tax has been submitted. This is a demo - no actual payment was processed.`);
+
+    // In production, this would navigate to payment processing:
+    // navigate('/revenue/payment/process', {
+    //   state: { paymentType, amount, taxYear }
+    // });
+  };
 
   return (
     <main className="main">
@@ -451,10 +470,11 @@ function MakePayment() {
           <div className="main-content">
             <div className="card">
               <h3 className="card-title">Payment Information</h3>
-              <div className="content-text">
+              <form onSubmit={handleSubmit} className="content-text">
                 <div style={{ marginBottom: '20px' }}>
-                  <label style={{ display: 'block', marginBottom: '8px', fontWeight: '500' }}>Payment Type</label>
+                  <label htmlFor="payment-type" style={{ display: 'block', marginBottom: '8px', fontWeight: '500' }}>Payment Type</label>
                   <select
+                    id="payment-type"
                     value={paymentType}
                     onChange={(e) => setPaymentType(e.target.value)}
                     style={{ width: '100%', padding: '10px', borderRadius: '8px', border: '1px solid var(--border-subtle)' }}
@@ -468,8 +488,9 @@ function MakePayment() {
                 </div>
 
                 <div style={{ marginBottom: '20px' }}>
-                  <label style={{ display: 'block', marginBottom: '8px', fontWeight: '500' }}>Tax Year</label>
+                  <label htmlFor="tax-year" style={{ display: 'block', marginBottom: '8px', fontWeight: '500' }}>Tax Year</label>
                   <select
+                    id="tax-year"
                     value={taxYear}
                     onChange={(e) => setTaxYear(e.target.value)}
                     style={{ width: '100%', padding: '10px', borderRadius: '8px', border: '1px solid var(--border-subtle)' }}
@@ -482,12 +503,16 @@ function MakePayment() {
                 </div>
 
                 <div style={{ marginBottom: '20px' }}>
-                  <label style={{ display: 'block', marginBottom: '8px', fontWeight: '500' }}>Payment Amount (¤)</label>
+                  <label htmlFor="payment-amount" style={{ display: 'block', marginBottom: '8px', fontWeight: '500' }}>Payment Amount (¤)</label>
                   <input
+                    id="payment-amount"
                     type="number"
                     value={amount}
                     onChange={(e) => setAmount(e.target.value)}
                     placeholder="0.00"
+                    required
+                    min="0.01"
+                    step="0.01"
                     style={{ width: '100%', padding: '10px', borderRadius: '8px', border: '1px solid var(--border-subtle)', fontSize: '16px' }}
                   />
                 </div>
@@ -512,14 +537,14 @@ function MakePayment() {
                   </div>
                 </div>
 
-                <button className="btn btn-primary" style={{ width: '100%', marginTop: '24px', padding: '14px' }}>
+                <button type="submit" className="btn btn-primary" style={{ width: '100%', marginTop: '24px', padding: '14px' }}>
                   Continue to Payment
                 </button>
 
                 <p style={{ fontSize: '13px', color: 'var(--text-muted)', marginTop: '16px', textAlign: 'center' }}>
                   Secure payment processing · Bank-level encryption · Confirmation via email
                 </p>
-              </div>
+              </form>
             </div>
 
             <div className="card">
@@ -577,6 +602,31 @@ function RefundStatus() {
   const [filingStatus, setFilingStatus] = React.useState('single');
   const [refundAmount, setRefundAmount] = React.useState('');
 
+  const handleCheckStatus = (e) => {
+    e.preventDefault();
+
+    // Validate SSN format
+    const ssnPattern = /^\d{3}-\d{2}-\d{4}$/;
+    if (!ssn || !ssnPattern.test(ssn)) {
+      alert('Please enter a valid SSN in format XXX-XX-XXXX');
+      return;
+    }
+
+    // Validate refund amount
+    if (!refundAmount || parseFloat(refundAmount) <= 0) {
+      alert('Please enter your expected refund amount');
+      return;
+    }
+
+    // For demo purposes, show a mock status
+    alert(`Refund Status Check:\n\nSSN: ${ssn}\nFiling Status: ${filingStatus}\nExpected Refund: ¤${refundAmount}\n\nStatus: Your refund is being processed. This is a demo - actual status would require backend integration.`);
+
+    // In production, this would make an API call or navigate to results:
+    // navigate('/revenue/refunds/status', {
+    //   state: { ssn, filingStatus, refundAmount }
+    // });
+  };
+
   return (
     <main className="main">
       <div className="page-header">
@@ -593,23 +643,27 @@ function RefundStatus() {
           <div className="main-content">
             <div className="card">
               <h3 className="card-title">Track Your Refund</h3>
-              <div className="content-text">
+              <form onSubmit={handleCheckStatus} className="content-text">
                 <p style={{ marginBottom: '20px' }}>Enter your information to check your refund status. You can check status 24 hours after e-filing or 4 weeks after mailing a paper return.</p>
 
                 <div style={{ marginBottom: '20px' }}>
-                  <label style={{ display: 'block', marginBottom: '8px', fontWeight: '500' }}>Social Security Number</label>
+                  <label htmlFor="refund-ssn" style={{ display: 'block', marginBottom: '8px', fontWeight: '500' }}>Social Security Number</label>
                   <input
+                    id="refund-ssn"
                     type="text"
                     value={ssn}
                     onChange={(e) => setSSN(e.target.value)}
                     placeholder="XXX-XX-XXXX"
+                    required
+                    pattern="\d{3}-\d{2}-\d{4}"
                     style={{ width: '100%', padding: '10px', borderRadius: '8px', border: '1px solid var(--border-subtle)', fontSize: '16px' }}
                   />
                 </div>
 
                 <div style={{ marginBottom: '20px' }}>
-                  <label style={{ display: 'block', marginBottom: '8px', fontWeight: '500' }}>Filing Status</label>
+                  <label htmlFor="filing-status" style={{ display: 'block', marginBottom: '8px', fontWeight: '500' }}>Filing Status</label>
                   <select
+                    id="filing-status"
                     value={filingStatus}
                     onChange={(e) => setFilingStatus(e.target.value)}
                     style={{ width: '100%', padding: '10px', borderRadius: '8px', border: '1px solid var(--border-subtle)' }}
@@ -623,21 +677,25 @@ function RefundStatus() {
                 </div>
 
                 <div style={{ marginBottom: '20px' }}>
-                  <label style={{ display: 'block', marginBottom: '8px', fontWeight: '500' }}>Exact Refund Amount (¤)</label>
+                  <label htmlFor="refund-amount-check" style={{ display: 'block', marginBottom: '8px', fontWeight: '500' }}>Exact Refund Amount (¤)</label>
                   <input
+                    id="refund-amount-check"
                     type="number"
                     value={refundAmount}
                     onChange={(e) => setRefundAmount(e.target.value)}
                     placeholder="0.00"
+                    required
+                    min="0.01"
+                    step="0.01"
                     style={{ width: '100%', padding: '10px', borderRadius: '8px', border: '1px solid var(--border-subtle)', fontSize: '16px' }}
                   />
                   <p style={{ fontSize: '13px', color: 'var(--text-muted)', marginTop: '4px' }}>Enter the exact amount shown on your tax return</p>
                 </div>
 
-                <button className="btn btn-primary" style={{ width: '100%', padding: '14px' }}>
+                <button type="submit" className="btn btn-primary" style={{ width: '100%', padding: '14px' }}>
                   Check Status
                 </button>
-              </div>
+              </form>
             </div>
 
             <div className="card">
