@@ -32,7 +32,6 @@ class GeminiService {
     const apiKey = import.meta.env.VITE_GEMINI_API_KEY;
 
     if (!apiKey || apiKey === 'your_api_key_here') {
-      console.warn('Gemini API key not configured. AI features will be disabled.');
       this.initialized = false;
       return;
     }
@@ -67,9 +66,7 @@ class GeminiService {
         ],
       });
       this.initialized = true;
-      console.log('Gemini API initialized successfully');
     } catch (error) {
-      console.error('Failed to initialize Gemini API:', error);
       this.initialized = false;
     }
   }
@@ -511,8 +508,6 @@ ${dynamicContext}
         },
       };
     } catch (error) {
-      console.error('Gemini API error:', error);
-
       // Handle specific error types
       if (error.message?.includes('quota') || error.message?.includes('429')) {
         throw new Error('API quota exceeded. Please try again later.');

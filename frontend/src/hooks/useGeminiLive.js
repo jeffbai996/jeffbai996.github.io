@@ -61,7 +61,6 @@ export function useGeminiLive() {
       await geminiLiveService.connect()
       setConnectionState(ConnectionState.CONNECTED)
     } catch (err) {
-      console.error('Failed to connect:', err)
       setConnectionState(ConnectionState.ERROR)
       setError(err.message || 'Failed to connect to voice service')
     } finally {
@@ -122,10 +121,7 @@ export function useGeminiLive() {
 
       setIsVoiceModeActive(true)
       setVoiceState(VoiceState.LISTENING)
-      console.log('Voice mode started')
-
     } catch (err) {
-      console.error('Failed to start voice mode:', err)
       setError(err.message || 'Failed to access microphone')
       setVoiceState(VoiceState.IDLE)
     }
@@ -145,7 +141,6 @@ export function useGeminiLive() {
 
     setIsVoiceModeActive(false)
     setVoiceState(VoiceState.IDLE)
-    console.log('Voice mode stopped')
   }, [])
 
   /**
@@ -164,7 +159,6 @@ export function useGeminiLive() {
    */
   const sendTextMessage = useCallback((text) => {
     if (!geminiLiveService.isReady()) {
-      console.warn('Cannot send text: not connected')
       return false
     }
 
@@ -210,7 +204,6 @@ export function useGeminiLive() {
 
     // Handle errors
     const handleError = (err) => {
-      console.error('Gemini Live error:', err)
       setError('Connection error occurred')
     }
 
