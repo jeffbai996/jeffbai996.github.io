@@ -27,7 +27,6 @@ export class AudioCapture {
    */
   async start(onAudioData) {
     if (this.isCapturing) {
-      console.warn('Audio capture already active')
       return
     }
 
@@ -52,7 +51,6 @@ export class AudioCapture {
 
       // If browser doesn't support the sample rate, we'll need to resample
       const actualSampleRate = this.audioContext.sampleRate
-      console.log(`Audio context sample rate: ${actualSampleRate}`)
 
       // Create source from microphone
       this.sourceNode = this.audioContext.createMediaStreamSource(this.mediaStream)
@@ -101,10 +99,7 @@ export class AudioCapture {
       this.processorNode.connect(this.audioContext.destination)
 
       this.isCapturing = true
-      console.log('Audio capture started')
-
     } catch (error) {
-      console.error('Failed to start audio capture:', error)
       throw error
     }
   }
@@ -134,8 +129,6 @@ export class AudioCapture {
       this.audioContext.close()
       this.audioContext = null
     }
-
-    console.log('Audio capture stopped')
   }
 
   /**
@@ -222,8 +215,6 @@ export class AudioPlayback {
     this.gainNode = this.audioContext.createGain()
     this.gainNode.connect(this.audioContext.destination)
     this.gainNode.gain.value = 1.0
-
-    console.log('Audio playback initialized')
   }
 
   /**
