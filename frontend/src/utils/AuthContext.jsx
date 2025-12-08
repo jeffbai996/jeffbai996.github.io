@@ -15,7 +15,6 @@ export function AuthProvider({ children }) {
       setUser(userData)
       return userData
     } catch (err) {
-      console.error('Error fetching user:', err)
       setUser(null)
       return null
     }
@@ -42,8 +41,6 @@ export function AuthProvider({ children }) {
     const {
       data: { subscription },
     } = supabase.auth.onAuthStateChange(async (event, session) => {
-      console.log('Auth state changed:', event)
-
       if (event === 'SIGNED_IN' || event === 'TOKEN_REFRESHED') {
         await fetchUser()
       } else if (event === 'SIGNED_OUT') {

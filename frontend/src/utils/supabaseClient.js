@@ -7,11 +7,7 @@ const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY
 // Check if Supabase is configured
 const isSupabaseConfigured = !!(supabaseUrl && supabaseAnonKey)
 
-// Log warning if Supabase is not configured (but don't throw)
-if (!isSupabaseConfigured) {
-  console.warn('Supabase is not configured. Authentication features will be disabled.')
-  console.warn('To enable authentication, set VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY environment variables.')
-}
+// Supabase configuration status is checked at runtime
 
 // Create Supabase client (or null if not configured)
 export const supabase = isSupabaseConfigured
@@ -93,8 +89,7 @@ export const recordLogin = async (userId, metadata = {}) => {
         user_agent: metadata.user_agent || navigator.userAgent,
       })
   } catch (error) {
-    console.error('Error recording login:', error)
-    // Don't throw - this is non-critical
+    // Non-critical error - silently ignore
   }
 }
 
@@ -112,7 +107,6 @@ export const getFullUserData = async () => {
     .single()
 
   if (profileError) {
-    console.error('Error fetching profile:', profileError)
     // Return user without profile if profile fetch fails
     return {
       id: user.id,

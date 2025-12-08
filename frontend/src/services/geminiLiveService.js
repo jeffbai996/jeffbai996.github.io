@@ -6,11 +6,7 @@
 const GEMINI_LIVE_API_KEY = import.meta.env.VITE_GEMINI_API_KEY
 const GEMINI_LIVE_MODEL = 'gemini-2.0-flash-exp'
 
-// Validate API key is present
-if (!GEMINI_LIVE_API_KEY) {
-  console.error('VITE_GEMINI_API_KEY is not configured. Voice chat will not work.')
-  console.error('Please set VITE_GEMINI_API_KEY in your GitHub repository secrets.')
-}
+// API key validation is handled at runtime when connect() is called
 
 // Use v1alpha endpoint which supports the Live API
 const WEBSOCKET_URL = `wss://generativelanguage.googleapis.com/ws/google.ai.generativelanguage.v1alpha.GenerativeService.BidiGenerateContent?key=${GEMINI_LIVE_API_KEY}`
@@ -74,7 +70,7 @@ class GeminiLiveService {
         try {
           callback(data)
         } catch (error) {
-          console.error(`Error in ${event} listener:`, error)
+          // Silently handle listener errors in production
         }
       })
     }
@@ -99,11 +95,9 @@ class GeminiLiveService {
       }
 
       try {
-        console.log('Connecting to Gemini Live API...')
         this.ws = new WebSocket(WEBSOCKET_URL)
 
         this.ws.onopen = () => {
-          console.log('WebSocket connected, sending setup message...')
           this.isConnected = true
           this.reconnectAttempts = 0
           this.sendSetupMessage()
@@ -119,13 +113,11 @@ class GeminiLiveService {
         }
 
         this.ws.onerror = (error) => {
-          console.error('WebSocket error:', error)
           this.emit('error', error)
           reject(error)
         }
 
         this.ws.onclose = (event) => {
-          console.log('WebSocket closed:', event.code, event.reason)
           this.isConnected = false
           this.isSetupComplete = false
           this.emit('disconnected', { code: event.code, reason: event.reason })
@@ -133,7 +125,6 @@ class GeminiLiveService {
           // Attempt reconnect if not intentional close
           if (event.code !== 1000 && this.reconnectAttempts < this.maxReconnectAttempts) {
             this.reconnectAttempts++
-            console.log(`Attempting reconnect (${this.reconnectAttempts}/${this.maxReconnectAttempts})...`)
             setTimeout(() => this.connect(), 2000 * this.reconnectAttempts)
           }
         }
@@ -146,7 +137,6 @@ class GeminiLiveService {
         }, 10000)
 
       } catch (error) {
-        console.error('Failed to create WebSocket:', error)
         reject(error)
       }
     })
@@ -195,7 +185,6 @@ class GeminiLiveService {
 
       // Setup complete acknowledgment
       if (data.setupComplete) {
-        console.log('Gemini Live setup complete')
         this.isSetupComplete = true
         this.emit('setupComplete')
         return
@@ -207,7 +196,6 @@ class GeminiLiveService {
 
         // Check for interruption
         if (content.interrupted) {
-          console.log('Model was interrupted')
           this.isModelSpeaking = false
           this.emit('interrupted')
           return
@@ -236,7 +224,6 @@ class GeminiLiveService {
 
         // Turn complete
         if (content.turnComplete) {
-          console.log('Model turn complete')
           this.isModelSpeaking = false
           this.emit('turnComplete')
         }
@@ -248,7 +235,7 @@ class GeminiLiveService {
       }
 
     } catch (error) {
-      console.error('Error parsing message:', error)
+      // Silently handle parse errors in production
     }
   }
 
@@ -258,7 +245,6 @@ class GeminiLiveService {
    */
   sendAudio(base64Audio) {
     if (!this.isConnected || !this.isSetupComplete) {
-      console.warn('Cannot send audio: not connected or setup incomplete')
       return
     }
 
@@ -280,7 +266,6 @@ class GeminiLiveService {
    */
   sendText(text) {
     if (!this.isConnected || !this.isSetupComplete) {
-      console.warn('Cannot send text: not connected or setup incomplete')
       return
     }
 
@@ -303,8 +288,6 @@ class GeminiLiveService {
   sendJSON(data) {
     if (this.ws && this.ws.readyState === WebSocket.OPEN) {
       this.ws.send(JSON.stringify(data))
-    } else {
-      console.warn('WebSocket not ready, message not sent')
     }
   }
 

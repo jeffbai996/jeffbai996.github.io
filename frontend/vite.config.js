@@ -16,7 +16,7 @@ export default defineConfig({
   },
   build: {
     outDir: '..',
-    emptyOutDir: false,
-    sourcemap: true
+    emptyOutDir: false, // Keep false to preserve non-build files in root
+    sourcemap: false // Disabled in production for security
   }
 })
