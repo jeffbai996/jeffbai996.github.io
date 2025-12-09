@@ -469,7 +469,11 @@ function MakePayment() {
         <div className="content-grid">
           <div className="main-content">
             <div className="card">
-              <h3 className="card-title">Payment Information</h3>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '4px' }}>
+                <h3 className="card-title" style={{ marginBottom: 0 }}>Payment Information</h3>
+                <span style={{ background: 'rgba(245, 158, 11, 0.15)', color: '#f59e0b', padding: '4px 10px', borderRadius: '6px', fontSize: '12px', fontWeight: '600' }}>Demo Only</span>
+              </div>
+              <p style={{ color: 'var(--text-muted)', fontSize: '14px', marginBottom: '20px' }}>This form demonstrates the payment interface. No actual transactions will be processed.</p>
               <form onSubmit={handleSubmit} className="content-text">
                 <div style={{ marginBottom: '20px' }}>
                   <label htmlFor="payment-type" style={{ display: 'block', marginBottom: '8px', fontWeight: '500' }}>Payment Type</label>
@@ -642,9 +646,12 @@ function RefundStatus() {
         <div className="content-grid">
           <div className="main-content">
             <div className="card">
-              <h3 className="card-title">Track Your Refund</h3>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '4px' }}>
+                <h3 className="card-title" style={{ marginBottom: 0 }}>Track Your Refund</h3>
+                <span style={{ background: 'rgba(245, 158, 11, 0.15)', color: '#f59e0b', padding: '4px 10px', borderRadius: '6px', fontSize: '12px', fontWeight: '600' }}>Demo Only</span>
+              </div>
               <form onSubmit={handleCheckStatus} className="content-text">
-                <p style={{ marginBottom: '20px' }}>Enter your information to check your refund status. You can check status 24 hours after e-filing or 4 weeks after mailing a paper return.</p>
+                <p style={{ marginBottom: '20px', color: 'var(--text-muted)', fontSize: '14px' }}>This form demonstrates the refund tracking interface. Enter sample data to see how the status check works.</p>
 
                 <div style={{ marginBottom: '20px' }}>
                   <label htmlFor="refund-ssn" style={{ display: 'block', marginBottom: '8px', fontWeight: '500' }}>Social Security Number</label>
