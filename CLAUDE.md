@@ -4,8 +4,8 @@
 
 ### Immediate Priority
 - [x] 1. Fix XSS vulnerability in `chatbot-embed.js` - Replace innerHTML with safe DOM methods
-- [ ] 2. Move API key from WebSocket URL to headers in `geminiLiveService.js`
-- [ ] 3. Remove 11 source map files from `/assets/` directory
+- [x] 2. ~~Move API key from WebSocket URL to headers~~ - Added security documentation (browser WebSocket API limitation)
+- [x] 3. Remove 11 source map files from `/assets/` directory
 
 ### High Priority
 - [ ] 4. Add Error Boundary component to `App.jsx`
