@@ -60,6 +60,7 @@ export default function Interior() {
                 <li><Link to="/interior/identity">Identity Documents</Link></li>
                 <li><Link to="/interior/civil">Civil Records</Link></li>
                 <li><Link to="/interior/parks">Parks & Reserves</Link></li>
+                <li><Link to="/weather">Weather Service</Link></li>
               </ul>
             </div>
             <div className="footer-section">
@@ -209,6 +210,15 @@ function InteriorHome({ navigate }) {
                     <h4>Parks & Reserves</h4>
                     <p>National parks information and permits</p>
                   </div>
+                  <div className="service-card" onClick={() => navigate('/weather')}>
+                    <div className="service-icon">
+                      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                        <path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z"/>
+                      </svg>
+                    </div>
+                    <h4>Weather Service</h4>
+                    <p>Forecasts, alerts, and climate data</p>
+                  </div>
                 </div>
               </div>
 
@@ -259,6 +269,14 @@ function InteriorHome({ navigate }) {
                     </svg>
                   </span>
                   Order Certificate
+                </div>
+                <div className="quick-link" onClick={() => navigate('/weather')}>
+                  <span className="icon">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                      <path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z"/>
+                    </svg>
+                  </span>
+                  Weather Forecast
                 </div>
               </div>
 
