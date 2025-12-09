@@ -611,7 +611,6 @@ async function callGeminiAPI(message, messages, currentDeptData = null, useEnhan
 
     return null
   } catch (error) {
-    console.error('Failed to call Gemini API:', error)
     return null
   }
 }
@@ -797,8 +796,6 @@ export default function ChatWidget({ currentPath = '/' }) {
     })
 
     if (routingDecision.useGemini) {
-      console.log(`Using Gemini AI: ${routingDecision.reason}`)
-
       // Try calling Gemini API with enhanced context
       const geminiResponse = await callGeminiAPI(
         messageText,
@@ -857,7 +854,6 @@ export default function ChatWidget({ currentPath = '/' }) {
         return
       }
       // If Gemini fails, fall back to rule-based system
-      console.log('Gemini API unavailable, falling back to rule-based system')
     }
 
     // Use rule-based system with semantic enhancement

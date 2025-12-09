@@ -1,102 +1,142 @@
+import { lazy, Suspense } from 'react'
 import { Routes, Route } from 'react-router-dom'
 import { ThemeProvider } from './utils/ThemeContext'
 import { AuthProvider } from './utils/AuthContext'
 import Layout from './components/Layout'
+
+// Eagerly load Portal (landing page) for fast initial load
 import Portal from './pages/Portal'
-import NPA from './pages/NPA'
-import BOP from './pages/BOP'
-import DOJ from './pages/DOJ'
-import CTB from './pages/CTB'
-import Interior from './pages/Interior'
-import BD from './pages/BD'
-import CR from './pages/CR'
-import SWD from './pages/SWD'
-import Post from './pages/Post'
-import CBCA from './pages/CBCA'
-import Health from './pages/Health'
-import Housing from './pages/Housing'
-import Revenue from './pages/Revenue'
-import Transport from './pages/Transport'
-import LC from './pages/LC'
-import PSE from './pages/PSE'
-import AirQuality from './pages/AirQuality'
-import NationalSecurity from './pages/NationalSecurity'
-import NotFound from './pages/NotFound'
 
-// Auth pages
-import Login from './pages/auth/Login'
-import Register from './pages/auth/Register'
-import ForgotPassword from './pages/auth/ForgotPassword'
-import AuthCallback from './pages/auth/AuthCallback'
+// Lazy load department pages for code splitting
+const NPA = lazy(() => import('./pages/NPA'))
+const BOP = lazy(() => import('./pages/BOP'))
+const DOJ = lazy(() => import('./pages/DOJ'))
+const CTB = lazy(() => import('./pages/CTB'))
+const Interior = lazy(() => import('./pages/Interior'))
+const BD = lazy(() => import('./pages/BD'))
+const CR = lazy(() => import('./pages/CR'))
+const SWD = lazy(() => import('./pages/SWD'))
+const Post = lazy(() => import('./pages/Post'))
+const CBCA = lazy(() => import('./pages/CBCA'))
+const Health = lazy(() => import('./pages/Health'))
+const Housing = lazy(() => import('./pages/Housing'))
+const Revenue = lazy(() => import('./pages/Revenue'))
+const Transport = lazy(() => import('./pages/Transport'))
+const LC = lazy(() => import('./pages/LC'))
+const PSE = lazy(() => import('./pages/PSE'))
+const AirQuality = lazy(() => import('./pages/AirQuality'))
+const NationalSecurity = lazy(() => import('./pages/NationalSecurity'))
+const NotFound = lazy(() => import('./pages/NotFound'))
 
-// Account pages
-import Dashboard from './pages/account/Dashboard'
-import Security from './pages/account/Security'
+// Lazy load auth pages
+const Login = lazy(() => import('./pages/auth/Login'))
+const Register = lazy(() => import('./pages/auth/Register'))
+const ForgotPassword = lazy(() => import('./pages/auth/ForgotPassword'))
+const AuthCallback = lazy(() => import('./pages/auth/AuthCallback'))
+
+// Lazy load account pages
+const Dashboard = lazy(() => import('./pages/account/Dashboard'))
+const Security = lazy(() => import('./pages/account/Security'))
+
+// Eagerly load ProtectedRoute (small component, needed for auth check)
 import ProtectedRoute from './components/auth/ProtectedRoute'
+
+// Loading fallback component
+function PageLoader() {
+  return (
+    <div style={{
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
+      minHeight: '50vh',
+      color: 'var(--text-secondary)'
+    }}>
+      <div style={{ textAlign: 'center' }}>
+        <div style={{
+          width: '40px',
+          height: '40px',
+          border: '3px solid var(--border-color)',
+          borderTopColor: 'var(--primary-color)',
+          borderRadius: '50%',
+          animation: 'spin 1s linear infinite',
+          margin: '0 auto 1rem'
+        }} />
+        <p>Loading...</p>
+      </div>
+      <style>{`
+        @keyframes spin {
+          to { transform: rotate(360deg); }
+        }
+      `}</style>
+    </div>
+  )
+}
 
 function App() {
   return (
     <ThemeProvider>
       <AuthProvider>
-        <Routes>
-          <Route path="/" element={<Layout />}>
-            <Route index element={<Portal />} />
+        <Suspense fallback={<PageLoader />}>
+          <Routes>
+            <Route path="/" element={<Layout />}>
+              <Route index element={<Portal />} />
 
-            {/* Department Pages */}
-            <Route path="npa/*" element={<NPA />} />
-            <Route path="bop/*" element={<BOP />} />
-            <Route path="ctb/*" element={<CTB />} />
-            <Route path="doj/*" element={<DOJ />} />
-            <Route path="bd/*" element={<BD />} />
-            <Route path="cr/*" element={<CR />} />
-            <Route path="swd/*" element={<SWD />} />
-            <Route path="interior/*" element={<Interior />} />
-            <Route path="post/*" element={<Post />} />
-            <Route path="cbca/*" element={<CBCA />} />
-            <Route path="health/*" element={<Health />} />
-            <Route path="housing/*" element={<Housing />} />
-            <Route path="revenue/*" element={<Revenue />} />
-            <Route path="transport/*" element={<Transport />} />
-            <Route path="lc/*" element={<LC />} />
-            <Route path="pse/*" element={<PSE />} />
-            <Route path="air-quality" element={<AirQuality />} />
-            <Route path="national-security" element={<NationalSecurity />} />
+              {/* Department Pages */}
+              <Route path="npa/*" element={<NPA />} />
+              <Route path="bop/*" element={<BOP />} />
+              <Route path="ctb/*" element={<CTB />} />
+              <Route path="doj/*" element={<DOJ />} />
+              <Route path="bd/*" element={<BD />} />
+              <Route path="cr/*" element={<CR />} />
+              <Route path="swd/*" element={<SWD />} />
+              <Route path="interior/*" element={<Interior />} />
+              <Route path="post/*" element={<Post />} />
+              <Route path="cbca/*" element={<CBCA />} />
+              <Route path="health/*" element={<Health />} />
+              <Route path="housing/*" element={<Housing />} />
+              <Route path="revenue/*" element={<Revenue />} />
+              <Route path="transport/*" element={<Transport />} />
+              <Route path="lc/*" element={<LC />} />
+              <Route path="pse/*" element={<PSE />} />
+              <Route path="air-quality" element={<AirQuality />} />
+              <Route path="national-security" element={<NationalSecurity />} />
 
-            {/* Auth Routes */}
-            <Route path="login" element={<Login />} />
-            <Route path="register" element={<Register />} />
-            <Route path="forgot-password" element={<ForgotPassword />} />
-            <Route path="auth/callback" element={<AuthCallback />} />
+              {/* Auth Routes */}
+              <Route path="login" element={<Login />} />
+              <Route path="register" element={<Register />} />
+              <Route path="forgot-password" element={<ForgotPassword />} />
+              <Route path="auth/callback" element={<AuthCallback />} />
 
-            {/* Protected Account Routes */}
-            <Route
-              path="account"
-              element={
-                <ProtectedRoute>
-                  <Dashboard />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path="account/security"
-              element={
-                <ProtectedRoute>
-                  <Security />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path="account/profile"
-              element={
-                <ProtectedRoute>
-                  <Dashboard />
-                </ProtectedRoute>
-              }
-            />
+              {/* Protected Account Routes */}
+              <Route
+                path="account"
+                element={
+                  <ProtectedRoute>
+                    <Dashboard />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="account/security"
+                element={
+                  <ProtectedRoute>
+                    <Security />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="account/profile"
+                element={
+                  <ProtectedRoute>
+                    <Dashboard />
+                  </ProtectedRoute>
+                }
+              />
 
-            <Route path="*" element={<NotFound />} />
-          </Route>
-        </Routes>
+              <Route path="*" element={<NotFound />} />
+            </Route>
+          </Routes>
+        </Suspense>
       </AuthProvider>
     </ThemeProvider>
   )
