@@ -3,6 +3,9 @@
  * Manages government alerts, warnings, and critical announcements
  */
 
+// Storage key for admin-managed alerts
+const ALERTS_STORAGE_KEY = 'govpraya_alerts';
+
 // Alert severity levels with associated styling
 export const ALERT_SEVERITY = {
   CRITICAL: {
@@ -49,64 +52,179 @@ export const ALERT_CATEGORY = {
   GOVERNMENT: 'government'
 };
 
-// Sample active alerts - in production this would come from an API
-const activeAlerts = [
+// Category display names
+export const CATEGORY_LABELS = {
+  weather: 'Weather',
+  public_safety: 'Public Safety',
+  health: 'Health',
+  transport: 'Transport',
+  service: 'Service',
+  government: 'Government'
+};
+
+// Default alerts (shown if no admin alerts exist)
+const defaultAlerts = [
   {
     id: 'alert-winter-storm-2025',
-    severity: ALERT_SEVERITY.WARNING,
+    severityKey: 'WARNING',
     category: ALERT_CATEGORY.WEATHER,
     title: 'Winter Weather Advisory',
     message: 'Heavy snowfall expected across Metropolitan District and Downtown from Dec 10-12. Government offices may operate on reduced hours. Check transport.praya.gov for transit updates.',
     department: 'National Weather Service',
-    timestamp: new Date('2025-12-09T08:00:00'),
-    expiresAt: new Date('2025-12-12T23:59:59'),
+    timestamp: '2025-12-09T08:00:00',
+    expiresAt: '2025-12-12T23:59:59',
     dismissible: true,
     link: '/transport',
-    linkText: 'View Transit Updates'
-  }
-];
-
-// Non-active alerts for demo purposes (can be activated)
-const scheduledAlerts = [
-  {
-    id: 'alert-tax-deadline-2026',
-    severity: ALERT_SEVERITY.INFO,
-    category: ALERT_CATEGORY.GOVERNMENT,
-    title: 'Tax Filing Season Opens January 15',
-    message: 'Revenue Department reminds all citizens that 2025 tax returns are due by April 15, 2026. Early filers may receive refunds within 10 business days.',
-    department: 'Revenue Department',
-    timestamp: new Date('2025-12-01T00:00:00'),
-    expiresAt: new Date('2026-01-31T23:59:59'),
-    dismissible: true,
-    link: '/revenue',
-    linkText: 'File Your Taxes'
-  },
-  {
-    id: 'alert-system-maintenance',
-    severity: ALERT_SEVERITY.INFO,
-    category: ALERT_CATEGORY.SERVICE,
-    title: 'Scheduled Maintenance: December 15',
-    message: 'GOV.PRAYA online services will undergo scheduled maintenance from 2:00 AM to 6:00 AM on December 15. Some services may be temporarily unavailable.',
-    department: 'Digital Services',
-    timestamp: new Date('2025-12-09T00:00:00'),
-    expiresAt: new Date('2025-12-15T06:00:00'),
-    dismissible: true,
-    link: null,
-    linkText: null
+    linkText: 'View Transit Updates',
+    isActive: true
   }
 ];
 
 /**
- * Get all currently active alerts
- * Filters by expiration and activation time
+ * Get severity object from key string
+ */
+export function getSeverityFromKey(key) {
+  return ALERT_SEVERITY[key] || ALERT_SEVERITY.INFO;
+}
+
+/**
+ * Parse stored alert to include severity object
+ */
+function parseStoredAlert(alert) {
+  return {
+    ...alert,
+    severity: getSeverityFromKey(alert.severityKey),
+    timestamp: new Date(alert.timestamp),
+    expiresAt: new Date(alert.expiresAt)
+  };
+}
+
+/**
+ * Get all alerts from storage (for admin)
+ */
+export function getAllAlerts() {
+  try {
+    const stored = localStorage.getItem(ALERTS_STORAGE_KEY);
+    if (stored) {
+      const alerts = JSON.parse(stored);
+      return alerts.map(parseStoredAlert);
+    }
+    // Return default alerts if none stored
+    return defaultAlerts.map(parseStoredAlert);
+  } catch {
+    return defaultAlerts.map(parseStoredAlert);
+  }
+}
+
+/**
+ * Get all currently active alerts (for display)
+ * Filters by expiration, activation time, and isActive flag
  */
 export function getActiveAlerts() {
   const now = new Date();
-  return activeAlerts.filter(alert => {
-    const isActive = alert.timestamp <= now;
+  const alerts = getAllAlerts();
+
+  return alerts.filter(alert => {
+    if (!alert.isActive) return false;
+    const isStarted = alert.timestamp <= now;
     const notExpired = alert.expiresAt > now;
-    return isActive && notExpired;
+    return isStarted && notExpired;
   });
+}
+
+/**
+ * Save an alert (create or update)
+ */
+export function saveAlert(alertData) {
+  try {
+    const alerts = getAllAlertsRaw();
+    const existingIndex = alerts.findIndex(a => a.id === alertData.id);
+
+    const alertToSave = {
+      ...alertData,
+      id: alertData.id || `alert-${Date.now()}`,
+      timestamp: alertData.timestamp instanceof Date
+        ? alertData.timestamp.toISOString()
+        : alertData.timestamp,
+      expiresAt: alertData.expiresAt instanceof Date
+        ? alertData.expiresAt.toISOString()
+        : alertData.expiresAt,
+      updatedAt: new Date().toISOString()
+    };
+
+    // Remove severity object for storage (keep severityKey)
+    delete alertToSave.severity;
+
+    if (existingIndex >= 0) {
+      alerts[existingIndex] = alertToSave;
+    } else {
+      alertToSave.createdAt = new Date().toISOString();
+      alerts.unshift(alertToSave);
+    }
+
+    localStorage.setItem(ALERTS_STORAGE_KEY, JSON.stringify(alerts));
+    return { success: true, alert: parseStoredAlert(alertToSave) };
+  } catch (error) {
+    return { success: false, error: error.message };
+  }
+}
+
+/**
+ * Delete an alert by ID
+ */
+export function deleteAlert(alertId) {
+  try {
+    const alerts = getAllAlertsRaw();
+    const filtered = alerts.filter(a => a.id !== alertId);
+    localStorage.setItem(ALERTS_STORAGE_KEY, JSON.stringify(filtered));
+    return { success: true };
+  } catch (error) {
+    return { success: false, error: error.message };
+  }
+}
+
+/**
+ * Toggle alert active status
+ */
+export function toggleAlertActive(alertId) {
+  try {
+    const alerts = getAllAlertsRaw();
+    const alert = alerts.find(a => a.id === alertId);
+    if (alert) {
+      alert.isActive = !alert.isActive;
+      alert.updatedAt = new Date().toISOString();
+      localStorage.setItem(ALERTS_STORAGE_KEY, JSON.stringify(alerts));
+      return { success: true, isActive: alert.isActive };
+    }
+    return { success: false, error: 'Alert not found' };
+  } catch (error) {
+    return { success: false, error: error.message };
+  }
+}
+
+/**
+ * Get raw alerts from storage (without parsing)
+ */
+function getAllAlertsRaw() {
+  try {
+    const stored = localStorage.getItem(ALERTS_STORAGE_KEY);
+    if (stored) {
+      return JSON.parse(stored);
+    }
+    // Initialize with defaults
+    localStorage.setItem(ALERTS_STORAGE_KEY, JSON.stringify(defaultAlerts));
+    return [...defaultAlerts];
+  } catch {
+    return [...defaultAlerts];
+  }
+}
+
+/**
+ * Get a single alert by ID
+ */
+export function getAlertById(alertId) {
+  const alerts = getAllAlerts();
+  return alerts.find(a => a.id === alertId) || null;
 }
 
 /**
@@ -189,6 +307,10 @@ export function cleanupDismissedAlerts() {
  * Format alert timestamp for display
  */
 export function formatAlertTime(date) {
+  if (!(date instanceof Date)) {
+    date = new Date(date);
+  }
+
   const now = new Date();
   const diff = now - date;
   const hours = Math.floor(diff / (1000 * 60 * 60));
@@ -222,4 +344,12 @@ export function getAlertIconPath(iconType) {
     default:
       return 'M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z';
   }
+}
+
+/**
+ * Reset alerts to defaults (for testing)
+ */
+export function resetAlertsToDefault() {
+  localStorage.setItem(ALERTS_STORAGE_KEY, JSON.stringify(defaultAlerts));
+  return defaultAlerts.map(parseStoredAlert);
 }
