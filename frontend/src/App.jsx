@@ -29,6 +29,9 @@ const AirQuality = lazy(() => import('./pages/AirQuality'))
 const NationalSecurity = lazy(() => import('./pages/NationalSecurity'))
 const NotFound = lazy(() => import('./pages/NotFound'))
 
+// Lazy load admin pages
+const AlertAdmin = lazy(() => import('./pages/admin/AlertAdmin'))
+
 // Lazy load auth pages
 const Login = lazy(() => import('./pages/auth/Login'))
 const Register = lazy(() => import('./pages/auth/Register'))
@@ -80,6 +83,16 @@ function App() {
         <ErrorBoundary>
           <Suspense fallback={<PageLoader />}>
             <Routes>
+            {/* Admin Routes (protected, outside Layout for standalone UI) */}
+            <Route
+              path="/admin/alerts"
+              element={
+                <ProtectedRoute>
+                  <AlertAdmin />
+                </ProtectedRoute>
+              }
+            />
+
             <Route path="/" element={<Layout />}>
               <Route index element={<Portal />} />
 
