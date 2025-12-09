@@ -1,0 +1,434 @@
+/* Emergency Alert System Styles */
+
+.emergency-alerts {
+  position: relative;
+  z-index: 50;
+}
+
+/* Main Alert Banner */
+.alert-banner {
+  background: var(--alert-bg);
+  border: 1px solid var(--alert-border);
+  border-left: 4px solid var(--alert-color);
+  margin: 0;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  animation: alertSlideIn 0.4s ease-out;
+  overflow: hidden;
+}
+
+.alert-banner:hover {
+  background: color-mix(in srgb, var(--alert-bg) 80%, var(--alert-color) 5%);
+}
+
+.alert-banner:focus {
+  outline: 2px solid var(--alert-color);
+  outline-offset: -2px;
+}
+
+/* Severity-specific styles */
+.alert-critical {
+  background: linear-gradient(90deg, var(--alert-bg), rgba(220, 38, 38, 0.08));
+}
+
+.alert-critical .alert-icon-wrapper {
+  animation: criticalPulse 2s ease-in-out infinite;
+}
+
+@keyframes criticalPulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.7; }
+}
+
+/* Container */
+.alert-container {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  padding: 14px 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* Icon */
+.alert-icon-wrapper {
+  position: relative;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  background: color-mix(in srgb, var(--alert-color) 15%, transparent);
+  border-radius: 10px;
+  margin-top: 2px;
+}
+
+.alert-icon {
+  width: 20px;
+  height: 20px;
+  color: var(--alert-color);
+}
+
+.alert-pulse {
+  position: absolute;
+  inset: -4px;
+  border: 2px solid var(--alert-color);
+  border-radius: 14px;
+  animation: alertPulseRing 2s ease-out infinite;
+  pointer-events: none;
+}
+
+@keyframes alertPulseRing {
+  0% {
+    transform: scale(1);
+    opacity: 0.8;
+  }
+  100% {
+    transform: scale(1.3);
+    opacity: 0;
+  }
+}
+
+/* Content */
+.alert-content {
+  flex: 1;
+  min-width: 0;
+}
+
+.alert-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.alert-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 10px;
+  background: var(--alert-color);
+  color: #fff;
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  border-radius: 100px;
+  flex-shrink: 0;
+}
+
+.alert-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin: 0;
+  line-height: 1.4;
+}
+
+.alert-meta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  color: var(--text-muted);
+  margin-left: auto;
+}
+
+.alert-separator {
+  opacity: 0.5;
+}
+
+.alert-department {
+  font-weight: 500;
+}
+
+/* Alert Body (expandable) */
+.alert-body {
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  transition: max-height 0.3s ease, opacity 0.3s ease, margin 0.3s ease;
+}
+
+.alert-body-visible {
+  max-height: 200px;
+  opacity: 1;
+  margin-top: 12px;
+}
+
+.alert-message {
+  font-size: 14px;
+  color: var(--text-secondary);
+  line-height: 1.6;
+  margin: 0 0 12px 0;
+}
+
+.alert-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--alert-color);
+  text-decoration: none;
+  padding: 6px 12px;
+  background: color-mix(in srgb, var(--alert-color) 12%, transparent);
+  border-radius: 6px;
+  transition: all 0.2s;
+}
+
+.alert-link:hover {
+  background: color-mix(in srgb, var(--alert-color) 20%, transparent);
+}
+
+.alert-link svg {
+  transition: transform 0.2s;
+}
+
+.alert-link:hover svg {
+  transform: translateX(3px);
+}
+
+/* Actions */
+.alert-actions {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  flex-shrink: 0;
+}
+
+.alert-expand-btn,
+.alert-dismiss-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  background: transparent;
+  border: none;
+  border-radius: 8px;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.alert-expand-btn:hover,
+.alert-dismiss-btn:hover {
+  background: var(--bg-elevated);
+  color: var(--text-primary);
+}
+
+.alert-expand-btn svg {
+  transition: transform 0.3s ease;
+}
+
+.alert-expand-btn svg.rotated {
+  transform: rotate(180deg);
+}
+
+.alert-dismiss-btn:hover {
+  color: var(--alert-color);
+}
+
+/* Progress bar for critical alerts */
+.alert-progress {
+  height: 3px;
+  background: color-mix(in srgb, var(--alert-color) 20%, transparent);
+  overflow: hidden;
+}
+
+.alert-progress-bar {
+  height: 100%;
+  background: var(--alert-color);
+  animation: alertProgress 30s linear infinite;
+}
+
+@keyframes alertProgress {
+  0% { width: 0%; }
+  100% { width: 100%; }
+}
+
+/* Alert count badge */
+.alert-count {
+  display: flex;
+  justify-content: center;
+  padding: 8px;
+  background: var(--bg-elevated);
+  border-top: 1px solid var(--border-subtle);
+}
+
+.alert-count span {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-muted);
+}
+
+/* Animations */
+@keyframes alertSlideIn {
+  from {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.alert-dismissing {
+  animation: alertSlideOut 0.3s ease-in forwards;
+}
+
+@keyframes alertSlideOut {
+  from {
+    transform: translateY(0);
+    opacity: 1;
+    max-height: 200px;
+  }
+  to {
+    transform: translateY(-20px);
+    opacity: 0;
+    max-height: 0;
+    padding: 0;
+    margin: 0;
+    border-width: 0;
+  }
+}
+
+/* Expanded state */
+.alert-expanded {
+  background: color-mix(in srgb, var(--alert-bg) 100%, var(--alert-color) 3%);
+}
+
+/* Compact Alert (for department headers) */
+.compact-alert {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 16px;
+  background: var(--alert-bg);
+  border-radius: 8px;
+  border: 1px solid var(--alert-border);
+}
+
+.compact-alert-icon {
+  width: 18px;
+  height: 18px;
+  color: var(--alert-color);
+  flex-shrink: 0;
+}
+
+.compact-alert-text {
+  font-size: 13px;
+  color: var(--text-secondary);
+  flex: 1;
+}
+
+.compact-alert-text strong {
+  color: var(--alert-color);
+  font-weight: 600;
+}
+
+.compact-alert-link {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--alert-color);
+  text-decoration: none;
+  padding: 4px 10px;
+  background: color-mix(in srgb, var(--alert-color) 12%, transparent);
+  border-radius: 4px;
+  transition: background 0.2s;
+}
+
+.compact-alert-link:hover {
+  background: color-mix(in srgb, var(--alert-color) 20%, transparent);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .alert-container {
+    padding: 12px 16px;
+    gap: 12px;
+  }
+
+  .alert-icon-wrapper {
+    width: 32px;
+    height: 32px;
+  }
+
+  .alert-icon {
+    width: 18px;
+    height: 18px;
+  }
+
+  .alert-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .alert-meta {
+    margin-left: 0;
+  }
+
+  .alert-title {
+    font-size: 13px;
+  }
+
+  .alert-message {
+    font-size: 13px;
+  }
+
+  .alert-actions {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+  }
+
+  .alert-banner {
+    position: relative;
+  }
+
+  .compact-alert {
+    flex-wrap: wrap;
+  }
+
+  .compact-alert-link {
+    margin-left: auto;
+  }
+}
+
+@media (max-width: 480px) {
+  .alert-container {
+    padding: 10px 12px;
+  }
+
+  .alert-badge {
+    font-size: 9px;
+    padding: 3px 8px;
+  }
+
+  .alert-meta {
+    font-size: 11px;
+  }
+
+  .alert-expand-btn,
+  .alert-dismiss-btn {
+    width: 28px;
+    height: 28px;
+  }
+}
+
+/* Dark mode adjustments */
+body.light .alert-banner {
+  border-color: color-mix(in srgb, var(--alert-border) 100%, #000 5%);
+}
+
+body.light .alert-icon-wrapper {
+  background: color-mix(in srgb, var(--alert-color) 10%, transparent);
+}
+
+body.light .alert-expand-btn:hover,
+body.light .alert-dismiss-btn:hover {
+  background: rgba(0, 0, 0, 0.05);
+}
