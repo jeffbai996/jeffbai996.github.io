@@ -228,6 +228,36 @@ export const departmentContextConfig = {
     ],
     suggestedTopics: ['benefits', 'family services', 'elderly care', 'disability', 'assistance'],
     contextKeywords: ['welfare', 'benefits', 'social', 'elderly', 'disability', 'family', 'assistance']
+  },
+
+  // Air Quality Index
+  'air-quality': {
+    id: 'air-quality',
+    name: 'Air Quality Index',
+    greeting: "Hello! I'm the Air Quality Assistant. I can help you understand AQI readings, protect your health from air pollution, find monitoring data, and stay informed about air quality in your area.",
+    quickActions: [
+      { label: 'Current AQI', query: 'What is the current air quality index?', icon: 'search' },
+      { label: 'Health Advice', query: 'How should I protect myself from air pollution?', icon: 'heart' },
+      { label: 'Pollutants', query: 'What pollutants are being monitored?', icon: 'help' },
+      { label: 'Get Alerts', query: 'How do I get air quality alerts?', icon: 'alert' }
+    ],
+    suggestedTopics: ['air quality', 'AQI', 'pollution', 'health', 'masks', 'outdoor activities', 'sensitive groups', 'alerts'],
+    contextKeywords: ['air', 'quality', 'aqi', 'pollution', 'pm2.5', 'pm10', 'ozone', 'health', 'respiratory', 'outdoor', 'mask']
+  },
+
+  // National Security & Civil Defense
+  'national-security': {
+    id: 'national-security',
+    name: 'National Security & Civil Defense',
+    greeting: "Hello! I'm the National Security Assistant. I can help you understand current threat levels, get emergency preparedness information, learn about civil defense resources, and find contact information for emergencies.",
+    quickActions: [
+      { label: 'Current Level', query: 'What is the current national security level?', icon: 'shield' },
+      { label: 'Preparedness', query: 'How do I prepare for emergencies?', icon: 'package' },
+      { label: 'Emergency Contacts', query: 'What are the emergency contact numbers?', icon: 'alert' },
+      { label: 'Shelter Info', query: 'Where are public shelters located?', icon: 'home' }
+    ],
+    suggestedTopics: ['security level', 'civil defense', 'emergency', 'preparedness', 'shelter', 'alert', 'evacuate', 'safety'],
+    contextKeywords: ['security', 'threat', 'level', 'emergency', 'civil defense', 'shelter', 'alert', 'evacuation', 'disaster', 'safety']
   }
 }
 
