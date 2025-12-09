@@ -83,8 +83,15 @@ function App() {
         <ErrorBoundary>
           <Suspense fallback={<PageLoader />}>
             <Routes>
-            {/* Admin Routes (outside Layout for standalone UI) */}
-            <Route path="/admin/alerts" element={<AlertAdmin />} />
+            {/* Admin Routes (protected, outside Layout for standalone UI) */}
+            <Route
+              path="/admin/alerts"
+              element={
+                <ProtectedRoute>
+                  <AlertAdmin />
+                </ProtectedRoute>
+              }
+            />
 
             <Route path="/" element={<Layout />}>
               <Route index element={<Portal />} />
