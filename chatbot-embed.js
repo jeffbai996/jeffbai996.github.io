@@ -977,23 +977,58 @@
     return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
   }
 
+  // Escape HTML entities to prevent XSS
+  function escapeHtml(text) {
+    const div = document.createElement('div');
+    div.textContent = text;
+    return div.innerHTML;
+  }
+
+  // Safely format text with markdown-like syntax (after HTML escaping)
+  function formatMessageText(text) {
+    // First escape HTML to prevent XSS
+    let safe = escapeHtml(text);
+
+    // Then apply safe formatting transformations
+    safe = safe
+      .replace(/\n/g, '<br>')
+      .replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>')
+      .replace(/\*([^*]+)\*/g, '<em>$1</em>');
+
+    // Safely handle markdown links [text](url) - validate URL protocol
+    safe = safe.replace(/\[([^\]]+)\]\(([^)]+)\)/g, function(match, linkText, url) {
+      // Only allow http, https, mailto, and tel protocols
+      if (/^(https?:\/\/|mailto:|tel:)/i.test(url)) {
+        return '<a href="' + url + '" target="_blank" rel="noopener noreferrer" class="chat-link">' + linkText + '</a>';
+      }
+      return linkText; // Return just the text if URL is suspicious
+    });
+
+    // Safely auto-link URLs - validate protocol
+    safe = safe.replace(/(^|[^"'>])(https?:\/\/[^\s<>")\]]+)/g, function(match, prefix, url) {
+      return prefix + '<a href="' + url + '" target="_blank" rel="noopener noreferrer" class="chat-link">' + url + '</a>';
+    });
+
+    return safe;
+  }
+
   function addMessage(text, isUser = false) {
     const messagesContainer = document.getElementById('chat-messages');
     const messageDiv = document.createElement('div');
     messageDiv.className = `chat-message ${isUser ? 'user' : 'bot'}`;
 
-    // Format text with line breaks, bold, italic, and links
-    const formattedText = text
-      .replace(/\n/g, '<br>')
-      .replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>')
-      .replace(/\*([^*]+)\*/g, '<em>$1</em>')
-      .replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank" rel="noopener noreferrer" class="chat-link">$1</a>')
-      .replace(/(^|[^"'>])(https?:\/\/[^\s<>")\]]+)/g, '$1<a href="$2" target="_blank" rel="noopener noreferrer" class="chat-link">$2</a>');
+    // Create message bubble with safely formatted text
+    const bubble = document.createElement('div');
+    bubble.className = 'message-bubble';
+    bubble.innerHTML = formatMessageText(text);
 
-    messageDiv.innerHTML = `
-      <div class="message-bubble">${formattedText}</div>
-      <span class="message-time">${formatTime(new Date())}</span>
-    `;
+    // Create timestamp
+    const timeSpan = document.createElement('span');
+    timeSpan.className = 'message-time';
+    timeSpan.textContent = formatTime(new Date());
+
+    messageDiv.appendChild(bubble);
+    messageDiv.appendChild(timeSpan);
 
     messagesContainer.appendChild(messageDiv);
     messagesContainer.scrollTop = messagesContainer.scrollHeight;
