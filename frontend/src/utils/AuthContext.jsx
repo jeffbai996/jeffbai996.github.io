@@ -29,13 +29,21 @@ export function AuthProvider({ children }) {
     }
 
     // Get initial session
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      if (session?.user) {
-        fetchUser().finally(() => setLoading(false))
-      } else {
+    supabase.auth.getSession()
+      .then(({ data: { session } }) => {
+        if (session?.user) {
+          fetchUser().finally(() => setLoading(false))
+        } else {
+          setLoading(false)
+        }
+      })
+      .catch((err) => {
+        // Handle session fetch errors gracefully
+        if (import.meta.env.DEV) {
+          console.error('Failed to get session:', err)
+        }
         setLoading(false)
-      }
-    })
+      })
 
     // Listen for auth changes
     const {
