@@ -8,9 +8,9 @@
 - [x] 3. Remove 11 source map files from `/assets/` directory
 
 ### High Priority
-- [ ] 4. Add Error Boundary component to `App.jsx`
-- [ ] 5. Fix unhandled Promise in `AuthContext.jsx` useEffect
-- [ ] 6. Add missing `theme-dark-aqi` CSS theme to `global.css`
+- [x] 4. Add Error Boundary component to `App.jsx`
+- [x] 5. Fix unhandled Promise in `AuthContext.jsx` useEffect
+- [x] 6. Add missing `theme-dark-aqi` CSS theme to `global.css`
 
 ### Medium Priority
 - [ ] 7. Remove unused components (DocumentUpload, DarkModeToggle, ProgressTracker, InteractiveMap, FeeCalculator) and their CSS files

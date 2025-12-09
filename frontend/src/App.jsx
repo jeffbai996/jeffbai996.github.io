@@ -3,6 +3,7 @@ import { Routes, Route } from 'react-router-dom'
 import { ThemeProvider } from './utils/ThemeContext'
 import { AuthProvider } from './utils/AuthContext'
 import Layout from './components/Layout'
+import ErrorBoundary from './components/ErrorBoundary'
 
 // Eagerly load Portal (landing page) for fast initial load
 import Portal from './pages/Portal'
@@ -76,8 +77,9 @@ function App() {
   return (
     <ThemeProvider>
       <AuthProvider>
-        <Suspense fallback={<PageLoader />}>
-          <Routes>
+        <ErrorBoundary>
+          <Suspense fallback={<PageLoader />}>
+            <Routes>
             <Route path="/" element={<Layout />}>
               <Route index element={<Portal />} />
 
@@ -135,8 +137,9 @@ function App() {
 
               <Route path="*" element={<NotFound />} />
             </Route>
-          </Routes>
-        </Suspense>
+            </Routes>
+          </Suspense>
+        </ErrorBoundary>
       </AuthProvider>
     </ThemeProvider>
   )
