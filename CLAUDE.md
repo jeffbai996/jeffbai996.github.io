@@ -21,12 +21,12 @@
 - [x] 12. Fix broken footer links in Portal.jsx and Revenue.jsx
 
 ### Low Priority
-- [ ] 13. Remove console.log statements from `chatbot-embed.js`
-- [ ] 14. Add ARIA labels to SVG icons throughout
-- [ ] 15. Add skip-to-content link for accessibility
-- [ ] 16. Integrate DarkModeToggle component into GovBanner
-- [ ] 17. Complete Revenue payment forms or clearly mark as demo
-- [ ] 18. Fix incomplete dependency arrays in `useGeminiLive.js`
+- [x] 13. Remove console.log statements from `chatbot-embed.js`
+- [x] 14. Add ARIA labels to SVG icons throughout
+- [x] 15. Add skip-to-content link for accessibility
+- [x] 16. ~~Integrate DarkModeToggle component into GovBanner~~ - Component removed; theme toggle exists in GovBanner
+- [x] 17. Complete Revenue payment forms or clearly mark as demo
+- [x] 18. Fix incomplete dependency arrays in `useGeminiLive.js`
 
 ## Build Commands
 
