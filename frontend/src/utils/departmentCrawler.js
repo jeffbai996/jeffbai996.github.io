@@ -411,6 +411,82 @@ export const departmentData = [
     ],
     hours: 'Mon-Fri 8AM-5PM. Emergency services available 24/7',
     contact: 'Visit SWD office or call hotline for assistance'
+  },
+  {
+    id: 'air-quality',
+    name: 'Air Quality Monitoring',
+    abbrev: 'AQI',
+    url: '/air-quality',
+    keywords: ['air', 'quality', 'aqi', 'pollution', 'pm2.5', 'pm10', 'ozone', 'pollutants', 'health', 'monitoring', 'alerts', 'respiratory', 'asthma', 'outdoor', 'mask', 'smog'],
+    description: 'Real-time air quality monitoring and health guidance for all regions of Praya with 87 monitoring stations nationwide.',
+    services: [
+      'Real-time AQI Readings - Updated hourly across 87 monitoring stations',
+      'Air Quality Scale Reference - Understand what AQI levels (0-500) mean for health',
+      'Pollutant Information - PM2.5, PM10, Ozone, NO2, SO2, CO monitoring and health effects',
+      'Regional Monitoring Network - Check air quality in all 6 regions of Praya',
+      'Health Protection Tips - Masks, activity timing, outdoor worker guidance',
+      'Alert System - Mobile app, SMS, email, and emergency broadcasts',
+      'Historical Data - Air quality trends and annual statistics'
+    ],
+    subPages: [
+      { name: 'Current AQI', url: '/air-quality#current', description: 'Check current AQI levels and regional status' },
+      { name: 'Understanding Pollutants', url: '/air-quality#pollutants', description: 'Learn about PM2.5, PM10, Ozone, NO2, SO2, and CO' },
+      { name: 'Health Protection Guide', url: '/air-quality#health', description: 'Tips for reducing air pollution exposure and protecting health' },
+      { name: 'Alerts & Notifications', url: '/air-quality#alerts', description: 'Sign up for mobile, SMS, email, and emergency broadcasts' }
+    ],
+    statistics: {
+      monitoringStations: 87,
+      regionsMonitored: 6,
+      goodDaysThisYear: 312,
+      updateFrequency: 'Hourly'
+    },
+    aqiScale: {
+      good: '0-50: Good - Air quality is satisfactory',
+      moderate: '51-100: Moderate - Acceptable for most, sensitive groups may experience effects',
+      unhealthySensitive: '101-150: Unhealthy for Sensitive Groups - Children, elderly, respiratory issues affected',
+      unhealthy: '151-200: Unhealthy - Everyone may experience health effects',
+      veryUnhealthy: '201-300: Very Unhealthy - Health warnings, everyone affected',
+      hazardous: '301-500: Hazardous - Emergency conditions, stay indoors'
+    },
+    hours: 'Monitoring: 24/7 | Web Access: 24/7',
+    contact: 'Air Quality Portal: gov.praya/air-quality | Mobile App: Praya Air (iOS/Android) | SMS Alerts: Text AQI to 311'
+  },
+  {
+    id: 'national-security',
+    name: 'National Security & Civil Defense',
+    abbrev: 'NS',
+    url: '/national-security',
+    keywords: ['security', 'threat', 'level', 'emergency', 'civil defense', 'preparedness', 'shelter', 'alert', 'evacuation', '911', 'disaster', 'safety', 'critical', 'elevated', 'enhanced', 'guarded'],
+    description: 'National Security Alert Level system and civil defense information for emergency preparedness and public safety.',
+    services: [
+      'National Security Level System - 5 threat levels with guidance (Critical to Low)',
+      'Emergency Preparedness Kit Checklist - Essential supplies (water, food, first aid)',
+      'Emergency Contacts Directory - 911, Civil Defense: 1-800-DEFEND, NPA: 1-800-NPA-HELP',
+      'Public Shelter System - 247 locations accessible during Level 1-2 alerts',
+      'Communication Planning - Out-of-area contacts, family meeting points, emergency alerts',
+      'Alert Types - Natural Disaster, Security Threat, Public Health, Infrastructure',
+      'Alert Channels - Emergency Alert System, Social Media, Emergency Radio (97.5 FM, 1240 AM)'
+    ],
+    subPages: [
+      { name: 'Security Level Scale', url: '/national-security#levels', description: 'Understand Level 1 (Critical) through Level 5 (Low) and recommended actions' },
+      { name: 'Preparedness Guide', url: '/national-security#preparedness', description: 'Emergency kit, contacts, shelters, and communication planning' },
+      { name: 'Emergency Alerts', url: '/national-security#alerts', description: 'Types of alerts and how to receive notifications' },
+      { name: 'Stay Informed', url: '/national-security#informed', description: 'Emergency Alert System, social media, and radio broadcasts' }
+    ],
+    securityLevels: {
+      level1: 'Critical (Red) - Imminent threat, follow all emergency instructions immediately',
+      level2: 'Elevated (Orange) - High threat, increased vigilance required, prepare to evacuate',
+      level3: 'Enhanced (Yellow) - Significant threat, heightened awareness, review emergency plans',
+      level4: 'Guarded (Blue) - General threat, standard precautions, stay informed',
+      level5: 'Low (Green) - Minimal threat, routine security measures, normal activities'
+    },
+    statistics: {
+      publicShelters: 247,
+      alertChannels: 4,
+      lastUpdate: 'Real-time monitoring'
+    },
+    hours: 'Monitoring: 24/7 | Civil Defense Hotline: 24/7',
+    contact: 'Emergency: 911 | Civil Defense: 1-800-DEFEND | NPA: 1-800-NPA-HELP | Fire & Rescue: 1-800-FIRE-PY'
   }
 ];
 
