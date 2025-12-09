@@ -8,7 +8,19 @@ const GEMINI_LIVE_MODEL = 'gemini-2.0-flash-exp'
 
 // API key validation is handled at runtime when connect() is called
 
-// Use v1alpha endpoint which supports the Live API
+/**
+ * SECURITY NOTE: The API key is passed as a URL query parameter because
+ * browser WebSocket API does not support custom headers during the handshake.
+ * This is the documented authentication method for Gemini Live API.
+ *
+ * For production environments with higher security requirements, consider:
+ * 1. Using a server-side WebSocket proxy that handles authentication
+ * 2. Implementing token-based auth with short-lived API keys
+ * 3. Rate limiting and monitoring API usage
+ *
+ * The key is loaded from environment variables and injected at build time,
+ * so it's not exposed in source control.
+ */
 const WEBSOCKET_URL = `wss://generativelanguage.googleapis.com/ws/google.ai.generativelanguage.v1alpha.GenerativeService.BidiGenerateContent?key=${GEMINI_LIVE_API_KEY}`
 
 // System instruction for the voice assistant

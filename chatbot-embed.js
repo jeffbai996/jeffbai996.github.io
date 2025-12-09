@@ -977,23 +977,58 @@
     return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
   }
 
+  // Escape HTML entities to prevent XSS
+  function escapeHtml(text) {
+    const div = document.createElement('div');
+    div.textContent = text;
+    return div.innerHTML;
+  }
+
+  // Safely format text with markdown-like syntax (after HTML escaping)
+  function formatMessageText(text) {
+    // First escape HTML to prevent XSS
+    let safe = escapeHtml(text);
+
+    // Then apply safe formatting transformations
+    safe = safe
+      .replace(/\n/g, '<br>')
+      .replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>')
+      .replace(/\*([^*]+)\*/g, '<em>$1</em>');
+
+    // Safely handle markdown links [text](url) - validate URL protocol
+    safe = safe.replace(/\[([^\]]+)\]\(([^)]+)\)/g, function(match, linkText, url) {
+      // Only allow http, https, mailto, and tel protocols
+      if (/^(https?:\/\/|mailto:|tel:)/i.test(url)) {
+        return '<a href="' + url + '" target="_blank" rel="noopener noreferrer" class="chat-link">' + linkText + '</a>';
+      }
+      return linkText; // Return just the text if URL is suspicious
+    });
+
+    // Safely auto-link URLs - validate protocol
+    safe = safe.replace(/(^|[^"'>])(https?:\/\/[^\s<>")\]]+)/g, function(match, prefix, url) {
+      return prefix + '<a href="' + url + '" target="_blank" rel="noopener noreferrer" class="chat-link">' + url + '</a>';
+    });
+
+    return safe;
+  }
+
   function addMessage(text, isUser = false) {
     const messagesContainer = document.getElementById('chat-messages');
     const messageDiv = document.createElement('div');
     messageDiv.className = `chat-message ${isUser ? 'user' : 'bot'}`;
 
-    // Format text with line breaks, bold, italic, and links
-    const formattedText = text
-      .replace(/\n/g, '<br>')
-      .replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>')
-      .replace(/\*([^*]+)\*/g, '<em>$1</em>')
-      .replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank" rel="noopener noreferrer" class="chat-link">$1</a>')
-      .replace(/(^|[^"'>])(https?:\/\/[^\s<>")\]]+)/g, '$1<a href="$2" target="_blank" rel="noopener noreferrer" class="chat-link">$2</a>');
+    // Create message bubble with safely formatted text
+    const bubble = document.createElement('div');
+    bubble.className = 'message-bubble';
+    bubble.innerHTML = formatMessageText(text);
 
-    messageDiv.innerHTML = `
-      <div class="message-bubble">${formattedText}</div>
-      <span class="message-time">${formatTime(new Date())}</span>
-    `;
+    // Create timestamp
+    const timeSpan = document.createElement('span');
+    timeSpan.className = 'message-time';
+    timeSpan.textContent = formatTime(new Date());
+
+    messageDiv.appendChild(bubble);
+    messageDiv.appendChild(timeSpan);
 
     messagesContainer.appendChild(messageDiv);
     messagesContainer.scrollTop = messagesContainer.scrollHeight;
@@ -1112,7 +1147,6 @@ The user is currently on the ${currentDepartment.name} page. Prioritize informat
     } catch (error) {
       hideTypingIndicator();
       showError(error.message || 'Failed to get response. Please try again.');
-      console.error('Chat error:', error);
     } finally {
       sendBtn.disabled = false;
       input.disabled = false;
@@ -1124,13 +1158,10 @@ The user is currently on the ${currentDepartment.name} page. Prioritize informat
     // API key will be injected during build from GitHub secrets
     const apiKey = 'GEMINI_API_KEY_PLACEHOLDER';
 
-    // Debug logging (will be visible in browser console)
     const isPlaceholder = !apiKey || apiKey === 'GEMINI_API_KEY_PLACEHOLDER';
-    console.log('[GOV.PRAYA Chat] API Status:', isPlaceholder ? 'Using fallback (no API key)' : 'API key configured');
 
     if (isPlaceholder) {
       // Provide helpful fallback responses when API key not available
-      console.log('[GOV.PRAYA Chat] Falling back to static responses');
       return getFallbackResponse(userMessage);
     }
 
@@ -1202,7 +1233,6 @@ The user is currently on the ${currentDepartment.name} page. Prioritize informat
 
       if (!response.ok) {
         const errorData = await response.json().catch(() => ({}));
-        console.error('[GOV.PRAYA Chat] Gemini API error:', response.status, errorData);
 
         if (response.status === 429) {
           throw new Error('API quota exceeded. Please try again later.');
@@ -1210,12 +1240,10 @@ The user is currently on the ${currentDepartment.name} page. Prioritize informat
           if (errorData.error?.message?.includes('safety')) {
             throw new Error('Response blocked due to safety filters. Please rephrase your question.');
           } else if (errorData.error?.message?.includes('API key')) {
-            console.error('[GOV.PRAYA Chat] API key error - falling back to static responses');
             return getFallbackResponse(userMessage);
           }
           throw new Error('Request error. Please try again.');
         } else if (response.status === 403) {
-          console.error('[GOV.PRAYA Chat] API key invalid or expired');
           return getFallbackResponse(userMessage);
         } else {
           throw new Error('Failed to get response. Please try again.');
@@ -1235,12 +1263,10 @@ The user is currently on the ${currentDepartment.name} page. Prioritize informat
 
       return candidate.content.parts[0].text;
     } catch (error) {
-      console.error('[GOV.PRAYA Chat] API call failed:', error.message);
       // Fall back to basic responses if API fails (except for user-facing errors)
       if (error.message.includes('quota') || error.message.includes('safety') || error.message.includes('rephras') || error.message.includes('blocked')) {
         throw error;
       }
-      console.log('[GOV.PRAYA Chat] Falling back to static response due to error');
       return getFallbackResponse(userMessage);
     }
   }
@@ -1285,16 +1311,8 @@ The user is currently on the ${currentDepartment.name} page. Prioritize informat
 
   // Initialize when DOM is ready
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', () => {
-      console.log('[GOV.PRAYA Chat] Initializing chatbot widget...');
-      console.log('[GOV.PRAYA Chat] Current department:', currentDepartment ? currentDepartment.name : 'General Portal');
-      createChatWidget();
-      console.log('[GOV.PRAYA Chat] Widget initialized successfully');
-    });
+    document.addEventListener('DOMContentLoaded', createChatWidget);
   } else {
-    console.log('[GOV.PRAYA Chat] Initializing chatbot widget...');
-    console.log('[GOV.PRAYA Chat] Current department:', currentDepartment ? currentDepartment.name : 'General Portal');
     createChatWidget();
-    console.log('[GOV.PRAYA Chat] Widget initialized successfully');
   }
 })();
