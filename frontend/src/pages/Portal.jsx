@@ -2,6 +2,7 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import { useAuth } from '../utils/AuthContext'
 import { getCurrentAQI, getCurrentSecurityLevel } from '../utils/nationalStatus'
+import EmergencyAlert from '../components/EmergencyAlert'
 import './Portal.css'
 
 // Department icon components
@@ -397,6 +398,8 @@ export default function Portal() {
           </nav>
         </div>
       </header>
+
+      <EmergencyAlert />
 
       <section className="portal-hero">
         <div className="hero-bg">
