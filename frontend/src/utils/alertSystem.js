@@ -1,10 +1,14 @@
 /**
  * Emergency Alert System
  * Manages government alerts, warnings, and critical announcements
+ * Supports both Supabase (persistent) and localStorage (fallback) storage
  */
+
+import { supabase, isSupabaseConfigured } from './supabaseClient';
 
 // Storage key for admin-managed alerts
 const ALERTS_STORAGE_KEY = 'govpraya_alerts';
+const SUPABASE_TABLE = 'emergency_alerts';
 
 // Alert severity levels with associated styling
 export const ALERT_SEVERITY = {
@@ -62,6 +66,120 @@ export const CATEGORY_LABELS = {
   government: 'Government'
 };
 
+// Alert templates for quick creation
+export const ALERT_TEMPLATES = [
+  {
+    id: 'weather-storm',
+    name: 'Severe Weather',
+    severityKey: 'WARNING',
+    category: 'weather',
+    title: 'Severe Weather Warning',
+    message: 'Severe weather conditions expected. Citizens are advised to stay indoors and monitor official channels for updates.',
+    department: 'National Weather Service',
+    link: '/transport',
+    linkText: 'View Transit Updates'
+  },
+  {
+    id: 'weather-heat',
+    name: 'Heat Advisory',
+    severityKey: 'WARNING',
+    category: 'weather',
+    title: 'Extreme Heat Advisory',
+    message: 'Dangerously high temperatures expected. Stay hydrated, avoid outdoor activities during peak hours, and check on elderly neighbors.',
+    department: 'National Weather Service',
+    link: '/health',
+    linkText: 'Health Guidelines'
+  },
+  {
+    id: 'public-safety-emergency',
+    name: 'Public Safety Emergency',
+    severityKey: 'CRITICAL',
+    category: 'public_safety',
+    title: 'Public Safety Alert',
+    message: 'An emergency situation is in progress. Follow instructions from local authorities and emergency services.',
+    department: 'National Police Agency',
+    link: '/npa',
+    linkText: 'Emergency Information'
+  },
+  {
+    id: 'public-safety-evacuation',
+    name: 'Evacuation Order',
+    severityKey: 'CRITICAL',
+    category: 'public_safety',
+    title: 'Mandatory Evacuation Order',
+    message: 'Immediate evacuation required for specified areas. Proceed to designated evacuation centers.',
+    department: 'National Emergency Management',
+    link: '/npa',
+    linkText: 'Evacuation Routes'
+  },
+  {
+    id: 'health-outbreak',
+    name: 'Health Advisory',
+    severityKey: 'WARNING',
+    category: 'health',
+    title: 'Public Health Advisory',
+    message: 'A health advisory has been issued. Please follow recommended precautions and consult healthcare providers if symptomatic.',
+    department: 'Department of Health',
+    link: '/health',
+    linkText: 'Health Information'
+  },
+  {
+    id: 'transport-closure',
+    name: 'Transport Disruption',
+    severityKey: 'INFO',
+    category: 'transport',
+    title: 'Transport Service Disruption',
+    message: 'Transit services are experiencing disruptions. Check for alternative routes and allow extra travel time.',
+    department: 'Transport Department',
+    link: '/transport',
+    linkText: 'Service Status'
+  },
+  {
+    id: 'service-maintenance',
+    name: 'System Maintenance',
+    severityKey: 'INFO',
+    category: 'service',
+    title: 'Scheduled System Maintenance',
+    message: 'GOV.PRAYA online services will undergo scheduled maintenance. Some services may be temporarily unavailable.',
+    department: 'Digital Services',
+    link: null,
+    linkText: null
+  },
+  {
+    id: 'government-announcement',
+    name: 'Government Announcement',
+    severityKey: 'INFO',
+    category: 'government',
+    title: 'Government Announcement',
+    message: 'An important government announcement has been issued. Please review the details.',
+    department: 'Office of the Chief Executive',
+    link: '/lc',
+    linkText: 'Read Announcement'
+  },
+  {
+    id: 'tax-deadline',
+    name: 'Tax Deadline Reminder',
+    severityKey: 'INFO',
+    category: 'government',
+    title: 'Tax Filing Deadline Approaching',
+    message: 'The deadline for tax filing is approaching. File your returns before the deadline to avoid penalties.',
+    department: 'Revenue Department',
+    link: '/revenue',
+    linkText: 'File Your Taxes'
+  },
+  {
+    id: 'success-resolved',
+    name: 'Issue Resolved',
+    severityKey: 'SUCCESS',
+    category: 'service',
+    title: 'Service Restored',
+    message: 'The previously reported issue has been resolved. All services are now operating normally.',
+    department: 'Digital Services',
+    link: null,
+    linkText: null
+  }
+];
+
 // Default alerts (shown if no admin alerts exist)
 const defaultAlerts = [
   {
@@ -81,6 +199,27 @@ const defaultAlerts = [
 ];
 
 /**
+ * Check if Supabase alerts table is available
+ */
+let supabaseAvailable = null;
+async function checkSupabaseAvailability() {
+  if (supabaseAvailable !== null) return supabaseAvailable;
+  if (!isSupabaseConfigured || !supabase) {
+    supabaseAvailable = false;
+    return false;
+  }
+
+  try {
+    const { error } = await supabase.from(SUPABASE_TABLE).select('id').limit(1);
+    supabaseAvailable = !error;
+    return supabaseAvailable;
+  } catch {
+    supabaseAvailable = false;
+    return false;
+  }
+}
+
+/**
  * Get severity object from key string
  */
 export function getSeverityFromKey(key) {
@@ -93,14 +232,79 @@ export function getSeverityFromKey(key) {
 function parseStoredAlert(alert) {
   return {
     ...alert,
-    severity: getSeverityFromKey(alert.severityKey),
-    timestamp: new Date(alert.timestamp),
-    expiresAt: new Date(alert.expiresAt)
+    severity: getSeverityFromKey(alert.severityKey || alert.severity_key),
+    timestamp: new Date(alert.timestamp || alert.starts_at),
+    expiresAt: new Date(alert.expiresAt || alert.expires_at)
   };
 }
 
 /**
- * Get all alerts from storage (for admin)
+ * Convert alert to Supabase format
+ */
+function toSupabaseFormat(alert) {
+  return {
+    id: alert.id,
+    severity_key: alert.severityKey,
+    category: alert.category,
+    title: alert.title,
+    message: alert.message,
+    department: alert.department,
+    starts_at: alert.timestamp instanceof Date ? alert.timestamp.toISOString() : alert.timestamp,
+    expires_at: alert.expiresAt instanceof Date ? alert.expiresAt.toISOString() : alert.expiresAt,
+    dismissible: alert.dismissible,
+    link: alert.link || null,
+    link_text: alert.linkText || null,
+    is_active: alert.isActive
+  };
+}
+
+/**
+ * Convert Supabase format to app format
+ */
+function fromSupabaseFormat(row) {
+  return {
+    id: row.id,
+    severityKey: row.severity_key,
+    category: row.category,
+    title: row.title,
+    message: row.message,
+    department: row.department,
+    timestamp: row.starts_at,
+    expiresAt: row.expires_at,
+    dismissible: row.dismissible,
+    link: row.link,
+    linkText: row.link_text,
+    isActive: row.is_active,
+    createdAt: row.created_at,
+    updatedAt: row.updated_at
+  };
+}
+
+/**
+ * Get all alerts from storage (for admin) - ASYNC version
+ */
+export async function getAllAlertsAsync() {
+  const useSupabase = await checkSupabaseAvailability();
+
+  if (useSupabase) {
+    try {
+      const { data, error } = await supabase
+        .from(SUPABASE_TABLE)
+        .select('*')
+        .order('created_at', { ascending: false });
+
+      if (error) throw error;
+      return data.map(row => parseStoredAlert(fromSupabaseFormat(row)));
+    } catch {
+      // Fall back to localStorage
+    }
+  }
+
+  return getAllAlerts();
+}
+
+/**
+ * Get all alerts from storage (for admin) - SYNC version (localStorage only)
  */
 export function getAllAlerts() {
   try {
@@ -117,8 +321,34 @@ export function getAllAlerts() {
 }
 
 /**
- * Get all currently active alerts (for display)
- * Filters by expiration, activation time, and isActive flag
+ * Get all currently active alerts (for display) - ASYNC version
+ */
+export async function getActiveAlertsAsync() {
+  const now = new Date();
+  const useSupabase = await checkSupabaseAvailability();
+
+  if (useSupabase) {
+    try {
+      const { data, error } = await supabase
+        .from(SUPABASE_TABLE)
+        .select('*')
+        .eq('is_active', true)
+        .lte('starts_at', now.toISOString())
+        .gt('expires_at', now.toISOString())
+        .order('created_at', { ascending: false });
+
+      if (error) throw error;
+      return data.map(row => parseStoredAlert(fromSupabaseFormat(row)));
+    } catch {
+      // Fall back to localStorage
+    }
+  }
+
+  return getActiveAlerts();
+}
+
+/**
+ * Get all currently active alerts (for display) - SYNC version
  */
 export function getActiveAlerts() {
   const now = new Date();
@@ -133,7 +363,49 @@ export function getActiveAlerts() {
 }
 
 /**
- * Save an alert (create or update)
+ * Save an alert (create or update) - ASYNC version
+ */
+export async function saveAlertAsync(alertData) {
+  const useSupabase = await checkSupabaseAvailability();
+
+  if (useSupabase) {
+    try {
+      const supabaseData = toSupabaseFormat(alertData);
+      const isUpdate = !!alertData.id && !alertData.id.startsWith('alert-');
+
+      if (isUpdate) {
+        const { data, error } = await supabase
+          .from(SUPABASE_TABLE)
+          .update(supabaseData)
+          .eq('id', alertData.id)
+          .select()
+          .single();
+
+        if (error) throw error;
+        return { success: true, alert: parseStoredAlert(fromSupabaseFormat(data)), source: 'supabase' };
+      } else {
+        // Remove id for insert (let Supabase generate UUID)
+        delete supabaseData.id;
+        const { data, error } = await supabase
+          .from(SUPABASE_TABLE)
+          .insert(supabaseData)
+          .select()
+          .single();
+
+        if (error) throw error;
+        return { success: true, alert: parseStoredAlert(fromSupabaseFormat(data)), source: 'supabase' };
+      }
+    } catch (error) {
+      console.warn('Supabase save failed, falling back to localStorage:', error);
+    }
+  }
+
+  // Fall back to localStorage
+  return { ...saveAlert(alertData), source: 'localStorage' };
+}
+
+/**
+ * Save an alert (create or update) - SYNC version (localStorage only)
  */
 export function saveAlert(alertData) {
   try {
@@ -170,7 +442,30 @@ export function saveAlert(alertData) {
 }
 
 /**
- * Delete an alert by ID
+ * Delete an alert by ID - ASYNC version
+ */
+export async function deleteAlertAsync(alertId) {
+  const useSupabase = await checkSupabaseAvailability();
+
+  if (useSupabase) {
+    try {
+      const { error } = await supabase
+        .from(SUPABASE_TABLE)
+        .delete()
+        .eq('id', alertId);
+
+      if (error) throw error;
+      return { success: true, source: 'supabase' };
+    } catch (error) {
+      console.warn('Supabase delete failed, falling back to localStorage:', error);
+    }
+  }
+
+  return { ...deleteAlert(alertId), source: 'localStorage' };
+}
+
+/**
+ * Delete an alert by ID - SYNC version
  */
 export function deleteAlert(alertId) {
   try {
@@ -184,7 +479,42 @@ export function deleteAlert(alertId) {
 }
 
 /**
- * Toggle alert active status
+ * Toggle alert active status - ASYNC version
+ */
+export async function toggleAlertActiveAsync(alertId) {
+  const useSupabase = await checkSupabaseAvailability();
+
+  if (useSupabase) {
+    try {
+      // First get current state
+      const { data: current, error: fetchError } = await supabase
+        .from(SUPABASE_TABLE)
+        .select('is_active')
+        .eq('id', alertId)
+        .single();
+
+      if (fetchError) throw fetchError;
+
+      // Toggle it
+      const { data, error } = await supabase
+        .from(SUPABASE_TABLE)
+        .update({ is_active: !current.is_active })
+        .eq('id', alertId)
+        .select()
+        .single();
+
+      if (error) throw error;
+      return { success: true, isActive: data.is_active, source: 'supabase' };
+    } catch (error) {
+      console.warn('Supabase toggle failed, falling back to localStorage:', error);
+    }
+  }
+
+  return { ...toggleAlertActive(alertId), source: 'localStorage' };
+}
+
+/**
+ * Toggle alert active status - SYNC version
  */
 export function toggleAlertActive(alertId) {
   try {
@@ -352,4 +682,17 @@ export function getAlertIconPath(iconType) {
 export function resetAlertsToDefault() {
   localStorage.setItem(ALERTS_STORAGE_KEY, JSON.stringify(defaultAlerts));
   return defaultAlerts.map(parseStoredAlert);
+}
+
+/**
+ * Get storage source status
+ */
+export async function getStorageStatus() {
+  const useSupabase = await checkSupabaseAvailability();
+  return {
+    supabaseConfigured: isSupabaseConfigured,
+    supabaseAvailable: useSupabase,
+    usingSupabase: useSupabase,
+    source: useSupabase ? 'Supabase (cloud)' : 'localStorage (browser)'
+  };
 }
