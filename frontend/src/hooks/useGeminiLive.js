@@ -167,7 +167,9 @@ export function useGeminiLive() {
   }, [])
 
   /**
-   * Set up event listeners
+   * Set up event listeners for Gemini Live service
+   * Dependencies: [isVoiceModeActive] - needed because handleTurnComplete
+   * uses isVoiceModeActive to determine next state after model finishes speaking
    */
   useEffect(() => {
     // Handle audio response from Gemini

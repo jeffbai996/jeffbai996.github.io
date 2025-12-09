@@ -7,8 +7,13 @@ export default function Layout() {
 
   return (
     <div className="app-layout">
+      <a href="#main-content" className="skip-to-content">
+        Skip to main content
+      </a>
       <GovBanner />
-      <Outlet />
+      <main id="main-content">
+        <Outlet />
+      </main>
       <ChatWidget currentPath={location.pathname} />
     </div>
   )

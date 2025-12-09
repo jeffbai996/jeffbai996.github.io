@@ -724,6 +724,16 @@ export default function ChatWidget({ currentPath = '/' }) {
     }
   }, [isOpen])
 
+  // Cleanup streaming timeout on unmount to prevent memory leaks
+  useEffect(() => {
+    return () => {
+      if (streamingRef.current) {
+        clearTimeout(streamingRef.current)
+        streamingRef.current = null
+      }
+    }
+  }, [])
+
   // Handle quick action chip clicks
   const handleQuickAction = (query) => {
     setShowQuickActions(false)
