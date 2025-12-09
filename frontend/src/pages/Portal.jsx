@@ -307,12 +307,12 @@ const priorities = [
 ]
 
 const quickLinks = [
-  { label: 'Report an incident', href: '/npa#report' },
-  { label: 'File cannabis taxes', href: '/ctb#taxes' },
-  { label: 'Book a court date', href: '/doj#courts' },
-  { label: 'Check land records', href: '/interior#land' },
-  { label: 'Submit business returns', href: '/revenue#business' },
-  { label: 'View government notices', href: '/doj#news' }
+  { label: 'Report an incident', href: '/npa/report' },
+  { label: 'File cannabis taxes', href: '/ctb/taxation' },
+  { label: 'Book a court date', href: '/doj/courts' },
+  { label: 'Check land records', href: '/interior/land' },
+  { label: 'Submit business returns', href: '/revenue/file' },
+  { label: 'View government notices', href: '/doj' }
 ]
 
 export default function Portal() {
@@ -684,7 +684,7 @@ export default function Portal() {
         </div>
       </section>
 
-      <section className="announcements">
+      <section className="announcements" id="news">
         <div className="container">
           <div className="announcements-header">
             <div>
@@ -692,12 +692,12 @@ export default function Portal() {
               <h2 className="section-title">Government Announcements</h2>
               <p className="section-subtitle">Stay informed about new policies, services, and important notices</p>
             </div>
-            <a href="#news" className="btn btn-accent">View All News</a>
+            <a href="#departments" className="btn btn-accent">Browse Departments</a>
           </div>
           <div className="announcements-grid">
             <div className="announcement-card announcement-featured">
               <div className="announcement-badge">Policy Update</div>
-              <span className="announcement-date">November 28, 2024</span>
+              <span className="announcement-date">December 5, 2025</span>
               <h3>New Housing Subsidy Program Expanded</h3>
               <p>The Housing Authority announces expansion of rental assistance programs to include middle-income families. Applications now open for eligible households earning up to ¤65,000 annually.</p>
               <a href="/housing" className="announcement-link">
@@ -709,7 +709,7 @@ export default function Portal() {
             </div>
             <div className="announcement-card">
               <div className="announcement-badge">Service Launch</div>
-              <span className="announcement-date">November 25, 2024</span>
+              <span className="announcement-date">December 2, 2025</span>
               <h3>Digital ID Cards Now Available</h3>
               <p>Apply for your digital government ID through the Interior Department portal. Accepted at all government facilities and participating businesses.</p>
               <a href="/interior" className="announcement-link">
@@ -721,9 +721,9 @@ export default function Portal() {
             </div>
             <div className="announcement-card">
               <div className="announcement-badge">Tax Notice</div>
-              <span className="announcement-date">November 20, 2024</span>
-              <h3>2025 Tax Filing Season Opens January 15</h3>
-              <p>Revenue Department reminds citizens that tax returns for 2024 are due by April 15, 2025. Early filers may receive refunds within 10 business days.</p>
+              <span className="announcement-date">November 28, 2025</span>
+              <h3>2026 Tax Filing Season Opens January 15</h3>
+              <p>Revenue Department reminds citizens that tax returns for 2025 are due by April 15, 2026. Early filers may receive refunds within 10 business days.</p>
               <a href="/revenue" className="announcement-link">
                 Tax information
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -819,10 +819,10 @@ export default function Portal() {
             <div className="footer-section">
               <h5>Quick Links</h5>
               <ul>
-                <li><a href="#">About Praya</a></li>
-                <li><a href="#">Contact Us</a></li>
-                <li><a href="#">Accessibility</a></li>
-                <li><a href="#">Privacy Policy</a></li>
+                <li><Link to="/#services">About Praya</Link></li>
+                <li><Link to="/lc">Contact Us</Link></li>
+                <li><Link to="/#services">Accessibility</Link></li>
+                <li><Link to="/#services">Privacy Policy</Link></li>
               </ul>
             </div>
             <div className="footer-section">
@@ -848,18 +848,18 @@ export default function Portal() {
             <div className="footer-section">
               <h5>Help</h5>
               <ul>
-                <li><a href="#">FAQs</a></li>
-                <li><a href="#">Support</a></li>
-                <li><a href="#">Feedback</a></li>
+                <li><Link to="/#services">FAQs</Link></li>
+                <li><Link to="/interior">Support</Link></li>
+                <li><Link to="/lc">Feedback</Link></li>
               </ul>
             </div>
           </div>
           <div className="footer-bottom">
             <span>&copy; 2011-2026 Republic of Praya. All rights reserved.</span>
             <div className="footer-legal">
-              <a href="#">Terms of Service</a>
-              <a href="#">Privacy</a>
-              <a href="#">Cookies</a>
+              <Link to="/#services">Terms of Service</Link>
+              <Link to="/#services">Privacy</Link>
+              <Link to="/#services">Cookies</Link>
             </div>
           </div>
         </div>

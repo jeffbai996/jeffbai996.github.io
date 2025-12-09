@@ -14,7 +14,7 @@ export default function GovBanner() {
           <div className="gov-banner-left">
             <Link to="/" className="gov-praya-link">GOV.PRAYA</Link>
             <div className="gov-icon">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
                 <path d="M3 21h18M3 10h18M5 6l7-3 7 3M4 10v11M20 10v11M8 14v3M12 14v3M16 14v3"/>
               </svg>
             </div>
@@ -24,7 +24,7 @@ export default function GovBanner() {
               onClick={() => setDropdownOpen(!dropdownOpen)}
             >
               Here's how you know
-              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
                 <path d="M6 9l6 6 6-6"/>
               </svg>
             </button>
@@ -42,7 +42,7 @@ export default function GovBanner() {
           <div className="gov-dropdown-inner">
             <div className="gov-dropdown-item">
               <div className="gov-dropdown-icon">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
                   <path d="M3 21h18M3 10h18M5 6l7-3 7 3M4 10v11M20 10v11"/>
                 </svg>
               </div>
@@ -53,7 +53,7 @@ export default function GovBanner() {
             </div>
             <div className="gov-dropdown-item">
               <div className="gov-dropdown-icon">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
                   <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
                   <path d="M7 11V7a5 5 0 0110 0v4"/>
                 </svg>
