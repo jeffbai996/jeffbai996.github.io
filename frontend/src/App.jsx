@@ -27,6 +27,7 @@ const LC = lazy(() => import('./pages/LC'))
 const PSE = lazy(() => import('./pages/PSE'))
 const AirQuality = lazy(() => import('./pages/AirQuality'))
 const NationalSecurity = lazy(() => import('./pages/NationalSecurity'))
+const Weather = lazy(() => import('./pages/Weather'))
 const NotFound = lazy(() => import('./pages/NotFound'))
 
 // Lazy load admin pages
@@ -115,6 +116,7 @@ function App() {
               <Route path="pse/*" element={<PSE />} />
               <Route path="air-quality" element={<AirQuality />} />
               <Route path="national-security" element={<NationalSecurity />} />
+              <Route path="weather/*" element={<Weather />} />
 
               {/* Auth Routes */}
               <Route path="login" element={<Login />} />
