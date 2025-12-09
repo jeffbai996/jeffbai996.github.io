@@ -1,14 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { useAuth } from '../../utils/AuthContext';
 import {
-  getAllAlerts,
-  saveAlert,
-  deleteAlert,
-  toggleAlertActive,
+  getAllAlertsAsync,
+  saveAlertAsync,
+  deleteAlertAsync,
+  toggleAlertActiveAsync,
+  getStorageStatus,
   ALERT_SEVERITY,
   ALERT_CATEGORY,
   CATEGORY_LABELS,
-  formatAlertTime,
+  ALERT_TEMPLATES,
   getAlertIconPath,
   resetAlertsToDefault
 } from '../../utils/alertSystem';
@@ -32,20 +34,37 @@ const DEPARTMENTS = [
 ];
 
 export default function AlertAdmin() {
+  const { user } = useAuth();
   const [alerts, setAlerts] = useState([]);
   const [isEditing, setIsEditing] = useState(false);
   const [editingAlert, setEditingAlert] = useState(null);
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(null);
+  const [showTemplates, setShowTemplates] = useState(false);
   const [notification, setNotification] = useState(null);
+  const [storageStatus, setStorageStatus] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
 
-  // Load alerts on mount
+  // Load alerts and storage status on mount
   useEffect(() => {
     loadAlerts();
+    loadStorageStatus();
   }, []);
 
-  const loadAlerts = () => {
-    const allAlerts = getAllAlerts();
-    setAlerts(allAlerts);
+  const loadAlerts = async () => {
+    setIsLoading(true);
+    try {
+      const allAlerts = await getAllAlertsAsync();
+      setAlerts(allAlerts);
+    } catch (error) {
+      showNotification('Failed to load alerts', 'error');
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const loadStorageStatus = async () => {
+    const status = await getStorageStatus();
+    setStorageStatus(status);
   };
 
   const showNotification = (message, type = 'success') => {
@@ -68,6 +87,26 @@ export default function AlertAdmin() {
       linkText: '',
       isActive: true
     });
+    setShowTemplates(false);
+    setIsEditing(true);
+  };
+
+  const handleUseTemplate = (template) => {
+    setEditingAlert({
+      id: null,
+      title: template.title,
+      message: template.message,
+      severityKey: template.severityKey,
+      category: template.category,
+      department: template.department,
+      timestamp: new Date().toISOString().slice(0, 16),
+      expiresAt: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString().slice(0, 16),
+      dismissible: true,
+      link: template.link || '',
+      linkText: template.linkText || '',
+      isActive: true
+    });
+    setShowTemplates(false);
     setIsEditing(true);
   };
 
@@ -84,35 +123,50 @@ export default function AlertAdmin() {
     setIsEditing(true);
   };
 
-  const handleSaveAlert = (e) => {
+  const handleSaveAlert = async (e) => {
     e.preventDefault();
-    const result = saveAlert(editingAlert);
-    if (result.success) {
-      showNotification(editingAlert.id ? 'Alert updated successfully' : 'Alert created successfully');
-      setIsEditing(false);
-      setEditingAlert(null);
-      loadAlerts();
-    } else {
-      showNotification('Failed to save alert: ' + result.error, 'error');
+    try {
+      const result = await saveAlertAsync(editingAlert);
+      if (result.success) {
+        showNotification(
+          `Alert ${editingAlert.id ? 'updated' : 'created'} successfully` +
+          (result.source === 'supabase' ? ' (synced to cloud)' : ' (saved locally)')
+        );
+        setIsEditing(false);
+        setEditingAlert(null);
+        await loadAlerts();
+      } else {
+        showNotification('Failed to save alert: ' + result.error, 'error');
+      }
+    } catch (error) {
+      showNotification('Failed to save alert', 'error');
     }
   };
 
-  const handleDeleteAlert = (alertId) => {
-    const result = deleteAlert(alertId);
-    if (result.success) {
-      showNotification('Alert deleted');
-      setShowDeleteConfirm(null);
-      loadAlerts();
-    } else {
+  const handleDeleteAlert = async (alertId) => {
+    try {
+      const result = await deleteAlertAsync(alertId);
+      if (result.success) {
+        showNotification('Alert deleted');
+        setShowDeleteConfirm(null);
+        await loadAlerts();
+      } else {
+        showNotification('Failed to delete alert', 'error');
+      }
+    } catch (error) {
       showNotification('Failed to delete alert', 'error');
     }
   };
 
-  const handleToggleActive = (alertId) => {
-    const result = toggleAlertActive(alertId);
-    if (result.success) {
-      showNotification(result.isActive ? 'Alert activated' : 'Alert deactivated');
-      loadAlerts();
+  const handleToggleActive = async (alertId) => {
+    try {
+      const result = await toggleAlertActiveAsync(alertId);
+      if (result.success) {
+        showNotification(result.isActive ? 'Alert activated' : 'Alert deactivated');
+        await loadAlerts();
+      }
+    } catch (error) {
+      showNotification('Failed to toggle alert', 'error');
     }
   };
 
@@ -158,6 +212,29 @@ export default function AlertAdmin() {
             <h1>Emergency Alert Management</h1>
             <p>Create and manage government alerts displayed on GOV.PRAYA</p>
           </div>
+          <div className="admin-user">
+            <span className="admin-user-name">{user?.firstName} {user?.lastName}</span>
+            {storageStatus && (
+              <span className={`storage-badge ${storageStatus.usingSupabase ? 'cloud' : 'local'}`}>
+                {storageStatus.usingSupabase ? (
+                  <>
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                      <path d="M18 10h-1.26A8 8 0 109 20h9a5 5 0 000-10z" />
+                    </svg>
+                    Cloud Sync
+                  </>
+                ) : (
+                  <>
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                      <rect x="2" y="3" width="20" height="14" rx="2" />
+                      <path d="M8 21h8M12 17v4" />
+                    </svg>
+                    Local Storage
+                  </>
+                )}
+              </span>
+            )}
+          </div>
         </div>
       </header>
 
@@ -169,19 +246,67 @@ export default function AlertAdmin() {
 
       <main className="admin-main">
         <div className="admin-container">
-          {!isEditing ? (
+          {isLoading ? (
+            <div className="admin-loading">
+              <div className="loading-spinner" />
+              <p>Loading alerts...</p>
+            </div>
+          ) : !isEditing ? (
             <>
               <div className="admin-toolbar">
-                <button className="btn btn-primary" onClick={handleNewAlert}>
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                    <path d="M12 5v14M5 12h14" />
-                  </svg>
-                  New Alert
-                </button>
+                <div className="toolbar-left">
+                  <button className="btn btn-primary" onClick={handleNewAlert}>
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                      <path d="M12 5v14M5 12h14" />
+                    </svg>
+                    New Alert
+                  </button>
+                  <button className="btn btn-secondary" onClick={() => setShowTemplates(!showTemplates)}>
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                      <rect x="3" y="3" width="7" height="7" />
+                      <rect x="14" y="3" width="7" height="7" />
+                      <rect x="14" y="14" width="7" height="7" />
+                      <rect x="3" y="14" width="7" height="7" />
+                    </svg>
+                    Templates
+                  </button>
+                </div>
                 <button className="btn btn-secondary" onClick={handleResetDefaults}>
                   Reset to Defaults
                 </button>
               </div>
+
+              {/* Templates Panel */}
+              {showTemplates && (
+                <div className="templates-panel">
+                  <h3>Quick Templates</h3>
+                  <p>Start with a pre-configured template and customize as needed.</p>
+                  <div className="templates-grid">
+                    {ALERT_TEMPLATES.map(template => {
+                      const severity = ALERT_SEVERITY[template.severityKey];
+                      return (
+                        <button
+                          key={template.id}
+                          className="template-card"
+                          onClick={() => handleUseTemplate(template)}
+                          style={{ '--severity-color': severity.color }}
+                        >
+                          <div className="template-header">
+                            <span className="template-severity" style={{ background: severity.color }}>
+                              {severity.label}
+                            </span>
+                            <span className="template-category">
+                              {CATEGORY_LABELS[template.category]}
+                            </span>
+                          </div>
+                          <h4>{template.name}</h4>
+                          <p>{template.title}</p>
+                        </button>
+                      );
+                    })}
+                  </div>
+                </div>
+              )}
 
               <div className="alerts-list">
                 {alerts.length === 0 ? (
