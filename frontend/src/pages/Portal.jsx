@@ -819,10 +819,10 @@ export default function Portal() {
             <div className="footer-section">
               <h5>Quick Links</h5>
               <ul>
-                <li><a href="#">About Praya</a></li>
-                <li><a href="#">Contact Us</a></li>
-                <li><a href="#">Accessibility</a></li>
-                <li><a href="#">Privacy Policy</a></li>
+                <li><Link to="/#services">About Praya</Link></li>
+                <li><Link to="/lc">Contact Us</Link></li>
+                <li><Link to="/#services">Accessibility</Link></li>
+                <li><Link to="/#services">Privacy Policy</Link></li>
               </ul>
             </div>
             <div className="footer-section">
@@ -848,18 +848,18 @@ export default function Portal() {
             <div className="footer-section">
               <h5>Help</h5>
               <ul>
-                <li><a href="#">FAQs</a></li>
-                <li><a href="#">Support</a></li>
-                <li><a href="#">Feedback</a></li>
+                <li><Link to="/#services">FAQs</Link></li>
+                <li><Link to="/interior">Support</Link></li>
+                <li><Link to="/lc">Feedback</Link></li>
               </ul>
             </div>
           </div>
           <div className="footer-bottom">
             <span>&copy; 2011-2026 Republic of Praya. All rights reserved.</span>
             <div className="footer-legal">
-              <a href="#">Terms of Service</a>
-              <a href="#">Privacy</a>
-              <a href="#">Cookies</a>
+              <Link to="/#services">Terms of Service</Link>
+              <Link to="/#services">Privacy</Link>
+              <Link to="/#services">Cookies</Link>
             </div>
           </div>
         </div>

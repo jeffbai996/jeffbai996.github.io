@@ -77,8 +77,8 @@ export default function Revenue() {
           <div className="footer-bottom">
             <span>&copy; {new Date().getFullYear()} Republic of Praya. Revenue Department.</span>
             <div className="footer-legal">
-              <a href="/terms">Terms</a>
-              <a href="/privacy">Privacy</a>
+              <Link to="/">Terms</Link>
+              <Link to="/">Privacy</Link>
             </div>
           </div>
         </div>

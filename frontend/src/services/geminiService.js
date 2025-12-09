@@ -8,8 +8,7 @@ import {
 import {
   searchForms,
   generateFormSummary,
-  generateFormHelp,
-  getFormById
+  generateFormHelp
 } from '../utils/formKnowledge';
 
 /**
