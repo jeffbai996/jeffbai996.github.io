@@ -13,12 +13,12 @@
 - [x] 6. Add missing `theme-dark-aqi` CSS theme to `global.css`
 
 ### Medium Priority
-- [ ] 7. Remove unused components (DocumentUpload, DarkModeToggle, ProgressTracker, InteractiveMap, FeeCalculator) and their CSS files
-- [ ] 8. Remove unused exports from `formKnowledge.js`
-- [ ] 9. Remove unused import of `getFormById` from `geminiService.js`
-- [ ] 10. Add chatbot contexts for Air Quality and National Security departments
-- [ ] 11. Fix memory leak in ChatWidget streaming (clear setTimeout on unmount)
-- [ ] 12. Fix broken footer links in Portal.jsx and Revenue.jsx
+- [x] 7. Remove unused components (DocumentUpload, DarkModeToggle, ProgressTracker, InteractiveMap, FeeCalculator) and their CSS files
+- [x] 8. Remove unused exports from `formKnowledge.js`
+- [x] 9. Remove unused import of `getFormById` from `geminiService.js`
+- [x] 10. Add chatbot contexts for Air Quality and National Security departments
+- [x] 11. Fix memory leak in ChatWidget streaming (clear setTimeout on unmount)
+- [x] 12. Fix broken footer links in Portal.jsx and Revenue.jsx
 
 ### Low Priority
 - [ ] 13. Remove console.log statements from `chatbot-embed.js`
