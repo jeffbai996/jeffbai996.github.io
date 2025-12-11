@@ -616,19 +616,24 @@ function HealthcareProviders() {
               <h3 className="card-title">Major Hospitals</h3>
               <div className="content-text">
                 <div style={{ marginBottom: '16px' }}>
-                  <h4 style={{ marginBottom: '4px' }}>Praya General Hospital</h4>
-                  <p style={{ fontSize: '14px', color: 'var(--text-muted)', marginBottom: '4px' }}>Level 1 Trauma Center • 847 beds</p>
-                  <p style={{ fontSize: '14px' }}>1200 Medical Center Drive, Praya City • (555) 100-1000</p>
+                  <h4 style={{ marginBottom: '4px' }}>Pei Ho General Hospital</h4>
+                  <p style={{ fontSize: '14px', color: 'var(--text-muted)', marginBottom: '4px' }}>Level 1 Trauma Center • 1,200 beds • Largest in Praya</p>
+                  <p style={{ fontSize: '14px' }}>100 Hospital Road, Pei Ho District • (555) 100-1000</p>
                 </div>
                 <div style={{ marginBottom: '16px' }}>
-                  <h4 style={{ marginBottom: '4px' }}>Central Medical Center</h4>
+                  <h4 style={{ marginBottom: '4px' }}>University of Praya Medical Centre</h4>
                   <p style={{ fontSize: '14px', color: 'var(--text-muted)', marginBottom: '4px' }}>Teaching Hospital • 612 beds</p>
-                  <p style={{ fontSize: '14px' }}>450 University Ave, Praya City • (555) 200-2000</p>
+                  <p style={{ fontSize: '14px' }}>University Endowment Lands • (555) 200-2000</p>
                 </div>
                 <div style={{ marginBottom: '16px' }}>
-                  <h4 style={{ marginBottom: '4px' }}>Children's Hospital of Praya</h4>
-                  <p style={{ fontSize: '14px', color: 'var(--text-muted)', marginBottom: '4px' }}>Pediatric Specialty Center • 285 beds</p>
-                  <p style={{ fontSize: '14px' }}>89 Children's Way, Praya City • (555) 300-3000</p>
+                  <h4 style={{ marginBottom: '4px' }}>Braemar Regional Hospital</h4>
+                  <p style={{ fontSize: '14px', color: 'var(--text-muted)', marginBottom: '4px' }}>Regional Medical Center • 420 beds</p>
+                  <p style={{ fontSize: '14px' }}>25 Healthcare Boulevard, Braemar City • (555) 300-3000</p>
+                </div>
+                <div style={{ marginBottom: '16px' }}>
+                  <h4 style={{ marginBottom: '4px' }}>Oakville Community Hospital</h4>
+                  <p style={{ fontSize: '14px', color: 'var(--text-muted)', marginBottom: '4px' }}>Community Hospital • 285 beds</p>
+                  <p style={{ fontSize: '14px' }}>180 Trinity Square, Oakville • (555) 400-4000</p>
                 </div>
               </div>
             </div>
