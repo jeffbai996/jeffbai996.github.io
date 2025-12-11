@@ -28,6 +28,8 @@ const PSE = lazy(() => import('./pages/PSE'))
 const AirQuality = lazy(() => import('./pages/AirQuality'))
 const NationalSecurity = lazy(() => import('./pages/NationalSecurity'))
 const Weather = lazy(() => import('./pages/Weather'))
+const Status = lazy(() => import('./pages/Status'))
+const Payments = lazy(() => import('./pages/Payments'))
 const NotFound = lazy(() => import('./pages/NotFound'))
 
 // Lazy load admin pages
@@ -93,6 +95,10 @@ function App() {
                 </ProtectedRoute>
               }
             />
+
+            {/* Standalone pages (outside Layout for custom headers) */}
+            <Route path="/status" element={<Status />} />
+            <Route path="/payments" element={<Payments />} />
 
             <Route path="/" element={<Layout />}>
               <Route index element={<Portal />} />
