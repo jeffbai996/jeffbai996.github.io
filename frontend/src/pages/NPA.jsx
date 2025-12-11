@@ -269,6 +269,7 @@ function NPAHome({ navigate }) {
                 <p><strong>Emergency:</strong> 911</p>
                 <p><strong>Non-Emergency:</strong> 311</p>
                 <p><strong>Anonymous Tips:</strong> 1-800-CRIME-TIP</p>
+                <p style={{ marginTop: '12px', borderTop: '1px solid var(--border-subtle)', paddingTop: '12px' }}><strong>NPA Headquarters:</strong><br />87 Mikkelson Road, Western District</p>
               </div>
             </aside>
           </div>
