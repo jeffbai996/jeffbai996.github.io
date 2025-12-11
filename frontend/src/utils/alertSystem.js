@@ -192,8 +192,8 @@ const defaultAlerts = [
     timestamp: '2025-12-09T08:00:00',
     expiresAt: '2025-12-12T23:59:59',
     dismissible: true,
-    link: '/transport',
-    linkText: 'View Transit Updates',
+    link: '/nws',
+    linkText: 'View Weather Details',
     isActive: true
   }
 ];
