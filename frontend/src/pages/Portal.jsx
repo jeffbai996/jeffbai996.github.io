@@ -831,7 +831,7 @@ export default function Portal() {
                 <li><Link to="/#services">Privacy Policy</Link></li>
               </ul>
             </div>
-            <div className="footer-section">
+            <div className="footer-section footer-departments">
               <h5>Departments</h5>
               <ul>
                 <li><a href="/npa">National Police Agency</a></li>
@@ -844,9 +844,9 @@ export default function Portal() {
                 <li><a href="/post">Praya Post</a></li>
                 <li><a href="/health">Health Department</a></li>
                 <li><a href="/housing">Housing Authority</a></li>
-                <li><a href="/cbca">Customs & Border Control</a></li>
+                <li><a href="/cbca">Customs & Border</a></li>
                 <li><a href="/lc">Legislative Council</a></li>
-                <li><Link to="/bd">Buildings Department</Link></li>
+                <li><Link to="/bd">Buildings Dept</Link></li>
                 <li><Link to="/cr">Companies Registry</Link></li>
                 <li><Link to="/swd">Social Welfare</Link></li>
               </ul>
