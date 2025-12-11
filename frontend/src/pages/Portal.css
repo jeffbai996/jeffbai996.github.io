@@ -997,7 +997,7 @@ body.light .portal-header {
 
 .footer-grid {
   display: grid;
-  grid-template-columns: 1.5fr 1fr 1fr 1fr;
+  grid-template-columns: 1.5fr 0.8fr 1.5fr 0.8fr;
   gap: 32px;
   margin-bottom: 32px;
 }
@@ -1032,6 +1032,16 @@ body.light .portal-header {
   cursor: pointer;
 }
 .footer-section a:hover { color: var(--primary); }
+
+/* Compact departments list with multi-column layout */
+.footer-section.footer-departments ul {
+  column-count: 2;
+  column-gap: 24px;
+}
+.footer-section.footer-departments li {
+  margin-bottom: 6px;
+  break-inside: avoid;
+}
 
 .footer-bottom {
   border-top: 1px solid var(--border-subtle);
@@ -1072,6 +1082,7 @@ body.light .portal-header {
   .hero-features { grid-template-columns: 1fr; }
   .dept-grid { grid-template-columns: 1fr; }
   .footer-grid { grid-template-columns: 1fr; }
+  .footer-section.footer-departments ul { column-count: 2; }
   .footer-bottom {
     flex-direction: column;
     gap: 12px;
