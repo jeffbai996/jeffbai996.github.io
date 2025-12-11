@@ -14,7 +14,7 @@ export const MRT_LINES = {
     color: '#e11d48', // Rose red
     textColor: '#ffffff',
     type: 'mrt',
-    description: 'North-South spine connecting Airport to Downtown',
+    description: 'North-South spine connecting Airport to Downtown via Pei Ho',
     operatingHours: { start: '05:30', end: '00:30' },
     frequency: { peak: 3, offPeak: 6, weekend: 8 },
     totalLength: 42.5, // km
@@ -23,16 +23,16 @@ export const MRT_LINES = {
       { id: 'L1-01', name: 'Praya International Airport', code: 'PIA', zone: 5, interchange: ['ISR'], facilities: ['airport', 'parking', 'bus'] },
       { id: 'L1-02', name: 'Airport City', code: 'APC', zone: 5, facilities: ['parking', 'bus'] },
       { id: 'L1-03', name: 'Northgate', code: 'NGT', zone: 4, facilities: ['parking', 'bus'] },
-      { id: 'L1-04', name: 'Riverside North', code: 'RVN', zone: 4, facilities: ['bus'] },
-      { id: 'L1-05', name: 'University', code: 'UNI', zone: 3, interchange: ['L3'], facilities: ['bus'] },
+      { id: 'L1-04', name: 'Pei Ho', code: 'PEH', zone: 4, facilities: ['bus', 'hospital'] },
+      { id: 'L1-05', name: 'University of Praya', code: 'UNI', zone: 3, interchange: ['L3'], facilities: ['bus'] },
       { id: 'L1-06', name: 'Science Park', code: 'SCP', zone: 3, facilities: ['bus'] },
-      { id: 'L1-07', name: 'Exhibition Centre', code: 'EXC', zone: 3, facilities: ['parking', 'bus'] },
-      { id: 'L1-08', name: 'Midtown', code: 'MDT', zone: 2, interchange: ['L2'], facilities: ['bus'] },
-      { id: 'L1-09', name: 'Central', code: 'CTL', zone: 1, interchange: ['L2', 'L3', 'L4', 'ISR'], facilities: ['bus', 'shopping'] },
-      { id: 'L1-10', name: 'Civic Centre', code: 'CVC', zone: 1, facilities: ['bus', 'government'] },
+      { id: 'L1-07', name: 'Upper East Side', code: 'UES', zone: 3, facilities: ['parking', 'bus'] },
+      { id: 'L1-08', name: 'Surowski Valley', code: 'SVY', zone: 2, interchange: ['L2'], facilities: ['bus'] },
+      { id: 'L1-09', name: 'Grand Praya Terminal', code: 'GPT', zone: 1, interchange: ['L2', 'L3', 'L4', 'ISR'], facilities: ['bus', 'shopping'] },
+      { id: 'L1-10', name: 'Downtown', code: 'DWT', zone: 1, facilities: ['bus', 'government'] },
       { id: 'L1-11', name: 'Waterfront', code: 'WFT', zone: 1, interchange: ['L4'], facilities: ['ferry', 'bus'] },
-      { id: 'L1-12', name: 'Harbourview', code: 'HBV', zone: 2, facilities: ['bus'] },
-      { id: 'L1-13', name: 'Marina Bay', code: 'MRB', zone: 2, facilities: ['ferry', 'parking'] },
+      { id: 'L1-12', name: 'Western District', code: 'WDT', zone: 2, facilities: ['bus'] },
+      { id: 'L1-13', name: 'Flower Island', code: 'FLI', zone: 2, facilities: ['ferry', 'parking'] },
       { id: 'L1-14', name: 'Southpoint', code: 'SPT', zone: 3, interchange: ['L2'], facilities: ['bus', 'parking'] },
       { id: 'L1-15', name: 'Industrial Park', code: 'IDP', zone: 3, facilities: ['bus'] },
       { id: 'L1-16', name: 'Praya South', code: 'PYS', zone: 4, facilities: ['parking', 'bus', 'depot'] }
@@ -45,7 +45,7 @@ export const MRT_LINES = {
     color: '#2563eb', // Blue
     textColor: '#ffffff',
     type: 'mrt',
-    description: 'East-West corridor through commercial districts',
+    description: 'East-West corridor through Downtown and Surowski Valley',
     operatingHours: { start: '05:30', end: '00:30' },
     frequency: { peak: 3, offPeak: 5, weekend: 7 },
     totalLength: 35.8,
@@ -53,18 +53,18 @@ export const MRT_LINES = {
     stations: [
       { id: 'L2-01', name: 'Westlands', code: 'WLD', zone: 4, facilities: ['parking', 'bus'] },
       { id: 'L2-02', name: 'Lakeside', code: 'LKS', zone: 4, interchange: ['L4'], facilities: ['parking', 'bus'] },
-      { id: 'L2-03', name: 'Parkway', code: 'PKW', zone: 3, facilities: ['bus'] },
-      { id: 'L2-04', name: 'West Market', code: 'WMK', zone: 3, facilities: ['bus', 'shopping'] },
-      { id: 'L2-05', name: 'Stadium', code: 'STD', zone: 2, facilities: ['parking', 'bus'] },
-      { id: 'L2-06', name: 'Midtown', code: 'MDT', zone: 2, interchange: ['L1'], facilities: ['bus'] },
-      { id: 'L2-07', name: 'Financial District', code: 'FIN', zone: 1, facilities: ['bus'] },
-      { id: 'L2-08', name: 'Central', code: 'CTL', zone: 1, interchange: ['L1', 'L3', 'L4', 'ISR'], facilities: ['bus', 'shopping'] },
-      { id: 'L2-09', name: 'Old Town', code: 'OLD', zone: 1, facilities: ['bus', 'heritage'] },
-      { id: 'L2-10', name: 'East Square', code: 'ESQ', zone: 2, interchange: ['L3'], facilities: ['bus'] },
-      { id: 'L2-11', name: 'Technopark', code: 'TKP', zone: 2, facilities: ['bus'] },
-      { id: 'L2-12', name: 'Eastgate', code: 'EGT', zone: 3, facilities: ['bus', 'parking'] },
+      { id: 'L2-03', name: 'Western Hills', code: 'WHL', zone: 3, facilities: ['bus'] },
+      { id: 'L2-04', name: 'Western District', code: 'WDT', zone: 3, facilities: ['bus', 'shopping'] },
+      { id: 'L2-05', name: 'Beacon Hill', code: 'BCH', zone: 2, facilities: ['parking', 'bus'] },
+      { id: 'L2-06', name: 'Surowski Valley', code: 'SVY', zone: 2, interchange: ['L1'], facilities: ['bus'] },
+      { id: 'L2-07', name: 'Shanghai Road', code: 'SHR', zone: 1, facilities: ['bus'] },
+      { id: 'L2-08', name: 'Grand Praya Terminal', code: 'GPT', zone: 1, interchange: ['L1', 'L3', 'L4', 'ISR'], facilities: ['bus', 'shopping'] },
+      { id: 'L2-09', name: 'Downtown', code: 'DWT', zone: 1, facilities: ['bus', 'heritage'] },
+      { id: 'L2-10', name: 'Cathedral', code: 'CTH', zone: 2, interchange: ['L3'], facilities: ['bus'] },
+      { id: 'L2-11', name: 'Turing Hall', code: 'TRH', zone: 2, facilities: ['bus'] },
+      { id: 'L2-12', name: 'Upper East Side', code: 'UES', zone: 3, facilities: ['bus', 'parking'] },
       { id: 'L2-13', name: 'Southpoint', code: 'SPT', zone: 3, interchange: ['L1'], facilities: ['bus', 'parking'] },
-      { id: 'L2-14', name: 'Valley View', code: 'VLV', zone: 3, facilities: ['bus'] },
+      { id: 'L2-14', name: 'Lower Surowski Valley', code: 'LSV', zone: 3, facilities: ['bus'] },
       { id: 'L2-15', name: 'East Terminal', code: 'ETM', zone: 4, interchange: ['ISR'], facilities: ['parking', 'bus', 'depot'] }
     ]
   },
@@ -75,24 +75,24 @@ export const MRT_LINES = {
     color: '#16a34a', // Green
     textColor: '#ffffff',
     type: 'mrt',
-    description: 'Serves northern suburbs and university district',
+    description: 'Serves Braemar County and University of Praya',
     operatingHours: { start: '05:45', end: '00:15' },
     frequency: { peak: 4, offPeak: 7, weekend: 10 },
     totalLength: 28.3,
     journeyTime: 42,
     stations: [
-      { id: 'L3-01', name: 'Braemar Heights', code: 'BRH', zone: 5, facilities: ['parking', 'bus'] },
-      { id: 'L3-02', name: 'Forest Park', code: 'FRP', zone: 4, facilities: ['parking', 'bus'] },
-      { id: 'L3-03', name: 'Hillcrest', code: 'HLC', zone: 4, facilities: ['bus'] },
-      { id: 'L3-04', name: 'Northwood', code: 'NWD', zone: 3, facilities: ['bus'] },
-      { id: 'L3-05', name: 'University', code: 'UNI', zone: 3, interchange: ['L1'], facilities: ['bus'] },
-      { id: 'L3-06', name: 'Medical Centre', code: 'MED', zone: 2, facilities: ['hospital', 'bus'] },
-      { id: 'L3-07', name: 'Arts District', code: 'ART', zone: 2, facilities: ['bus'] },
-      { id: 'L3-08', name: 'Central', code: 'CTL', zone: 1, interchange: ['L1', 'L2', 'L4', 'ISR'], facilities: ['bus', 'shopping'] },
-      { id: 'L3-09', name: 'Commerce Park', code: 'CMP', zone: 2, facilities: ['bus'] },
-      { id: 'L3-10', name: 'East Square', code: 'ESQ', zone: 2, interchange: ['L2'], facilities: ['bus'] },
-      { id: 'L3-11', name: 'Gardens', code: 'GDN', zone: 3, facilities: ['bus', 'parking'] },
-      { id: 'L3-12', name: 'Greenfield', code: 'GRF', zone: 3, facilities: ['bus', 'parking'] }
+      { id: 'L3-01', name: 'Braemar', code: 'BRM', zone: 5, facilities: ['parking', 'bus'] },
+      { id: 'L3-02', name: 'Braemar County Centre', code: 'BCC', zone: 4, facilities: ['parking', 'bus', 'government'] },
+      { id: 'L3-03', name: 'Taiping', code: 'TPG', zone: 4, facilities: ['bus'] },
+      { id: 'L3-04', name: 'Northgate', code: 'NGT', zone: 3, facilities: ['bus'] },
+      { id: 'L3-05', name: 'University of Praya', code: 'UNI', zone: 3, interchange: ['L1'], facilities: ['bus'] },
+      { id: 'L3-06', name: 'Pei Ho General Hospital', code: 'PGH', zone: 2, facilities: ['hospital', 'bus'] },
+      { id: 'L3-07', name: 'Art and Design Institute', code: 'ADI', zone: 2, facilities: ['bus'] },
+      { id: 'L3-08', name: 'Grand Praya Terminal', code: 'GPT', zone: 1, interchange: ['L1', 'L2', 'L4', 'ISR'], facilities: ['bus', 'shopping'] },
+      { id: 'L3-09', name: 'Holy Trinity Cathedral', code: 'HTC', zone: 2, facilities: ['bus'] },
+      { id: 'L3-10', name: 'Cathedral', code: 'CTH', zone: 2, interchange: ['L2'], facilities: ['bus'] },
+      { id: 'L3-11', name: 'Adelaide Street', code: 'ADS', zone: 3, facilities: ['bus', 'parking'] },
+      { id: 'L3-12', name: 'Upper Surowski Valley', code: 'USV', zone: 3, facilities: ['bus', 'parking'] }
     ]
   },
 
@@ -102,28 +102,28 @@ export const MRT_LINES = {
     color: '#ea580c', // Orange
     textColor: '#ffffff',
     type: 'mrt',
-    description: 'Circular line connecting outer districts',
+    description: 'Circular line connecting Oakville and outer districts',
     operatingHours: { start: '06:00', end: '00:00' },
     frequency: { peak: 5, offPeak: 8, weekend: 12 },
     totalLength: 52.1,
     journeyTime: 78,
     isCircular: true,
     stations: [
-      { id: 'L4-01', name: 'Central', code: 'CTL', zone: 1, interchange: ['L1', 'L2', 'L3', 'ISR'], facilities: ['bus', 'shopping'] },
+      { id: 'L4-01', name: 'Grand Praya Terminal', code: 'GPT', zone: 1, interchange: ['L1', 'L2', 'L3', 'ISR'], facilities: ['bus', 'shopping'] },
       { id: 'L4-02', name: 'Waterfront', code: 'WFT', zone: 1, interchange: ['L1'], facilities: ['ferry', 'bus'] },
-      { id: 'L4-03', name: 'Convention Centre', code: 'CVC', zone: 2, facilities: ['bus'] },
-      { id: 'L4-04', name: 'Sports Hub', code: 'SPH', zone: 2, facilities: ['parking', 'bus'] },
-      { id: 'L4-05', name: 'Beachside', code: 'BCH', zone: 3, facilities: ['bus'] },
+      { id: 'L4-03', name: 'Flower Island', code: 'FLI', zone: 2, facilities: ['bus'] },
+      { id: 'L4-04', name: 'Nautical Club', code: 'NTC', zone: 2, facilities: ['parking', 'bus'] },
+      { id: 'L4-05', name: 'Braemar Beach', code: 'BBH', zone: 3, facilities: ['bus'] },
       { id: 'L4-06', name: 'Oakville', code: 'OKV', zone: 3, facilities: ['parking', 'bus'] },
-      { id: 'L4-07', name: 'Sunset District', code: 'SND', zone: 3, facilities: ['bus'] },
-      { id: 'L4-08', name: 'Clearwater', code: 'CLW', zone: 4, facilities: ['bus'] },
+      { id: 'L4-07', name: 'Toranomon Gate', code: 'TRG', zone: 3, facilities: ['bus'] },
+      { id: 'L4-08', name: 'Tencent Gardens', code: 'TCG', zone: 4, facilities: ['bus'] },
       { id: 'L4-09', name: 'Lakeside', code: 'LKS', zone: 4, interchange: ['L2'], facilities: ['parking', 'bus'] },
-      { id: 'L4-10', name: 'Westbrook', code: 'WBK', zone: 4, facilities: ['bus'] },
-      { id: 'L4-11', name: 'Highland Park', code: 'HLP', zone: 3, facilities: ['parking', 'bus'] },
-      { id: 'L4-12', name: 'Valley Junction', code: 'VLJ', zone: 3, facilities: ['bus'] },
-      { id: 'L4-13', name: 'Newtown', code: 'NTN', zone: 2, facilities: ['bus', 'shopping'] },
-      { id: 'L4-14', name: 'Riverdale', code: 'RVD', zone: 2, facilities: ['bus'] }
-      // Connects back to Central
+      { id: 'L4-10', name: 'Tsuen Lok Road', code: 'TLR', zone: 4, facilities: ['bus'] },
+      { id: 'L4-11', name: 'Tamshui Bay', code: 'TSB', zone: 3, facilities: ['parking', 'bus'] },
+      { id: 'L4-12', name: 'Ting Kau', code: 'TKU', zone: 3, facilities: ['bus'] },
+      { id: 'L4-13', name: 'Alderney', code: 'ALY', zone: 2, facilities: ['bus', 'shopping'] },
+      { id: 'L4-14', name: 'Metropolitan', code: 'MTP', zone: 2, facilities: ['bus'] }
+      // Connects back to Grand Praya Terminal
     ]
   }
 };
@@ -135,11 +135,11 @@ export const MRT_LINES = {
 export const ISR_LINES = {
   ISR: {
     id: 'ISR',
-    name: 'Intercity Suburban Rail',
+    name: 'Islands Surface Rail',
     color: '#7c3aed', // Purple
     textColor: '#ffffff',
     type: 'commuter',
-    description: 'Commuter rail connecting satellite cities',
+    description: 'Commuter rail connecting Metropolitan and Braemar Counties',
     operatingHours: { start: '05:00', end: '01:00' },
     frequency: { peak: 10, offPeak: 20, weekend: 30 },
     routes: [
@@ -148,11 +148,11 @@ export const ISR_LINES = {
         name: 'Northern Line',
         direction: 'North',
         stations: [
-          { id: 'ISR-N01', name: 'Central', code: 'CTL', zone: 1, interchange: ['L1', 'L2', 'L3', 'L4'], platform: '1-4' },
-          { id: 'ISR-N02', name: 'North Junction', code: 'NJN', zone: 3, platform: '1-2' },
-          { id: 'ISR-N03', name: 'Woodlands', code: 'WDL', zone: 5, platform: '1-2' },
-          { id: 'ISR-N04', name: 'Springvale', code: 'SPV', zone: 6, platform: '1' },
-          { id: 'ISR-N05', name: 'Meadowbrook', code: 'MDB', zone: 7, platform: '1' },
+          { id: 'ISR-N01', name: 'Grand Praya Terminal', code: 'GPT', zone: 1, interchange: ['L1', 'L2', 'L3', 'L4'], platform: '1-4' },
+          { id: 'ISR-N02', name: 'Pei Ho', code: 'PEH', zone: 3, platform: '1-2' },
+          { id: 'ISR-N03', name: 'Northgate', code: 'NGT', zone: 5, platform: '1-2' },
+          { id: 'ISR-N04', name: 'Braemar', code: 'BRM', zone: 6, platform: '1' },
+          { id: 'ISR-N05', name: 'Oakville Central', code: 'OKC', zone: 7, platform: '1' },
           { id: 'ISR-N06', name: 'Praya International Airport', code: 'PIA', zone: 5, interchange: ['L1'], platform: '1-2' },
           { id: 'ISR-N07', name: 'Northfield', code: 'NTF', zone: 8, platform: '1', terminus: true }
         ],
@@ -163,9 +163,9 @@ export const ISR_LINES = {
         name: 'Eastern Line',
         direction: 'East',
         stations: [
-          { id: 'ISR-E01', name: 'Central', code: 'CTL', zone: 1, interchange: ['L1', 'L2', 'L3', 'L4'], platform: '5-6' },
+          { id: 'ISR-E01', name: 'Grand Praya Terminal', code: 'GPT', zone: 1, interchange: ['L1', 'L2', 'L3', 'L4'], platform: '5-6' },
           { id: 'ISR-E02', name: 'East Terminal', code: 'ETM', zone: 4, interchange: ['L2'], platform: '1-2' },
-          { id: 'ISR-E03', name: 'Riverside East', code: 'RVE', zone: 5, platform: '1' },
+          { id: 'ISR-E03', name: 'Upper Surowski Valley', code: 'USV', zone: 5, platform: '1' },
           { id: 'ISR-E04', name: 'Seaside', code: 'SSD', zone: 6, platform: '1' },
           { id: 'ISR-E05', name: 'Port Praya', code: 'PPY', zone: 7, facilities: ['port'], platform: '1', terminus: true }
         ],
@@ -176,11 +176,11 @@ export const ISR_LINES = {
         name: 'Southern Line',
         direction: 'South',
         stations: [
-          { id: 'ISR-S01', name: 'Central', code: 'CTL', zone: 1, interchange: ['L1', 'L2', 'L3', 'L4'], platform: '7-8' },
-          { id: 'ISR-S02', name: 'South Junction', code: 'SJN', zone: 3, platform: '1-2' },
-          { id: 'ISR-S03', name: 'Greendale', code: 'GDL', zone: 5, platform: '1' },
-          { id: 'ISR-S04', name: 'Sunnyvale', code: 'SNV', zone: 6, platform: '1' },
-          { id: 'ISR-S05', name: 'Coastview', code: 'CSV', zone: 7, platform: '1' },
+          { id: 'ISR-S01', name: 'Grand Praya Terminal', code: 'GPT', zone: 1, interchange: ['L1', 'L2', 'L3', 'L4'], platform: '7-8' },
+          { id: 'ISR-S02', name: 'Flower Island', code: 'FLI', zone: 3, platform: '1-2' },
+          { id: 'ISR-S03', name: 'Praya South', code: 'PYS', zone: 5, platform: '1' },
+          { id: 'ISR-S04', name: 'Covina', code: 'CVN', zone: 6, platform: '1' },
+          { id: 'ISR-S05', name: 'Canary Cove', code: 'CCV', zone: 7, platform: '1' },
           { id: 'ISR-S06', name: 'South Bay', code: 'SBY', zone: 8, platform: '1', terminus: true }
         ],
         journeyTime: 55

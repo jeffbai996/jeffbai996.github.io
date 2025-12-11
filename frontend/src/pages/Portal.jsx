@@ -413,7 +413,7 @@ export default function Portal() {
         <div className="container">
           <div className="hero-content">
             <h2>Welcome to <span style={{color: '#f97316'}}>GOV.PRAYA</span></h2>
-            <p>Your central gateway to government services, information, and resources. Access everything from banking and postal services to justice, policing, and tax administration—all from one unified platform serving 2.4 million citizens nationwide.</p>
+            <p>Your central gateway to government services in the Republic of Praya. Founded in 2011 on Flower Island, our nation has grown from a small settlement to a thriving city-state of 4.2 million residents across Metropolitan and Braemar Counties—all served through one unified digital platform.</p>
             <div className="hero-features">
               <div className="hero-feature">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -820,7 +820,8 @@ export default function Portal() {
           <div className="footer-grid">
             <div className="footer-brand">
               <h4>Republic of Praya</h4>
-              <p>The official digital gateway to government services for the Republic of Praya's 2.4 million citizens. We're building a transparent, efficient, and accessible government through modern technology and comprehensive online services. From central banking and public housing to healthcare, justice, and postal services—access everything you need in one unified platform designed to serve you 24/7.</p>
+              <p>Founded on 26 February 2011, the Republic of Praya has grown from its original settlement on Flower Island to a thriving city-state. Today, we serve 4.2 million citizens across Metropolitan County (home to districts like Downtown, Surowski Valley, and Western District) and Braemar County (featuring the cities of Braemar and Oakville). This portal provides unified access to all government services 24/7.</p>
+              <p style={{ marginTop: '8px', fontSize: '13px', color: 'var(--text-muted)' }}><strong>Office of the Mayor:</strong> Jeff Bai &bull; <strong>Governor, Braemar County:</strong> Karson Mo</p>
             </div>
             <div className="footer-section">
               <h5>Quick Links</h5>
