@@ -57,16 +57,16 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 36px;
-  height: 36px;
+  width: 24px;
+  height: 24px;
   background: color-mix(in srgb, var(--alert-color) 15%, transparent);
-  border-radius: 10px;
-  margin-top: 2px;
+  border-radius: 6px;
+  margin-top: 0;
 }
 
 .alert-icon {
-  width: 20px;
-  height: 20px;
+  width: 16px;
+  height: 16px;
   color: var(--alert-color);
 }
 
@@ -357,13 +357,13 @@
   }
 
   .alert-icon-wrapper {
-    width: 32px;
-    height: 32px;
+    width: 22px;
+    height: 22px;
   }
 
   .alert-icon {
-    width: 18px;
-    height: 18px;
+    width: 14px;
+    height: 14px;
   }
 
   .alert-header {
