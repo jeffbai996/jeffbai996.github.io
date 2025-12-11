@@ -287,7 +287,7 @@ function LCHome({ navigate }) {
                 <h4>Contact Legislature</h4>
                 <p><strong>Phone:</strong> 1-800-LEG-INFO</p>
                 <p><strong>Email:</strong> info@lc.gov.py</p>
-                <p><strong>Address:</strong> Legislative Building, Praya City</p>
+                <p><strong>Address:</strong> Council Tower, Downtown, Praya City</p>
               </div>
             </aside>
           </div>
@@ -921,7 +921,7 @@ function Sessions() {
                 <h4>Public Galleries</h4>
                 <p>The public is welcome to observe legislative sessions in person:</p>
                 <ul>
-                  <li><strong>Location:</strong> Legislative Building, 100 Council Plaza, Praya City</li>
+                  <li><strong>Location:</strong> Council Tower, 1 Council Plaza, Downtown, Praya City</li>
                   <li><strong>Hours:</strong> Public galleries open 30 minutes before each session</li>
                   <li><strong>Capacity:</strong> 250 seats (first-come, first-served)</li>
                   <li><strong>Security:</strong> Bag check required, no weapons or recording devices</li>
@@ -967,7 +967,7 @@ function Sessions() {
               <h4>Session Information</h4>
               <p><strong>Phone:</strong> 1-800-LEG-INFO</p>
               <p><strong>Email:</strong> sessions@lc.gov.py</p>
-              <p><strong>Location:</strong> Legislative Building, Praya City</p>
+              <p><strong>Location:</strong> Council Tower, Downtown, Praya City</p>
             </div>
 
             <div className="card">
