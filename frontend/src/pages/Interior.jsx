@@ -953,15 +953,29 @@ function CivilRegistry() {
 
             <div className="form-group">
               <label>Location (City/District)</label>
-              <input
-                type="text"
-                placeholder="e.g., Praya City, Central District"
+              <select
                 value={formData.locationOfEvent}
                 onChange={(e) => handleInputChange('locationOfEvent', e.target.value)}
                 style={{
                   borderColor: errors.locationOfEvent ? '#ef4444' : undefined
                 }}
-              />
+              >
+                <option value="">Select location...</option>
+                <optgroup label="Metropolitan County">
+                  <option value="Downtown, Praya">Downtown, Praya</option>
+                  <option value="Surowski Valley, Praya">Surowski Valley, Praya</option>
+                  <option value="Western District, Praya">Western District, Praya</option>
+                  <option value="Upper East Side, Praya">Upper East Side, Praya</option>
+                  <option value="Pei Ho, Praya">Pei Ho, Praya</option>
+                  <option value="Flower Island, Praya">Flower Island, Praya</option>
+                </optgroup>
+                <optgroup label="Braemar County">
+                  <option value="Braemar City">Braemar City</option>
+                  <option value="Oakville">Oakville</option>
+                  <option value="Taiping">Taiping</option>
+                  <option value="Northgate">Northgate</option>
+                </optgroup>
+              </select>
               {errors.locationOfEvent && (
                 <div style={{ color: '#ef4444', fontSize: '13px', marginTop: '6px' }}>
                   {errors.locationOfEvent}
@@ -1157,35 +1171,35 @@ function ParksAndReserves() {
 
         <div className="license-grid" style={{ marginTop: '20px' }}>
           <div className="license-card">
-            <h4>Montana Nature Reserve</h4>
-            <span className="code">PARK-MTN</span>
-            <p>Mountain trails, wildlife viewing, camping facilities</p>
+            <h4>Braemar Lava Pools</h4>
+            <span className="code">PARK-BLP</span>
+            <p>Natural geothermal pools in Braemar County</p>
             <div style={{ fontSize: '13px', color: 'var(--text-muted)', marginTop: '12px' }}>
-              450,000 hectares
+              12,500 hectares
             </div>
           </div>
           <div className="license-card">
-            <h4>Coastal Marine Park</h4>
-            <span className="code">PARK-COAST</span>
-            <p>Beaches, coral reefs, marine conservation</p>
+            <h4>Western Hills Nature Reserve</h4>
+            <span className="code">PARK-WHR</span>
+            <p>Hiking trails between Pei Ho and Western District</p>
             <div style={{ fontSize: '13px', color: 'var(--text-muted)', marginTop: '12px' }}>
-              780,000 hectares
+              8,200 hectares
             </div>
           </div>
           <div className="license-card">
-            <h4>Central Forest Reserve</h4>
-            <span className="code">PARK-FOR</span>
-            <p>Old-growth forest, hiking trails, birdwatching</p>
+            <h4>Tamshui Bay Marine Park</h4>
+            <span className="code">PARK-TMB</span>
+            <p>Coastal conservation area, beaches, and marine wildlife</p>
             <div style={{ fontSize: '13px', color: 'var(--text-muted)', marginTop: '12px' }}>
-              920,000 hectares
+              24,800 hectares
             </div>
           </div>
           <div className="license-card">
-            <h4>Desert Wildlife Sanctuary</h4>
-            <span className="code">PARK-DES</span>
-            <p>Unique desert ecosystems and wildlife</p>
+            <h4>University Endowment Lands</h4>
+            <span className="code">PARK-UEL</span>
+            <p>Protected forest adjacent to University of Praya</p>
             <div style={{ fontSize: '13px', color: 'var(--text-muted)', marginTop: '12px' }}>
-              250,000 hectares
+              4,500 hectares
             </div>
           </div>
         </div>
@@ -1201,10 +1215,10 @@ function ParksAndReserves() {
                 value={formData.parkName}
                 onChange={(e) => handleInputChange('parkName', e.target.value)}
               >
-                <option value="montana-reserve">Montana Nature Reserve</option>
-                <option value="coastal-marine">Coastal Marine Park</option>
-                <option value="central-forest">Central Forest Reserve</option>
-                <option value="desert-sanctuary">Desert Wildlife Sanctuary</option>
+                <option value="braemar-lava-pools">Braemar Lava Pools</option>
+                <option value="western-hills">Western Hills Nature Reserve</option>
+                <option value="tamshui-bay">Tamshui Bay Marine Park</option>
+                <option value="university-lands">University Endowment Lands</option>
               </select>
             </div>
 
