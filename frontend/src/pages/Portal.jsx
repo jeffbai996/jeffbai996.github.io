@@ -1,8 +1,9 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useAuth } from '../utils/AuthContext'
 import { getCurrentAQI, getCurrentSecurityLevel } from '../utils/nationalStatus'
 import EmergencyAlert from '../components/EmergencyAlert'
+import Search, { SearchTrigger } from '../components/Search'
 import './Portal.css'
 
 // Department icon components
@@ -308,16 +309,17 @@ const priorities = [
 ]
 
 const quickLinks = [
+  { label: 'Pay taxes & fees', href: '/payments' },
   { label: 'Report an incident', href: '/npa/report' },
   { label: 'File cannabis taxes', href: '/ctb/taxation' },
   { label: 'Book a court date', href: '/doj/courts' },
-  { label: 'Check land records', href: '/interior/land' },
-  { label: 'Submit business returns', href: '/revenue/file' },
-  { label: 'View government notices', href: '/doj' }
+  { label: 'Check system status', href: '/status' },
+  { label: 'Submit business returns', href: '/revenue/file' }
 ]
 
 export default function Portal() {
-  const [servicesOpen, setServicesOpen] = React.useState(false);
+  const [servicesOpen, setServicesOpen] = useState(false);
+  const [searchOpen, setSearchOpen] = useState(false);
   const { user, isAuthenticated, loading } = useAuth();
 
   // Get current national status
@@ -341,6 +343,7 @@ export default function Portal() {
             </div>
           </div>
           <nav className="portal-nav">
+            <SearchTrigger onClick={() => setSearchOpen(true)} />
             <div
               className="nav-dropdown"
               onMouseEnter={() => setServicesOpen(true)}
@@ -454,16 +457,16 @@ export default function Portal() {
               <span className="stat-value" style={{color: currentSecurity.color}}>{currentSecurity.level}</span>
               <span className="stat-change">{currentSecurity.name} • Routine vigilance</span>
             </Link>
-            <div className="stat-item">
-              <span className="stat-label">Citizens Served</span>
-              <span className="stat-value">2.4M</span>
-              <span className="stat-change">Population</span>
-            </div>
-            <div className="stat-item">
-              <span className="stat-label">Online Services</span>
-              <span className="stat-value">127</span>
-              <span className="stat-change">Available 24/7</span>
-            </div>
+            <Link to="/status" className="stat-item stat-item-link">
+              <span className="stat-label">System Status</span>
+              <span className="stat-value" style={{color: '#10b981'}}>99.9%</span>
+              <span className="stat-change">All services operational</span>
+            </Link>
+            <Link to="/payments" className="stat-item stat-item-link">
+              <span className="stat-label">Pay Online</span>
+              <span className="stat-value" style={{color: 'var(--primary)'}}>127</span>
+              <span className="stat-change">Payment types available</span>
+            </Link>
           </div>
         </div>
       </section>
@@ -853,7 +856,8 @@ export default function Portal() {
               <ul>
                 <li><Link to="/#services">FAQs</Link></li>
                 <li><Link to="/interior">Support</Link></li>
-                <li><Link to="/lc">Feedback</Link></li>
+                <li><Link to="/status">System Status</Link></li>
+                <li><Link to="/payments">Make a Payment</Link></li>
               </ul>
             </div>
           </div>
@@ -867,6 +871,8 @@ export default function Portal() {
           </div>
         </div>
       </footer>
+
+      <Search isOpen={searchOpen} onClose={() => setSearchOpen(false)} />
     </>
   )
 }
