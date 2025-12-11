@@ -107,6 +107,7 @@
   cursor: pointer;
   text-align: left;
   transition: background 0.15s;
+  font-family: inherit;
 }
 
 .search-result-item:hover,
@@ -229,6 +230,7 @@
   padding: 0.25rem 0.5rem;
   border-radius: 4px;
   transition: all 0.15s;
+  font-family: inherit;
 }
 
 .search-recent-header button:hover {
@@ -265,6 +267,7 @@
   color: var(--text-secondary);
   cursor: pointer;
   transition: all 0.15s;
+  font-family: inherit;
 }
 
 .search-suggestions-list button:hover {
@@ -312,6 +315,7 @@
   cursor: pointer;
   transition: all 0.2s;
   min-width: 200px;
+  font-family: inherit;
 }
 
 .search-trigger:hover {
