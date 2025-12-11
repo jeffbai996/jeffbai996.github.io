@@ -1,5 +1,6 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Routes, Route, Link, useNavigate } from 'react-router-dom'
+import { TripPlanner, Timetable, TransitMap, ServiceStatus, FaresInfo } from '../components/transit'
 import './Department.css'
 
 export default function Transport() {
@@ -27,6 +28,7 @@ export default function Transport() {
           </Link>
           <nav className="nav">
             <Link to="/transport" className="nav-link">Home</Link>
+            <Link to="/transport/transit" className="nav-link">Public Transit</Link>
             <Link to="/transport/license" className="nav-link">Driver's License</Link>
             <Link to="/transport/registration" className="nav-link">Vehicle Registration</Link>
             <Link to="/transport/permits" className="nav-link">Permits</Link>
@@ -36,6 +38,7 @@ export default function Transport() {
 
       <Routes>
         <Route index element={<TransportHome navigate={navigate} />} />
+        <Route path="transit/*" element={<PublicTransit />} />
         <Route path="license" element={<DriversLicense />} />
         <Route path="registration" element={<VehicleRegistration />} />
         <Route path="permits" element={<SpecialPermits />} />
@@ -49,19 +52,20 @@ export default function Transport() {
               <p>Ensuring safe and efficient transportation throughout the Republic of Praya through licensing, registration, and oversight.</p>
             </div>
             <div className="footer-section">
-              <h5>Services</h5>
+              <h5>Public Transit</h5>
+              <ul>
+                <li><Link to="/transport/transit">Trip Planner</Link></li>
+                <li><Link to="/transport/transit">MRT Timetables</Link></li>
+                <li><Link to="/transport/transit">Service Status</Link></li>
+                <li><Link to="/transport/transit">Fares & Passes</Link></li>
+              </ul>
+            </div>
+            <div className="footer-section">
+              <h5>Driving Services</h5>
               <ul>
                 <li><Link to="/transport/license">Driver's License</Link></li>
                 <li><Link to="/transport/registration">Vehicle Registration</Link></li>
                 <li><Link to="/transport/permits">Special Permits</Link></li>
-              </ul>
-            </div>
-            <div className="footer-section">
-              <h5>Resources</h5>
-              <ul>
-                <li><Link to="/transport/license">Driver's Manual</Link></li>
-                <li><Link to="/transport/license">Practice Tests</Link></li>
-                <li><Link to="/transport">Service Centers</Link></li>
               </ul>
             </div>
             <div className="footer-section">
@@ -84,6 +88,136 @@ export default function Transport() {
       </footer>
     </>
   )
+}
+
+function PublicTransit() {
+  const [activeTab, setActiveTab] = useState('planner');
+
+  const tabs = [
+    { id: 'planner', label: 'Trip Planner', icon: 'M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z' },
+    { id: 'timetable', label: 'Timetables', icon: 'M12 22c5.52 0 10-4.48 10-10S17.52 2 12 2 2 6.48 2 12s4.48 10 10 10zm0-18c4.42 0 8 3.58 8 8s-3.58 8-8 8-8-3.58-8-8 3.58-8 8-8zm.5 3H11v6l5.25 3.15.75-1.23-4.5-2.67V7z' },
+    { id: 'map', label: 'System Map', icon: 'M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l5.447 2.724A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7' },
+    { id: 'status', label: 'Service Status', icon: 'M22 12h-4l-3 9L9 3l-3 9H2' },
+    { id: 'fares', label: 'Fares & Passes', icon: 'M1 4h22v16H1zM1 10h22' }
+  ];
+
+  return (
+    <main className="main">
+      <div className="page-header" style={{ background: 'linear-gradient(135deg, #1a1a2e 0%, #16213e 100%)' }}>
+        <div className="container">
+          <div className="breadcrumb" style={{ color: 'rgba(255,255,255,0.7)' }}>
+            <Link to="/transport" style={{ color: 'rgba(255,255,255,0.7)' }}>Transport</Link> / Public Transit
+          </div>
+          <h1 style={{ color: '#fff' }}>Praya Public Transit</h1>
+          <p className="subtitle" style={{ color: 'rgba(255,255,255,0.8)' }}>
+            MRT, Commuter Rail, High Speed Rail & Bus Services
+          </p>
+        </div>
+      </div>
+
+      <div className="container" style={{ marginTop: '24px' }}>
+        {/* Transit Tab Navigation */}
+        <div style={{
+          display: 'flex',
+          gap: '8px',
+          marginBottom: '24px',
+          overflowX: 'auto',
+          paddingBottom: '4px'
+        }}>
+          {tabs.map(tab => (
+            <button
+              key={tab.id}
+              onClick={() => setActiveTab(tab.id)}
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: '8px',
+                padding: '12px 20px',
+                background: activeTab === tab.id ? '#1a1a2e' : 'var(--bg-elevated)',
+                border: '2px solid',
+                borderColor: activeTab === tab.id ? '#1a1a2e' : 'var(--border-subtle)',
+                borderRadius: '10px',
+                color: activeTab === tab.id ? '#fff' : 'var(--text-secondary)',
+                fontFamily: 'Helvetica, Arial, sans-serif',
+                fontSize: '14px',
+                fontWeight: '700',
+                cursor: 'pointer',
+                whiteSpace: 'nowrap',
+                transition: 'all 0.2s'
+              }}
+            >
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <path d={tab.icon} />
+              </svg>
+              {tab.label}
+            </button>
+          ))}
+        </div>
+
+        {/* Tab Content */}
+        {activeTab === 'planner' && <TripPlanner />}
+        {activeTab === 'timetable' && <Timetable />}
+        {activeTab === 'map' && <TransitMap />}
+        {activeTab === 'status' && <ServiceStatus />}
+        {activeTab === 'fares' && <FaresInfo />}
+
+        {/* Quick Info Cards */}
+        <div style={{
+          display: 'grid',
+          gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
+          gap: '20px',
+          marginTop: '32px'
+        }}>
+          <div className="card">
+            <h4 className="card-title">MRT Network</h4>
+            <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap', marginTop: '12px' }}>
+              <span style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', width: '32px', height: '32px', borderRadius: '50%', background: '#e11d48', color: '#fff', fontWeight: '700', fontSize: '14px' }}>L1</span>
+              <span style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', width: '32px', height: '32px', borderRadius: '50%', background: '#2563eb', color: '#fff', fontWeight: '700', fontSize: '14px' }}>L2</span>
+              <span style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', width: '32px', height: '32px', borderRadius: '50%', background: '#16a34a', color: '#fff', fontWeight: '700', fontSize: '14px' }}>L3</span>
+              <span style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', width: '32px', height: '32px', borderRadius: '50%', background: '#ea580c', color: '#fff', fontWeight: '700', fontSize: '14px' }}>L4</span>
+            </div>
+            <p style={{ fontSize: '13px', color: 'var(--text-secondary)', marginTop: '12px' }}>
+              4 lines • 57 stations • 158.7 km network
+            </p>
+          </div>
+
+          <div className="card">
+            <h4 className="card-title">ISR Commuter Rail</h4>
+            <div style={{ display: 'flex', gap: '8px', marginTop: '12px' }}>
+              <span style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', padding: '4px 12px', borderRadius: '4px', transform: 'rotate(45deg)', background: '#7c3aed', color: '#fff', fontWeight: '700', fontSize: '12px' }}>
+                <span style={{ transform: 'rotate(-45deg)' }}>ISR</span>
+              </span>
+            </div>
+            <p style={{ fontSize: '13px', color: 'var(--text-secondary)', marginTop: '12px' }}>
+              3 lines • Northern, Eastern, Southern corridors
+            </p>
+          </div>
+
+          <div className="card">
+            <h4 className="card-title">High Speed Rail</h4>
+            <div style={{ display: 'flex', gap: '8px', marginTop: '12px' }}>
+              <span style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', padding: '4px 12px', borderRadius: '4px', background: '#dc2626', color: '#fff', fontWeight: '700', fontSize: '12px' }}>HSR</span>
+            </div>
+            <p style={{ fontSize: '13px', color: 'var(--text-secondary)', marginTop: '12px' }}>
+              Up to 350 km/h • Praya to Wellington in 72 min
+            </p>
+          </div>
+
+          <div className="card">
+            <h4 className="card-title">Bus Network</h4>
+            <div style={{ display: 'flex', gap: '8px', marginTop: '12px' }}>
+              <span style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', padding: '4px 10px', borderRadius: '6px', background: '#0891b2', color: '#fff', fontWeight: '700', fontSize: '11px' }}>PBC</span>
+              <span style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', padding: '4px 10px', borderRadius: '6px', background: '#f59e0b', color: '#fff', fontWeight: '700', fontSize: '11px' }}>CBL</span>
+              <span style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', padding: '4px 10px', borderRadius: '6px', background: '#84cc16', color: '#fff', fontWeight: '700', fontSize: '11px' }}>NTB</span>
+            </div>
+            <p style={{ fontSize: '13px', color: 'var(--text-secondary)', marginTop: '12px' }}>
+              3 operators • 326 routes • 850,000 daily riders
+            </p>
+          </div>
+        </div>
+      </div>
+    </main>
+  );
 }
 
 function TransportHome({ navigate }) {
@@ -112,11 +246,11 @@ function TransportHome({ navigate }) {
                 <p>The Transport Department manages driver licensing, vehicle registration, and transportation safety programs to keep Praya's roads safe and efficient for all travelers.</p>
               </div>
               <div className="hero-actions">
-                <button className="btn btn-primary" onClick={() => navigate('/transport/license')}>
-                  Driver's License
+                <button className="btn btn-primary" onClick={() => navigate('/transport/transit')}>
+                  Public Transit
                 </button>
-                <button className="btn btn-secondary" onClick={() => navigate('/transport/registration')}>
-                  Register Vehicle
+                <button className="btn btn-secondary" onClick={() => navigate('/transport/license')}>
+                  Driver's License
                 </button>
               </div>
             </div>
