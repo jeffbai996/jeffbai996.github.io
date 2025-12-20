@@ -38,8 +38,8 @@ import {
   detectProactiveIntervention
 } from '../utils/proactiveSuggestions'
 
-// Configuration from environment variables
-const GEMINI_ENABLED = import.meta.env.VITE_GEMINI_ENABLED === 'true' && geminiService.isAvailable()
+// Configuration - Gemini is enabled if API key is available
+const GEMINI_ENABLED = geminiService.isAvailable()
 const VOICE_ENABLED = true // Enable voice chat feature
 
 // Generate expanded knowledge base from department data
