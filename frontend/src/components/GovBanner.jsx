@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useTheme } from '../utils/ThemeContext'
+import LanguageSwitcher from './LanguageSwitcher'
 import './GovBanner.css'
 
 export default function GovBanner() {
@@ -9,11 +10,11 @@ export default function GovBanner() {
 
   return (
     <>
-      <div className="gov-banner">
+      <div className="gov-banner" role="banner" aria-label="Government website banner">
         <div className="container">
           <div className="gov-banner-left">
-            <Link to="/" className="gov-praya-link">GOV.PRAYA</Link>
-            <div className="gov-icon">
+            <Link to="/" className="gov-praya-link" aria-label="Go to GOV.PRAYA homepage">GOV.PRAYA</Link>
+            <div className="gov-icon" aria-hidden="true">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
                 <path d="M3 21h18M3 10h18M5 6l7-3 7 3M4 10v11M20 10v11M8 14v3M12 14v3M16 14v3"/>
               </svg>
@@ -22,6 +23,8 @@ export default function GovBanner() {
             <button
               className={`gov-how ${dropdownOpen ? 'open' : ''}`}
               onClick={() => setDropdownOpen(!dropdownOpen)}
+              aria-expanded={dropdownOpen}
+              aria-label="Show information about how to verify this is an official government website"
             >
               Here's how you know
               <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
@@ -30,18 +33,29 @@ export default function GovBanner() {
             </button>
           </div>
           <div className="gov-banner-right">
-            <button className="theme-btn" onClick={toggleTheme}>
+            <LanguageSwitcher />
+            <button
+              className="theme-btn"
+              onClick={toggleTheme}
+              aria-label={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
+              aria-pressed={isDark}
+            >
               {isDark ? 'Light Mode' : 'Dark Mode'}
             </button>
           </div>
         </div>
       </div>
 
-      <div className={`gov-dropdown ${dropdownOpen ? 'open' : ''}`}>
+      <div
+        className={`gov-dropdown ${dropdownOpen ? 'open' : ''}`}
+        role="region"
+        aria-label="Official website verification information"
+        aria-hidden={!dropdownOpen}
+      >
         <div className="container">
           <div className="gov-dropdown-inner">
             <div className="gov-dropdown-item">
-              <div className="gov-dropdown-icon">
+              <div className="gov-dropdown-icon" aria-hidden="true">
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
                   <path d="M3 21h18M3 10h18M5 6l7-3 7 3M4 10v11M20 10v11"/>
                 </svg>
@@ -52,7 +66,7 @@ export default function GovBanner() {
               </div>
             </div>
             <div className="gov-dropdown-item">
-              <div className="gov-dropdown-icon">
+              <div className="gov-dropdown-icon" aria-hidden="true">
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
                   <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
                   <path d="M7 11V7a5 5 0 0110 0v4"/>

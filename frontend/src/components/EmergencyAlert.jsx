@@ -191,6 +191,9 @@ export function CompactAlert({ alert }) {
   return (
     <div
       className="compact-alert"
+      role="alert"
+      aria-live="polite"
+      aria-label={`${alert.severity.label}: ${alert.title}`}
       style={{
         '--alert-color': alert.severity.color,
         '--alert-bg': alert.severity.bgColor
@@ -210,7 +213,7 @@ export function CompactAlert({ alert }) {
         <strong>{alert.severity.label}:</strong> {alert.title}
       </span>
       {alert.link && (
-        <Link to={alert.link} className="compact-alert-link">
+        <Link to={alert.link} className="compact-alert-link" aria-label={`View details about ${alert.title}`}>
           Details
         </Link>
       )}
