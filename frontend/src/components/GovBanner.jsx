@@ -1,7 +1,6 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useTheme } from '../utils/ThemeContext'
-import LanguageSwitcher from './LanguageSwitcher'
 import './GovBanner.css'
 
 export default function GovBanner() {
@@ -33,7 +32,6 @@ export default function GovBanner() {
             </button>
           </div>
           <div className="gov-banner-right">
-            <LanguageSwitcher />
             <button
               className="theme-btn"
               onClick={toggleTheme}
