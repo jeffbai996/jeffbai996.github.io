@@ -5,6 +5,7 @@ on:
     branches:
       - main
       - master
+      - claude/audit-and-features-3gJcf
   workflow_dispatch: # Allow manual trigger
 
 # Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
