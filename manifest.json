@@ -1,0 +1,54 @@
+{
+  "name": "GOV.PRAYA - Republic of Praya Government Portal",
+  "short_name": "GOV.PRAYA",
+  "description": "Official government services portal for the Republic of Praya",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#f97316",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["government", "productivity", "utilities"],
+  "lang": "en-US",
+  "dir": "ltr",
+  "scope": "/",
+  "related_applications": [],
+  "prefer_related_applications": false,
+  "shortcuts": [
+    {
+      "name": "Police Services",
+      "short_name": "NPA",
+      "description": "Access National Police Agency services",
+      "url": "/npa",
+      "icons": [{ "src": "/favicon.svg", "sizes": "192x192" }]
+    },
+    {
+      "name": "Revenue Services",
+      "short_name": "Revenue",
+      "description": "Pay taxes and fees",
+      "url": "/revenue",
+      "icons": [{ "src": "/favicon.svg", "sizes": "192x192" }]
+    },
+    {
+      "name": "Transport",
+      "short_name": "Transport",
+      "description": "Public transit information",
+      "url": "/transport",
+      "icons": [{ "src": "/favicon.svg", "sizes": "192x192" }]
+    },
+    {
+      "name": "My Account",
+      "short_name": "Account",
+      "description": "Manage your PrayaPass account",
+      "url": "/account",
+      "icons": [{ "src": "/favicon.svg", "sizes": "192x192" }]
+    }
+  ]
+}

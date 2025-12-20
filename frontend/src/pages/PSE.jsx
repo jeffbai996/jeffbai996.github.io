@@ -92,6 +92,7 @@ export default function PSE() {
   const [selectedStock, setSelectedStock] = useState('PSE')
   const [timeframe, setTimeframe] = useState('1D')
   const [chartLoaded, setChartLoaded] = useState(false)
+  const [chartError, setChartError] = useState(false)
   const mainChartRef = useRef(null)
   const rsiChartRef = useRef(null)
   const macdChartRef = useRef(null)
@@ -435,13 +436,29 @@ export default function PSE() {
         const script = document.createElement('script')
         script.src = 'https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js'
         script.async = true
+
+        // Set timeout to handle CDN failures
+        const timeout = setTimeout(() => {
+          if (!window.Chart) {
+            console.error('Chart.js load timeout')
+            setChartError(true)
+          }
+        }, 10000) // 10 second timeout
+
         script.onload = () => {
+          clearTimeout(timeout)
           setChartLoaded(true)
         }
+
         script.onerror = () => {
+          clearTimeout(timeout)
           console.error('Failed to load Chart.js')
+          setChartError(true)
         }
+
         document.head.appendChild(script)
+
+        return () => clearTimeout(timeout)
       }
     }
   }, [])
@@ -533,7 +550,39 @@ export default function PSE() {
               </div>
               <div className="pse-card-body">
                 <div className="pse-chart-container">
-                  <canvas ref={mainChartRef}></canvas>
+                  {chartError ? (
+                    <div style={{ padding: '60px 20px', textAlign: 'center', color: 'var(--pse-text-muted)' }}>
+                      <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ margin: '0 auto 16px', display: 'block', opacity: 0.5 }}>
+                        <circle cx="12" cy="12" r="10"/>
+                        <line x1="12" y1="8" x2="12" y2="12"/>
+                        <line x1="12" y1="16" x2="12.01" y2="16"/>
+                      </svg>
+                      <p style={{ marginBottom: '8px', fontSize: '14px', fontWeight: '500' }}>Chart unavailable</p>
+                      <p style={{ fontSize: '13px', opacity: 0.7 }}>Unable to load charting library. Please check your connection and refresh.</p>
+                      <button
+                        onClick={() => window.location.reload()}
+                        style={{
+                          marginTop: '16px',
+                          padding: '8px 16px',
+                          background: 'var(--pse-primary)',
+                          color: 'white',
+                          border: 'none',
+                          borderRadius: '6px',
+                          cursor: 'pointer',
+                          fontSize: '13px'
+                        }}
+                      >
+                        Retry
+                      </button>
+                    </div>
+                  ) : !chartLoaded ? (
+                    <div style={{ padding: '60px 20px', textAlign: 'center', color: 'var(--pse-text-muted)' }}>
+                      <div style={{ width: '32px', height: '32px', border: '3px solid var(--pse-border)', borderTopColor: 'var(--pse-primary)', borderRadius: '50%', animation: 'spin 1s linear infinite', margin: '0 auto 16px' }} />
+                      <p style={{ fontSize: '13px' }}>Loading charts...</p>
+                    </div>
+                  ) : (
+                    <canvas ref={mainChartRef}></canvas>
+                  )}
                 </div>
               </div>
             </div>
