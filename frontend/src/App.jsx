@@ -4,6 +4,7 @@ import { ThemeProvider } from './utils/ThemeContext'
 import { AuthProvider } from './utils/AuthContext'
 import Layout from './components/Layout'
 import ErrorBoundary from './components/ErrorBoundary'
+import PWAInstallPrompt from './components/PWAInstallPrompt'
 
 // Eagerly load Portal (landing page) for fast initial load
 import Portal from './pages/Portal'
@@ -44,6 +45,7 @@ const AuthCallback = lazy(() => import('./pages/auth/AuthCallback'))
 // Lazy load account pages
 const Dashboard = lazy(() => import('./pages/account/Dashboard'))
 const Security = lazy(() => import('./pages/account/Security'))
+const Appointments = lazy(() => import('./pages/Appointments'))
 
 // Eagerly load ProtectedRoute (small component, needed for auth check)
 import ProtectedRoute from './components/auth/ProtectedRoute'
@@ -84,6 +86,7 @@ function App() {
     <ThemeProvider>
       <AuthProvider>
         <ErrorBoundary>
+          <PWAInstallPrompt />
           <Suspense fallback={<PageLoader />}>
             <Routes>
             {/* Admin Routes (protected, outside Layout for standalone UI) */}
@@ -152,6 +155,14 @@ function App() {
                 element={
                   <ProtectedRoute>
                     <Dashboard />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="appointments"
+                element={
+                  <ProtectedRoute>
+                    <Appointments />
                   </ProtectedRoute>
                 }
               />
