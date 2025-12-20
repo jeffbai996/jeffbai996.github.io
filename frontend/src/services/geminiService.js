@@ -39,9 +39,9 @@ class GeminiService {
       this.genAI = new GoogleGenerativeAI(apiKey);
 
       // Initialize both models for routing
-      // gemini-1.5-flash for regular queries (fast, efficient)
+      // gemini-2.5-flash for regular queries (fast, efficient)
       this.flashModel = this.genAI.getGenerativeModel({
-        model: 'gemini-1.5-flash',
+        model: 'gemini-2.5-flash',
         generationConfig: {
           temperature: 0.7,
           maxOutputTokens: 1500,
@@ -68,9 +68,9 @@ class GeminiService {
         ],
       });
 
-      // gemini-1.5-pro for complex queries (more capable, deeper reasoning)
+      // gemini-3-pro for complex queries (more capable, deeper reasoning)
       this.proModel = this.genAI.getGenerativeModel({
-        model: 'gemini-1.5-pro',
+        model: 'gemini-3-pro',
         generationConfig: {
           temperature: 0.8,
           maxOutputTokens: 2500,
@@ -180,13 +180,13 @@ class GeminiService {
     if (isComplex) {
       return {
         model: this.proModel,
-        modelName: 'gemini-1.5-pro',
+        modelName: 'gemini-3-pro',
         reason: 'complex query requiring deep reasoning'
       };
     } else {
       return {
         model: this.flashModel,
-        modelName: 'gemini-1.5-flash',
+        modelName: 'gemini-2.5-flash',
         reason: 'standard query'
       };
     }
@@ -658,8 +658,8 @@ ${dynamicContext}
     return {
       available: this.initialized,
       models: {
-        flash: 'gemini-1.5-flash',
-        pro: 'gemini-1.5-pro'
+        flash: 'gemini-2.5-flash',
+        pro: 'gemini-3-pro'
       },
       routing: 'intelligent query complexity detection',
     };
