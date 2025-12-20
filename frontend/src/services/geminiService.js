@@ -37,8 +37,11 @@ class GeminiService {
 
     try {
       this.genAI = new GoogleGenerativeAI(apiKey);
-      this.model = this.genAI.getGenerativeModel({
-        model: 'gemini-2.0-flash-lite',
+
+      // Initialize both models for routing
+      // gemini-2.5-flash for regular queries (fast, efficient)
+      this.flashModel = this.genAI.getGenerativeModel({
+        model: 'gemini-2.5-flash',
         generationConfig: {
           temperature: 0.7,
           maxOutputTokens: 1500,
@@ -64,9 +67,128 @@ class GeminiService {
           },
         ],
       });
+
+      // gemini-3-pro for complex queries (more capable, deeper reasoning)
+      this.proModel = this.genAI.getGenerativeModel({
+        model: 'gemini-3-pro',
+        generationConfig: {
+          temperature: 0.8,
+          maxOutputTokens: 2500,
+          topP: 0.95,
+          topK: 40,
+        },
+        safetySettings: [
+          {
+            category: 'HARM_CATEGORY_HARASSMENT',
+            threshold: 'BLOCK_MEDIUM_AND_ABOVE',
+          },
+          {
+            category: 'HARM_CATEGORY_HATE_SPEECH',
+            threshold: 'BLOCK_MEDIUM_AND_ABOVE',
+          },
+          {
+            category: 'HARM_CATEGORY_SEXUALLY_EXPLICIT',
+            threshold: 'BLOCK_MEDIUM_AND_ABOVE',
+          },
+          {
+            category: 'HARM_CATEGORY_DANGEROUS_CONTENT',
+            threshold: 'BLOCK_MEDIUM_AND_ABOVE',
+          },
+        ],
+      });
+
+      // Default to flash model
+      this.model = this.flashModel;
       this.initialized = true;
     } catch (error) {
       this.initialized = false;
+    }
+  }
+
+  /**
+   * Detect if a query is complex and requires the Pro model
+   * @param {string} message - User message to analyze
+   * @param {object} context - Additional context
+   * @returns {boolean} - True if query is complex
+   */
+  isComplexQuery(message, context = {}) {
+    const messageLower = message.toLowerCase();
+
+    // Indicators of complex queries
+    const complexIndicators = [
+      // Multi-step reasoning
+      /explain (the )?process|walk me through|step[- ]by[- ]step/i,
+      /how (do|does|can) (i|it) .*(and|then|after|before)/i,
+
+      // Comparisons and analysis
+      /compare|difference between|versus|vs\.|which is better/i,
+      /analyze|evaluation|assessment|pros and cons/i,
+
+      // Legal, financial, or technical advice
+      /legal|lawsuit|contract|regulation|compliance/i,
+      /tax|financial|investment|mortgage|loan calculation/i,
+      /technical (issue|problem)|debug|troubleshoot/i,
+
+      // Multiple topics or entities
+      /what (are|about) (all|multiple|various|different)/i,
+
+      // Long-form content requests
+      /write (a|an)|draft|compose|create (a|an)/i,
+      /summarize|summary of|overview of/i,
+
+      // Complex calculations or data
+      /calculate|compute|estimate|how much (would|will|does)/i,
+
+      // Policy or procedural questions
+      /policy|procedure|regulation|requirement|eligibility/i,
+      /what (documents?|forms?|papers?) (do i|should i) need/i,
+    ];
+
+    // Check for complex indicators
+    const hasComplexIndicator = complexIndicators.some(pattern => pattern.test(message));
+
+    // Check message length (longer queries often need more reasoning)
+    const isLongQuery = message.length > 150;
+
+    // Check for multiple questions
+    const hasMultipleQuestions = (message.match(/\?/g) || []).length > 1;
+
+    // Check conversation context
+    const hasComplexHistory = context.conversationHistory &&
+                               context.conversationHistory.length > 4;
+
+    // Check for form-related queries (often complex)
+    const isFormQuery = /form|document|application|filing|submit/i.test(message);
+
+    // Determine complexity
+    const isComplex = hasComplexIndicator ||
+                      (isLongQuery && (hasMultipleQuestions || isFormQuery)) ||
+                      (hasComplexHistory && (hasMultipleQuestions || isFormQuery));
+
+    return isComplex;
+  }
+
+  /**
+   * Select the appropriate model based on query complexity
+   * @param {string} message - User message
+   * @param {object} context - Additional context
+   * @returns {object} - Selected model
+   */
+  selectModel(message, context = {}) {
+    const isComplex = this.isComplexQuery(message, context);
+
+    if (isComplex) {
+      return {
+        model: this.proModel,
+        modelName: 'gemini-3-pro',
+        reason: 'complex query requiring deep reasoning'
+      };
+    } else {
+      return {
+        model: this.flashModel,
+        modelName: 'gemini-2.5-flash',
+        reason: 'standard query'
+      };
     }
   }
 
@@ -308,6 +430,15 @@ class GeminiService {
         };
       }
 
+      // Select appropriate model based on query complexity
+      const modelSelection = this.selectModel(userMessage, {
+        conversationHistory,
+        ...enhancedContext
+      });
+
+      const selectedModel = modelSelection.model;
+      const modelName = modelSelection.modelName;
+
       // Build the system context
       const departmentContext = this.buildContext(relevantDepartments);
 
@@ -473,8 +604,8 @@ ${dynamicContext}
       // Format conversation history
       const history = this.formatHistory(conversationHistory.slice(-6)); // Last 6 messages for context
 
-      // Start a chat session with history
-      const chat = this.model.startChat({
+      // Start a chat session with history using the selected model
+      const chat = selectedModel.startChat({
         history: [
           {
             role: 'user',
@@ -500,6 +631,8 @@ ${dynamicContext}
         success: true,
         response: text,
         suggestions,
+        model: modelName,
+        modelReason: modelSelection.reason,
         tokensUsed: {
           prompt: result.response.usageMetadata?.promptTokenCount || 0,
           completion: result.response.usageMetadata?.candidatesTokenCount || 0,
@@ -524,7 +657,11 @@ ${dynamicContext}
   getStatus() {
     return {
       available: this.initialized,
-      model: 'gemini-2.0-flash-lite',
+      models: {
+        flash: 'gemini-2.5-flash',
+        pro: 'gemini-3-pro'
+      },
+      routing: 'intelligent query complexity detection',
     };
   }
 }
