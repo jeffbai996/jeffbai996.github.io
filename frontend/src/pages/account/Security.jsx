@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { useAuth } from '../../utils/AuthContext'
+import TwoFactorAuth from '../../components/TwoFactorAuth'
 import './Account.css'
 
 export default function Security() {
@@ -89,21 +90,8 @@ export default function Security() {
           </div>
         </section>
 
-        {/* Two-Factor Authentication - Coming Soon */}
-        <section className="security-section">
-          <div className="section-header">
-            <div className="section-icon disabled">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
-              </svg>
-            </div>
-            <div className="section-info">
-              <h2>Two-Factor Authentication</h2>
-              <p>Add an extra layer of security to your account</p>
-            </div>
-            <span className="coming-soon-badge">Coming Soon</span>
-          </div>
-        </section>
+        {/* Two-Factor Authentication */}
+        <TwoFactorAuth />
 
         {/* Phone Verification - Coming Soon */}
         <section className="security-section">
