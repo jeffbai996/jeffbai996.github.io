@@ -45,6 +45,7 @@ const AuthCallback = lazy(() => import('./pages/auth/AuthCallback'))
 // Lazy load account pages
 const Dashboard = lazy(() => import('./pages/account/Dashboard'))
 const Security = lazy(() => import('./pages/account/Security'))
+const Appointments = lazy(() => import('./pages/Appointments'))
 
 // Eagerly load ProtectedRoute (small component, needed for auth check)
 import ProtectedRoute from './components/auth/ProtectedRoute'
@@ -154,6 +155,14 @@ function App() {
                 element={
                   <ProtectedRoute>
                     <Dashboard />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="appointments"
+                element={
+                  <ProtectedRoute>
+                    <Appointments />
                   </ProtectedRoute>
                 }
               />
