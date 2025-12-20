@@ -57,20 +57,23 @@ jobs:
           VITE_GEMINI_ENABLED: true
           VITE_GEMINI_API_KEY: ${{ secrets.VITE_GEMINI_API_KEY }}
 
+      - name: Copy chatbot-embed.js to dist
+        run: cp chatbot-embed.js frontend/dist/
+
       - name: Inject Gemini API key into chatbot-embed.js
         run: |
           # Use perl for safer substitution (handles special characters in API key)
           # IMPORTANT: Use single quotes so bash doesn't expand $ENV before perl runs
-          perl -i -pe 's|GEMINI_API_KEY_PLACEHOLDER|$ENV{GEMINI_KEY}|g' chatbot-embed.js
+          perl -i -pe 's|GEMINI_API_KEY_PLACEHOLDER|$ENV{GEMINI_KEY}|g' frontend/dist/chatbot-embed.js
 
           # Verify injection was successful
-          if grep -q "GEMINI_API_KEY_PLACEHOLDER" chatbot-embed.js; then
+          if grep -q "GEMINI_API_KEY_PLACEHOLDER" frontend/dist/chatbot-embed.js; then
             echo "ERROR: API key placeholder still present - injection failed"
             exit 1
           fi
 
           # Verify a valid API key was actually injected (Gemini keys start with AIza)
-          if grep -q "apiKey = 'AIza" chatbot-embed.js; then
+          if grep -q "apiKey = 'AIza" frontend/dist/chatbot-embed.js; then
             echo "API key injected successfully"
           else
             echo "ERROR: API key injection produced invalid result"
@@ -83,7 +86,7 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: '.'
+          path: 'frontend/dist'
 
   deploy:
     environment:
