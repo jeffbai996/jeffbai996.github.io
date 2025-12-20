@@ -4,6 +4,7 @@ import { ThemeProvider } from './utils/ThemeContext'
 import { AuthProvider } from './utils/AuthContext'
 import Layout from './components/Layout'
 import ErrorBoundary from './components/ErrorBoundary'
+import PWAInstallPrompt from './components/PWAInstallPrompt'
 
 // Eagerly load Portal (landing page) for fast initial load
 import Portal from './pages/Portal'
@@ -84,6 +85,7 @@ function App() {
     <ThemeProvider>
       <AuthProvider>
         <ErrorBoundary>
+          <PWAInstallPrompt />
           <Suspense fallback={<PageLoader />}>
             <Routes>
             {/* Admin Routes (protected, outside Layout for standalone UI) */}
