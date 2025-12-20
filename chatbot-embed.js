@@ -1154,6 +1154,55 @@ The user is currently on the ${currentDepartment.name} page. Prioritize informat
     }
   }
 
+  /**
+   * Detect if a query is complex and requires the Pro model
+   */
+  function isComplexQuery(message) {
+    const messageLower = message.toLowerCase();
+
+    // Indicators of complex queries
+    const complexIndicators = [
+      // Multi-step reasoning
+      /explain (the )?process|walk me through|step[- ]by[- ]step/i,
+      /how (do|does|can) (i|it) .*(and|then|after|before)/i,
+      // Comparisons and analysis
+      /compare|difference between|versus|vs\.|which is better/i,
+      /analyze|evaluation|assessment|pros and cons/i,
+      // Legal, financial, or technical advice
+      /legal|lawsuit|contract|regulation|compliance/i,
+      /tax|financial|investment|mortgage|loan calculation/i,
+      // Multiple topics or entities
+      /what (are|about) (all|multiple|various|different)/i,
+      // Long-form content requests
+      /write (a|an)|draft|compose|create (a|an)/i,
+      /summarize|summary of|overview of/i,
+      // Complex calculations or data
+      /calculate|compute|estimate|how much (would|will|does)/i,
+      // Policy or procedural questions
+      /policy|procedure|regulation|requirement|eligibility/i,
+      /what (documents?|forms?|papers?) (do i|should i) need/i,
+    ];
+
+    // Check for complex indicators
+    const hasComplexIndicator = complexIndicators.some(pattern => pattern.test(message));
+
+    // Check message length (longer queries often need more reasoning)
+    const isLongQuery = message.length > 150;
+
+    // Check for multiple questions
+    const hasMultipleQuestions = (message.match(/\?/g) || []).length > 1;
+
+    // Check for form-related queries (often complex)
+    const isFormQuery = /form|document|application|filing|submit/i.test(message);
+
+    // Determine complexity
+    const isComplex = hasComplexIndicator ||
+                      (isLongQuery && (hasMultipleQuestions || isFormQuery)) ||
+                      (conversationHistory.length > 4 && (hasMultipleQuestions || isFormQuery));
+
+    return isComplex;
+  }
+
   async function callGeminiAPI(userMessage, systemPrompt) {
     // API key will be injected during build from GitHub secrets
     const apiKey = 'GEMINI_API_KEY_PLACEHOLDER';
@@ -1164,6 +1213,10 @@ The user is currently on the ${currentDepartment.name} page. Prioritize informat
       // Provide helpful fallback responses when API key not available
       return getFallbackResponse(userMessage);
     }
+
+    // Select model based on query complexity
+    const useProModel = isComplexQuery(userMessage);
+    const modelName = useProModel ? 'gemini-3-pro' : 'gemini-2.5-flash';
 
     try {
       // Build the full request with conversation history
@@ -1193,9 +1246,9 @@ The user is currently on the ${currentDepartment.name} page. Prioritize informat
         parts: [{ text: userMessage }]
       });
 
-      // Call Gemini API
+      // Call Gemini API with selected model
       const response = await fetch(
-        `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-lite:generateContent?key=${apiKey}`,
+        `https://generativelanguage.googleapis.com/v1beta/models/${modelName}:generateContent?key=${apiKey}`,
         {
           method: 'POST',
           headers: {
@@ -1204,8 +1257,8 @@ The user is currently on the ${currentDepartment.name} page. Prioritize informat
           body: JSON.stringify({
             contents: contents,
             generationConfig: {
-              temperature: 0.7,
-              maxOutputTokens: 1500,
+              temperature: useProModel ? 0.8 : 0.7,
+              maxOutputTokens: useProModel ? 2500 : 1500,
               topP: 0.95,
               topK: 40,
             },
