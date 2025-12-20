@@ -28,8 +28,8 @@ export default defineConfig({
     }
   },
   build: {
-    outDir: '..',
-    emptyOutDir: false, // Keep false to preserve non-build files in root
+    outDir: 'dist',
+    emptyOutDir: true,
     sourcemap: false, // Disabled in production for security
     rollupOptions: {
       output: {
