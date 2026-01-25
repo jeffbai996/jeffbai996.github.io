@@ -238,7 +238,7 @@ export function generateProactiveSuggestions(context = {}) {
 export function generateProactiveTip(currentTopic) {
   const tips = {
     passport: 'Did you know? You can apply for an expedited passport for urgent travel needs.',
-    taxes: 'Did you know? E-filing is free for incomes under ¤75,000.',
+    taxes: 'Did you know? E-filing is free for incomes under $75,000.',
     police: 'Did you know? You can file minor theft reports online without visiting a station.',
     license: 'Did you know? License renewals can be done online if your address hasn\'t changed.',
     insurance: 'Did you know? Open enrollment for health insurance is November 1 - December 31.',

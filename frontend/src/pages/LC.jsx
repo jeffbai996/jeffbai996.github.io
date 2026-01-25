@@ -215,7 +215,7 @@ function LCHome({ navigate }) {
                 <div className="news-item">
                   <span className="news-date">Nov 27, 2024</span>
                   <h4 className="news-title">Infrastructure Investment Act Signed</h4>
-                  <p className="news-excerpt">¤12 billion infrastructure package becomes law after legislative approval.</p>
+                  <p className="news-excerpt">$12 billion infrastructure package becomes law after legislative approval.</p>
                 </div>
                 <div className="news-item">
                   <span className="news-date">Nov 20, 2024</span>
@@ -496,7 +496,7 @@ function Bills() {
                         Sponsor: Sen. James Wilson | Committee: Housing & Urban Development
                       </div>
                       <p style={{ fontSize: '14px', marginBottom: '8px' }}>
-                        Allocates ¤500 million for affordable housing construction and provides tax credits to developers.
+                        Allocates $500 million for affordable housing construction and provides tax credits to developers.
                       </p>
                       <div style={{ fontSize: '13px' }}>
                         <strong>Status:</strong> <span style={{ color: 'var(--accent-info)' }}>Reported out of Committee</span> |
@@ -531,7 +531,7 @@ function Bills() {
                         Sponsor: Rep. David Park | Floor Status: Second Reading
                       </div>
                       <p style={{ fontSize: '14px', marginBottom: '8px' }}>
-                        Authorizes ¤2.4 billion for light rail expansion and bus rapid transit in metropolitan areas.
+                        Authorizes $2.4 billion for light rail expansion and bus rapid transit in metropolitan areas.
                       </p>
                       <div style={{ fontSize: '13px' }}>
                         <strong>Status:</strong> <span style={{ color: 'var(--accent-success)' }}>Passed Second Reading</span> (82-38) |
@@ -569,7 +569,7 @@ function Bills() {
                       Passed: November 27, 2024 | Vote: 89-31
                     </div>
                     <p style={{ fontSize: '14px', marginBottom: '8px' }}>
-                      ¤12 billion comprehensive infrastructure package including roads, bridges, broadband, water systems, and public buildings.
+                      $12 billion comprehensive infrastructure package including roads, bridges, broadband, water systems, and public buildings.
                     </p>
                     <div style={{ fontSize: '13px', color: 'var(--accent-success)' }}>
                       <strong>Status:</strong> Signed into law by President | Effective: January 1, 2025
@@ -582,7 +582,7 @@ function Bills() {
                       Passed: October 15, 2024 | Vote: 74-46
                     </div>
                     <p style={{ fontSize: '14px', marginBottom: '8px' }}>
-                      Increases minimum wage to ¤16.50/hour, with annual adjustments tied to inflation.
+                      Increases minimum wage to $16.50/hour, with annual adjustments tied to inflation.
                     </p>
                     <div style={{ fontSize: '13px', color: 'var(--accent-success)' }}>
                       <strong>Status:</strong> Signed into law | Effective: July 1, 2025

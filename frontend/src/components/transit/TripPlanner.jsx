@@ -176,9 +176,9 @@ export default function TripPlanner() {
             <div className="summary-item">
               <span className="summary-label">Fare</span>
               <span className="summary-value fare">
-                <span className="currency">¤</span>{route.fare}
+                <span className="currency">$</span>{route.fare}
                 {fareType !== 'adult' && (
-                  <span className="original-fare">(¤{route.baseFare})</span>
+                  <span className="original-fare">(${route.baseFare})</span>
                 )}
               </span>
             </div>
