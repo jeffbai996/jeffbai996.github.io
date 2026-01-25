@@ -205,9 +205,35 @@ body.light .gov-dropdown-icon {
 }
 
 @media (max-width: 768px) {
+  .gov-banner {
+    padding: 8px 0;
+  }
+
   .gov-banner .container {
-    justify-content: center;
+    justify-content: space-between;
     gap: 8px;
+  }
+
+  .gov-banner-left {
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+
+  .gov-banner-left > span {
+    display: none;
+  }
+
+  .gov-praya-link {
+    font-size: 13px;
+    padding-right: 8px;
+  }
+
+  .gov-icon {
+    display: none;
+  }
+
+  .gov-how {
+    font-size: 12px;
   }
 
   .gov-login-link span {
@@ -226,7 +252,44 @@ body.light .gov-dropdown-icon {
     padding: 4px;
   }
 
+  .theme-btn {
+    padding: 5px 10px;
+    font-size: 11px;
+  }
+
   .gov-dropdown-inner {
     grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 480px) {
+  .gov-banner {
+    padding: 6px 0;
+    font-size: 12px;
+  }
+
+  .gov-banner-left {
+    gap: 6px;
+  }
+
+  .gov-praya-link {
+    font-size: 12px;
+    padding-right: 6px;
+    border-right: none;
+    margin-right: 0;
+  }
+
+  .gov-how {
+    font-size: 11px;
+  }
+
+  .gov-how svg {
+    width: 10px;
+    height: 10px;
+  }
+
+  .theme-btn {
+    padding: 4px 8px;
+    font-size: 10px;
   }
 }

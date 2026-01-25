@@ -34,7 +34,7 @@ Your role:
 
 Key departments: National Police Agency, Bank of fictional project, Cannabis Tax Bureau, Department of Justice, Interior Department, Transport Department, Revenue Department, fictional project Post, Health Department, Housing Authority, Customs & Border Control, Legislative Council, Buildings Department, Companies Registry, Social Welfare Department.
 
-Currency: fictional project Dollar (¤)
+Currency: fictional project Dollar ($)
 
 Keep responses conversational and under 3 sentences when possible for voice clarity.`
 

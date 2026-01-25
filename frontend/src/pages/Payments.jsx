@@ -60,7 +60,7 @@ const paymentTypes = [
         <circle cx="17" cy="17" r="2"/>
       </svg>
     ),
-    fees: '¤85'
+    fees: '$85'
   },
   {
     id: 'driver-license',
@@ -75,7 +75,7 @@ const paymentTypes = [
         <path d="M15 10h2M15 14h2"/>
       </svg>
     ),
-    fees: '¤45'
+    fees: '$45'
   },
   {
     id: 'passport',
@@ -90,7 +90,7 @@ const paymentTypes = [
         <path d="M8 18h8"/>
       </svg>
     ),
-    fees: '¤120'
+    fees: '$120'
   },
   {
     id: 'building-permit',
@@ -150,10 +150,10 @@ const paymentTypes = [
 ]
 
 const paymentHistory = [
-  { id: 'TXN-2025-12847', date: '2025-12-05', type: 'Income Tax Payment', amount: '¤2,450.00', status: 'completed' },
-  { id: 'TXN-2025-12683', date: '2025-11-28', type: 'Vehicle Registration', amount: '¤85.00', status: 'completed' },
-  { id: 'TXN-2025-12541', date: '2025-11-15', type: 'Property Tax', amount: '¤890.00', status: 'completed' },
-  { id: 'TXN-2025-12398', date: '2025-10-30', type: 'Traffic Fine', amount: '¤150.00', status: 'completed' },
+  { id: 'TXN-2025-12847', date: '2025-12-05', type: 'Income Tax Payment', amount: '$2,450.00', status: 'completed' },
+  { id: 'TXN-2025-12683', date: '2025-11-28', type: 'Vehicle Registration', amount: '$85.00', status: 'completed' },
+  { id: 'TXN-2025-12541', date: '2025-11-15', type: 'Property Tax', amount: '$890.00', status: 'completed' },
+  { id: 'TXN-2025-12398', date: '2025-10-30', type: 'Traffic Fine', amount: '$150.00', status: 'completed' },
 ]
 
 export default function Payments() {
@@ -310,7 +310,7 @@ export default function Payments() {
                       <h3>Payment Details</h3>
                       <div className="form-grid">
                         <div className="form-group">
-                          <label>Amount (¤)</label>
+                          <label>Amount ($)</label>
                           <input
                             type="number"
                             placeholder="0.00"
@@ -427,7 +427,7 @@ export default function Payments() {
                     <div className="payment-summary-divider" />
                     <div className="payment-summary-row payment-summary-total">
                       <span>Total Amount</span>
-                      <strong>¤{parseFloat(formData.amount).toFixed(2)}</strong>
+                      <strong>${parseFloat(formData.amount).toFixed(2)}</strong>
                     </div>
                   </div>
 
@@ -436,7 +436,7 @@ export default function Payments() {
                       Edit Details
                     </button>
                     <button className="btn-primary btn-large" onClick={handleConfirmPayment}>
-                      Confirm & Pay ¤{parseFloat(formData.amount).toFixed(2)}
+                      Confirm & Pay ${parseFloat(formData.amount).toFixed(2)}
                     </button>
                   </div>
                 </div>
@@ -464,7 +464,7 @@ export default function Payments() {
                     </div>
                     <div className="payment-receipt-row">
                       <span>Amount Paid</span>
-                      <strong>¤{parseFloat(formData.amount).toFixed(2)}</strong>
+                      <strong>${parseFloat(formData.amount).toFixed(2)}</strong>
                     </div>
                     <div className="payment-receipt-row">
                       <span>Payment Type</span>
