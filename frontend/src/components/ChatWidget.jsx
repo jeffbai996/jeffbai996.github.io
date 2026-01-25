@@ -295,7 +295,7 @@ function getTopicSuggestions(topic) {
 function generateQuestionGuidance(questionType, message) {
   const guidance = {
     howTo: "I'd be happy to explain how to do something! Could you specify what service you're interested in? For example:\n• How to get a passport\n• How to file taxes\n• How to report a crime\n• How to track a package",
-    howMuch: "I can help with fee information! Which service are you asking about? Common fees:\n• **National ID**: ¤25 (new), ¤15 (renewal)\n• **Passport**: ¤80 (standard), ¤150 (expedited)\n• **Driver's License**: ¤45 (new), ¤30 (renewal)\n• **Police Clearance**: ¤20",
+    howMuch: "I can help with fee information! Which service are you asking about? Common fees:\n• **National ID**: $25 (new), $15 (renewal)\n• **Passport**: $80 (standard), $150 (expedited)\n• **Driver's License**: $45 (new), $30 (renewal)\n• **Police Clearance**: $20",
     whereIs: "I can help you find locations! Are you looking for:\n• A government office location\n• Where to submit documents\n• Which department handles your request\n\nPlease specify what you're looking for.",
     whenIs: "I can provide timing information! Most government offices are open:\n• **Mon-Fri**: 8AM-5PM\n• **Some Sat**: 9AM-1PM\n• **Online**: 24/7\n\nWhat specific service do you need hours for?",
     canI: "I can help determine if you're eligible for something. What service or benefit are you asking about?",

@@ -13,7 +13,7 @@ export const departmentData = [
     services: [
       'Emergency Response - Dial 911 for life-threatening incidents, crimes in progress, missing children',
       'Non-emergency line: 311',
-      'Online crime reporting for thefts under ¤2,500, vandalism, lost property, identity fraud',
+      'Online crime reporting for thefts under $2,500, vandalism, lost property, identity fraud',
       'Police Clearance Certificates - 3 business day processing, covers criminal history, open warrants',
       'Firearm Licensing - requires safety training, secure storage proof, biometric background checks',
       'Traffic Safety - collision reports, citations, commercial vehicle inspections',
@@ -22,7 +22,7 @@ export const departmentData = [
       'Community Programs - school safety officers, patrol briefings'
     ],
     subPages: [
-      { name: 'File Police Report', url: '/npa/report', description: 'Submit non-emergency reports online for theft under ¤2,500, lost property, vandalism, vehicle accidents with no injuries' },
+      { name: 'File Police Report', url: '/npa/report', description: 'Submit non-emergency reports online for theft under $2,500, lost property, vandalism, vehicle accidents with no injuries' },
       { name: 'Police Services', url: '/npa/services', description: 'Access police clearances, case lookups, and community programs' },
       { name: 'Public Safety', url: '/npa/safety', description: 'Safety tips, crime prevention resources, and community awareness programs' }
     ],
@@ -41,12 +41,12 @@ export const departmentData = [
     name: 'Bank of Praya',
     abbrev: 'BOP',
     url: '/bop',
-    keywords: ['bank', 'banking', 'account', 'loan', 'bop', 'savings', 'currency', 'praya dollar', '¤', 'mortgage', 'financial', 'central bank', 'monetary'],
+    keywords: ['bank', 'banking', 'account', 'loan', 'bop', 'savings', 'currency', 'praya dollar', '$', 'mortgage', 'financial', 'central bank', 'monetary'],
     description: 'Central bank responsible for monetary policy, financial stability, and banking supervision.',
     services: [
       'Personal Banking - savings accounts, checking accounts, online banking',
       'Business Loans and Mortgages - schedule appointment with financial advisor',
-      'Currency Services - official currency is the Praya Dollar (¤)',
+      'Currency Services - official currency is the Praya Dollar ($)',
       'Banking Supervision',
       'Monetary Policy',
       'Economic Research and Analysis'
@@ -124,15 +124,15 @@ export const departmentData = [
       'Parks and Nature Reserves Management'
     ],
     subPages: [
-      { name: 'National ID', url: '/interior/id', description: 'Apply for or renew your National ID card. Fee: ¤25 new, ¤15 renewal. Processing: 5-7 days.' },
-      { name: 'Passport Services', url: '/interior/passport', description: 'Apply for passport. Standard: ¤80, 10-14 days. Expedited: ¤150, 3-5 days.' },
-      { name: 'Birth Certificates', url: '/interior/birth', description: 'Request certified copies or register a birth. Fee: ¤10. Processing: 3-5 days.' },
+      { name: 'National ID', url: '/interior/id', description: 'Apply for or renew your National ID card. Fee: $25 new, $15 renewal. Processing: 5-7 days.' },
+      { name: 'Passport Services', url: '/interior/passport', description: 'Apply for passport. Standard: $80, 10-14 days. Expedited: $150, 3-5 days.' },
+      { name: 'Birth Certificates', url: '/interior/birth', description: 'Request certified copies or register a birth. Fee: $10. Processing: 3-5 days.' },
       { name: 'Civil Records', url: '/interior/records', description: 'Marriage licenses, death certificates, and other civil documents' }
     ],
     fees: {
-      nationalId: { new: '¤25', renewal: '¤15', processing: '5-7 business days' },
-      passport: { standard: '¤80', expedited: '¤150', standardProcessing: '10-14 days', expeditedProcessing: '3-5 days' },
-      birthCertificate: { fee: '¤10', processing: '3-5 business days' }
+      nationalId: { new: '$25', renewal: '$15', processing: '5-7 business days' },
+      passport: { standard: '$80', expedited: '$150', standardProcessing: '10-14 days', expeditedProcessing: '3-5 days' },
+      birthCertificate: { fee: '$10', processing: '3-5 business days' }
     },
     hours: 'Mon-Fri 8AM-5PM. PrayaPass account required for online services',
     contact: 'Visit any Interior Department office with valid ID'
@@ -153,12 +153,12 @@ export const departmentData = [
       'Vehicle Inspections'
     ],
     subPages: [
-      { name: 'Driver License', url: '/transport/license', description: 'Apply for new license, renew, or schedule driving tests. Fee: ¤45 new, ¤30 renewal.' },
+      { name: 'Driver License', url: '/transport/license', description: 'Apply for new license, renew, or schedule driving tests. Fee: $45 new, $30 renewal.' },
       { name: 'Vehicle Registration', url: '/transport/registration', description: 'Register vehicles, renew registration, or transfer titles' },
       { name: 'Schedule Test', url: '/transport/test', description: 'Schedule written or road tests for driver licensing' }
     ],
     fees: {
-      driverLicense: { new: '¤45', renewal: '¤30', replacement: '¤25', valid: '5 years' },
+      driverLicense: { new: '$45', renewal: '$30', replacement: '$25', valid: '5 years' },
       vehicleRegistration: { annual: 'varies by vehicle type' }
     },
     hours: 'Mon-Fri 8AM-5PM, Sat 9AM-1PM select locations',
@@ -180,20 +180,20 @@ export const departmentData = [
       'Refund Status Tracking'
     ],
     subPages: [
-      { name: 'File Taxes', url: '/revenue/file', description: 'File individual or business tax returns online. Free e-file for incomes under ¤75,000.' },
+      { name: 'File Taxes', url: '/revenue/file', description: 'File individual or business tax returns online. Free e-file for incomes under $75,000.' },
       { name: 'Make Payment', url: '/revenue/payment', description: 'Pay taxes online, set up payment plans, or manage your account' },
       { name: 'Refund Status', url: '/revenue/refunds', description: 'Track refund status and update direct deposit information' }
     ],
     statistics: {
       returnsFiled: '2.8M this year',
       eFileRate: '87% online filing',
-      avgRefund: '¤2,840 per return',
+      avgRefund: '$2,840 per return',
       processingTime: '21 days e-file average'
     },
     taxInfo: {
       deadline: 'April 15 annually',
-      freeFileThreshold: '¤75,000 AGI',
-      standardDeduction: { single: '¤13,850', marriedJoint: '¤27,700', headOfHousehold: '¤20,800' },
+      freeFileThreshold: '$75,000 AGI',
+      standardDeduction: { single: '$13,850', marriedJoint: '$27,700', headOfHousehold: '$20,800' },
       helpLine: '1-800-TAX-HELP'
     },
     hours: 'Office hours: Mon-Fri 8AM-5PM. Online filing available 24/7',
@@ -241,7 +241,7 @@ export const departmentData = [
       'Emergency Medical Services - Dial 911'
     ],
     subPages: [
-      { name: 'Health Insurance', url: '/health/insurance', description: 'Enroll in National Health Insurance. Standard Plan ¤50-¤350/month, Premium Plan ¤180-¤520/month based on income.' },
+      { name: 'Health Insurance', url: '/health/insurance', description: 'Enroll in National Health Insurance. Standard Plan $50-$350/month, Premium Plan $180-$520/month based on income.' },
       { name: 'Vaccinations', url: '/health/vaccinations', description: 'View vaccination records, schedule immunizations, find clinic locations' },
       { name: 'Find Provider', url: '/health/providers', description: 'Search for doctors, specialists, hospitals, and clinics in your area' },
       { name: 'Health Alerts', url: '/health/alerts', description: 'Public health advisories, disease outbreaks, and safety recommendations' }
@@ -253,8 +253,8 @@ export const departmentData = [
       vaccinationRate: '89% full coverage'
     },
     insuranceInfo: {
-      standardPlan: '¤50-¤350/month based on income',
-      premiumPlan: '¤180-¤520/month based on income',
+      standardPlan: '$50-$350/month based on income',
+      premiumPlan: '$180-$520/month based on income',
       openEnrollment: 'November 1 - December 31',
       coverageStart: 'January 1'
     },
@@ -732,7 +732,7 @@ export function generateKnowledgeBase() {
     },
     {
       keywords: ['cost', 'fee', 'price', 'how much', 'pay', 'payment', 'charge', 'expensive'],
-      response: "Service fees vary by department and service type. Common fees include:\n\n• **National ID**: ¤25 (new), ¤15 (renewal)\n• **Passport**: ¤80 (standard), ¤150 (expedited)\n• **Driver's License**: ¤45 (new), ¤30 (renewal)\n• **Birth Certificate**: ¤10\n• **Police Clearance**: ¤20\n\nFor specific fee information, please specify which service you need, or visit the relevant department's page."
+      response: "Service fees vary by department and service type. Common fees include:\n\n• **National ID**: $25 (new), $15 (renewal)\n• **Passport**: $80 (standard), $150 (expedited)\n• **Driver's License**: $45 (new), $30 (renewal)\n• **Birth Certificate**: $10\n• **Police Clearance**: $20\n\nFor specific fee information, please specify which service you need, or visit the relevant department's page."
     },
     {
       keywords: ['language', 'translate', 'spanish', 'french', 'chinese', 'other language', 'english', 'interpretation'],

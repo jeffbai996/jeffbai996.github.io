@@ -41,14 +41,14 @@ export default function FaresInfo() {
                 <tr key={zone}>
                   <td><strong>Zone {zone}</strong></td>
                   <td>{info.name}</td>
-                  <td><strong>¤{info.baseFare.toFixed(2)}</strong></td>
+                  <td><strong>${info.baseFare.toFixed(2)}</strong></td>
                 </tr>
               ))}
             </tbody>
           </table>
 
           <div style={{ fontSize: '13px', color: 'var(--text-secondary)', marginTop: '12px' }}>
-            <strong>Note:</strong> Additional ¤0.40 per zone crossed. Maximum fare: ¤8.00 for any single journey.
+            <strong>Note:</strong> Additional $0.40 per zone crossed. Maximum fare: $8.00 for any single journey.
           </div>
         </section>
 
@@ -90,7 +90,7 @@ export default function FaresInfo() {
               <div key={pass.id} className="pass-card">
                 <div className="pass-name">{pass.name}</div>
                 <div className="pass-price">
-                  <span className="currency">¤</span>{pass.price.toFixed(2)}
+                  <span className="currency">$</span>{pass.price.toFixed(2)}
                 </div>
                 <div className="pass-validity">
                   Valid for {pass.validity} • {pass.zones}
@@ -119,32 +119,32 @@ export default function FaresInfo() {
             <tbody>
               <tr>
                 <td><strong>Praya → Midland</strong> (28 min)</td>
-                <td>¤35</td>
-                <td>¤55</td>
-                <td>¤85</td>
+                <td>$35</td>
+                <td>$55</td>
+                <td>$85</td>
               </tr>
               <tr>
                 <td><strong>Praya → Riverport</strong> (48 min)</td>
-                <td>¤58</td>
-                <td>¤92</td>
-                <td>¤145</td>
+                <td>$58</td>
+                <td>$92</td>
+                <td>$145</td>
               </tr>
               <tr>
                 <td><strong>Praya → Wellington</strong> (72 min)</td>
-                <td>¤85</td>
-                <td>¤135</td>
-                <td>¤210</td>
+                <td>$85</td>
+                <td>$135</td>
+                <td>$210</td>
               </tr>
               <tr>
                 <td><strong>Praya → Seaside</strong> (35 min)</td>
-                <td>¤42</td>
-                <td>¤68</td>
+                <td>$42</td>
+                <td>$68</td>
                 <td>—</td>
               </tr>
               <tr>
                 <td><strong>Praya → Harbour City</strong> (58 min)</td>
-                <td>¤68</td>
-                <td>¤108</td>
+                <td>$68</td>
+                <td>$108</td>
                 <td>—</td>
               </tr>
             </tbody>
@@ -167,7 +167,7 @@ export default function FaresInfo() {
                 <strong>Praya Card</strong>
               </div>
               <p style={{ fontSize: '13px', color: 'var(--text-secondary)', margin: 0 }}>
-                Reloadable contactless card. Available at all stations. ¤5 card deposit (refundable).
+                Reloadable contactless card. Available at all stations. $5 card deposit (refundable).
               </p>
             </div>
 
@@ -195,7 +195,7 @@ export default function FaresInfo() {
                 <strong>Single Tickets</strong>
               </div>
               <p style={{ fontSize: '13px', color: 'var(--text-secondary)', margin: 0 }}>
-                Purchase at ticket machines. ¤0.50 surcharge for paper tickets.
+                Purchase at ticket machines. $0.50 surcharge for paper tickets.
               </p>
             </div>
 

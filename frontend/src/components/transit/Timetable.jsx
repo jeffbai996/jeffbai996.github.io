@@ -197,7 +197,7 @@ export default function Timetable() {
                 <>
                   <span>Operator: {BUS_FRANCHISEES[currentLine.operator]?.name}</span>
                   <span className="separator">|</span>
-                  <span>Fare: ¤{currentLine.fare}</span>
+                  <span>Fare: ${currentLine.fare}</span>
                 </>
               ) : (
                 <>
@@ -328,7 +328,7 @@ export default function Timetable() {
               </div>
               <div className="detail-item">
                 <span className="detail-label">Fare</span>
-                <span className="detail-value">¤{currentLine?.fare}</span>
+                <span className="detail-value">${currentLine?.fare}</span>
               </div>
               <div className="detail-item">
                 <span className="detail-label">Operating Hours</span>

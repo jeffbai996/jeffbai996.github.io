@@ -144,7 +144,7 @@ function SWDHome({ navigate }) {
             </div>
             <div className="stat-item">
               <span className="stat-label">Benefits Distributed</span>
-              <span className="stat-value">¤1.2B</span>
+              <span className="stat-value">$1.2B</span>
               <span className="stat-change">Annual</span>
             </div>
             <div className="stat-item">
@@ -188,7 +188,7 @@ function SWDHome({ navigate }) {
                 <div className="news-item">
                   <span className="news-date">Nov 30, 2024</span>
                   <h4 className="news-title">Winter Heating Allowance Applications Open</h4>
-                  <p className="news-excerpt">Eligible households can now apply for the annual winter heating subsidy of up to ¤500.</p>
+                  <p className="news-excerpt">Eligible households can now apply for the annual winter heating subsidy of up to $500.</p>
                 </div>
                 <div className="news-item">
                   <span className="news-date">Nov 22, 2024</span>
@@ -275,7 +275,7 @@ function SWDBenefits() {
             <h4 className="card-title">Comprehensive Social Assistance (CSA)</h4>
             <p style={{ color: 'var(--text-muted)', marginBottom: '12px' }}>Monthly financial support for individuals and families below the poverty threshold. Includes food, shelter, and basic needs allowance.</p>
             <div style={{ fontSize: '13px', color: 'var(--text-secondary)' }}>
-              <strong>Amount:</strong> Up to ¤1,200/month | <strong>Eligibility:</strong> Income below ¤18,000/year
+              <strong>Amount:</strong> Up to $1,200/month | <strong>Eligibility:</strong> Income below $18,000/year
             </div>
           </div>
 
@@ -283,7 +283,7 @@ function SWDBenefits() {
             <h4 className="card-title">Child Benefit Allowance</h4>
             <p style={{ color: 'var(--text-muted)', marginBottom: '12px' }}>Monthly payment for each dependent child under 18 years. Additional supplements for children with disabilities or special needs.</p>
             <div style={{ fontSize: '13px', color: 'var(--text-secondary)' }}>
-              <strong>Amount:</strong> ¤150-300/child/month | <strong>Eligibility:</strong> All resident families
+              <strong>Amount:</strong> $150-300/child/month | <strong>Eligibility:</strong> All resident families
             </div>
           </div>
 
@@ -291,7 +291,7 @@ function SWDBenefits() {
             <h4 className="card-title">Old Age Pension Supplement</h4>
             <p style={{ color: 'var(--text-muted)', marginBottom: '12px' }}>Additional support for seniors aged 65+ whose retirement income falls below the living standard threshold.</p>
             <div style={{ fontSize: '13px', color: 'var(--text-secondary)' }}>
-              <strong>Amount:</strong> Up to ¤600/month | <strong>Eligibility:</strong> Seniors with low pension income
+              <strong>Amount:</strong> Up to $600/month | <strong>Eligibility:</strong> Seniors with low pension income
             </div>
           </div>
 
@@ -299,7 +299,7 @@ function SWDBenefits() {
             <h4 className="card-title">Disability Support Allowance</h4>
             <p style={{ color: 'var(--text-muted)', marginBottom: '12px' }}>Financial assistance for citizens with permanent disabilities, covering care needs, equipment, and living expenses.</p>
             <div style={{ fontSize: '13px', color: 'var(--text-secondary)' }}>
-              <strong>Amount:</strong> ¤400-800/month | <strong>Eligibility:</strong> Certified disability assessment
+              <strong>Amount:</strong> $400-800/month | <strong>Eligibility:</strong> Certified disability assessment
             </div>
           </div>
 
@@ -381,7 +381,7 @@ function SWDFamily() {
                 <li>Pass background checks and home safety inspection</li>
                 <li>Complete 30 hours of pre-service training</li>
               </ul>
-              <strong>Support provided:</strong> Monthly stipend (¤400-800 per child), 24/7 caseworker support, respite care, medical coverage for children
+              <strong>Support provided:</strong> Monthly stipend ($400-800 per child), 24/7 caseworker support, respite care, medical coverage for children
             </div>
           </div>
 
@@ -425,7 +425,7 @@ function SWDFamily() {
             <h4 className="card-title">International Adoption</h4>
             <p style={{ color: 'var(--text-muted)', marginBottom: '12px' }}>Support for Prayan families adopting children from other countries, including home studies and post-placement supervision.</p>
             <div style={{ fontSize: '13px', color: 'var(--text-secondary)' }}>
-              <strong>Services:</strong> Home study preparation (¤2,000), Hague Convention compliance, immigration support, cultural integration resources
+              <strong>Services:</strong> Home study preparation ($2,000), Hague Convention compliance, immigration support, cultural integration resources
             </div>
           </div>
 
@@ -475,10 +475,10 @@ function SWDFamily() {
               <strong>Eligibility:</strong>
               <ul>
                 <li>Parents working at least 20 hours per week or in school/training</li>
-                <li>Income below 200% of poverty level (¤36,000 for family of 3)</li>
+                <li>Income below 200% of poverty level ($36,000 for family of 3)</li>
                 <li>Child under age 13 (or under 18 if disabled)</li>
               </ul>
-              <strong>Benefit:</strong> Covers up to 80% of child care costs at licensed providers. Family pays co-payment based on income (¤10-200 per week).
+              <strong>Benefit:</strong> Covers up to 80% of child care costs at licensed providers. Family pays co-payment based on income ($10-200 per week).
               <div style={{ marginTop: '12px', padding: '12px', background: 'white', borderRadius: '8px', fontSize: '13px' }}>
                 <strong>How to apply:</strong> Complete online application at www.swd.gov.py/childcare or visit local service center. Processing time 15 business days.
               </div>
@@ -523,9 +523,9 @@ function SWDElderly() {
             <div style={{ padding: '12px', background: 'var(--bg-elevated)', borderRadius: '8px', marginTop: '12px', fontSize: '13px' }}>
               <strong>Service levels:</strong>
               <ul style={{ marginTop: '8px', marginBottom: 0 }}>
-                <li><strong>Basic care:</strong> 2-4 hours per day, 2-3 days per week (¤20/hour, subsidized to ¤5 for low-income)</li>
-                <li><strong>Moderate care:</strong> 4-6 hours per day, 5 days per week (¤18/hour with subsidy)</li>
-                <li><strong>Intensive care:</strong> 8+ hours per day or overnight care (¤15/hour with subsidy)</li>
+                <li><strong>Basic care:</strong> 2-4 hours per day, 2-3 days per week ($20/hour, subsidized to $5 for low-income)</li>
+                <li><strong>Moderate care:</strong> 4-6 hours per day, 5 days per week ($18/hour with subsidy)</li>
+                <li><strong>Intensive care:</strong> 8+ hours per day or overnight care ($15/hour with subsidy)</li>
               </ul>
             </div>
           </div>
@@ -534,7 +534,7 @@ function SWDElderly() {
             <h4 className="card-title">Homemaker Services</h4>
             <p style={{ color: 'var(--text-muted)', marginBottom: '12px' }}>Assistance with household tasks including light housekeeping, laundry, meal preparation, and grocery shopping.</p>
             <div style={{ fontSize: '13px', color: 'var(--text-secondary)' }}>
-              <strong>Hours:</strong> 2-6 hours per week | <strong>Cost:</strong> ¤15/hour (subsidized to ¤3 for eligible seniors)
+              <strong>Hours:</strong> 2-6 hours per week | <strong>Cost:</strong> $15/hour (subsidized to $3 for eligible seniors)
             </div>
           </div>
 
@@ -550,7 +550,7 @@ function SWDElderly() {
             <h4 className="card-title">Emergency Response System</h4>
             <p style={{ color: 'var(--text-muted)', marginBottom: '12px' }}>Personal emergency button worn as pendant or wristband connects directly to 24/7 response center for immediate help.</p>
             <div style={{ fontSize: '13px', color: 'var(--text-secondary)' }}>
-              <strong>Features:</strong> Two-way voice communication, automatic fall detection, GPS tracking (mobile version) | <strong>Cost:</strong> ¤30/month (free for low-income seniors)
+              <strong>Features:</strong> Two-way voice communication, automatic fall detection, GPS tracking (mobile version) | <strong>Cost:</strong> $30/month (free for low-income seniors)
             </div>
           </div>
 
@@ -569,7 +569,7 @@ function SWDElderly() {
                 <li>1:00 PM - 3:00 PM: Afternoon programs (music, educational talks, hobbies)</li>
                 <li>3:00 PM - 4:00 PM: Snack and departure</li>
               </ul>
-              <strong>Cost:</strong> ¤40 per day (includes meals, transportation, activities). Subsidized rate ¤10 for eligible seniors.
+              <strong>Cost:</strong> $40 per day (includes meals, transportation, activities). Subsidized rate $10 for eligible seniors.
             </div>
           </div>
 
@@ -596,7 +596,7 @@ function SWDElderly() {
             <div style={{ padding: '12px', background: 'var(--bg-elevated)', borderRadius: '8px', marginTop: '12px', fontSize: '13px' }}>
               <strong>What's included:</strong> Hot lunch delivered by noon, cold dinner to be heated later, diet modifications available (diabetic, low-sodium, pureed)
               <div style={{ marginTop: '8px' }}>
-                <strong>Eligibility:</strong> Age 65+, homebound or unable to prepare meals | <strong>Cost:</strong> Suggested donation ¤5 per meal (no one denied for inability to pay)
+                <strong>Eligibility:</strong> Age 65+, homebound or unable to prepare meals | <strong>Cost:</strong> Suggested donation $5 per meal (no one denied for inability to pay)
               </div>
             </div>
           </div>
@@ -605,7 +605,7 @@ function SWDElderly() {
             <h4 className="card-title">Congregate Meals</h4>
             <p style={{ color: 'var(--text-muted)', marginBottom: '12px' }}>Hot lunch served at senior centers and community locations. Social dining experience with nutrition education and health screenings.</p>
             <div style={{ fontSize: '13px', color: 'var(--text-secondary)' }}>
-              <strong>Locations:</strong> 45 sites across Praya | <strong>Time:</strong> 11:30 AM - 12:30 PM, Monday-Friday | <strong>Cost:</strong> Suggested donation ¤3
+              <strong>Locations:</strong> 45 sites across Praya | <strong>Time:</strong> 11:30 AM - 12:30 PM, Monday-Friday | <strong>Cost:</strong> Suggested donation $3
             </div>
           </div>
 
@@ -630,7 +630,7 @@ function SWDElderly() {
             <h4 className="card-title">Assisted Living Facilities</h4>
             <p style={{ color: 'var(--text-muted)', marginBottom: '12px' }}>Licensed facilities providing housing, meals, personal care, and 24-hour supervision for seniors who can no longer live independently.</p>
             <div style={{ fontSize: '13px', color: 'var(--text-secondary)' }}>
-              <strong>Services:</strong> Private or semi-private rooms, three meals daily, medication management, activities, housekeeping | <strong>Cost:</strong> ¤2,500-4,500/month
+              <strong>Services:</strong> Private or semi-private rooms, three meals daily, medication management, activities, housekeeping | <strong>Cost:</strong> $2,500-4,500/month
             </div>
           </div>
 
@@ -651,7 +651,7 @@ function SWDElderly() {
               <li><strong>Caregiver Training:</strong> Free workshops on elder care, dementia care, transfer techniques, stress management</li>
               <li><strong>Support Groups:</strong> Monthly meetings connecting caregivers facing similar challenges</li>
               <li><strong>Counseling Services:</strong> Individual counseling for caregiver stress and burnout</li>
-              <li><strong>Financial Assistance:</strong> Small stipends (up to ¤200/month) for low-income family caregivers</li>
+              <li><strong>Financial Assistance:</strong> Small stipends (up to $200/month) for low-income family caregivers</li>
             </ul>
           </div>
 
