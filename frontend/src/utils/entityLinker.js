@@ -63,7 +63,7 @@ const servicePrerequisites = {
     name: 'New Passport Application',
     department: 'interior',
     requires: ['national_id', 'birth_certificate', 'passport_photo'],
-    fee: '¤80 (standard) / ¤150 (expedited)',
+    fee: '$80 (standard) / $150 (expedited)',
     processing: '10-14 business days',
     url: '/interior/passport'
   },
@@ -71,7 +71,7 @@ const servicePrerequisites = {
     name: 'Passport Renewal',
     department: 'interior',
     requires: ['current_passport', 'passport_photo'],
-    fee: '¤60',
+    fee: '$60',
     processing: '7-10 business days',
     url: '/interior/passport'
   },
@@ -79,7 +79,7 @@ const servicePrerequisites = {
     name: 'New National ID',
     department: 'interior',
     requires: ['birth_certificate', 'proof_of_address', 'id_photo'],
-    fee: '¤25',
+    fee: '$25',
     processing: '5-7 business days',
     url: '/interior/id'
   },
@@ -87,7 +87,7 @@ const servicePrerequisites = {
     name: 'National ID Renewal',
     department: 'interior',
     requires: ['current_id'],
-    fee: '¤15',
+    fee: '$15',
     processing: '3-5 business days',
     url: '/interior/id'
   },
@@ -95,7 +95,7 @@ const servicePrerequisites = {
     name: 'New Driver License',
     department: 'transport',
     requires: ['national_id', 'proof_of_address', 'vision_test', 'written_test', 'road_test'],
-    fee: '¤45',
+    fee: '$45',
     processing: '5-7 business days after tests',
     url: '/transport/license'
   },
@@ -103,7 +103,7 @@ const servicePrerequisites = {
     name: 'Driver License Renewal',
     department: 'transport',
     requires: ['current_license'],
-    fee: '¤30',
+    fee: '$30',
     processing: '3-5 business days',
     url: '/transport/license'
   },
@@ -119,7 +119,7 @@ const servicePrerequisites = {
     name: 'Police Clearance Certificate',
     department: 'npa',
     requires: ['national_id', 'completed_application'],
-    fee: '¤20',
+    fee: '$20',
     processing: '3 business days',
     url: '/npa/services'
   },
@@ -127,7 +127,7 @@ const servicePrerequisites = {
     name: 'Tax Return Filing',
     department: 'revenue',
     requires: ['w2_forms', 'income_records', 'deduction_records'],
-    fee: 'Free for e-file under ¤75,000 income',
+    fee: 'Free for e-file under $75,000 income',
     deadline: 'April 15 annually',
     url: '/revenue/file'
   },

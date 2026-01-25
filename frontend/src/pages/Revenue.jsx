@@ -153,7 +153,7 @@ function RevenueHome({ navigate }) {
             </div>
             <div className="stat-item">
               <span className="stat-label">Avg Refund</span>
-              <span className="stat-value">¤2,840</span>
+              <span className="stat-value">$2,840</span>
               <span className="stat-change">Per Return</span>
             </div>
             <div className="stat-item">
@@ -184,7 +184,7 @@ function RevenueHome({ navigate }) {
                   </ul>
                   <h4 style={{ marginTop: '20px' }}>Filing Options</h4>
                   <ul>
-                    <li><strong>E-File:</strong> Free online filing for incomes under ¤75,000</li>
+                    <li><strong>E-File:</strong> Free online filing for incomes under $75,000</li>
                     <li><strong>Tax Software:</strong> Approved third-party providers</li>
                     <li><strong>Tax Professional:</strong> Find certified preparers</li>
                     <li><strong>Paper Filing:</strong> Download forms and mail return</li>
@@ -199,19 +199,19 @@ function RevenueHome({ navigate }) {
                 <div className="content-text">
                   <h4>2024 Income Tax Brackets (Individual)</h4>
                   <ul>
-                    <li>10% on income up to ¤10,275</li>
-                    <li>12% on income ¤10,276 - ¤41,775</li>
-                    <li>22% on income ¤41,776 - ¤89,075</li>
-                    <li>24% on income ¤89,076 - ¤170,050</li>
-                    <li>32% on income ¤170,051 - ¤215,950</li>
-                    <li>35% on income ¤215,951 - ¤539,900</li>
-                    <li>37% on income over ¤539,900</li>
+                    <li>10% on income up to $10,275</li>
+                    <li>12% on income $10,276 - $41,775</li>
+                    <li>22% on income $41,776 - $89,075</li>
+                    <li>24% on income $89,076 - $170,050</li>
+                    <li>32% on income $170,051 - $215,950</li>
+                    <li>35% on income $215,951 - $539,900</li>
+                    <li>37% on income over $539,900</li>
                   </ul>
                   <h4 style={{ marginTop: '20px' }}>Common Tax Credits</h4>
                   <ul>
-                    <li><strong>Child Tax Credit:</strong> ¤2,000 per qualifying child</li>
-                    <li><strong>Earned Income Credit:</strong> Up to ¤7,430 (based on income/family size)</li>
-                    <li><strong>Education Credit:</strong> Up to ¤2,500 per student</li>
+                    <li><strong>Child Tax Credit:</strong> $2,000 per qualifying child</li>
+                    <li><strong>Earned Income Credit:</strong> Up to $7,430 (based on income/family size)</li>
+                    <li><strong>Education Credit:</strong> Up to $2,500 per student</li>
                   </ul>
                 </div>
               </div>
@@ -228,7 +228,7 @@ function RevenueHome({ navigate }) {
                 <div className="news-item">
                   <span className="news-date">Nov 20, 2024</span>
                   <h4 className="news-title">New Tax Credit for First-Time Home Buyers</h4>
-                  <p className="news-excerpt">Eligible buyers can claim up to ¤15,000 credit on 2024 returns.</p>
+                  <p className="news-excerpt">Eligible buyers can claim up to $15,000 credit on 2024 returns.</p>
                 </div>
               </div>
             </div>
@@ -278,16 +278,16 @@ function RevenueHome({ navigate }) {
 
               <div className="card" style={{ background: 'linear-gradient(135deg, #059669 0%, #047857 100%)', color: 'white', border: 'none' }}>
                 <h4 style={{ color: 'white', marginBottom: '8px' }}>Standard Deduction</h4>
-                <div style={{ fontSize: '32px', fontWeight: '800', marginBottom: '4px' }}>¤13,850</div>
+                <div style={{ fontSize: '32px', fontWeight: '800', marginBottom: '4px' }}>$13,850</div>
                 <div style={{ fontSize: '13px', opacity: 0.9 }}>Single Filers (2024)</div>
                 <div style={{ marginTop: '16px', paddingTop: '16px', borderTop: '1px solid rgba(255,255,255,0.2)' }}>
                   <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '8px' }}>
                     <span style={{ fontSize: '13px' }}>Married Filing Jointly</span>
-                    <span style={{ fontSize: '13px', fontWeight: '600' }}>¤27,700</span>
+                    <span style={{ fontSize: '13px', fontWeight: '600' }}>$27,700</span>
                   </div>
                   <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                     <span style={{ fontSize: '13px' }}>Head of Household</span>
-                    <span style={{ fontSize: '13px', fontWeight: '600' }}>¤20,800</span>
+                    <span style={{ fontSize: '13px', fontWeight: '600' }}>$20,800</span>
                   </div>
                 </div>
               </div>
@@ -327,7 +327,7 @@ function FileTaxes() {
             <h4 className="card-title">Free E-File (Individual Returns)</h4>
             <p style={{ color: 'var(--text-muted)', marginBottom: '12px' }}>Free online filing for qualifying taxpayers:</p>
             <ul style={{ marginBottom: '12px' }}>
-              <li><strong>Eligibility:</strong> Adjusted gross income of ¤75,000 or less</li>
+              <li><strong>Eligibility:</strong> Adjusted gross income of $75,000 or less</li>
               <li><strong>Forms included:</strong> Form 1040, common schedules, basic credits</li>
               <li><strong>State filing:</strong> Also included free with federal return</li>
               <li><strong>Refund:</strong> Direct deposit in as little as 21 days</li>
@@ -344,7 +344,7 @@ function FileTaxes() {
             <ul>
               <li><strong>Approved providers:</strong> TaxPrep Pro, E-Tax Plus, QuickFile</li>
               <li><strong>Features:</strong> Step-by-step guidance, automatic calculations, audit support</li>
-              <li><strong>Pricing:</strong> Free to ¤120 depending on complexity</li>
+              <li><strong>Pricing:</strong> Free to $120 depending on complexity</li>
               <li><strong>Business returns:</strong> Self-employed, rental income, investments</li>
               <li><strong>Import data:</strong> W-2s, 1099s, prior year returns</li>
             </ul>
@@ -446,7 +446,7 @@ function MakePayment() {
     }
 
     // For now, just show a confirmation
-    alert(`Payment of ¤${amount} for ${taxYear} ${paymentType} tax has been submitted. This is a demo - no actual payment was processed.`);
+    alert(`Payment of $${amount} for ${taxYear} ${paymentType} tax has been submitted. This is a demo - no actual payment was processed.`);
 
     // In production, this would navigate to payment processing:
     // navigate('/revenue/payment/process', {
@@ -507,7 +507,7 @@ function MakePayment() {
                 </div>
 
                 <div style={{ marginBottom: '20px' }}>
-                  <label htmlFor="payment-amount" style={{ display: 'block', marginBottom: '8px', fontWeight: '500' }}>Payment Amount (¤)</label>
+                  <label htmlFor="payment-amount" style={{ display: 'block', marginBottom: '8px', fontWeight: '500' }}>Payment Amount ($)</label>
                   <input
                     id="payment-amount"
                     type="number"
@@ -557,7 +557,7 @@ function MakePayment() {
                 <p>Can't pay in full? Set up a payment plan (installment agreement) to pay over time.</p>
                 <ul style={{ marginTop: '12px', marginBottom: '12px' }}>
                   <li><strong>Short-term plan:</strong> Pay in 180 days or less (no setup fee)</li>
-                  <li><strong>Long-term plan:</strong> Monthly payments up to 72 months (¤31 setup fee, waived for low income)</li>
+                  <li><strong>Long-term plan:</strong> Monthly payments up to 72 months ($31 setup fee, waived for low income)</li>
                   <li><strong>Automatic payments:</strong> Lower setup fees with direct debit</li>
                 </ul>
                 <p style={{ marginTop: '12px' }}>Interest and penalties continue to accrue until paid in full.</p>
@@ -623,7 +623,7 @@ function RefundStatus() {
     }
 
     // For demo purposes, show a mock status
-    alert(`Refund Status Check:\n\nSSN: ${ssn}\nFiling Status: ${filingStatus}\nExpected Refund: ¤${refundAmount}\n\nStatus: Your refund is being processed. This is a demo - actual status would require backend integration.`);
+    alert(`Refund Status Check:\n\nSSN: ${ssn}\nFiling Status: ${filingStatus}\nExpected Refund: $${refundAmount}\n\nStatus: Your refund is being processed. This is a demo - actual status would require backend integration.`);
 
     // In production, this would make an API call or navigate to results:
     // navigate('/revenue/refunds/status', {
@@ -684,7 +684,7 @@ function RefundStatus() {
                 </div>
 
                 <div style={{ marginBottom: '20px' }}>
-                  <label htmlFor="refund-amount-check" style={{ display: 'block', marginBottom: '8px', fontWeight: '500' }}>Exact Refund Amount (¤)</label>
+                  <label htmlFor="refund-amount-check" style={{ display: 'block', marginBottom: '8px', fontWeight: '500' }}>Exact Refund Amount ($)</label>
                   <input
                     id="refund-amount-check"
                     type="number"
@@ -754,7 +754,7 @@ function RefundStatus() {
           <aside className="sidebar">
             <div className="card" style={{ background: 'linear-gradient(135deg, #059669 0%, #047857 100%)', color: 'white', border: 'none' }}>
               <h4 style={{ color: 'white', marginBottom: '8px' }}>Average Refund</h4>
-              <div style={{ fontSize: '32px', fontWeight: '800', marginBottom: '4px' }}>¤2,840</div>
+              <div style={{ fontSize: '32px', fontWeight: '800', marginBottom: '4px' }}>$2,840</div>
               <div style={{ fontSize: '13px', opacity: 0.9 }}>Based on 2024 filings</div>
             </div>
 
