@@ -361,7 +361,7 @@ export default function Portal() {
                     {departments.map(dept => (
                       <a key={dept.id} href={dept.url} className="dropdown-item">
                         <div className="dropdown-item-icon" style={{background: `color-mix(in srgb, ${dept.color} 15%, transparent)`, color: dept.color}}>
-                          {dept.abbrev}
+                          {departmentIcons[dept.id]}
                         </div>
                         <div>
                           <div className="dropdown-item-title">{dept.name}</div>
@@ -501,7 +501,7 @@ export default function Portal() {
                   <span className="featured-stat-label">Inflation</span>
                 </div>
                 <div className="featured-stat">
-                  <span className="featured-stat-value">¤82.4B</span>
+                  <span className="featured-stat-value">$82.4B</span>
                   <span className="featured-stat-label">Reserves</span>
                 </div>
               </div>
@@ -544,7 +544,7 @@ export default function Portal() {
               <p>Apply for affordable public housing. Heavily subsidized rental units for eligible Prayan citizens across all regions.</p>
               <div className="featured-stat-row">
                 <div><strong>24,847</strong> active units</div>
-                <div><strong>¤385</strong> avg. rent</div>
+                <div><strong>$385</strong> avg. rent</div>
               </div>
               <span className="featured-link">
                 Apply for Housing
@@ -705,7 +705,7 @@ export default function Portal() {
               <div className="announcement-badge">Policy Update</div>
               <span className="announcement-date">December 5, 2025</span>
               <h3>New Housing Subsidy Program Expanded</h3>
-              <p>The Housing Authority announces expansion of rental assistance programs to include middle-income families. Applications now open for eligible households earning up to ¤65,000 annually.</p>
+              <p>The Housing Authority announces expansion of rental assistance programs to include middle-income families. Applications now open for eligible households earning up to $65,000 annually.</p>
               <a href="/housing" className="announcement-link">
                 Read full announcement
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">

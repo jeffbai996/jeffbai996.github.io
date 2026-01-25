@@ -424,10 +424,10 @@ function TransportHome({ navigate }) {
               <div className="card">
                 <h4 className="card-title">License Fees</h4>
                 <div style={{ fontSize: '13px', color: 'var(--text-muted)', marginTop: '12px' }}>
-                  <p style={{ marginBottom: '8px' }}><strong>Class A (5 years):</strong> ¤45</p>
-                  <p style={{ marginBottom: '8px' }}><strong>Class B/C (3 years):</strong> ¤85</p>
-                  <p style={{ marginBottom: '8px' }}><strong>Learner's Permit:</strong> ¤15</p>
-                  <p><strong>Road Test:</strong> ¤25</p>
+                  <p style={{ marginBottom: '8px' }}><strong>Class A (5 years):</strong> $45</p>
+                  <p style={{ marginBottom: '8px' }}><strong>Class B/C (3 years):</strong> $85</p>
+                  <p style={{ marginBottom: '8px' }}><strong>Learner's Permit:</strong> $15</p>
+                  <p><strong>Road Test:</strong> $25</p>
                 </div>
               </div>
             </aside>
@@ -463,7 +463,7 @@ function DriversLicense() {
               <li><strong>Written test:</strong> 25 questions on traffic laws and signs (must score 80%)</li>
               <li><strong>Vision test:</strong> 20/40 minimum in at least one eye</li>
               <li><strong>Documents needed:</strong> Birth certificate or passport, proof of residency, parental consent (under 18)</li>
-              <li><strong>Fee:</strong> ¤15 (valid 2 years)</li>
+              <li><strong>Fee:</strong> $15 (valid 2 years)</li>
               <li><strong>Restrictions:</strong> Must be accompanied by licensed driver 21+ in front seat</li>
             </ul>
             <div style={{ fontSize: '13px', color: 'var(--text-secondary)' }}>
@@ -479,7 +479,7 @@ function DriversLicense() {
               <li><strong>Requirement:</strong> Hold learner's permit for minimum 6 months (if under 18)</li>
               <li><strong>Road test:</strong> Demonstrate safe driving skills with examiner</li>
               <li><strong>Vehicle types:</strong> Cars, motorcycles, light trucks under 3,500 kg</li>
-              <li><strong>Fee:</strong> ¤45 (valid 5 years)</li>
+              <li><strong>Fee:</strong> $45 (valid 5 years)</li>
               <li><strong>Restrictions for ages 16-17:</strong> No driving midnight-5am, max 1 passenger</li>
             </ul>
           </div>
@@ -492,7 +492,7 @@ function DriversLicense() {
               <li><strong>Vehicle types:</strong> Commercial vehicles 3,500-7,500 kg, small buses</li>
               <li><strong>Additional tests:</strong> Written commercial knowledge test, specialized road test</li>
               <li><strong>Medical exam:</strong> DOT physical required</li>
-              <li><strong>Fee:</strong> ¤85 (valid 3 years)</li>
+              <li><strong>Fee:</strong> $85 (valid 3 years)</li>
             </ul>
           </div>
 
@@ -505,7 +505,7 @@ function DriversLicense() {
               <li><strong>Training:</strong> Approved commercial driver training course required</li>
               <li><strong>Tests:</strong> Written and practical exams, vehicle inspection test</li>
               <li><strong>Medical exam:</strong> Annual DOT physical required</li>
-              <li><strong>Fee:</strong> ¤85 (valid 3 years)</li>
+              <li><strong>Fee:</strong> $85 (valid 3 years)</li>
             </ul>
           </div>
 
@@ -542,7 +542,7 @@ function DriversLicense() {
             <ul>
               <li>Receive score sheet with areas needing improvement</li>
               <li>Can retake test after 7 days</li>
-              <li>Additional fee required for each retest (¤25)</li>
+              <li>Additional fee required for each retest ($25)</li>
               <li>Consider taking driving lessons if failing multiple times</li>
             </ul>
           </div>
@@ -557,7 +557,7 @@ function DriversLicense() {
 
           <div className="info-box" style={{ marginTop: '24px' }}>
             <h4>Lost or Stolen License?</h4>
-            <p>Report lost/stolen licenses online or at any service center. Replacement license fee: ¤20. New license will be mailed within 7-10 business days.</p>
+            <p>Report lost/stolen licenses online or at any service center. Replacement license fee: $20. New license will be mailed within 7-10 business days.</p>
           </div>
         </div>
       </div>
@@ -636,9 +636,9 @@ function VehicleRegistration() {
                 </ul>
                 <h4 style={{ marginTop: '16px' }}>Fees:</h4>
                 <ul>
-                  <li><strong>Title fee:</strong> ¤50</li>
-                  <li><strong>Registration fee:</strong> ¤85-¤250 (based on vehicle weight and value)</li>
-                  <li><strong>License plates:</strong> ¤25 (one-time fee)</li>
+                  <li><strong>Title fee:</strong> $50</li>
+                  <li><strong>Registration fee:</strong> $85-$250 (based on vehicle weight and value)</li>
+                  <li><strong>License plates:</strong> $25 (one-time fee)</li>
                   <li><strong>Sales tax:</strong> 6.5% of purchase price</li>
                 </ul>
               </div>
@@ -650,9 +650,9 @@ function VehicleRegistration() {
                 <p style={{ marginBottom: '12px' }}>Renew your registration online, by mail, or in person:</p>
                 <h4>Renewal Options:</h4>
                 <ul>
-                  <li><strong>1 year:</strong> Standard registration (¤85-¤150 based on vehicle type)</li>
+                  <li><strong>1 year:</strong> Standard registration ($85-$150 based on vehicle type)</li>
                   <li><strong>2 years:</strong> Save 5% with multi-year registration</li>
-                  <li><strong>Grace period:</strong> 30 days after expiration (¤10 late fee)</li>
+                  <li><strong>Grace period:</strong> 30 days after expiration ($10 late fee)</li>
                 </ul>
                 <h4 style={{ marginTop: '16px' }}>Online Renewal Eligibility:</h4>
                 <ul>
@@ -674,13 +674,13 @@ function VehicleRegistration() {
                 <ul style={{ marginBottom: '16px' }}>
                   <li><strong>Seller responsibilities:</strong> Sign title, provide bill of sale, odometer reading</li>
                   <li><strong>Buyer responsibilities:</strong> Apply for new title within 30 days, pay transfer fee</li>
-                  <li><strong>Transfer fee:</strong> ¤75</li>
-                  <li><strong>Lien notation:</strong> ¤25 (if applicable)</li>
+                  <li><strong>Transfer fee:</strong> $75</li>
+                  <li><strong>Lien notation:</strong> $25 (if applicable)</li>
                 </ul>
                 <h4>Duplicate Title</h4>
                 <ul>
                   <li>Apply online, by mail, or in person</li>
-                  <li>Fee: ¤50</li>
+                  <li>Fee: $50</li>
                   <li>Processing time: 2-3 weeks</li>
                   <li>Must show ID and proof of ownership</li>
                 </ul>
@@ -694,19 +694,19 @@ function VehicleRegistration() {
               <div style={{ fontSize: '13px', opacity: 0.9, marginTop: '12px' }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '8px' }}>
                   <span>Passenger Car</span>
-                  <span style={{ fontWeight: '600' }}>¤85-¤150</span>
+                  <span style={{ fontWeight: '600' }}>$85-$150</span>
                 </div>
                 <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '8px' }}>
                   <span>Motorcycle</span>
-                  <span style={{ fontWeight: '600' }}>¤45</span>
+                  <span style={{ fontWeight: '600' }}>$45</span>
                 </div>
                 <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '8px' }}>
                   <span>Truck/Commercial</span>
-                  <span style={{ fontWeight: '600' }}>¤150-¤350</span>
+                  <span style={{ fontWeight: '600' }}>$150-$350</span>
                 </div>
                 <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                   <span>Trailer</span>
-                  <span style={{ fontWeight: '600' }}>¤35</span>
+                  <span style={{ fontWeight: '600' }}>$35</span>
                 </div>
               </div>
             </div>
@@ -721,8 +721,8 @@ function VehicleRegistration() {
               <h4 className="card-title">Personalized Plates</h4>
               <ul style={{ fontSize: '14px' }}>
                 <li>3-7 characters available</li>
-                <li>One-time fee: ¤50</li>
-                <li>Annual renewal: ¤25 extra</li>
+                <li>One-time fee: $50</li>
+                <li>Annual renewal: $25 extra</li>
                 <li>Check availability online</li>
               </ul>
             </div>
@@ -762,14 +762,14 @@ function SpecialPermits() {
                 <ul style={{ marginTop: '12px' }}>
                   <li><strong>Intrastate commerce:</strong> Operating only within Praya</li>
                   <li><strong>Interstate commerce:</strong> Operating across state lines</li>
-                  <li><strong>Annual permit:</strong> ¤150-¤500 based on gross vehicle weight</li>
-                  <li><strong>Quarterly permit:</strong> ¤50-¤150 for seasonal operations</li>
+                  <li><strong>Annual permit:</strong> $150-$500 based on gross vehicle weight</li>
+                  <li><strong>Quarterly permit:</strong> $50-$150 for seasonal operations</li>
                   <li><strong>Safety inspection:</strong> Required annually for commercial vehicles</li>
                   <li><strong>DOT number:</strong> Required for commercial carriers</li>
                 </ul>
                 <h4 style={{ marginTop: '20px' }}>Application Requirements:</h4>
                 <ul>
-                  <li>Proof of commercial insurance (minimum ¤500,000 liability)</li>
+                  <li>Proof of commercial insurance (minimum $500,000 liability)</li>
                   <li>Vehicle registration and title</li>
                   <li>Company business license</li>
                   <li>Driver Class B or C commercial license</li>
@@ -790,9 +790,9 @@ function SpecialPermits() {
                 </ul>
                 <h4>Permit Types:</h4>
                 <ul style={{ marginBottom: '16px' }}>
-                  <li><strong>Single trip:</strong> ¤50-¤200 (valid for specific route and dates)</li>
-                  <li><strong>Annual superload:</strong> ¤500 (multiple trips, same route)</li>
-                  <li><strong>Emergency:</strong> ¤100 (24-hour processing for urgent loads)</li>
+                  <li><strong>Single trip:</strong> $50-$200 (valid for specific route and dates)</li>
+                  <li><strong>Annual superload:</strong> $500 (multiple trips, same route)</li>
+                  <li><strong>Emergency:</strong> $100 (24-hour processing for urgent loads)</li>
                 </ul>
                 <h4>Additional Requirements:</h4>
                 <ul>
@@ -810,10 +810,10 @@ function SpecialPermits() {
               <div className="content-text">
                 <p>Short-term registration for special situations:</p>
                 <ul style={{ marginTop: '12px', marginBottom: '16px' }}>
-                  <li><strong>30-day temp:</strong> ¤25 (moving to Praya, awaiting permanent registration)</li>
-                  <li><strong>90-day temp:</strong> ¤50 (for out-of-state vehicles, military personnel)</li>
-                  <li><strong>Dealer temp:</strong> ¤15 per vehicle (licensed dealers only)</li>
-                  <li><strong>Antique/collector:</strong> ¤35 (one-time event or show)</li>
+                  <li><strong>30-day temp:</strong> $25 (moving to Praya, awaiting permanent registration)</li>
+                  <li><strong>90-day temp:</strong> $50 (for out-of-state vehicles, military personnel)</li>
+                  <li><strong>Dealer temp:</strong> $15 per vehicle (licensed dealers only)</li>
+                  <li><strong>Antique/collector:</strong> $35 (one-time event or show)</li>
                 </ul>
                 <p style={{ fontSize: '13px', color: 'var(--text-secondary)' }}>
                   Temporary tags printed immediately at service centers or emailed for online applications
@@ -841,7 +841,7 @@ function SpecialPermits() {
                 <h4>Organizational Permit:</h4>
                 <ul>
                   <li>For organizations transporting disabled persons</li>
-                  <li>Annual fee: ¤25</li>
+                  <li>Annual fee: $25</li>
                   <li>Requires proof of nonprofit status or licensing</li>
                 </ul>
               </div>
@@ -863,16 +863,16 @@ function SpecialPermits() {
             <div className="info-box">
               <h4>Processing Times</h4>
               <p><strong>Standard:</strong> 3-5 business days</p>
-              <p><strong>Expedited:</strong> 24 hours (+¤50 fee)</p>
-              <p><strong>Emergency:</strong> Same day (+¤100 fee)</p>
+              <p><strong>Expedited:</strong> 24 hours (+$50 fee)</p>
+              <p><strong>Emergency:</strong> Same day (+$100 fee)</p>
             </div>
 
             <div className="card">
               <h4 className="card-title">Permit Fees</h4>
               <ul style={{ fontSize: '14px' }}>
-                <li><strong>Commercial:</strong> ¤150-¤500/year</li>
-                <li><strong>Oversized:</strong> ¤50-¤200/trip</li>
-                <li><strong>Temporary:</strong> ¤15-¤50</li>
+                <li><strong>Commercial:</strong> $150-$500/year</li>
+                <li><strong>Oversized:</strong> $50-$200/trip</li>
+                <li><strong>Temporary:</strong> $15-$50</li>
                 <li><strong>Disabled:</strong> Free</li>
               </ul>
             </div>

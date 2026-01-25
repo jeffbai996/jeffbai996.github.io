@@ -34,7 +34,7 @@ export const formDatabase = {
     department: 'interior',
     category: FormCategory.IDENTITY,
     url: '/interior/id',
-    fee: { new: '¤25', renewal: '¤15', replacement: '¤20' },
+    fee: { new: '$25', renewal: '$15', replacement: '$20' },
     processingTime: '5-7 business days',
     validFor: '10 years',
 
@@ -79,9 +79,9 @@ export const formDatabase = {
       'Fill out the ID-100 form online or at an Interior Department office',
       'Schedule an appointment or visit during walk-in hours',
       'Present documents and complete biometric capture (fingerprints, photo)',
-      'Pay the applicable fee (¤25 new, ¤15 renewal)',
+      'Pay the applicable fee ($25 new, $15 renewal)',
       'Receive temporary ID receipt (valid for 30 days)',
-      'Collect your ID card in 5-7 business days or opt for mail delivery (+¤5)'
+      'Collect your ID card in 5-7 business days or opt for mail delivery (+$5)'
     ],
 
     tips: [
@@ -100,7 +100,7 @@ export const formDatabase = {
     department: 'interior',
     category: FormCategory.IDENTITY,
     url: '/interior/passport',
-    fee: { standard: '¤80', expedited: '¤150', childUnder16: '¤60' },
+    fee: { standard: '$80', expedited: '$150', childUnder16: '$60' },
     processingTime: { standard: '10-14 business days', expedited: '3-5 business days' },
     validFor: { adult: '10 years', minor: '5 years' },
 
@@ -149,7 +149,7 @@ export const formDatabase = {
       'Bring all required documents to your appointment',
       'Pay fee and complete biometric capture',
       'Receive tracking number for status updates',
-      'Collect passport in person or opt for secure mail delivery (+¤15)'
+      'Collect passport in person or opt for secure mail delivery (+$15)'
     ],
 
     tips: [
@@ -169,14 +169,14 @@ export const formDatabase = {
     department: 'revenue',
     category: FormCategory.TAXES,
     url: '/revenue/file',
-    fee: 'Free (e-file for income under ¤75,000)',
+    fee: 'Free (e-file for income under $75,000)',
     deadline: 'April 15 annually',
 
     description: 'Annual income tax return for individual Praya taxpayers.',
 
     eligibility: [
-      'Income above ¤12,950 (single) or ¤25,900 (married filing jointly)',
-      'Self-employed income over ¤400',
+      'Income above $12,950 (single) or $25,900 (married filing jointly)',
+      'Self-employed income over $400',
       'Praya citizen or resident with taxable income'
     ],
 
@@ -224,20 +224,20 @@ export const formDatabase = {
 
     tips: [
       'E-file is faster and has fewer errors than paper filing',
-      'Standard deduction in 2024: ¤13,850 (single), ¤27,700 (married joint)',
+      'Standard deduction in 2024: $13,850 (single), $27,700 (married joint)',
       'Keep records for 7 years in case of audit',
       'Request extension by April 15 if needed (Form 4868-PY)',
-      'Free filing assistance available for incomes under ¤75,000'
+      'Free filing assistance available for incomes under $75,000'
     ],
 
     deductions: {
-      standard: { single: '¤13,850', marriedJoint: '¤27,700', headOfHousehold: '¤20,800' },
+      standard: { single: '$13,850', marriedJoint: '$27,700', headOfHousehold: '$20,800' },
       itemizable: [
-        'Mortgage interest (up to ¤750,000 loan)',
-        'State/local taxes (up to ¤10,000)',
+        'Mortgage interest (up to $750,000 loan)',
+        'State/local taxes (up to $10,000)',
         'Charitable donations',
         'Medical expenses (over 7.5% of AGI)',
-        'Student loan interest (up to ¤2,500)'
+        'Student loan interest (up to $2,500)'
       ]
     },
 
@@ -251,7 +251,7 @@ export const formDatabase = {
     department: 'transport',
     category: FormCategory.TRANSPORT,
     url: '/transport/license',
-    fee: { new: '¤45', renewal: '¤30', replacement: '¤25' },
+    fee: { new: '$45', renewal: '$30', replacement: '$25' },
     processingTime: '5-7 business days after testing',
     validFor: '5 years',
 
@@ -290,7 +290,7 @@ export const formDatabase = {
       { mistake: 'Expired proof of address', fix: 'Document must be dated within 90 days' },
       { mistake: 'Not practicing parallel parking', fix: 'Practice in the actual test vehicle; most common fail point' },
       { mistake: 'Forgetting to check mirrors', fix: 'Exaggerate mirror checks during test; examiners must see it' },
-      { mistake: 'No vehicle for road test', fix: 'Bring a registered, insured vehicle or schedule TD vehicle (+¤20)' }
+      { mistake: 'No vehicle for road test', fix: 'Bring a registered, insured vehicle or schedule TD vehicle (+$20)' }
     ],
 
     stepByStep: [
@@ -333,8 +333,8 @@ export const formDatabase = {
     description: 'Official form for reporting non-emergency crimes and incidents.',
 
     eligibility: [
-      'Online filing: Thefts under ¤2,500, vandalism, lost property, identity fraud, vehicle accidents (no injuries)',
-      'In-person only: Violent crimes, thefts over ¤2,500, crimes in progress'
+      'Online filing: Thefts under $2,500, vandalism, lost property, identity fraud, vehicle accidents (no injuries)',
+      'In-person only: Violent crimes, thefts over $2,500, crimes in progress'
     ],
 
     requiredDocuments: [
@@ -393,7 +393,7 @@ export const formDatabase = {
     department: 'npa',
     category: FormCategory.POLICE,
     url: '/npa/services',
-    fee: '¤20',
+    fee: '$20',
     processingTime: '3 business days',
     validFor: '6 months',
 
@@ -420,7 +420,7 @@ export const formDatabase = {
       { name: 'National ID Number', type: 'text', required: true },
       { name: 'Purpose of Certificate', type: 'select', required: true, options: ['Employment', 'Immigration/Visa', 'Professional License', 'Adoption', 'Other'] },
       { name: 'Destination Country', type: 'text', required: false, tip: 'If for immigration' },
-      { name: 'Number of Copies', type: 'number', required: true, tip: 'Additional copies ¤5 each' }
+      { name: 'Number of Copies', type: 'number', required: true, tip: 'Additional copies $5 each' }
     ],
 
     commonMistakes: [
@@ -433,15 +433,15 @@ export const formDatabase = {
       'Apply online through PrayaPass or visit NPA office',
       'Complete form NPA-200 with accurate information',
       'Upload or provide passport photo',
-      'Pay ¤20 fee (+¤5 per additional copy)',
+      'Pay $20 fee (+$5 per additional copy)',
       'Submit fingerprints (online uses previous biometrics; in-person requires new scan)',
       'Receive confirmation and tracking number',
-      'Collect certificate in 3 business days (pickup or mail +¤5)'
+      'Collect certificate in 3 business days (pickup or mail +$5)'
     ],
 
     tips: [
       'Some countries require apostille certification - add 2-3 days',
-      'Express service available for ¤40 (24-hour processing)',
+      'Express service available for $40 (24-hour processing)',
       'Digital certificates available for domestic employment verification',
       'Certificate is valid for 6 months from issue date'
     ],
@@ -488,15 +488,15 @@ export const formDatabase = {
     planInfo: {
       standard: {
         name: 'Standard Plan',
-        premium: '¤50-¤350/month (income-based)',
-        deductible: '¤2,500/year',
+        premium: '$50-$350/month (income-based)',
+        deductible: '$2,500/year',
         coverage: '70% after deductible',
         includes: ['Preventive care', 'Emergency services', 'Hospitalization', 'Prescription drugs (formulary)']
       },
       premium: {
         name: 'Premium Plan',
-        premium: '¤180-¤520/month (income-based)',
-        deductible: '¤500/year',
+        premium: '$180-$520/month (income-based)',
+        deductible: '$500/year',
         coverage: '90% after deductible',
         includes: ['All Standard benefits', 'Specialist visits', 'Mental health', 'Dental & vision', 'Alternative medicine']
       }
@@ -522,7 +522,7 @@ export const formDatabase = {
 
     tips: [
       'Use the online calculator to compare Standard vs Premium total costs',
-      'Low-income applicants may qualify for ¤0 premium plans',
+      'Low-income applicants may qualify for $0 premium plans',
       'Life events (marriage, birth, job loss) qualify for special enrollment',
       'Preventive care is free on all plans - use it!'
     ],
@@ -571,7 +571,7 @@ export const formDatabase = {
     incomeThresholds: {
       veryLow: '50% of Area Median Income (AMI)',
       low: '80% of Area Median Income (AMI)',
-      example: 'Family of 4: Very Low = ¤42,000, Low = ¤67,200'
+      example: 'Family of 4: Very Low = $42,000, Low = $67,200'
     },
 
     commonMistakes: [
@@ -609,7 +609,7 @@ export const formDatabase = {
     department: 'cr',
     category: FormCategory.BUSINESS,
     url: '/cr/register',
-    fee: { llc: '¤200', corporation: '¤300', dba: '¤50' },
+    fee: { llc: '$200', corporation: '$300', dba: '$50' },
     processingTime: '3-5 business days',
 
     description: 'Register a new business entity in Praya.',
@@ -649,7 +649,7 @@ export const formDatabase = {
 
     stepByStep: [
       'Search business name availability on CR portal',
-      'Reserve name if desired (¤25, valid 120 days)',
+      'Reserve name if desired ($25, valid 120 days)',
       'Choose appropriate entity type',
       'Prepare required documents (articles, operating agreement)',
       'Complete CR-100 form online',
@@ -661,8 +661,8 @@ export const formDatabase = {
 
     tips: [
       'LLCs offer liability protection without corporate complexity',
-      'Annual report required by anniversary date (¤50 fee)',
-      'Consider professional registered agent service (¤100-200/year)',
+      'Annual report required by anniversary date ($50 fee)',
+      'Consider professional registered agent service ($100-200/year)',
       'Business bank account requires Certificate of Formation'
     ],
 

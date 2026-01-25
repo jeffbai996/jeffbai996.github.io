@@ -346,8 +346,8 @@ export const intentPatterns = {
     followUp: {
       question: "What type of incident would you like to report?",
       options: [
-        { label: "Theft (under ¤2,500)", value: "theft_minor" },
-        { label: "Theft (over ¤2,500)", value: "theft_major" },
+        { label: "Theft (under $2,500)", value: "theft_minor" },
+        { label: "Theft (over $2,500)", value: "theft_major" },
         { label: "Vandalism/Property Damage", value: "vandalism" },
         { label: "Assault/Violence", value: "assault" },
         { label: "Other Crime", value: "other_crime" }
@@ -416,7 +416,7 @@ export const intentPatterns = {
         { label: "Other Purpose", value: "clearance_other" }
       ]
     },
-    details: "**Police Clearance Certificates**\n- Processing time: 3 business days\n- Fee: ¤20\n- Covers: Criminal history, open warrants\n- Required: Valid ID, completed application",
+    details: "**Police Clearance Certificates**\n- Processing time: 3 business days\n- Fee: $20\n- Covers: Criminal history, open warrants\n- Required: Valid ID, completed application",
     department: 'npa'
   },
 
@@ -533,7 +533,7 @@ export const intentPatterns = {
         { label: "Request extension", value: "tax_extension" }
       ]
     },
-    details: "**Tax Payments**\n- Online payments through PrayaPass\n- Payment plans available for balances over ¤500\n- Late payment penalties: 1% per month",
+    details: "**Tax Payments**\n- Online payments through PrayaPass\n- Payment plans available for balances over $500\n- Late payment penalties: 1% per month",
     department: 'revenue'
   },
 
@@ -592,7 +592,7 @@ export const intentPatterns = {
         { label: "Update Information", value: "id_update" }
       ]
     },
-    details: "**National ID**\n- Fee: ¤25 (new), ¤15 (renewal)\n- Processing: 5-7 business days\n- Required: Birth certificate, photo, proof of address",
+    details: "**National ID**\n- Fee: $25 (new), $15 (renewal)\n- Processing: 5-7 business days\n- Required: Birth certificate, photo, proof of address",
     department: 'interior'
   },
 
@@ -632,7 +632,7 @@ export const intentPatterns = {
         { label: "Expedited Service", value: "passport_expedited" }
       ]
     },
-    details: "**Passport Services**\n- Standard: ¤80, 10-14 days\n- Expedited: ¤150, 3-5 days\n- Required: National ID, photo, application form",
+    details: "**Passport Services**\n- Standard: $80, 10-14 days\n- Expedited: $150, 3-5 days\n- Required: National ID, photo, application form",
     department: 'interior'
   },
 
@@ -653,7 +653,7 @@ export const intentPatterns = {
         { label: "Correct Information", value: "birth_correct" }
       ]
     },
-    details: "**Birth Certificates**\n- Fee: ¤10 per certified copy\n- Processing: 3-5 business days\n- New births must be registered within 30 days",
+    details: "**Birth Certificates**\n- Fee: $10 per certified copy\n- Processing: 3-5 business days\n- New births must be registered within 30 days",
     department: 'interior'
   },
 
@@ -702,7 +702,7 @@ export const intentPatterns = {
         { label: "Commercial License (CDL)", value: "license_cdl" }
       ]
     },
-    details: "**Driver's License**\n- Fee: ¤45 (new), ¤30 (renewal)\n- Valid for 5 years\n- Required: ID, vision test, written/road test (new only)",
+    details: "**Driver's License**\n- Fee: $45 (new), $30 (renewal)\n- Valid for 5 years\n- Required: ID, vision test, written/road test (new only)",
     department: 'transport'
   },
 
@@ -1321,14 +1321,14 @@ export function handleFollowUp(intentName, selection) {
   // Map of follow-up responses based on selection
   const followUpResponses = {
     // Crime reporting follow-ups
-    theft_minor: "For thefts under ¤2,500, you can file an online report:\n\n1. Go to the NPA portal\n2. Click 'File Online Report'\n3. Select 'Theft - Minor'\n4. Fill in incident details\n5. Submit and save your case number\n\nProcessing time: 24-48 hours for confirmation.",
-    theft_major: "For thefts over ¤2,500, please call the non-emergency line (311) or visit your nearest police station. You'll need:\n\n• Description of stolen items\n• Estimated value\n• Time and location of incident\n• Any witness information",
+    theft_minor: "For thefts under $2,500, you can file an online report:\n\n1. Go to the NPA portal\n2. Click 'File Online Report'\n3. Select 'Theft - Minor'\n4. Fill in incident details\n5. Submit and save your case number\n\nProcessing time: 24-48 hours for confirmation.",
+    theft_major: "For thefts over $2,500, please call the non-emergency line (311) or visit your nearest police station. You'll need:\n\n• Description of stolen items\n• Estimated value\n• Time and location of incident\n• Any witness information",
     vandalism: "To report vandalism, you can file online or call 311. Please gather:\n\n• Photos of damage\n• Location details\n• Approximate time of incident\n• Any suspect description",
     assault: "**For assault, please call 911 if you need immediate help or are injured.**\n\nOtherwise, call 311 or visit a police station to file a report. Victim assistance services are available.",
 
     // Banking follow-ups
-    savings_personal: "To open a Personal Savings Account:\n\n**Requirements:**\n• Valid National ID\n• Proof of address\n• Minimum deposit: ¤100\n\n**Features:**\n• Competitive interest rates\n• No monthly fees\n• Online/mobile banking\n\nVisit any BOP branch or start your application online.",
-    checking_personal: "To open a Personal Checking Account:\n\n**Requirements:**\n• Valid National ID\n• Proof of address\n• Minimum deposit: ¤50\n\n**Features:**\n• Free debit card\n• Unlimited transactions\n• Online bill pay\n\nVisit any BOP branch to get started.",
+    savings_personal: "To open a Personal Savings Account:\n\n**Requirements:**\n• Valid National ID\n• Proof of address\n• Minimum deposit: $100\n\n**Features:**\n• Competitive interest rates\n• No monthly fees\n• Online/mobile banking\n\nVisit any BOP branch or start your application online.",
+    checking_personal: "To open a Personal Checking Account:\n\n**Requirements:**\n• Valid National ID\n• Proof of address\n• Minimum deposit: $50\n\n**Features:**\n• Free debit card\n• Unlimited transactions\n• Online bill pay\n\nVisit any BOP branch to get started.",
     business_account: "For Business Accounts, you'll need:\n\n• Business registration documents\n• Tax ID\n• Owner identification\n• Business plan (for new businesses)\n\nSchedule an appointment with a business banking specialist at your nearest BOP branch.",
 
     // Tax follow-ups
@@ -1336,17 +1336,17 @@ export function handleFollowUp(intentName, selection) {
     tax_business: "For business tax filing:\n\n1. Log into PrayaPass with business account\n2. Select 'File Business Return'\n3. Have ready: Financial statements, expense records, payroll data\n\nConsider scheduling a consultation with RD for complex filings.",
 
     // ID follow-ups
-    id_new: "To apply for a new National ID:\n\n**Requirements:**\n• Birth certificate\n• Passport-style photo\n• Proof of address\n• Fee: ¤25\n\n**Process:**\n1. Book appointment online or visit ID office\n2. Submit documents\n3. Biometric capture\n4. Receive ID in 5-7 business days",
-    id_renew: "To renew your National ID:\n\n**Requirements:**\n• Current/expired ID\n• Updated photo\n• Fee: ¤15\n\nYou can renew online through PrayaPass if your address hasn't changed.",
+    id_new: "To apply for a new National ID:\n\n**Requirements:**\n• Birth certificate\n• Passport-style photo\n• Proof of address\n• Fee: $25\n\n**Process:**\n1. Book appointment online or visit ID office\n2. Submit documents\n3. Biometric capture\n4. Receive ID in 5-7 business days",
+    id_renew: "To renew your National ID:\n\n**Requirements:**\n• Current/expired ID\n• Updated photo\n• Fee: $15\n\nYou can renew online through PrayaPass if your address hasn't changed.",
 
     // Passport follow-ups
-    passport_new: "To apply for a new passport:\n\n**Requirements:**\n• National ID\n• Passport photo (2x2 inches)\n• Completed application\n• Fee: ¤80 (standard) or ¤150 (expedited)\n\n**Processing:**\n• Standard: 10-14 business days\n• Expedited: 3-5 business days\n\nAppointment required at Interior Department.",
-    passport_expedited: "For expedited passport service:\n\n**Additional fee:** ¤70 (total ¤150)\n**Processing:** 3-5 business days\n\nMust apply in person. Bring proof of urgent travel if requesting same-week processing.",
+    passport_new: "To apply for a new passport:\n\n**Requirements:**\n• National ID\n• Passport photo (2x2 inches)\n• Completed application\n• Fee: $80 (standard) or $150 (expedited)\n\n**Processing:**\n• Standard: 10-14 business days\n• Expedited: 3-5 business days\n\nAppointment required at Interior Department.",
+    passport_expedited: "For expedited passport service:\n\n**Additional fee:** $70 (total $150)\n**Processing:** 3-5 business days\n\nMust apply in person. Bring proof of urgent travel if requesting same-week processing.",
 
     // Driver's license follow-ups
-    license_new: "To get a new driver's license:\n\n**Requirements:**\n• Valid National ID\n• Proof of address\n• Vision test (at TD office)\n• Written test\n• Road test\n• Fee: ¤45\n\n**Steps:**\n1. Schedule appointment online\n2. Pass vision and written tests\n3. Schedule road test\n4. Receive license in 5-7 days",
-    license_renew: "To renew your driver's license:\n\n**Requirements:**\n• Current/expired license\n• Fee: ¤30\n\n**Options:**\n• Online: Via PrayaPass (if eligible)\n• In-person: Any Transport Department office\n\nOnline renewals process in 3-5 days.",
-    license_replace: "To replace a lost/stolen license:\n\n**Requirements:**\n• Police report (if stolen)\n• Valid ID\n• Fee: ¤25\n\nYou can apply online or visit a TD office. Replacement takes 5-7 days.",
+    license_new: "To get a new driver's license:\n\n**Requirements:**\n• Valid National ID\n• Proof of address\n• Vision test (at TD office)\n• Written test\n• Road test\n• Fee: $45\n\n**Steps:**\n1. Schedule appointment online\n2. Pass vision and written tests\n3. Schedule road test\n4. Receive license in 5-7 days",
+    license_renew: "To renew your driver's license:\n\n**Requirements:**\n• Current/expired license\n• Fee: $30\n\n**Options:**\n• Online: Via PrayaPass (if eligible)\n• In-person: Any Transport Department office\n\nOnline renewals process in 3-5 days.",
+    license_replace: "To replace a lost/stolen license:\n\n**Requirements:**\n• Police report (if stolen)\n• Valid ID\n• Fee: $25\n\nYou can apply online or visit a TD office. Replacement takes 5-7 days.",
     license_test: "To schedule a driving test:\n\n1. Book online at Transport Department portal\n2. Choose location and time\n3. Bring learner's permit and valid ID\n4. Arrive 15 minutes early\n\n**Test includes:**\n• Pre-drive checklist\n• Basic maneuvers\n• City driving\n• Highway section (varies by location)",
 
     // Health follow-ups
@@ -1359,10 +1359,10 @@ export function handleFollowUp(intentName, selection) {
 
     // Cannabis follow-ups
     cannabis_retail: "For retail dispensary licensing:\n\n**Requirements:**\n• Business registration\n• Background check\n• Location approval\n• Security plan\n• Fee: Varies by license type\n\n**Process:**\n1. Pre-application consultation\n2. Submit full application\n3. Site inspection\n4. License issuance (60-90 days)\n\nContact CTB for current application windows.",
-    cannabis_personal: "For personal cultivation permits:\n\n**Limits:**\n• Up to 6 plants per household\n• 18+ age requirement\n• Registration required\n\n**Fee:** ¤50 annually\n\nRegister online through CTB portal.",
+    cannabis_personal: "For personal cultivation permits:\n\n**Limits:**\n• Up to 6 plants per household\n• 18+ age requirement\n• Registration required\n\n**Fee:** $50 annually\n\nRegister online through CTB portal.",
 
     // Legal follow-ups
-    court_civil: "For civil court cases:\n\n**Types handled:**\n• Contract disputes\n• Property matters\n• Family law\n• Personal injury\n\n**To file:**\n1. Complete civil complaint form\n2. Pay filing fee (¤50-¤200)\n3. Serve defendant\n4. Await court date\n\nSmall claims (under ¤5,000) have simplified procedures.",
+    court_civil: "For civil court cases:\n\n**Types handled:**\n• Contract disputes\n• Property matters\n• Family law\n• Personal injury\n\n**To file:**\n1. Complete civil complaint form\n2. Pay filing fee ($50-$200)\n3. Serve defendant\n4. Await court date\n\nSmall claims (under $5,000) have simplified procedures.",
     legal_public: "For public defender services:\n\n**Eligibility:**\n• Criminal case\n• Income below threshold\n• Unable to afford attorney\n\n**Process:**\n1. Request at arraignment\n2. Financial screening\n3. Assignment of attorney\n\nContact DOJ for eligibility screening."
   };
 
@@ -1422,7 +1422,7 @@ export function extractEntities(message) {
   }
 
   // Amount/money pattern (with currency symbol)
-  const amountMatch = message.match(/[¤$]\s*\d+(?:,\d{3})*(?:\.\d{2})?/);
+  const amountMatch = message.match(/[$$]\s*\d+(?:,\d{3})*(?:\.\d{2})?/);
   if (amountMatch) {
     entities.amount = amountMatch[0];
   }

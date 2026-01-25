@@ -158,7 +158,7 @@ function HousingHome({ navigate }) {
             </div>
             <div className="stat-item">
               <span className="stat-label">Avg Rent Savings</span>
-              <span className="stat-value">¤680/mo</span>
+              <span className="stat-value">$680/mo</span>
               <span className="stat-change">Per Household</span>
             </div>
             <div className="stat-item">
@@ -210,11 +210,11 @@ function HousingHome({ navigate }) {
                   </ul>
                   <h4 style={{ marginTop: '20px' }}>Income Limits (Annual Household)</h4>
                   <ul>
-                    <li>1 person: ¤32,800 or less</li>
-                    <li>2 people: ¤37,500 or less</li>
-                    <li>3 people: ¤42,200 or less</li>
-                    <li>4 people: ¤46,850 or less</li>
-                    <li>Additional person: +¤4,650</li>
+                    <li>1 person: $32,800 or less</li>
+                    <li>2 people: $37,500 or less</li>
+                    <li>3 people: $42,200 or less</li>
+                    <li>4 people: $46,850 or less</li>
+                    <li>Additional person: +$4,650</li>
                   </ul>
                 </div>
               </div>
@@ -547,16 +547,16 @@ function TenantResources() {
                   <ul>
                     <li><strong>Due Date:</strong> Rent is due on the 1st of each month</li>
                     <li><strong>Grace Period:</strong> 5-day grace period (no late fee until 6th)</li>
-                    <li><strong>Late Fee:</strong> ¤25 after grace period, ¤10 per day thereafter (max ¤75)</li>
-                    <li><strong>NSF Fee:</strong> ¤35 for returned checks or failed bank transfers</li>
+                    <li><strong>Late Fee:</strong> $25 after grace period, $10 per day thereafter (max $75)</li>
+                    <li><strong>NSF Fee:</strong> $35 for returned checks or failed bank transfers</li>
                     <li><strong>Receipts:</strong> Always get/keep receipt for payments</li>
                   </ul>
 
                   <h4 style={{ marginTop: '20px' }}>Rent Calculation</h4>
                   <p>Your rent is 30% of your adjusted monthly income. Adjustments include:</p>
                   <ul>
-                    <li>¤480 deduction per dependent (under 18 or disabled)</li>
-                    <li>¤400 deduction per elderly household member (62+)</li>
+                    <li>$480 deduction per dependent (under 18 or disabled)</li>
+                    <li>$400 deduction per elderly household member (62+)</li>
                     <li>Medical expense deduction (expenses exceeding 3% of income)</li>
                     <li>Childcare expense deduction (for work/school)</li>
                   </ul>
@@ -667,7 +667,7 @@ function TenantResources() {
                     <p>Report these changes within 10 days:</p>
                     <ul>
                       <li>Household member moves in or out</li>
-                      <li>Income increase of ¤200+ per month</li>
+                      <li>Income increase of $200+ per month</li>
                       <li>Change in employment status</li>
                       <li>Birth or adoption of child</li>
                     </ul>
@@ -851,20 +851,20 @@ function LandlordResources() {
                     <h4>Fair Market Rent (FMR) Limits</h4>
                     <p>Maximum allowable rents for voucher program:</p>
                     <ul>
-                      <li><strong>Studio:</strong> ¤950/month</li>
-                      <li><strong>1-Bedroom:</strong> ¤1,100/month</li>
-                      <li><strong>2-Bedroom:</strong> ¤1,400/month</li>
-                      <li><strong>3-Bedroom:</strong> ¤1,850/month</li>
-                      <li><strong>4-Bedroom:</strong> ¤2,200/month</li>
+                      <li><strong>Studio:</strong> $950/month</li>
+                      <li><strong>1-Bedroom:</strong> $1,100/month</li>
+                      <li><strong>2-Bedroom:</strong> $1,400/month</li>
+                      <li><strong>3-Bedroom:</strong> $1,850/month</li>
+                      <li><strong>4-Bedroom:</strong> $2,200/month</li>
                     </ul>
 
                     <h4 style={{ marginTop: '20px' }}>Payment Split Example</h4>
-                    <p>For a 2-bedroom apartment renting at ¤1,200/month:</p>
+                    <p>For a 2-bedroom apartment renting at $1,200/month:</p>
                     <ul>
-                      <li>Tenant's income: ¤2,000/month</li>
-                      <li>Tenant pays: ¤600 (30% of income)</li>
-                      <li>Housing Authority pays: ¤600</li>
-                      <li>Total rent to landlord: ¤1,200</li>
+                      <li>Tenant's income: $2,000/month</li>
+                      <li>Tenant pays: $600 (30% of income)</li>
+                      <li>Housing Authority pays: $600</li>
+                      <li>Total rent to landlord: $1,200</li>
                     </ul>
                   </div>
                 </div>

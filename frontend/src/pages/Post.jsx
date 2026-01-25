@@ -187,7 +187,7 @@ function PostHome({ navigate }) {
                   <h4>Domestic Mail</h4>
                   <ul>
                     <li><strong>First Class Mail</strong> - Letters and postcards delivered in 1-3 business days</li>
-                    <li><strong>Priority Mail</strong> - 1-2 day delivery with tracking and insurance up to ¤100</li>
+                    <li><strong>Priority Mail</strong> - 1-2 day delivery with tracking and insurance up to $100</li>
                     <li><strong>Express Mail</strong> - Overnight delivery with guaranteed service</li>
                     <li><strong>Standard Post</strong> - Economical option for non-urgent mail, 2-8 days</li>
                   </ul>
@@ -195,7 +195,7 @@ function PostHome({ navigate }) {
                   <ul>
                     <li><strong>Package tracking</strong> included on all Priority and Express shipments</li>
                     <li><strong>Signature confirmation</strong> available for important deliveries</li>
-                    <li><strong>Insurance options</strong> up to ¤5,000 for valuable items</li>
+                    <li><strong>Insurance options</strong> up to $5,000 for valuable items</li>
                   </ul>
                 </div>
               </div>
@@ -286,10 +286,10 @@ function PostHome({ navigate }) {
               <div className="card">
                 <h4 className="card-title">Popular Stamps</h4>
                 <div style={{ fontSize: '13px', color: 'var(--text-muted)', marginTop: '12px' }}>
-                  <p style={{ marginBottom: '8px' }}>First Class Letter: ¤0.68</p>
-                  <p style={{ marginBottom: '8px' }}>Postcard: ¤0.48</p>
-                  <p style={{ marginBottom: '8px' }}>International Letter: ¤1.45</p>
-                  <p>Roll of 100: ¤68.00</p>
+                  <p style={{ marginBottom: '8px' }}>First Class Letter: $0.68</p>
+                  <p style={{ marginBottom: '8px' }}>Postcard: $0.48</p>
+                  <p style={{ marginBottom: '8px' }}>International Letter: $1.45</p>
+                  <p>Roll of 100: $68.00</p>
                 </div>
               </div>
             </aside>
@@ -396,9 +396,9 @@ function Shipping() {
             <ul style={{ marginBottom: '12px' }}>
               <li><strong>Weight limit:</strong> Up to 500g (1.1 lbs)</li>
               <li><strong>Delivery time:</strong> 2-5 business days</li>
-              <li><strong>Pricing:</strong> Starting at ¤0.85 for letters</li>
-              <li><strong>Tracking:</strong> Not included (available for ¤1.50 extra)</li>
-              <li><strong>Insurance:</strong> Available up to ¤100</li>
+              <li><strong>Pricing:</strong> Starting at $0.85 for letters</li>
+              <li><strong>Tracking:</strong> Not included (available for $1.50 extra)</li>
+              <li><strong>Insurance:</strong> Available up to $100</li>
             </ul>
             <div style={{ fontSize: '13px', color: 'var(--text-secondary)' }}>
               <strong>Best for:</strong> Personal correspondence, bills, small lightweight items
@@ -411,9 +411,9 @@ function Shipping() {
             <ul style={{ marginBottom: '12px' }}>
               <li><strong>Weight limit:</strong> Up to 30kg (66 lbs)</li>
               <li><strong>Delivery time:</strong> 1-3 business days</li>
-              <li><strong>Pricing:</strong> Starting at ¤9.50 (varies by weight and distance)</li>
+              <li><strong>Pricing:</strong> Starting at $9.50 (varies by weight and distance)</li>
               <li><strong>Tracking:</strong> Free tracking included</li>
-              <li><strong>Insurance:</strong> Up to ¤100 included, additional coverage available</li>
+              <li><strong>Insurance:</strong> Up to $100 included, additional coverage available</li>
               <li><strong>Features:</strong> Free packaging supplies at post office</li>
             </ul>
             <div style={{ fontSize: '13px', color: 'var(--text-secondary)' }}>
@@ -427,9 +427,9 @@ function Shipping() {
             <ul style={{ marginBottom: '12px' }}>
               <li><strong>Weight limit:</strong> Up to 30kg (66 lbs)</li>
               <li><strong>Delivery time:</strong> Next business day by noon</li>
-              <li><strong>Pricing:</strong> Starting at ¤24.95</li>
+              <li><strong>Pricing:</strong> Starting at $24.95</li>
               <li><strong>Tracking:</strong> Real-time tracking included</li>
-              <li><strong>Insurance:</strong> Up to ¤200 included</li>
+              <li><strong>Insurance:</strong> Up to $200 included</li>
               <li><strong>Guarantee:</strong> Money-back guarantee if not delivered on time</li>
             </ul>
             <div style={{ fontSize: '13px', color: 'var(--text-secondary)' }}>
@@ -441,9 +441,9 @@ function Shipping() {
             <h4 className="card-title">Flat Rate Shipping</h4>
             <p style={{ color: 'var(--text-muted)', marginBottom: '12px' }}>One price regardless of weight - pack as much as you can fit!</p>
             <ul>
-              <li><strong>Small Box:</strong> ¤8.50 (22cm x 14cm x 6cm)</li>
-              <li><strong>Medium Box:</strong> ¤15.00 (28cm x 22cm x 15cm)</li>
-              <li><strong>Large Box:</strong> ¤21.50 (30cm x 30cm x 30cm)</li>
+              <li><strong>Small Box:</strong> $8.50 (22cm x 14cm x 6cm)</li>
+              <li><strong>Medium Box:</strong> $15.00 (28cm x 22cm x 15cm)</li>
+              <li><strong>Large Box:</strong> $21.50 (30cm x 30cm x 30cm)</li>
               <li><strong>Delivery time:</strong> 2-3 business days</li>
               <li><strong>Free boxes:</strong> Available at any post office</li>
             </ul>
@@ -457,7 +457,7 @@ function Shipping() {
             <ul>
               <li><strong>Weight limit:</strong> Up to 2kg (4.4 lbs)</li>
               <li><strong>Delivery time:</strong> 7-21 business days</li>
-              <li><strong>Pricing:</strong> Starting at ¤15.00 (varies by destination)</li>
+              <li><strong>Pricing:</strong> Starting at $15.00 (varies by destination)</li>
               <li><strong>Tracking:</strong> Limited tracking to border</li>
             </ul>
           </div>
@@ -468,9 +468,9 @@ function Shipping() {
             <ul>
               <li><strong>Weight limit:</strong> Up to 30kg (66 lbs)</li>
               <li><strong>Delivery time:</strong> 6-10 business days</li>
-              <li><strong>Pricing:</strong> Starting at ¤45.00</li>
+              <li><strong>Pricing:</strong> Starting at $45.00</li>
               <li><strong>Tracking:</strong> Full international tracking</li>
-              <li><strong>Insurance:</strong> Available up to ¤1,000</li>
+              <li><strong>Insurance:</strong> Available up to $1,000</li>
             </ul>
           </div>
 
@@ -480,7 +480,7 @@ function Shipping() {
             <ul>
               <li><strong>Weight limit:</strong> Up to 30kg (66 lbs)</li>
               <li><strong>Delivery time:</strong> 3-5 business days</li>
-              <li><strong>Pricing:</strong> Starting at ¤85.00</li>
+              <li><strong>Pricing:</strong> Starting at $85.00</li>
               <li><strong>Customs clearance:</strong> Expedited processing</li>
             </ul>
           </div>
@@ -492,8 +492,8 @@ function Shipping() {
             <p style={{ color: 'var(--text-muted)', marginBottom: '12px' }}>Maximum security for valuable items.</p>
             <ul>
               <li>Chain of custody with signature at each step</li>
-              <li>Insurance up to ¤50,000</li>
-              <li>Additional fee: ¤15.00 plus postage</li>
+              <li>Insurance up to $50,000</li>
+              <li>Additional fee: $15.00 plus postage</li>
               <li>Delivery time: Same as service selected plus 1-2 days</li>
             </ul>
           </div>
@@ -504,19 +504,19 @@ function Shipping() {
             <ul>
               <li>Proof of mailing receipt</li>
               <li>Proof of delivery signature</li>
-              <li>Additional fee: ¤3.75 plus postage</li>
+              <li>Additional fee: $3.75 plus postage</li>
               <li>Electronic delivery confirmation</li>
             </ul>
           </div>
 
           <h3 style={{ marginTop: '32px' }}>Additional Services</h3>
           <ul>
-            <li><strong>Signature Confirmation:</strong> ¤3.00 - Requires recipient signature</li>
-            <li><strong>Adult Signature:</strong> ¤6.50 - Requires signature from adult (18+)</li>
-            <li><strong>Collect on Delivery (COD):</strong> ¤8.00 - Collect payment upon delivery</li>
-            <li><strong>Return Receipt:</strong> ¤2.85 - Proof of delivery signature</li>
-            <li><strong>Insurance:</strong> ¤2.50 per ¤100 of value</li>
-            <li><strong>Special Handling:</strong> ¤11.95 - For fragile or perishable items</li>
+            <li><strong>Signature Confirmation:</strong> $3.00 - Requires recipient signature</li>
+            <li><strong>Adult Signature:</strong> $6.50 - Requires signature from adult (18+)</li>
+            <li><strong>Collect on Delivery (COD):</strong> $8.00 - Collect payment upon delivery</li>
+            <li><strong>Return Receipt:</strong> $2.85 - Proof of delivery signature</li>
+            <li><strong>Insurance:</strong> $2.50 per $100 of value</li>
+            <li><strong>Special Handling:</strong> $11.95 - For fragile or perishable items</li>
           </ul>
 
           <div className="info-box" style={{ marginTop: '24px' }}>
@@ -562,9 +562,9 @@ function Stamps() {
             <h4 className="card-title">First Class Stamps</h4>
             <p style={{ color: 'var(--text-muted)', marginBottom: '12px' }}>Standard postage for letters and cards.</p>
             <ul style={{ marginBottom: '12px' }}>
-              <li><strong>Price:</strong> ¤0.85 each</li>
+              <li><strong>Price:</strong> $0.85 each</li>
               <li><strong>Valid for:</strong> Letters up to 50g domestically</li>
-              <li><strong>Purchase options:</strong> Book of 20 (¤17.00), Roll of 100 (¤85.00)</li>
+              <li><strong>Purchase options:</strong> Book of 20 ($17.00), Roll of 100 ($85.00)</li>
               <li><strong>Designs:</strong> Available in Flag of Praya, National Landmarks, and Wildlife series</li>
             </ul>
             <div style={{ fontSize: '13px', color: 'var(--text-secondary)' }}>
@@ -576,9 +576,9 @@ function Stamps() {
             <h4 className="card-title">Additional Ounce Stamps</h4>
             <p style={{ color: 'var(--text-muted)', marginBottom: '12px' }}>For heavier letters requiring extra postage.</p>
             <ul>
-              <li><strong>Price:</strong> ¤0.25 each</li>
+              <li><strong>Price:</strong> $0.25 each</li>
               <li><strong>Use with:</strong> First class stamp for letters over 50g</li>
-              <li><strong>Available in:</strong> Books of 10 (¤2.50)</li>
+              <li><strong>Available in:</strong> Books of 10 ($2.50)</li>
             </ul>
           </div>
 
@@ -586,7 +586,7 @@ function Stamps() {
             <h4 className="card-title">Postcard Stamps</h4>
             <p style={{ color: 'var(--text-muted)', marginBottom: '12px' }}>Special rate for standard-size postcards.</p>
             <ul>
-              <li><strong>Price:</strong> ¤0.55 each</li>
+              <li><strong>Price:</strong> $0.55 each</li>
               <li><strong>Size limit:</strong> Standard postcard (10cm x 15cm)</li>
               <li><strong>Designs:</strong> Seasonal and tourist destination themes</li>
             </ul>
@@ -598,35 +598,35 @@ function Stamps() {
             <h4 className="card-title">2024 Commemorative Series</h4>
             <p style={{ color: 'var(--text-muted)', marginBottom: '12px' }}>Limited edition stamps celebrating Praya's heritage and achievements.</p>
             <ul>
-              <li><strong>Republic Founding Anniversary</strong> - ¤0.85 (Released January 2024)
+              <li><strong>Republic Founding Anniversary</strong> - $0.85 (Released January 2024)
                 <ul style={{ marginLeft: '20px', marginTop: '8px' }}>
                   <li>Features: Historical buildings and founding fathers</li>
-                  <li>Sheet of 12: ¤10.20</li>
+                  <li>Sheet of 12: $10.20</li>
                 </ul>
               </li>
-              <li><strong>Praya National Parks</strong> - ¤0.85 (Released March 2024)
+              <li><strong>Praya National Parks</strong> - $0.85 (Released March 2024)
                 <ul style={{ marginLeft: '20px', marginTop: '8px' }}>
                   <li>Features: 8 national parks across the republic</li>
-                  <li>Complete set of 8: ¤6.80</li>
+                  <li>Complete set of 8: $6.80</li>
                 </ul>
               </li>
-              <li><strong>Endangered Species Series</strong> - ¤1.25 (Released June 2024)
+              <li><strong>Endangered Species Series</strong> - $1.25 (Released June 2024)
                 <ul style={{ marginLeft: '20px', marginTop: '8px' }}>
                   <li>Features: Native endangered wildlife</li>
                   <li>Premium stamps with detailed artwork</li>
-                  <li>Sheet of 6: ¤7.50</li>
+                  <li>Sheet of 6: $7.50</li>
                 </ul>
               </li>
-              <li><strong>Cultural Festivals</strong> - ¤0.85 (Released September 2024)
+              <li><strong>Cultural Festivals</strong> - $0.85 (Released September 2024)
                 <ul style={{ marginLeft: '20px', marginTop: '8px' }}>
                   <li>Features: Traditional celebrations and costumes</li>
-                  <li>Set of 4: ¤3.40</li>
+                  <li>Set of 4: $3.40</li>
                 </ul>
               </li>
-              <li><strong>Holiday Season</strong> - ¤0.85 (Released November 2024)
+              <li><strong>Holiday Season</strong> - $0.85 (Released November 2024)
                 <ul style={{ marginLeft: '20px', marginTop: '8px' }}>
                   <li>Features: Winter scenes and holiday traditions</li>
-                  <li>Book of 20: ¤17.00</li>
+                  <li>Book of 20: $17.00</li>
                 </ul>
               </li>
             </ul>
@@ -638,7 +638,7 @@ function Stamps() {
             <h4 className="card-title">First Day Covers</h4>
             <p style={{ color: 'var(--text-muted)', marginBottom: '12px' }}>Envelopes bearing new stamps postmarked on their first day of issue.</p>
             <ul>
-              <li><strong>Price:</strong> ¤4.50 - ¤12.00 depending on stamp</li>
+              <li><strong>Price:</strong> $4.50 - $12.00 depending on stamp</li>
               <li><strong>Features:</strong> Special cancellation mark, commemorative cachet</li>
               <li><strong>Availability:</strong> Limited quantities, sold at major post offices</li>
               <li><strong>Subscription:</strong> Available for all new commemorative releases</li>
@@ -651,7 +651,7 @@ function Stamps() {
             <ul>
               <li><strong>Standard sheet:</strong> 50 stamps</li>
               <li><strong>Limited editions:</strong> Numbered and authenticated</li>
-              <li><strong>Pricing:</strong> Face value plus ¤5.00 premium</li>
+              <li><strong>Pricing:</strong> Face value plus $5.00 premium</li>
               <li><strong>Popular series:</strong> Annual commemoratives, special events</li>
             </ul>
           </div>
@@ -663,7 +663,7 @@ function Stamps() {
               <li><strong>Includes:</strong> All commemorative and definitive stamps</li>
               <li><strong>Presentation:</strong> Hardcover album with protective mounts</li>
               <li><strong>Details:</strong> Historical context and design information</li>
-              <li><strong>2024 Yearbook:</strong> ¤75.00 (pre-order available)</li>
+              <li><strong>2024 Yearbook:</strong> $75.00 (pre-order available)</li>
             </ul>
           </div>
 
@@ -706,7 +706,7 @@ function Stamps() {
           <div className="card">
             <h4 className="card-title">For Beginners</h4>
             <ul>
-              <li><strong>Starter Kit:</strong> ¤19.95 - Includes album, mounting supplies, and guide</li>
+              <li><strong>Starter Kit:</strong> $19.95 - Includes album, mounting supplies, and guide</li>
               <li><strong>Free resources:</strong> Collecting guide available at post offices</li>
               <li><strong>Workshops:</strong> Monthly stamp collecting classes at select locations</li>
               <li><strong>Youth program:</strong> Free program for collectors under 18</li>
@@ -717,7 +717,7 @@ function Stamps() {
             <h4 className="card-title">Praya Philatelic Society</h4>
             <p style={{ color: 'var(--text-muted)', marginBottom: '12px' }}>Join fellow stamp enthusiasts.</p>
             <ul>
-              <li><strong>Membership:</strong> ¤35/year</li>
+              <li><strong>Membership:</strong> $35/year</li>
               <li><strong>Benefits:</strong> Quarterly magazine, trading events, exhibitions</li>
               <li><strong>Events:</strong> Annual stamp show and monthly meetings</li>
               <li><strong>Contact:</strong> philately@prayapost.gov.py</li>

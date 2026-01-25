@@ -134,7 +134,7 @@ function CBCAHome({ navigate }) {
             </div>
             <div className="stat-item">
               <span className="stat-label">Trade Volume</span>
-              <span className="stat-value">¤4.2B</span>
+              <span className="stat-value">$4.2B</span>
               <span className="stat-change">Monthly</span>
             </div>
           </div>
@@ -153,14 +153,14 @@ function CBCAHome({ navigate }) {
                 <div className="content-text">
                   <h4>Duty-Free Allowances</h4>
                   <ul>
-                    <li><strong>Personal goods:</strong> Up to ¤800 value per person duty-free</li>
+                    <li><strong>Personal goods:</strong> Up to $800 value per person duty-free</li>
                     <li><strong>Alcohol:</strong> 1 liter of spirits or 2 liters of wine</li>
                     <li><strong>Tobacco:</strong> 200 cigarettes or 50 cigars or 250g tobacco</li>
-                    <li><strong>Gifts:</strong> ¤100 per gift (excluding alcohol/tobacco)</li>
+                    <li><strong>Gifts:</strong> $100 per gift (excluding alcohol/tobacco)</li>
                   </ul>
                   <h4 style={{ marginTop: '20px' }}>Declaration Required</h4>
                   <ul>
-                    <li>Amounts over ¤10,000 in currency</li>
+                    <li>Amounts over $10,000 in currency</li>
                     <li>Commercial goods for resale</li>
                     <li>Agricultural products and food items</li>
                     <li>Prescription medications (with documentation)</li>
@@ -293,11 +293,11 @@ function CustomsInfo() {
             <h4 className="card-title">Duty-Free Allowances</h4>
             <p style={{ color: 'var(--text-muted)', marginBottom: '12px' }}>Personal items and goods within these limits are duty-free:</p>
             <ul style={{ marginBottom: '12px' }}>
-              <li><strong>General goods:</strong> ¤800 value per person (proof of purchase required)</li>
+              <li><strong>General goods:</strong> $800 value per person (proof of purchase required)</li>
               <li><strong>Alcoholic beverages:</strong> 1 liter of spirits OR 2 liters of wine</li>
               <li><strong>Tobacco products:</strong> 200 cigarettes OR 50 cigars OR 250g loose tobacco</li>
               <li><strong>Perfume:</strong> 50ml of perfume and 250ml of eau de toilette</li>
-              <li><strong>Gifts:</strong> ¤100 per gift item (excluding alcohol and tobacco)</li>
+              <li><strong>Gifts:</strong> $100 per gift item (excluding alcohol and tobacco)</li>
             </ul>
             <div style={{ fontSize: '13px', color: 'var(--text-secondary)' }}>
               <strong>Note:</strong> Allowances apply to passengers 18 years and older (21+ for alcohol)
@@ -308,7 +308,7 @@ function CustomsInfo() {
             <h4 className="card-title">Customs Duty Rates</h4>
             <p style={{ color: 'var(--text-muted)', marginBottom: '12px' }}>Items exceeding duty-free limits are subject to customs duty:</p>
             <ul>
-              <li><strong>General goods:</strong> 15% of value exceeding ¤800</li>
+              <li><strong>General goods:</strong> 15% of value exceeding $800</li>
               <li><strong>Electronics:</strong> 20% customs duty + 12% VAT</li>
               <li><strong>Vehicles:</strong> 35% customs duty + fees (varies by type)</li>
               <li><strong>Luxury goods:</strong> 25% customs duty + 12% VAT</li>
@@ -321,7 +321,7 @@ function CustomsInfo() {
             <p style={{ color: 'var(--text-muted)', marginBottom: '12px' }}>You must declare:</p>
             <ul>
               <li>All goods exceeding duty-free allowances</li>
-              <li>Currency or monetary instruments exceeding ¤10,000</li>
+              <li>Currency or monetary instruments exceeding $10,000</li>
               <li>Commercial goods or merchandise for resale</li>
               <li>Agricultural products, plants, animals, or food</li>
               <li>Prescription medications (with valid prescription)</li>
@@ -362,7 +362,7 @@ function CustomsInfo() {
               <li>Dedicated express lanes at major ports of entry</li>
               <li>Automated kiosk processing</li>
               <li>Valid for 5 years</li>
-              <li>Application fee: ¤85</li>
+              <li>Application fee: $85</li>
               <li>Background check and interview required</li>
             </ul>
           </div>
@@ -452,7 +452,7 @@ function TravelRequirements() {
                     <li>Valid for stays up to 90 days</li>
                     <li>Single or multiple entry options</li>
                     <li>Processing time: 5-10 business days</li>
-                    <li>Fee: ¤75 (single), ¤120 (multiple entry)</li>
+                    <li>Fee: $75 (single), $120 (multiple entry)</li>
                   </ul>
                 </div>
 
@@ -462,7 +462,7 @@ function TravelRequirements() {
                     <li>Valid for stays up to 180 days</li>
                     <li>Requires business invitation letter</li>
                     <li>Processing time: 7-15 business days</li>
-                    <li>Fee: ¤150</li>
+                    <li>Fee: $150</li>
                   </ul>
                 </div>
 
@@ -472,7 +472,7 @@ function TravelRequirements() {
                     <li>Valid for duration of study program</li>
                     <li>Requires acceptance letter from Prayan institution</li>
                     <li>Processing time: 15-30 business days</li>
-                    <li>Fee: ¤200</li>
+                    <li>Fee: $200</li>
                   </ul>
                 </div>
 
@@ -482,7 +482,7 @@ function TravelRequirements() {
                     <li>Valid for up to 2 years (renewable)</li>
                     <li>Requires job offer and work permit</li>
                     <li>Processing time: 30-45 business days</li>
-                    <li>Fee: ¤350</li>
+                    <li>Fee: $350</li>
                   </ul>
                 </div>
               </div>
@@ -628,7 +628,7 @@ function TravelRequirements() {
                 <h4 style={{ marginTop: '20px' }}>Exit Requirements</h4>
                 <ul>
                   <li>Must depart before visa or permitted stay expires</li>
-                  <li>Overstaying may result in fines (¤50-500 depending on duration)</li>
+                  <li>Overstaying may result in fines ($50-500 depending on duration)</li>
                   <li>Serious overstays may result in deportation and entry ban</li>
                   <li>Exit tax: None (abolished 2023)</li>
                 </ul>
@@ -636,7 +636,7 @@ function TravelRequirements() {
 
               <div className="info-box">
                 <h4>Need to Extend Your Stay?</h4>
-                <p>If you need to stay longer than your visa or permitted period allows, you must apply for an extension at least 7 days before expiration. Visit CBCA Extension Office in Praya City or apply online at cbca.gov.py/extension. Extension fee: ¤100 for up to 30 days.</p>
+                <p>If you need to stay longer than your visa or permitted period allows, you must apply for an extension at least 7 days before expiration. Visit CBCA Extension Office in Praya City or apply online at cbca.gov.py/extension. Extension fee: $100 for up to 30 days.</p>
               </div>
             </>
           )}
@@ -792,7 +792,7 @@ function ImportExport() {
                   <ul>
                     <li>Required for most commercial imports</li>
                     <li>Valid for 12 months from date of issue</li>
-                    <li>Application fee: ¤200</li>
+                    <li>Application fee: $200</li>
                     <li>Processing time: 5-10 business days</li>
                     <li>Renewable annually</li>
                   </ul>
@@ -804,7 +804,7 @@ function ImportExport() {
                     <li>Required for controlled items (firearms, chemicals, pharmaceuticals)</li>
                     <li>Additional documentation required (safety certificates, licenses)</li>
                     <li>Processing time: 15-30 business days</li>
-                    <li>Fee: ¤500-2,000 depending on goods</li>
+                    <li>Fee: $500-2,000 depending on goods</li>
                   </ul>
                 </div>
 
@@ -815,7 +815,7 @@ function ImportExport() {
                     <li>Phytosanitary or veterinary certificate required</li>
                     <li>Inspection at port of entry mandatory</li>
                     <li>Processing time: 10-20 business days</li>
-                    <li>Fee: ¤150</li>
+                    <li>Fee: $150</li>
                   </ul>
                 </div>
 
@@ -866,9 +866,9 @@ function ImportExport() {
                   <ul>
                     <li>Required for commercial exports</li>
                     <li>Valid for 12 months</li>
-                    <li>Application fee: ¤150</li>
+                    <li>Application fee: $150</li>
                     <li>Processing time: 3-7 business days</li>
-                    <li>No export license needed for shipments under ¤1,000</li>
+                    <li>No export license needed for shipments under $1,000</li>
                   </ul>
                 </div>
 
@@ -879,7 +879,7 @@ function ImportExport() {
                     <li>End-user certificate required</li>
                     <li>Strict compliance with international sanctions</li>
                     <li>Processing time: 30-60 business days</li>
-                    <li>Fee: ¤1,000+</li>
+                    <li>Fee: $1,000+</li>
                   </ul>
                 </div>
 
@@ -890,7 +890,7 @@ function ImportExport() {
                     <li>Certificate from National Heritage Board required</li>
                     <li>Items of national significance may not be exportable</li>
                     <li>Processing time: 20-45 business days</li>
-                    <li>Fee: ¤500</li>
+                    <li>Fee: $500</li>
                   </ul>
                 </div>
 
@@ -953,7 +953,7 @@ function ImportExport() {
                     <li>Tax identification number (TIN) required</li>
                     <li>Business license and incorporation documents</li>
                     <li>Annual renewal required</li>
-                    <li>Registration fee: ¤300</li>
+                    <li>Registration fee: $300</li>
                   </ul>
                 </div>
 
@@ -998,16 +998,16 @@ function ImportExport() {
                   <li>Priority processing during congestion</li>
                   <li>Mutual recognition with 45 partner countries</li>
                   <li>Requirements: 2+ years trade history, compliance record, security measures</li>
-                  <li>Application fee: ¤1,500, valid for 3 years</li>
+                  <li>Application fee: $1,500, valid for 3 years</li>
                 </ul>
               </div>
 
               <div className="card">
                 <h4 className="card-title">Penalties for Non-Compliance</h4>
                 <ul>
-                  <li><strong>False declarations:</strong> Fine up to ¤50,000 or 3x value of goods</li>
+                  <li><strong>False declarations:</strong> Fine up to $50,000 or 3x value of goods</li>
                   <li><strong>Smuggling:</strong> Criminal prosecution, imprisonment up to 10 years</li>
-                  <li><strong>Unlicensed imports:</strong> Seizure of goods, fine ¤5,000-25,000</li>
+                  <li><strong>Unlicensed imports:</strong> Seizure of goods, fine $5,000-25,000</li>
                   <li><strong>Prohibited goods:</strong> Seizure, fine, possible criminal charges</li>
                   <li><strong>Failure to pay duties:</strong> Interest charges, penalty fees, legal action</li>
                   <li><strong>Repeat violations:</strong> Suspension or revocation of trading privileges</li>
@@ -1050,9 +1050,9 @@ function ImportExport() {
                   <h5 style={{ fontSize: '15px', marginBottom: '8px' }}>Specific Duties</h5>
                   <ul>
                     <li>Certain goods subject to per-unit charges</li>
-                    <li>Alcoholic beverages: ¤5-15 per liter</li>
-                    <li>Tobacco products: ¤50-100 per kg</li>
-                    <li>Fuel: ¤0.30 per liter</li>
+                    <li>Alcoholic beverages: $5-15 per liter</li>
+                    <li>Tobacco products: $50-100 per kg</li>
+                    <li>Fuel: $0.30 per liter</li>
                   </ul>
                 </div>
 
@@ -1094,16 +1094,16 @@ function ImportExport() {
               <div className="card">
                 <h4 className="card-title">Duty Calculation Example</h4>
                 <p style={{ fontSize: '14px', color: 'var(--text-muted)', marginBottom: '12px' }}>
-                  Importing consumer electronics worth ¤10,000:
+                  Importing consumer electronics worth $10,000:
                 </p>
                 <div style={{ fontSize: '14px', fontFamily: 'monospace', background: 'var(--bg-elevated)', padding: '16px', borderRadius: '8px' }}>
-                  <div>Declared Value: ¤10,000</div>
-                  <div>Customs Duty (15%): ¤1,500</div>
-                  <div>Duty-Paid Value: ¤11,500</div>
-                  <div>VAT (12% of ¤11,500): ¤1,380</div>
-                  <div>Environmental Levy (2%): ¤230</div>
+                  <div>Declared Value: $10,000</div>
+                  <div>Customs Duty (15%): $1,500</div>
+                  <div>Duty-Paid Value: $11,500</div>
+                  <div>VAT (12% of $11,500): $1,380</div>
+                  <div>Environmental Levy (2%): $230</div>
                   <div style={{ borderTop: '1px solid var(--border-subtle)', marginTop: '8px', paddingTop: '8px', fontWeight: 'bold' }}>
-                    Total Payable: ¤13,110
+                    Total Payable: $13,110
                   </div>
                 </div>
               </div>
@@ -1113,7 +1113,7 @@ function ImportExport() {
                 <ul>
                   <li><strong>Online Tariff Database:</strong> Search HS codes and rates at cbca.gov.py/tariff</li>
                   <li><strong>Duty Calculator:</strong> Estimate duties and taxes online</li>
-                  <li><strong>Binding Rulings:</strong> Request advance classification ruling (fee: ¤250, valid 3 years)</li>
+                  <li><strong>Binding Rulings:</strong> Request advance classification ruling (fee: $250, valid 3 years)</li>
                   <li><strong>Tariff Helpline:</strong> 1-800-TARIFF-PY (Monday-Friday 8 AM - 6 PM)</li>
                 </ul>
               </div>
