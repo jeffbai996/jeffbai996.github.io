@@ -840,6 +840,7 @@ export default function Portal() {
                 <li><a href="/ctb">Cannabis</a></li>
                 <li><a href="/doj">Justice</a></li>
                 <li><a href="/interior">Interior</a></li>
+                <li><a href="/weather">Weather</a></li>
                 <li><a href="/transport">Transport</a></li>
                 <li><a href="/revenue">Revenue</a></li>
                 <li><a href="/post">Post</a></li>
