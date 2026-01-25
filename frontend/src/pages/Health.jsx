@@ -323,13 +323,13 @@ function HealthInsurance() {
               <li><strong>Hospitalization:</strong> Full coverage for public hospital stays</li>
               <li><strong>Outpatient Care:</strong> Doctor visits, specialist consultations</li>
               <li><strong>Emergency Services:</strong> 100% coverage for emergency room visits</li>
-              <li><strong>Prescription Drugs:</strong> Formulary medications with ¤5-¤20 copay</li>
+              <li><strong>Prescription Drugs:</strong> Formulary medications with $5-$20 copay</li>
               <li><strong>Preventive Care:</strong> Annual checkups, screenings, immunizations</li>
               <li><strong>Maternity & Newborn Care:</strong> Prenatal, delivery, and postnatal care</li>
               <li><strong>Mental Health:</strong> Therapy and counseling services</li>
             </ul>
             <div style={{ fontSize: '13px', color: 'var(--text-secondary)' }}>
-              <strong>Monthly Premium:</strong> ¤50-¤350 based on income (subsidized for low-income residents)
+              <strong>Monthly Premium:</strong> $50-$350 based on income (subsidized for low-income residents)
             </div>
           </div>
 
@@ -342,11 +342,11 @@ function HealthInsurance() {
               <li>Shorter wait times for elective procedures</li>
               <li>Extended specialist network</li>
               <li>Dental cleanings and basic procedures (2x per year)</li>
-              <li>Vision exams and eyewear allowance (¤200 annually)</li>
+              <li>Vision exams and eyewear allowance ($200 annually)</li>
               <li>Alternative medicine coverage (acupuncture, chiropractic)</li>
             </ul>
             <div style={{ fontSize: '13px', color: 'var(--text-secondary)' }}>
-              <strong>Monthly Premium:</strong> ¤180-¤520 based on income
+              <strong>Monthly Premium:</strong> $180-$520 based on income
             </div>
           </div>
 
@@ -354,10 +354,10 @@ function HealthInsurance() {
             <h4 className="card-title">Supplemental Insurance</h4>
             <p style={{ color: 'var(--text-muted)', marginBottom: '12px' }}>Add-on coverage for specific needs:</p>
             <ul>
-              <li><strong>Dental Plus:</strong> Comprehensive dental coverage including major procedures (¤45/month)</li>
-              <li><strong>Vision Plus:</strong> Enhanced eyewear benefits and LASIK discounts (¤25/month)</li>
-              <li><strong>International Coverage:</strong> Medical care while traveling abroad (¤35/month)</li>
-              <li><strong>Long-term Care:</strong> Nursing home and home care services (¤75/month)</li>
+              <li><strong>Dental Plus:</strong> Comprehensive dental coverage including major procedures ($45/month)</li>
+              <li><strong>Vision Plus:</strong> Enhanced eyewear benefits and LASIK discounts ($25/month)</li>
+              <li><strong>International Coverage:</strong> Medical care while traveling abroad ($35/month)</li>
+              <li><strong>Long-term Care:</strong> Nursing home and home care services ($75/month)</li>
             </ul>
           </div>
 
@@ -535,7 +535,7 @@ function Vaccinations() {
               <ul style={{ fontSize: '14px' }}>
                 <li><strong>Children:</strong> Free under National Program</li>
                 <li><strong>Adults:</strong> Covered by most insurance</li>
-                <li><strong>Travel vaccines:</strong> ¤35-¤150 per dose</li>
+                <li><strong>Travel vaccines:</strong> $35-$150 per dose</li>
                 <li><strong>No insurance:</strong> Sliding scale available</li>
               </ul>
             </div>

@@ -111,7 +111,7 @@ function BOPHome({ navigate }) {
         <div className="hero-visual">
           <div className="financial-display">
             <div className="display-label">Total Assets</div>
-            <div className="display-value">¤284B</div>
+            <div className="display-value">$284B</div>
             <div className="display-stats">
               <div>
                 <div className="display-stat-label">Growth (YoY)</div>
@@ -132,7 +132,7 @@ function BOPHome({ navigate }) {
           <div className="stats-grid">
             <div className="stat-item">
               <span className="stat-label">Total Assets</span>
-              <span className="stat-value">¤284B</span>
+              <span className="stat-value">$284B</span>
               <span className="stat-change">+8% YoY</span>
             </div>
             <div className="stat-item">
@@ -294,9 +294,9 @@ function Accounts() {
             <ul style={{ marginBottom: '12px' }}>
               <li>3.2% APY (Annual Percentage Yield)</li>
               <li>No monthly maintenance fees</li>
-              <li>Minimum opening deposit: ¤100</li>
+              <li>Minimum opening deposit: $100</li>
               <li>Online and mobile banking included</li>
-              <li>FDIC insured up to ¤250,000</li>
+              <li>FDIC insured up to $250,000</li>
             </ul>
             <div style={{ fontSize: '13px', color: 'var(--text-secondary)' }}>
               <strong>Best for:</strong> Building emergency funds, saving for goals
@@ -310,7 +310,7 @@ function Accounts() {
               <li>Free debit card with chip & PIN</li>
               <li>Unlimited check writing and transactions</li>
               <li>Online bill pay included</li>
-              <li>Minimum opening deposit: ¤50</li>
+              <li>Minimum opening deposit: $50</li>
               <li>Overdraft protection available</li>
             </ul>
             <div style={{ fontSize: '13px', color: 'var(--text-secondary)' }}>
@@ -436,7 +436,7 @@ function Loans() {
 
                 <h4>Loan Features</h4>
                 <ul>
-                  <li>Loan amounts from ¤50,000 to ¤5 million</li>
+                  <li>Loan amounts from $50,000 to $5 million</li>
                   <li>Down payment as low as 3% for first-time buyers</li>
                   <li>No prepayment penalties</li>
                   <li>Option to lock rate for up to 90 days</li>
@@ -471,7 +471,7 @@ function Loans() {
                 <h4>Loan Details</h4>
                 <ul>
                   <li><strong>Interest Rate:</strong> 6.2% - 15.9% APR (based on creditworthiness)</li>
-                  <li><strong>Loan Amount:</strong> ¤1,000 to ¤50,000</li>
+                  <li><strong>Loan Amount:</strong> $1,000 to $50,000</li>
                   <li><strong>Repayment Terms:</strong> 1 to 7 years</li>
                   <li><strong>Origination Fee:</strong> 1% - 5% of loan amount</li>
                   <li><strong>No collateral required</strong> for qualified borrowers</li>
@@ -498,11 +498,11 @@ function Loans() {
 
               <div className="card">
                 <h4 className="card-title">Loan Calculator Example</h4>
-                <p style={{ color: 'var(--text-muted)', marginBottom: '12px' }}>Sample monthly payment for ¤10,000 loan:</p>
+                <p style={{ color: 'var(--text-muted)', marginBottom: '12px' }}>Sample monthly payment for $10,000 loan:</p>
                 <div style={{ fontSize: '13px', color: 'var(--text-secondary)' }}>
-                  <div style={{ marginBottom: '8px' }}>• 3 years at 6.2% APR: <strong>¤305/month</strong></div>
-                  <div style={{ marginBottom: '8px' }}>• 5 years at 6.2% APR: <strong>¤195/month</strong></div>
-                  <div>• 7 years at 6.2% APR: <strong>¤148/month</strong></div>
+                  <div style={{ marginBottom: '8px' }}>• 3 years at 6.2% APR: <strong>$305/month</strong></div>
+                  <div style={{ marginBottom: '8px' }}>• 5 years at 6.2% APR: <strong>$195/month</strong></div>
+                  <div>• 7 years at 6.2% APR: <strong>$148/month</strong></div>
                 </div>
               </div>
             </>
@@ -521,7 +521,7 @@ function Loans() {
                 <div style={{ marginBottom: '20px' }}>
                   <h5 style={{ fontSize: '15px', marginBottom: '8px' }}>Term Loans</h5>
                   <ul>
-                    <li>Amount: ¤10,000 to ¤500,000</li>
+                    <li>Amount: $10,000 to $500,000</li>
                     <li>Rate: 5.5% - 10% APR</li>
                     <li>Term: 1 to 10 years</li>
                     <li>Best for: Equipment, expansion, working capital</li>
@@ -531,7 +531,7 @@ function Loans() {
                 <div style={{ marginBottom: '20px' }}>
                   <h5 style={{ fontSize: '15px', marginBottom: '8px' }}>Business Line of Credit</h5>
                   <ul>
-                    <li>Amount: ¤5,000 to ¤100,000</li>
+                    <li>Amount: $5,000 to $100,000</li>
                     <li>Rate: Variable (Prime + 2% - 5%)</li>
                     <li>Revolving credit - borrow as needed</li>
                     <li>Best for: Cash flow management, seasonal needs</li>
@@ -541,7 +541,7 @@ function Loans() {
                 <div style={{ marginBottom: '20px' }}>
                   <h5 style={{ fontSize: '15px', marginBottom: '8px' }}>SBA Loans</h5>
                   <ul>
-                    <li>Amount: Up to ¤5 million</li>
+                    <li>Amount: Up to $5 million</li>
                     <li>Rate: 6% - 8% APR (government-backed)</li>
                     <li>Term: Up to 25 years (real estate), 10 years (equipment)</li>
                     <li>Best for: Startups, real estate, major purchases</li>
@@ -585,7 +585,7 @@ function Loans() {
 
                 <h4>Loan Features</h4>
                 <ul>
-                  <li>Loan amounts from ¤5,000 to ¤100,000</li>
+                  <li>Loan amounts from $5,000 to $100,000</li>
                   <li>Terms: 12 to 84 months</li>
                   <li>Finance up to 100% of vehicle value (qualified buyers)</li>
                   <li>No application or origination fees</li>
@@ -613,12 +613,12 @@ function Loans() {
 
               <div className="card">
                 <h4 className="card-title">Payment Example</h4>
-                <p style={{ color: 'var(--text-muted)', marginBottom: '12px' }}>¤25,000 new car loan at 4.9% APR:</p>
+                <p style={{ color: 'var(--text-muted)', marginBottom: '12px' }}>$25,000 new car loan at 4.9% APR:</p>
                 <div style={{ fontSize: '13px', color: 'var(--text-secondary)' }}>
-                  <div style={{ marginBottom: '8px' }}>• 36 months: <strong>¤747/month</strong></div>
-                  <div style={{ marginBottom: '8px' }}>• 48 months: <strong>¤574/month</strong></div>
-                  <div style={{ marginBottom: '8px' }}>• 60 months: <strong>¤471/month</strong></div>
-                  <div>• 72 months: <strong>¤405/month</strong></div>
+                  <div style={{ marginBottom: '8px' }}>• 36 months: <strong>$747/month</strong></div>
+                  <div style={{ marginBottom: '8px' }}>• 48 months: <strong>$574/month</strong></div>
+                  <div style={{ marginBottom: '8px' }}>• 60 months: <strong>$471/month</strong></div>
+                  <div>• 72 months: <strong>$405/month</strong></div>
                 </div>
               </div>
             </>
@@ -699,7 +699,7 @@ function Services() {
                   <ul>
                     <li>Trade stocks, bonds, ETFs, and mutual funds</li>
                     <li>No account minimums for new investors</li>
-                    <li>Commission: ¤9.99 per trade (¤0 for ETFs)</li>
+                    <li>Commission: $9.99 per trade ($0 for ETFs)</li>
                     <li>Access to research tools and market analysis</li>
                     <li>Mobile and online trading platforms</li>
                   </ul>
@@ -709,7 +709,7 @@ function Services() {
                   <h5 style={{ fontSize: '15px', marginBottom: '8px' }}>Managed Portfolio</h5>
                   <ul>
                     <li>Professional management by BOP investment team</li>
-                    <li>Minimum investment: ¤10,000</li>
+                    <li>Minimum investment: $10,000</li>
                     <li>Management fee: 0.5% - 1.2% annually</li>
                     <li>Customized strategy based on goals and timeline</li>
                     <li>Quarterly performance reviews</li>
@@ -722,7 +722,7 @@ function Services() {
                     <li>Fixed-rate returns with FDIC insurance</li>
                     <li>Terms: 3 months to 5 years</li>
                     <li>Rates: 3.5% - 4.8% APY (based on term)</li>
-                    <li>Minimum deposit: ¤500</li>
+                    <li>Minimum deposit: $500</li>
                     <li>Penalty for early withdrawal</li>
                   </ul>
                 </div>
@@ -759,7 +759,7 @@ function Services() {
                   <ul>
                     <li>Tax-deductible contributions (subject to income limits)</li>
                     <li>Tax-deferred growth until withdrawal</li>
-                    <li>2024 contribution limit: ¤6,500 (¤7,500 if age 50+)</li>
+                    <li>2024 contribution limit: $6,500 ($7,500 if age 50+)</li>
                     <li>Required minimum distributions at age 73</li>
                     <li>Wide range of investment options</li>
                   </ul>
@@ -799,12 +799,12 @@ function Services() {
 
               <div className="card">
                 <h4 className="card-title">Retirement Calculator</h4>
-                <p style={{ color: 'var(--text-muted)', marginBottom: '12px' }}>Example: Contributing ¤500/month from age 30 to 65</p>
+                <p style={{ color: 'var(--text-muted)', marginBottom: '12px' }}>Example: Contributing $500/month from age 30 to 65</p>
                 <div style={{ fontSize: '13px', color: 'var(--text-secondary)' }}>
-                  <div style={{ marginBottom: '8px' }}>• Total contributions: <strong>¤210,000</strong></div>
-                  <div style={{ marginBottom: '8px' }}>• At 6% annual return: <strong>¤587,000</strong></div>
-                  <div style={{ marginBottom: '8px' }}>• At 7% annual return: <strong>¤767,000</strong></div>
-                  <div>• At 8% annual return: <strong>¤1,030,000</strong></div>
+                  <div style={{ marginBottom: '8px' }}>• Total contributions: <strong>$210,000</strong></div>
+                  <div style={{ marginBottom: '8px' }}>• At 6% annual return: <strong>$587,000</strong></div>
+                  <div style={{ marginBottom: '8px' }}>• At 7% annual return: <strong>$767,000</strong></div>
+                  <div>• At 8% annual return: <strong>$1,030,000</strong></div>
                 </div>
                 <p style={{ fontSize: '12px', color: 'var(--text-muted)', marginTop: '12px' }}>*Hypothetical examples for illustration only. Past performance doesn't guarantee future results.</p>
               </div>
@@ -827,7 +827,7 @@ function Services() {
                     <li><strong>Term Life:</strong> Affordable coverage for 10, 20, or 30 years</li>
                     <li><strong>Whole Life:</strong> Permanent coverage with cash value growth</li>
                     <li><strong>Universal Life:</strong> Flexible premiums and death benefit</li>
-                    <li>Coverage amounts from ¤50,000 to ¤10 million</li>
+                    <li>Coverage amounts from $50,000 to $10 million</li>
                     <li>Medical exam may be required</li>
                   </ul>
                 </div>
@@ -847,7 +847,7 @@ function Services() {
                   <h5 style={{ fontSize: '15px', marginBottom: '8px' }}>Long-Term Care Insurance</h5>
                   <ul>
                     <li>Coverage for nursing home, assisted living, or home care</li>
-                    <li>Daily benefit: ¤100 - ¤500</li>
+                    <li>Daily benefit: $100 - $500</li>
                     <li>Benefit period: 2, 3, 5 years, or lifetime</li>
                     <li>Inflation protection available</li>
                     <li>Best purchased in your 50s or early 60s</li>
@@ -893,8 +893,8 @@ function Services() {
                 <h4>Domestic Wire Transfers</h4>
                 <ul>
                   <li><strong>Processing:</strong> Same-day delivery (if sent before 3:00 PM)</li>
-                  <li><strong>Fee:</strong> ¤25 outgoing, ¤15 incoming</li>
-                  <li><strong>Limits:</strong> Up to ¤100,000 per transfer online, unlimited in-branch</li>
+                  <li><strong>Fee:</strong> $25 outgoing, $15 incoming</li>
+                  <li><strong>Limits:</strong> Up to $100,000 per transfer online, unlimited in-branch</li>
                   <li><strong>Required Info:</strong> Recipient name, bank name, routing number, account number</li>
                   <li>Available through online banking, mobile app, or branch</li>
                 </ul>
@@ -902,7 +902,7 @@ function Services() {
                 <h4>International Wire Transfers</h4>
                 <ul>
                   <li><strong>Processing:</strong> 1-5 business days depending on country</li>
-                  <li><strong>Fee:</strong> ¤45 outgoing, ¤15 incoming</li>
+                  <li><strong>Fee:</strong> $45 outgoing, $15 incoming</li>
                   <li><strong>Exchange Rates:</strong> Competitive rates updated hourly</li>
                   <li><strong>Required Info:</strong> Recipient name, address, SWIFT/BIC code, IBAN or account number</li>
                   <li>Supported in 200+ countries and 50+ currencies</li>
@@ -931,10 +931,10 @@ function Services() {
                 <h4 className="card-title">Alternative Transfer Options</h4>
                 <p style={{ color: 'var(--text-muted)', marginBottom: '12px' }}>Consider these options for smaller or non-urgent transfers:</p>
                 <ul style={{ fontSize: '14px' }}>
-                  <li><strong>ACH Transfer:</strong> Free, 1-3 days, up to ¤25,000</li>
+                  <li><strong>ACH Transfer:</strong> Free, 1-3 days, up to $25,000</li>
                   <li><strong>Mobile P2P:</strong> Free, instant to BOP customers</li>
                   <li><strong>Online Bill Pay:</strong> Free, 2-5 days delivery</li>
-                  <li><strong>Cashier's Check:</strong> ¤10 fee, physical delivery</li>
+                  <li><strong>Cashier's Check:</strong> $10 fee, physical delivery</li>
                 </ul>
               </div>
 

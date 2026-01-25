@@ -119,7 +119,7 @@ export default function PSE() {
   const news = [
     { time: '2h ago', tag: 'MARKETS', title: 'PSE Composite hits new record high', excerpt: 'Index surges past 8,750 on strong financial sector performance.' },
     { time: '4h ago', tag: 'EARNINGS', title: 'Praya National Bank reports Q4 earnings beat', excerpt: 'Net profit up 18% YoY as lending activity accelerates.' },
-    { time: '6h ago', tag: 'IPO', title: 'Tech startup TechCorp files for IPO', excerpt: 'Company seeks to raise ¤500M in early 2025 listing.' }
+    { time: '6h ago', tag: 'IPO', title: 'Tech startup TechCorp files for IPO', excerpt: 'Company seeks to raise $500M in early 2025 listing.' }
   ]
 
   useEffect(() => {
@@ -513,12 +513,12 @@ export default function PSE() {
           </div>
           <div className="pse-status-item">
             <span className="pse-status-label">Market Cap</span>
-            <span className="pse-status-value">¤892B</span>
+            <span className="pse-status-value">$892B</span>
             <span className="pse-status-change" style={{ color: 'var(--pse-text-muted)' }}>Total Value</span>
           </div>
           <div className="pse-status-item">
             <span className="pse-status-label">Volume</span>
-            <span className="pse-status-value">¤3.2B</span>
+            <span className="pse-status-value">$3.2B</span>
             <span className="pse-status-change" style={{ color: 'var(--pse-text-muted)' }}>Today</span>
           </div>
           <div className="pse-status-item">
@@ -658,7 +658,7 @@ export default function PSE() {
                       <div className="pse-watchlist-name">{stock.name}</div>
                     </div>
                     <div className="pse-watchlist-price">
-                      <div className="pse-watchlist-value">¤{stock.price.toFixed(2)}</div>
+                      <div className="pse-watchlist-value">${stock.price.toFixed(2)}</div>
                       <div className={`pse-watchlist-change ${stock.change >= 0 ? 'text-success' : 'text-danger'}`}>
                         {stock.change >= 0 ? '+' : ''}{stock.change.toFixed(1)}%
                       </div>
@@ -686,7 +686,7 @@ export default function PSE() {
                       </div>
                       <div className="pse-mover-change">
                         <div className="pse-mover-percent text-success">+{mover.percent}%</div>
-                        <div className="pse-mover-value">¤{mover.value.toFixed(2)}</div>
+                        <div className="pse-mover-value">${mover.value.toFixed(2)}</div>
                       </div>
                     </div>
                   ))}
