@@ -516,7 +516,7 @@ function Vaccinations() {
           </div>
 
           <aside className="sidebar">
-            <div className="card" style={{ background: 'linear-gradient(135deg, #dc2626 0%, #b91c1c 100%)', color: 'white', border: 'none' }}>
+            <div className="card" style={{ background: 'linear-gradient(135deg, #991b1b 0%, #7f1d1d 100%)', color: 'white', border: 'none' }}>
               <h4 style={{ color: 'white', marginBottom: '8px' }}>Vaccine Safety</h4>
               <p style={{ fontSize: '14px', opacity: 0.9, lineHeight: '1.5' }}>
                 All vaccines are rigorously tested for safety and effectiveness. Serious side effects are rare. Benefits far outweigh risks.

@@ -138,7 +138,7 @@
   font-size: 1.1rem;
   font-weight: 600;
   margin-bottom: 1rem;
-  color: var(--text-secondary);
+  color: #ffffff;
 }
 
 .payment-options-grid {
@@ -196,7 +196,7 @@
 
 .payment-option-content p {
   font-size: 0.85rem;
-  color: var(--text-muted);
+  color: rgba(255, 255, 255, 0.85);
   margin-bottom: 0.25rem;
 }
 
