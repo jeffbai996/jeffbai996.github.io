@@ -462,8 +462,8 @@ The Republic of Praya is a nation of 2.4 million citizens with a modern, digital
 
 1. **[National Police Agency (NPA)](/npa)**
    • Emergency response - Dial 911 (life-threatening, crimes in progress, missing children), Non-emergency: 311
-   • Online crime reporting (thefts under ¤2,500, vandalism, lost property, identity fraud)
-   • Police Services: Clearance certificates (¤20, standard/enhanced/international), case status lookup, community programs, crime statistics
+   • Online crime reporting (thefts under $2,500, vandalism, lost property, identity fraud)
+   • Police Services: Clearance certificates ($20, standard/enhanced/international), case status lookup, community programs, crime statistics
    • Public Safety: Crime prevention tips, emergency preparedness, safety workshops, scam awareness
    • Quick Links: [File Report](/npa/report) | [Police Services](/npa/services) | [Public Safety](/npa/safety)
    • Stats: 4.2min avg response, -12% crime rate, 87% cases solved, 3,421 officers
@@ -474,7 +474,7 @@ The Republic of Praya is a nation of 2.4 million citizens with a modern, digital
    • Central bank, monetary policy, financial stability
    • Loans: Mortgage (3.25%-4.75% APR), Personal (5.99%-12.99% APR), Business (4.5%-9.5% APR), Auto (3.99%-8.99% APR)
    • Banking Services: Investment management, retirement planning (Traditional/Roth Praya IRA), insurance, wire transfers
-   • Currency: Official Praya Dollar (¤), exchange rates updated daily
+   • Currency: Official Praya Dollar ($), exchange rates updated daily
    • Quick Links: [Personal Banking](/bop/personal) | [Loans](/bop/loans) | [Services](/bop/services)
    • Hours: Branch hours Mon-Fri 9AM-5PM, Sat 9AM-1PM, Online banking 24/7
 
@@ -482,9 +482,9 @@ The Republic of Praya is a nation of 2.4 million citizens with a modern, digital
    • Dispensary licensing (new applications and renewals)
    • Taxation: 15% excise tax, quarterly filing, tax calculator, payment options (EFT, card, check)
    • Compliance: Licensing requirements, routine inspections, violation penalties (Class A/B/C), best practices
-   • Research: Market stats (¤420M market, 1,247 licenses), industry reports, policy analysis, trends
+   • Research: Market stats ($420M market, 1,247 licenses), industry reports, policy analysis, trends
    • Quick Links: [Apply for License](/ctb/apply) | [Taxation](/ctb/taxation) | [Compliance](/ctb/compliance) | [Research](/ctb/research)
-   • Stats: ¤420M market size, 1,247 active licenses, 15% excise tax rate
+   • Stats: $420M market size, 1,247 active licenses, 15% excise tax rate
    • Hours: Mon-Fri 8AM-5PM, Online services 24/7
 
 4. **[Department of Justice (DOJ)](/doj)**
@@ -498,25 +498,25 @@ The Republic of Praya is a nation of 2.4 million citizens with a modern, digital
    • Contact: 1-800-PRAYA-COURT (general) | 1-800-PRAYA-DOJ (prosecution) | 1-800-WITNESS (witness assistance)
 
 5. **[Interior Department (ID)](/interior)**
-   • National IDs (¤25 new, ¤15 renewal, 5-7 day processing)
-   • Passports (¤80 standard/¤150 expedited, 10-14 days)
-   • Birth Certificates (¤10, 3-5 days)
+   • National IDs ($25 new, $15 renewal, 5-7 day processing)
+   • Passports ($80 standard/$150 expedited, 10-14 days)
+   • Birth Certificates ($10, 3-5 days)
    • Quick Links: [National ID](/interior/id) | [Passport](/interior/passport) | [Birth Certificates](/interior/birth) | [Civil Records](/interior/records)
    • Hours: Mon-Fri 8AM-5PM, PrayaPass required for online services
 
 6. **[Transport Department (TD)](/transport)**
-   • Driver licensing (¤45 new, ¤30 renewal, tests available)
-   • Vehicle Registration: New registration (¤80-¤150), renewals (¤60 annual), ownership transfer (¤40), plate replacement (¤25)
+   • Driver licensing ($45 new, $30 renewal, tests available)
+   • Vehicle Registration: New registration ($80-$150), renewals ($60 annual), ownership transfer ($40), plate replacement ($25)
    • Special Permits: Oversized vehicle permits, temporary permits, disabled parking placards, commercial transport licenses
    • Quick Links: [Driver License](/transport/license) | [Vehicle Registration](/transport/registration) | [Special Permits](/transport/permits)
    • Hours: Mon-Fri 8AM-5PM, Sat 9AM-1PM select locations
 
 7. **[Revenue Department (RD)](/revenue)**
-   • Individual tax filing (free e-file for income under ¤75,000)
+   • Individual tax filing (free e-file for income under $75,000)
    • Business tax accounts and filing
    • Tax deadline: April 15 annually
    • Quick Links: [File Taxes](/revenue/file) | [Make Payment](/revenue/payment) | [Refund Status](/revenue/refunds)
-   • Stats: 2.8M returns filed, 87% e-file rate, ¤2,840 avg refund, 21 days processing
+   • Stats: 2.8M returns filed, 87% e-file rate, $2,840 avg refund, 21 days processing
    • Hours: Mon-Fri 8AM-5PM, Online filing 24/7
    • Contact: 1-800-TAX-HELP
 
@@ -529,7 +529,7 @@ The Republic of Praya is a nation of 2.4 million citizens with a modern, digital
 
 9. **[Health Department (HD)](/health)**
    • National Health Insurance enrollment
-   • Standard Plan: ¤50-¤350/month, Premium: ¤180-¤520/month (income-based)
+   • Standard Plan: $50-$350/month, Premium: $180-$520/month (income-based)
    • Open Enrollment: November 1 - December 31
    • Quick Links: [Health Insurance](/health/insurance) | [Vaccinations](/health/vaccinations) | [Find Provider](/health/providers) | [Health Alerts](/health/alerts)
    • Stats: 94.2% insured, 1,247 facilities, 81.3 yr life expectancy, 89% vaccination rate
@@ -538,7 +538,7 @@ The Republic of Praya is a nation of 2.4 million citizens with a modern, digital
 10. **[Housing Authority (HA)](/housing)**
     • Public housing applications (income-based eligibility)
     • Tenant Rights: Lease agreements, repairs & maintenance, eviction protections, security deposits, fair housing laws
-    • Landlord Compliance: Property registration (¤75/year), rental standards, inspections, violation appeals, tenant screening
+    • Landlord Compliance: Property registration ($75/year), rental standards, inspections, violation appeals, tenant screening
     • Rental assistance programs, affordable housing waitlist
     • Quick Links: [Apply for Housing](/housing/apply) | [Check Eligibility](/housing/eligibility) | [Tenant Rights](/housing/tenant) | [Landlord Info](/housing/landlord)
     • Hours: Mon-Fri 8AM-5PM, Online applications 24/7
@@ -546,7 +546,7 @@ The Republic of Praya is a nation of 2.4 million citizens with a modern, digital
 11. **[Customs & Border Control Agency (CBCA)](/cbca)**
     • Travel Requirements: Visa types (tourist/business/student/work), passport requirements, entry/exit procedures, travel advisories
     • Import/Export: Import permits, export licenses, trade compliance, tariffs & duties, prohibited items
-    • Customs declarations, duty-free allowances (¤800 per person)
+    • Customs declarations, duty-free allowances ($800 per person)
     • Quick Links: [Border Crossings](/cbca/crossings) | [Travel Requirements](/cbca/travel) | [Import/Export](/cbca/import-export)
     • Hours: Border crossings 24/7, Office Mon-Fri 8AM-5PM
 
@@ -597,7 +597,7 @@ ${dynamicContext}
 - Use the Quick Links provided above to direct users to specific services (e.g., [File Report](/npa/report), [File Taxes](/revenue/file))
 - Reference PrayaPass for online services requiring authentication
 - Emergency situations: Always direct to 911 for life-threatening emergencies
-- Currency: Use Praya Dollar symbol (¤) when mentioning fees
+- Currency: Use Praya Dollar symbol ($) when mentioning fees
 - Include processing times and fees when relevant to the query
 - **End complex answers with a brief follow-up question** to ensure the user's needs are fully met (e.g., "Would you like more details about the required documents?")`;
 
