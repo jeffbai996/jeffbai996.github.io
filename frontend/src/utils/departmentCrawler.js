@@ -487,6 +487,45 @@ export const departmentData = [
     },
     hours: 'Monitoring: 24/7 | Civil Defense Hotline: 24/7',
     contact: 'Emergency: 911 | Civil Defense: 1-800-DEFEND | NPA: 1-800-NPA-HELP | Fire & Rescue: 1-800-FIRE-PY'
+  },
+  {
+    id: 'weather',
+    name: 'National Weather Service',
+    abbrev: 'NWS',
+    url: '/weather',
+    keywords: ['weather', 'forecast', 'temperature', 'snow', 'rain', 'alerts', 'radar', 'climate', 'marine', 'nws', 'winter', 'storm', 'precipitation', 'conditions', 'meteorology', 'snowfall', 'blizzard', 'frost', 'wind', 'humidity'],
+    description: 'The Praya National Weather Service provides accurate weather forecasts, severe weather warnings, and climate data to protect lives and property. Our temperate maritime climate brings mild summers, cool winters, and significant snowfall from November through April.',
+    services: [
+      'Weather Forecasts - 7-day and extended forecasts with snow accumulation predictions',
+      'Winter Storm Warnings - Blizzard alerts and frost advisories for temperate climate',
+      'Live Radar & Satellite - Precipitation radar and satellite imagery',
+      'Climate Data - Historical snowfall records and temperature trends',
+      'Marine Weather - Coastal forecasts, sea ice warnings, and tide tables',
+      'Snow Reports - Daily snowfall, accumulation, and road conditions',
+      'Regional Observations - Real-time data from weather stations across all regions',
+      'Aviation Weather - Specialized forecasts for flight operations'
+    ],
+    subPages: [
+      { name: 'Weather Forecasts', url: '/weather/forecasts', description: '7-day and extended forecasts with detailed snow accumulation predictions' },
+      { name: 'Weather Alerts', url: '/weather/alerts', description: 'Winter storm warnings, blizzard alerts, frost advisories, and severe weather notifications' },
+      { name: 'Radar & Satellite', url: '/weather/radar', description: 'Live precipitation radar and satellite imagery for tracking storms' },
+      { name: 'Climate Data', url: '/weather/climate', description: 'Historical snowfall records, temperature trends, and seasonal climate patterns' },
+      { name: 'Marine Weather', url: '/weather/marine', description: 'Coastal forecasts, sea ice warnings, tide tables, and maritime conditions' }
+    ],
+    statistics: {
+      monitoringStations: '50+ weather stations',
+      updateFrequency: 'Hourly updates',
+      avgSnowfall: '180-250 cm annually',
+      temperateClimate: 'Similar to Juneau/Vancouver/Hokkaido'
+    },
+    climatInfo: {
+      winter: 'Cold and snowy (November-April): -5°C to 5°C, heavy snowfall',
+      summer: 'Mild and comfortable (May-October): 12°C to 20°C',
+      snowSeason: 'November through April with significant accumulation',
+      snowDepth: 'Typical winter depth: 40-70 cm in cities, 150-200 cm in mountains'
+    },
+    hours: 'Weather Monitoring: 24/7 | Web Access: 24/7',
+    contact: 'Weather Emergency: 1-800-WEATHER | Road Conditions: 1-800-ROADS | Visit: gov.praya/weather'
   }
 ];
 
