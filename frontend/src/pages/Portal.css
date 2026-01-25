@@ -116,16 +116,27 @@ body.light .portal-header {
 
 .dropdown-menu {
   position: absolute;
-  top: calc(100% + 8px);
+  top: 100%;
   right: 0;
   background: var(--bg-card);
   border: 1px solid var(--border);
   border-radius: 12px;
   padding: 12px;
+  padding-top: 20px;
   min-width: 600px;
   box-shadow: 0 8px 24px rgba(0,0,0,0.3);
   z-index: 1000;
   animation: slideDown 0.2s ease-out;
+}
+
+/* Bridge the gap between button and dropdown for smooth hover */
+.dropdown-menu::before {
+  content: '';
+  position: absolute;
+  top: -10px;
+  left: 0;
+  right: 0;
+  height: 10px;
 }
 
 @keyframes slideDown {
