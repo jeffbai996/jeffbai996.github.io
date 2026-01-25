@@ -281,17 +281,17 @@ function CRRegister() {
 
           <div className="card" style={{ marginTop: '20px' }}>
             <h4 className="card-title">Private Limited Company (Ltd)</h4>
-            <p style={{ color: 'var(--text-muted)', marginBottom: '12px' }}>Ideal for small to medium businesses. Requires minimum 1 director and 1 shareholder. Share capital minimum ¤1.</p>
+            <p style={{ color: 'var(--text-muted)', marginBottom: '12px' }}>Ideal for small to medium businesses. Requires minimum 1 director and 1 shareholder. Share capital minimum $1.</p>
             <div style={{ fontSize: '13px', color: 'var(--text-secondary)' }}>
-              <strong>Fee:</strong> ¤350 | <strong>Processing:</strong> 1-3 business days
+              <strong>Fee:</strong> $350 | <strong>Processing:</strong> 1-3 business days
             </div>
           </div>
 
           <div className="card">
             <h4 className="card-title">Public Limited Company (PLC)</h4>
-            <p style={{ color: 'var(--text-muted)', marginBottom: '12px' }}>For companies seeking to raise capital from the public. Requires minimum 2 directors and share capital of ¤50,000.</p>
+            <p style={{ color: 'var(--text-muted)', marginBottom: '12px' }}>For companies seeking to raise capital from the public. Requires minimum 2 directors and share capital of $50,000.</p>
             <div style={{ fontSize: '13px', color: 'var(--text-secondary)' }}>
-              <strong>Fee:</strong> ¤1,500 | <strong>Processing:</strong> 5-10 business days
+              <strong>Fee:</strong> $1,500 | <strong>Processing:</strong> 5-10 business days
             </div>
           </div>
 
@@ -299,7 +299,7 @@ function CRRegister() {
             <h4 className="card-title">Limited Liability Partnership (LLP)</h4>
             <p style={{ color: 'var(--text-muted)', marginBottom: '12px' }}>Combines the flexibility of a partnership with limited liability protection. Popular for professional services firms.</p>
             <div style={{ fontSize: '13px', color: 'var(--text-secondary)' }}>
-              <strong>Fee:</strong> ¤250 | <strong>Processing:</strong> 1-3 business days
+              <strong>Fee:</strong> $250 | <strong>Processing:</strong> 1-3 business days
             </div>
           </div>
 
@@ -307,7 +307,7 @@ function CRRegister() {
             <h4 className="card-title">Sole Proprietorship</h4>
             <p style={{ color: 'var(--text-muted)', marginBottom: '12px' }}>Simplest form of business registration for individual traders. No separation between owner and business entity.</p>
             <div style={{ fontSize: '13px', color: 'var(--text-secondary)' }}>
-              <strong>Fee:</strong> ¤50 | <strong>Processing:</strong> Same day
+              <strong>Fee:</strong> $50 | <strong>Processing:</strong> Same day
             </div>
           </div>
 
@@ -424,15 +424,15 @@ function CRSearch() {
             <h4 className="card-title">Available Documents</h4>
             <div style={{ fontSize: '14px', color: 'var(--text-secondary)' }}>
               <ul>
-                <li><strong>Certificate of Incorporation</strong> - Original incorporation certificate (¤25)</li>
-                <li><strong>Certificate of Good Standing</strong> - Current compliance certificate (¤50)</li>
-                <li><strong>Articles of Association</strong> - Company constitution and rules (¤15)</li>
-                <li><strong>Annual Returns</strong> - Filed annual statements (¤10 per year)</li>
-                <li><strong>Financial Statements</strong> - Audited accounts if filed (¤20 per year)</li>
-                <li><strong>Charge Certificates</strong> - Security interest registrations (¤15 each)</li>
+                <li><strong>Certificate of Incorporation</strong> - Original incorporation certificate ($25)</li>
+                <li><strong>Certificate of Good Standing</strong> - Current compliance certificate ($50)</li>
+                <li><strong>Articles of Association</strong> - Company constitution and rules ($15)</li>
+                <li><strong>Annual Returns</strong> - Filed annual statements ($10 per year)</li>
+                <li><strong>Financial Statements</strong> - Audited accounts if filed ($20 per year)</li>
+                <li><strong>Charge Certificates</strong> - Security interest registrations ($15 each)</li>
               </ul>
               <div style={{ marginTop: '16px', padding: '12px', background: 'rgba(59, 130, 246, 0.1)', borderRadius: '8px', fontSize: '13px' }}>
-                <strong>Certification:</strong> Add ¤25 for official stamp and seal. Certified copies accepted by banks and government agencies worldwide.
+                <strong>Certification:</strong> Add $25 for official stamp and seal. Certified copies accepted by banks and government agencies worldwide.
               </div>
             </div>
           </div>
@@ -452,10 +452,10 @@ function CRSearch() {
             <h4 className="card-title">Advanced Search Services</h4>
             <p style={{ marginBottom: '16px' }}>Request customized searches and reports from our research team:</p>
             <ul style={{ fontSize: '14px', color: 'var(--text-secondary)' }}>
-              <li><strong>Ownership Tracing</strong> - Follow corporate ownership through multiple layers (¤200)</li>
-              <li><strong>Director Network Analysis</strong> - Map connections between directors and companies (¤300)</li>
-              <li><strong>Company Group Structures</strong> - Identify parent, subsidiary relationships (¤250)</li>
-              <li><strong>Historical Records</strong> - Research dissolved companies and archived records (¤150/hour)</li>
+              <li><strong>Ownership Tracing</strong> - Follow corporate ownership through multiple layers ($200)</li>
+              <li><strong>Director Network Analysis</strong> - Map connections between directors and companies ($300)</li>
+              <li><strong>Company Group Structures</strong> - Identify parent, subsidiary relationships ($250)</li>
+              <li><strong>Historical Records</strong> - Research dissolved companies and archived records ($150/hour)</li>
               <li><strong>Bulk Data Exports</strong> - Download datasets for research or compliance (quote required)</li>
             </ul>
             <div style={{ marginTop: '16px', padding: '12px', background: 'rgba(59, 130, 246, 0.1)', borderRadius: '8px', fontSize: '13px' }}>
@@ -489,7 +489,7 @@ function CRFilings() {
         <div className="content-text">
           <div className="info-box" style={{ marginBottom: '24px', background: 'rgba(239, 68, 68, 0.1)', border: '1px solid rgba(239, 68, 68, 0.2)' }}>
             <h4>Important Deadline</h4>
-            <p>All companies must file annual returns within 42 days of their incorporation anniversary. Late filing penalties apply: ¤100 first month, ¤50 each additional month. Companies more than 6 months late may be struck off the register.</p>
+            <p>All companies must file annual returns within 42 days of their incorporation anniversary. Late filing penalties apply: $100 first month, $50 each additional month. Companies more than 6 months late may be struck off the register.</p>
           </div>
 
           <h3>Required Annual Filings</h3>
@@ -499,7 +499,7 @@ function CRFilings() {
             <h4 className="card-title">Annual Return (Form AR1)</h4>
             <p style={{ color: 'var(--text-muted)', marginBottom: '12px' }}>Comprehensive snapshot of company structure, officers, shareholders, and registered particulars as of the return date.</p>
             <div style={{ fontSize: '13px', color: 'var(--text-secondary)', marginBottom: '12px' }}>
-              <strong>Filing deadline:</strong> Within 42 days of incorporation anniversary | <strong>Fee:</strong> ¤150
+              <strong>Filing deadline:</strong> Within 42 days of incorporation anniversary | <strong>Fee:</strong> $150
             </div>
             <div style={{ padding: '12px', background: 'var(--bg-elevated)', borderRadius: '8px', fontSize: '13px' }}>
               <strong>Required information:</strong>
@@ -517,14 +517,14 @@ function CRFilings() {
             <h4 className="card-title">Financial Statements</h4>
             <p style={{ color: 'var(--text-muted)', marginBottom: '12px' }}>Annual audited accounts showing financial position, profit and loss, and cash flow statement.</p>
             <div style={{ fontSize: '13px', color: 'var(--text-secondary)', marginBottom: '12px' }}>
-              <strong>Filing deadline:</strong> Within 6 months of financial year end | <strong>Fee:</strong> ¤100
+              <strong>Filing deadline:</strong> Within 6 months of financial year end | <strong>Fee:</strong> $100
             </div>
             <div style={{ padding: '12px', background: 'var(--bg-elevated)', borderRadius: '8px', fontSize: '13px' }}>
               <strong>Requirements vary by company size:</strong>
               <ul style={{ marginTop: '8px', marginBottom: 0 }}>
-                <li><strong>Small companies</strong> (turnover under ¤2M): Abbreviated accounts acceptable</li>
-                <li><strong>Medium companies</strong> (turnover ¤2M-10M): Full accounts, audit optional</li>
-                <li><strong>Large companies</strong> (turnover over ¤10M): Full audited accounts required</li>
+                <li><strong>Small companies</strong> (turnover under $2M): Abbreviated accounts acceptable</li>
+                <li><strong>Medium companies</strong> (turnover $2M-10M): Full accounts, audit optional</li>
+                <li><strong>Large companies</strong> (turnover over $10M): Full audited accounts required</li>
                 <li><strong>Public companies</strong> (all PLCs): Full audited accounts mandatory</li>
               </ul>
             </div>
@@ -545,7 +545,7 @@ function CRFilings() {
             <h4 className="card-title">Change of Directors (Form D1)</h4>
             <p style={{ color: 'var(--text-muted)', marginBottom: '12px' }}>Notify the Registry of director appointments or resignations.</p>
             <div style={{ fontSize: '13px', color: 'var(--text-secondary)' }}>
-              <strong>Deadline:</strong> 14 days from effective date | <strong>Fee:</strong> ¤50 | <strong>Required info:</strong> Full name, address, date of birth, ID number, appointment/resignation date
+              <strong>Deadline:</strong> 14 days from effective date | <strong>Fee:</strong> $50 | <strong>Required info:</strong> Full name, address, date of birth, ID number, appointment/resignation date
             </div>
           </div>
 
@@ -553,7 +553,7 @@ function CRFilings() {
             <h4 className="card-title">Change of Company Secretary (Form S1)</h4>
             <p style={{ color: 'var(--text-muted)', marginBottom: '12px' }}>Update secretary appointment or resignation (required for PLCs).</p>
             <div style={{ fontSize: '13px', color: 'var(--text-secondary)' }}>
-              <strong>Deadline:</strong> 14 days from change | <strong>Fee:</strong> ¤50
+              <strong>Deadline:</strong> 14 days from change | <strong>Fee:</strong> $50
             </div>
           </div>
 
@@ -561,7 +561,7 @@ function CRFilings() {
             <h4 className="card-title">Change of Registered Office (Form A1)</h4>
             <p style={{ color: 'var(--text-muted)', marginBottom: '12px' }}>Notify new registered office address within Praya.</p>
             <div style={{ fontSize: '13px', color: 'var(--text-secondary)' }}>
-              <strong>Deadline:</strong> 14 days before relocation | <strong>Fee:</strong> ¤75 | <strong>Note:</strong> Address must be physical location, not PO Box
+              <strong>Deadline:</strong> 14 days before relocation | <strong>Fee:</strong> $75 | <strong>Note:</strong> Address must be physical location, not PO Box
             </div>
           </div>
 
@@ -569,7 +569,7 @@ function CRFilings() {
             <h4 className="card-title">Allotment of Shares (Form SH1)</h4>
             <p style={{ color: 'var(--text-muted)', marginBottom: '12px' }}>Report new share issuances and changes to share capital.</p>
             <div style={{ fontSize: '13px', color: 'var(--text-secondary)' }}>
-              <strong>Deadline:</strong> 30 days from allotment | <strong>Fee:</strong> ¤100 + 0.5% of share value
+              <strong>Deadline:</strong> 30 days from allotment | <strong>Fee:</strong> $100 + 0.5% of share value
             </div>
           </div>
 
@@ -577,7 +577,7 @@ function CRFilings() {
             <h4 className="card-title">Charge Registration (Form CH1)</h4>
             <p style={{ color: 'var(--text-muted)', marginBottom: '12px' }}>Register mortgages, liens, and security interests over company assets.</p>
             <div style={{ fontSize: '13px', color: 'var(--text-secondary)' }}>
-              <strong>Deadline:</strong> 21 days from creation of charge | <strong>Fee:</strong> ¤200 | <strong>Critical:</strong> Unregistered charges may be void against creditors
+              <strong>Deadline:</strong> 21 days from creation of charge | <strong>Fee:</strong> $200 | <strong>Critical:</strong> Unregistered charges may be void against creditors
             </div>
           </div>
 
@@ -585,7 +585,7 @@ function CRFilings() {
             <h4 className="card-title">Special Resolutions (Form R1)</h4>
             <p style={{ color: 'var(--text-muted)', marginBottom: '12px' }}>File resolutions amending articles, changing company name, or approving major transactions.</p>
             <div style={{ fontSize: '13px', color: 'var(--text-secondary)' }}>
-              <strong>Deadline:</strong> 15 days from resolution passing | <strong>Fee:</strong> ¤100
+              <strong>Deadline:</strong> 15 days from resolution passing | <strong>Fee:</strong> $100
             </div>
           </div>
 
@@ -625,11 +625,11 @@ function CRFilings() {
             <h4 className="card-title">Consequences of Non-Compliance</h4>
             <p style={{ marginBottom: '12px' }}>Failing to file on time results in:</p>
             <ul style={{ marginBottom: '16px' }}>
-              <li><strong>Automatic penalties:</strong> ¤100 first month late, ¤50 each additional month</li>
+              <li><strong>Automatic penalties:</strong> $100 first month late, $50 each additional month</li>
               <li><strong>Director liability:</strong> Directors personally liable for penalties if company fails to pay</li>
               <li><strong>Loss of good standing:</strong> Cannot obtain certificates or file other documents</li>
               <li><strong>Strike-off notice:</strong> Company may be dissolved after 6 months non-compliance</li>
-              <li><strong>Prosecution:</strong> Persistent default may result in criminal charges (max fine ¤10,000)</li>
+              <li><strong>Prosecution:</strong> Persistent default may result in criminal charges (max fine $10,000)</li>
             </ul>
             <div style={{ padding: '12px', background: 'white', borderRadius: '8px', fontSize: '13px' }}>
               <strong>Rectification:</strong> File outstanding returns immediately and pay penalties to restore compliance. Contact filings@cr.gov.py for payment arrangements.
@@ -682,7 +682,7 @@ function CRServices() {
             <h4 className="card-title">Name Availability Check</h4>
             <p style={{ color: 'var(--text-muted)', marginBottom: '12px' }}>Search proposed company names instantly. System checks for duplicates, similar names, and restricted words requiring approval.</p>
             <div style={{ fontSize: '13px', color: 'var(--text-secondary)', marginTop: '12px' }}>
-              <strong>Features:</strong> Alternative suggestions, trademark conflict warnings, instant reservation (¤50 for 90 days)
+              <strong>Features:</strong> Alternative suggestions, trademark conflict warnings, instant reservation ($50 for 90 days)
             </div>
           </div>
 
@@ -713,12 +713,12 @@ function CRServices() {
             <div style={{ padding: '16px', background: 'var(--bg-elevated)', borderRadius: '8px', marginTop: '12px', fontSize: '13px' }}>
               <strong>Available certificates:</strong>
               <ul style={{ marginTop: '8px', marginBottom: '8px' }}>
-                <li>Certificate of Incorporation - ¤25 (digital ¤15)</li>
-                <li>Certificate of Good Standing - ¤50 (digital ¤30)</li>
-                <li>Certificate of Status - ¤40 (digital ¤25)</li>
-                <li>Certified Company Extract - ¤35 (digital ¤20)</li>
+                <li>Certificate of Incorporation - $25 (digital $15)</li>
+                <li>Certificate of Good Standing - $50 (digital $30)</li>
+                <li>Certificate of Status - $40 (digital $25)</li>
+                <li>Certified Company Extract - $35 (digital $20)</li>
               </ul>
-              <strong>Delivery:</strong> Standard mail (5-7 days) free, express (1-2 days) ¤25, digital immediate
+              <strong>Delivery:</strong> Standard mail (5-7 days) free, express (1-2 days) $25, digital immediate
             </div>
           </div>
 

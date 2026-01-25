@@ -119,7 +119,7 @@ function CTBHome({ navigate }) {
           <div className="hero-visual">
             <div className="financial-display">
               <div className="display-label">Annual Tax Revenue</div>
-              <div className="display-value">¤84M</div>
+              <div className="display-value">$84M</div>
               <div className="display-stats">
                 <div>
                   <div className="display-stat-label">Active Licenses</div>
@@ -488,13 +488,13 @@ function Taxation() {
 
                 <h4 style={{ marginTop: '24px' }}>Effective Total Tax Rate</h4>
                 <div style={{ fontSize: '14px', fontFamily: 'monospace', background: 'var(--bg-elevated)', padding: '16px', borderRadius: '8px' }}>
-                  <div>Product Price: ¤100</div>
-                  <div>Excise Tax (15%): ¤15</div>
-                  <div>Subtotal: ¤115</div>
-                  <div>Sales Tax (8% of ¤115): ¤9.20</div>
-                  <div>Local Tax (2% of ¤115): ¤2.30</div>
+                  <div>Product Price: $100</div>
+                  <div>Excise Tax (15%): $15</div>
+                  <div>Subtotal: $115</div>
+                  <div>Sales Tax (8% of $115): $9.20</div>
+                  <div>Local Tax (2% of $115): $2.30</div>
                   <div style={{ borderTop: '1px solid var(--border-subtle)', marginTop: '8px', paddingTop: '8px', fontWeight: 'bold' }}>
-                    Total Price: ¤126.50 (26.5% total tax)
+                    Total Price: $126.50 (26.5% total tax)
                   </div>
                 </div>
               </div>
@@ -529,13 +529,13 @@ function Taxation() {
                   <div style={{ marginBottom: '16px' }}>
                     <label style={{ fontSize: '13px', fontWeight: '600', display: 'block', marginBottom: '4px' }}>Gross Receipts (Quarterly)</label>
                     <div style={{ fontSize: '13px', color: 'var(--text-muted)', marginBottom: '8px' }}>Total revenue from cannabis sales before deductions</div>
-                    <input type="text" placeholder="¤0.00" style={{ width: '100%', padding: '10px', fontSize: '14px', border: '1px solid var(--border-subtle)', borderRadius: '6px' }} />
+                    <input type="text" placeholder="$0.00" style={{ width: '100%', padding: '10px', fontSize: '14px', border: '1px solid var(--border-subtle)', borderRadius: '6px' }} />
                   </div>
 
                   <div style={{ marginBottom: '16px' }}>
                     <label style={{ fontSize: '13px', fontWeight: '600', display: 'block', marginBottom: '4px' }}>Deductible Expenses</label>
                     <div style={{ fontSize: '13px', color: 'var(--text-muted)', marginBottom: '8px' }}>Business expenses (cultivation, processing, labor costs)</div>
-                    <input type="text" placeholder="¤0.00" style={{ width: '100%', padding: '10px', fontSize: '14px', border: '1px solid var(--border-subtle)', borderRadius: '6px' }} />
+                    <input type="text" placeholder="$0.00" style={{ width: '100%', padding: '10px', fontSize: '14px', border: '1px solid var(--border-subtle)', borderRadius: '6px' }} />
                   </div>
 
                   <button className="btn btn-primary" style={{ width: '100%' }}>Calculate Tax</button>
@@ -546,8 +546,8 @@ function Taxation() {
                 <div style={{ marginBottom: '16px', padding: '16px', background: 'var(--bg-elevated)', borderRadius: '8px' }}>
                   <h5 style={{ fontSize: '14px', marginBottom: '12px' }}>Small Retail Dispensary</h5>
                   <div style={{ fontSize: '13px', fontFamily: 'monospace' }}>
-                    <div style={{ marginBottom: '4px' }}>Quarterly Gross Receipts: ¤75,000</div>
-                    <div style={{ marginBottom: '4px' }}>Excise Tax (15%): <strong>¤11,250</strong></div>
+                    <div style={{ marginBottom: '4px' }}>Quarterly Gross Receipts: $75,000</div>
+                    <div style={{ marginBottom: '4px' }}>Excise Tax (15%): <strong>$11,250</strong></div>
                     <div style={{ marginTop: '8px', color: 'var(--text-muted)' }}>Estimated payment due quarterly</div>
                   </div>
                 </div>
@@ -555,8 +555,8 @@ function Taxation() {
                 <div style={{ marginBottom: '16px', padding: '16px', background: 'var(--bg-elevated)', borderRadius: '8px' }}>
                   <h5 style={{ fontSize: '14px', marginBottom: '12px' }}>Medium Cultivation Operation</h5>
                   <div style={{ fontSize: '13px', fontFamily: 'monospace' }}>
-                    <div style={{ marginBottom: '4px' }}>Quarterly Gross Receipts: ¤250,000</div>
-                    <div style={{ marginBottom: '4px' }}>Excise Tax (15%): <strong>¤37,500</strong></div>
+                    <div style={{ marginBottom: '4px' }}>Quarterly Gross Receipts: $250,000</div>
+                    <div style={{ marginBottom: '4px' }}>Excise Tax (15%): <strong>$37,500</strong></div>
                     <div style={{ marginTop: '8px', color: 'var(--text-muted)' }}>Estimated payment due quarterly</div>
                   </div>
                 </div>
@@ -564,8 +564,8 @@ function Taxation() {
                 <div style={{ marginBottom: '16px', padding: '16px', background: 'var(--bg-elevated)', borderRadius: '8px' }}>
                   <h5 style={{ fontSize: '14px', marginBottom: '12px' }}>Large Processing Facility</h5>
                   <div style={{ fontSize: '13px', fontFamily: 'monospace' }}>
-                    <div style={{ marginBottom: '4px' }}>Quarterly Gross Receipts: ¤500,000</div>
-                    <div style={{ marginBottom: '4px' }}>Excise Tax (15%): <strong>¤75,000</strong></div>
+                    <div style={{ marginBottom: '4px' }}>Quarterly Gross Receipts: $500,000</div>
+                    <div style={{ marginBottom: '4px' }}>Excise Tax (15%): <strong>$75,000</strong></div>
                     <div style={{ marginTop: '8px', color: 'var(--text-muted)' }}>Estimated payment due quarterly</div>
                   </div>
                 </div>
@@ -637,7 +637,7 @@ function Taxation() {
                 </p>
                 <ul>
                   <li>Request installment payment plan (Form CTB-PAY)</li>
-                  <li>Available for balances over ¤5,000</li>
+                  <li>Available for balances over $5,000</li>
                   <li>Up to 12 months to pay</li>
                   <li>Interest charges apply (6% APR)</li>
                   <li>Must file return on time to qualify</li>
@@ -862,7 +862,7 @@ function Compliance() {
                     <li>Failure to test products</li>
                   </ul>
                   <div style={{ fontSize: '13px', color: '#dc2626', fontWeight: '600' }}>
-                    Penalty: License suspension or revocation, fines ¤10,000-50,000
+                    Penalty: License suspension or revocation, fines $10,000-50,000
                   </div>
                 </div>
 
@@ -876,7 +876,7 @@ function Compliance() {
                     <li>Quantity limit violations</li>
                   </ul>
                   <div style={{ fontSize: '13px', color: '#f59e0b', fontWeight: '600' }}>
-                    Penalty: Fines ¤1,000-10,000, license suspension possible
+                    Penalty: Fines $1,000-10,000, license suspension possible
                   </div>
                 </div>
 
@@ -890,7 +890,7 @@ function Compliance() {
                     <li>Employee permit issues</li>
                   </ul>
                   <div style={{ fontSize: '13px', color: '#3b82f6', fontWeight: '600' }}>
-                    Penalty: Warning or fine ¤250-1,000, corrective action required
+                    Penalty: Warning or fine $250-1,000, corrective action required
                   </div>
                 </div>
 
@@ -1055,12 +1055,12 @@ function Research() {
                 <h4>Industry Overview</h4>
                 <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '16px', marginBottom: '24px' }}>
                   <div style={{ padding: '16px', background: 'rgba(45, 134, 89, 0.1)', borderRadius: '8px', border: '1px solid rgba(45, 134, 89, 0.3)' }}>
-                    <div style={{ fontSize: '24px', fontWeight: '700', color: '#2d8659', marginBottom: '4px' }}>¤420M</div>
+                    <div style={{ fontSize: '24px', fontWeight: '700', color: '#2d8659', marginBottom: '4px' }}>$420M</div>
                     <div style={{ fontSize: '13px', color: 'var(--text-muted)' }}>Total Market Size</div>
                     <div style={{ fontSize: '12px', color: 'var(--text-secondary)', marginTop: '4px' }}>FY 2024 (projected)</div>
                   </div>
                   <div style={{ padding: '16px', background: 'rgba(45, 134, 89, 0.1)', borderRadius: '8px', border: '1px solid rgba(45, 134, 89, 0.3)' }}>
-                    <div style={{ fontSize: '24px', fontWeight: '700', color: '#2d8659', marginBottom: '4px' }}>¤84M</div>
+                    <div style={{ fontSize: '24px', fontWeight: '700', color: '#2d8659', marginBottom: '4px' }}>$84M</div>
                     <div style={{ fontSize: '13px', color: 'var(--text-muted)' }}>Tax Revenue</div>
                     <div style={{ fontSize: '12px', color: 'var(--text-secondary)', marginTop: '4px' }}>FY 2024</div>
                   </div>
@@ -1093,19 +1093,19 @@ function Research() {
 
                 <h4>Sales Data (FY 2024)</h4>
                 <ul>
-                  <li><strong>Q1 Sales:</strong> ¤98M (January - March)</li>
-                  <li><strong>Q2 Sales:</strong> ¤105M (April - June)</li>
-                  <li><strong>Q3 Sales:</strong> ¤112M (July - September)</li>
-                  <li><strong>Q4 Sales:</strong> ¤105M est (October - December)</li>
+                  <li><strong>Q1 Sales:</strong> $98M (January - March)</li>
+                  <li><strong>Q2 Sales:</strong> $105M (April - June)</li>
+                  <li><strong>Q3 Sales:</strong> $112M (July - September)</li>
+                  <li><strong>Q4 Sales:</strong> $105M est (October - December)</li>
                   <li><strong>Growth Rate:</strong> +18% year-over-year</li>
                 </ul>
 
                 <h4 style={{ marginTop: '20px' }}>Product Categories</h4>
                 <ul>
-                  <li><strong>Flower:</strong> 52% of sales (¤218M)</li>
-                  <li><strong>Edibles:</strong> 23% of sales (¤97M)</li>
-                  <li><strong>Concentrates:</strong> 15% of sales (¤63M)</li>
-                  <li><strong>Other (topicals, tinctures):</strong> 10% of sales (¤42M)</li>
+                  <li><strong>Flower:</strong> 52% of sales ($218M)</li>
+                  <li><strong>Edibles:</strong> 23% of sales ($97M)</li>
+                  <li><strong>Concentrates:</strong> 15% of sales ($63M)</li>
+                  <li><strong>Other (topicals, tinctures):</strong> 10% of sales ($42M)</li>
                 </ul>
               </div>
 
@@ -1114,7 +1114,7 @@ function Research() {
                 <ul>
                   <li><strong>Direct Jobs:</strong> 8,450 employees in licensed cannabis businesses</li>
                   <li><strong>Indirect Jobs:</strong> 3,200 jobs in supporting industries</li>
-                  <li><strong>Average Wage:</strong> ¤18.50/hour (retail), ¤22/hour (cultivation/processing)</li>
+                  <li><strong>Average Wage:</strong> $18.50/hour (retail), $22/hour (cultivation/processing)</li>
                   <li><strong>Job Growth:</strong> +15% in 2024</li>
                 </ul>
               </div>
@@ -1248,7 +1248,7 @@ function Research() {
                   <li><strong>Black Market:</strong> Estimated 35% reduction in illicit sales</li>
                   <li><strong>Youth Usage:</strong> No statistical increase among ages 12-20</li>
                   <li><strong>DUI Arrests:</strong> Cannabis-involved DUIs up 8% (enforcement improved)</li>
-                  <li><strong>Tax Revenue:</strong> ¤312M collected (2020-2024)</li>
+                  <li><strong>Tax Revenue:</strong> $312M collected (2020-2024)</li>
                   <li><strong>Criminal Justice:</strong> 4,200 fewer cannabis possession arrests annually</li>
                   <li><strong>Public Support:</strong> 68% approval rating (2024 survey)</li>
                 </ul>
@@ -1323,7 +1323,7 @@ function Research() {
 
                 <h4 style={{ marginTop: '20px' }}>Future Outlook (2025-2027)</h4>
                 <ul>
-                  <li>Market projected to reach ¤600M by 2027 (10% annual growth)</li>
+                  <li>Market projected to reach $600M by 2027 (10% annual growth)</li>
                   <li>Federal legalization (if enacted) would open interstate commerce</li>
                   <li>Tourism cannabis market expected to grow significantly</li>
                   <li>Medical cannabis patient base projected to double</li>

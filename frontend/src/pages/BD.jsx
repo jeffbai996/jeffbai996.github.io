@@ -276,7 +276,7 @@ function BDPermits() {
             <h4 className="card-title">New Construction Permit</h4>
             <p style={{ color: 'var(--text-muted)', marginBottom: '12px' }}>For building new residential, commercial, or industrial structures. Includes foundation, structural, and occupancy approvals.</p>
             <div style={{ fontSize: '13px', color: 'var(--text-secondary)' }}>
-              <strong>Fee:</strong> ¤500 - ¤5,000 (based on project value) | <strong>Processing:</strong> 15-30 business days
+              <strong>Fee:</strong> $500 - $5,000 (based on project value) | <strong>Processing:</strong> 15-30 business days
             </div>
           </div>
 
@@ -284,7 +284,7 @@ function BDPermits() {
             <h4 className="card-title">Renovation Permit</h4>
             <p style={{ color: 'var(--text-muted)', marginBottom: '12px' }}>For major alterations, additions, or structural modifications to existing buildings. Minor cosmetic changes may not require a permit.</p>
             <div style={{ fontSize: '13px', color: 'var(--text-secondary)' }}>
-              <strong>Fee:</strong> ¤200 - ¤2,000 | <strong>Processing:</strong> 10-20 business days
+              <strong>Fee:</strong> $200 - $2,000 | <strong>Processing:</strong> 10-20 business days
             </div>
           </div>
 
@@ -292,7 +292,7 @@ function BDPermits() {
             <h4 className="card-title">Demolition Permit</h4>
             <p style={{ color: 'var(--text-muted)', marginBottom: '12px' }}>Required for complete or partial demolition of structures. Includes asbestos inspection and environmental clearance.</p>
             <div style={{ fontSize: '13px', color: 'var(--text-secondary)' }}>
-              <strong>Fee:</strong> ¤300 - ¤1,500 | <strong>Processing:</strong> 7-14 business days
+              <strong>Fee:</strong> $300 - $1,500 | <strong>Processing:</strong> 7-14 business days
             </div>
           </div>
 
@@ -300,7 +300,7 @@ function BDPermits() {
             <h4 className="card-title">Trade Permits</h4>
             <p style={{ color: 'var(--text-muted)', marginBottom: '12px' }}>Specialized permits for electrical, plumbing, HVAC, and fire protection systems. Must be obtained by licensed contractors.</p>
             <div style={{ fontSize: '13px', color: 'var(--text-secondary)' }}>
-              <strong>Fee:</strong> ¤100 - ¤800 | <strong>Processing:</strong> 5-10 business days
+              <strong>Fee:</strong> $100 - $800 | <strong>Processing:</strong> 5-10 business days
             </div>
           </div>
 
@@ -432,7 +432,7 @@ function BDInspections() {
 
           <div className="info-box" style={{ marginTop: '24px' }}>
             <h4>Failed Inspection?</h4>
-            <p>Don't worry! Our inspectors will provide detailed notes on what needs correction. You can schedule a re-inspection once issues are addressed. Re-inspection fee: ¤75</p>
+            <p>Don't worry! Our inspectors will provide detailed notes on what needs correction. You can schedule a re-inspection once issues are addressed. Re-inspection fee: $75</p>
           </div>
         </div>
       </div>
@@ -547,7 +547,7 @@ function BDCodes() {
             <h4 className="card-title">Getting Help with Code Requirements</h4>
             <ul>
               <li><strong>Code Interpretation Service:</strong> Email specific questions to codes@buildings.gov.py for official interpretation</li>
-              <li><strong>Plan Review Pre-Consultation:</strong> Schedule meeting with plan reviewers before submission (¤150/hour)</li>
+              <li><strong>Plan Review Pre-Consultation:</strong> Schedule meeting with plan reviewers before submission ($150/hour)</li>
               <li><strong>Code Reference Library:</strong> Free access at all BD offices - complete code books and reference materials</li>
               <li><strong>Online Code Search:</strong> Search code sections at www.buildings.gov.py/codes</li>
               <li><strong>Educational Workshops:</strong> Monthly code training sessions for contractors and designers</li>
@@ -655,7 +655,7 @@ function BDServices() {
             <h4 className="card-title">Property Reports</h4>
             <p style={{ color: 'var(--text-muted)', marginBottom: '12px' }}>Generate comprehensive reports showing all permits, inspections, and approvals for any property address.</p>
             <div style={{ fontSize: '13px', color: 'var(--text-secondary)', marginTop: '12px' }}>
-              <strong>Report includes:</strong> Permit history, inspection records, certificates of occupancy, zoning information | <strong>Fee:</strong> ¤25 per report
+              <strong>Report includes:</strong> Permit history, inspection records, certificates of occupancy, zoning information | <strong>Fee:</strong> $25 per report
             </div>
           </div>
 

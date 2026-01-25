@@ -194,7 +194,7 @@ function NPAHome({ navigate }) {
                 <div className="content-text">
                   <p>You can file online reports for:</p>
                   <ul>
-                    <li>Theft (under ¤2,500)</li>
+                    <li>Theft (under $2,500)</li>
                     <li>Lost property</li>
                     <li>Vandalism</li>
                     <li>Vehicle accidents (no injuries)</li>
@@ -297,8 +297,8 @@ function FileReport() {
           <p>You can file online reports for the following incident types:</p>
 
           <div className="card" style={{ marginTop: '20px' }}>
-            <h4 className="card-title">Theft - Minor (under ¤2,500)</h4>
-            <p style={{ color: 'var(--text-muted)', marginBottom: '12px' }}>Report theft of personal property valued under ¤2,500. Include description of stolen items, approximate value, and time of incident.</p>
+            <h4 className="card-title">Theft - Minor (under $2,500)</h4>
+            <p style={{ color: 'var(--text-muted)', marginBottom: '12px' }}>Report theft of personal property valued under $2,500. Include description of stolen items, approximate value, and time of incident.</p>
             <div style={{ fontSize: '13px', color: 'var(--text-secondary)' }}>
               <strong>Processing:</strong> 24-48 hours for case number | <strong>Response:</strong> Officer may contact for details
             </div>
@@ -332,7 +332,7 @@ function FileReport() {
           <p>Please call 911 or 311 for:</p>
           <ul>
             <li>Crimes in progress or emergencies</li>
-            <li>Theft over ¤2,500</li>
+            <li>Theft over $2,500</li>
             <li>Assault or violence</li>
             <li>Domestic incidents</li>
             <li>Missing persons</li>
@@ -414,7 +414,7 @@ function PoliceServices() {
                     <li>Shows criminal convictions in the Republic of Praya</li>
                     <li>Valid for 6 months from date of issue</li>
                     <li>Processing time: 5-10 business days</li>
-                    <li>Fee: ¤50</li>
+                    <li>Fee: $50</li>
                     <li>Common uses: Employment, visa applications, licensing</li>
                   </ul>
                 </div>
@@ -425,7 +425,7 @@ function PoliceServices() {
                     <li>Required for work with children, elderly, or vulnerable persons</li>
                     <li>Includes pardoned offenses and pending charges</li>
                     <li>Processing time: 10-15 business days</li>
-                    <li>Fee: ¤75</li>
+                    <li>Fee: $75</li>
                     <li>Requires fingerprinting and additional documentation</li>
                   </ul>
                 </div>
@@ -458,8 +458,8 @@ function PoliceServices() {
                 <ul>
                   <li>Includes apostille certification for international recognition</li>
                   <li>Processing time: 15-20 business days</li>
-                  <li>Fee: ¤100 (includes apostille)</li>
-                  <li>Translated versions available (English, Spanish, French) for additional ¤25</li>
+                  <li>Fee: $100 (includes apostille)</li>
+                  <li>Translated versions available (English, Spanish, French) for additional $25</li>
                 </ul>
               </div>
 
