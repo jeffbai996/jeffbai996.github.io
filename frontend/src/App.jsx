@@ -31,6 +31,11 @@ const Weather = lazy(() => import('./pages/Weather'))
 const Status = lazy(() => import('./pages/Status'))
 const Payments = lazy(() => import('./pages/Payments'))
 const NotFound = lazy(() => import('./pages/NotFound'))
+const Terms = lazy(() => import('./pages/Terms'))
+const Privacy = lazy(() => import('./pages/Privacy'))
+const Cookies = lazy(() => import('./pages/Cookies'))
+const FAQ = lazy(() => import('./pages/FAQ'))
+const About = lazy(() => import('./pages/About'))
 
 // Lazy load admin pages
 const AlertAdmin = lazy(() => import('./pages/admin/AlertAdmin'))
@@ -124,6 +129,13 @@ function App() {
               <Route path="air-quality" element={<AirQuality />} />
               <Route path="national-security" element={<NationalSecurity />} />
               <Route path="weather/*" element={<Weather />} />
+
+              {/* Static Pages */}
+              <Route path="terms" element={<Terms />} />
+              <Route path="privacy" element={<Privacy />} />
+              <Route path="cookies" element={<Cookies />} />
+              <Route path="faq" element={<FAQ />} />
+              <Route path="about" element={<About />} />
 
               {/* Auth Routes */}
               <Route path="login" element={<Login />} />
