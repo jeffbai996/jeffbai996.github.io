@@ -821,15 +821,20 @@ export default function Portal() {
             <div className="footer-brand">
               <h4>Republic of fictional project</h4>
               <p>Founded on 26 February 2011, the Republic of fictional project has grown from its original settlement on Flower Island to a thriving city-state. Today, we serve 4.2 million citizens across fictional project (home to districts like Downtown, Surowski Valley, and Western District) and Braemar County (featuring the cities of Braemar and Oakville). This portal provides unified access to all government services 24/7.</p>
-              <p style={{ marginTop: '8px', fontSize: '13px', color: 'var(--text-muted)' }}><strong>Office of the Chief Executive:</strong> Jeff Bai &bull; <strong>Governor, Braemar County:</strong> Karson Mo</p>
+              <p style={{ marginTop: '8px', fontSize: '13px', color: 'var(--text-muted)' }}>
+                <strong>Office of the Chief Executive:</strong> Jeff Bai<br/>
+                <strong>Governor, Braemar County:</strong> Karson Mo<br/>
+                <strong>Governor, fictional project County:</strong> Michael Tang<br/>
+                <strong>Contact:</strong> info@fictional-project.org
+              </p>
             </div>
             <div className="footer-section">
               <h5>Quick Links</h5>
               <ul>
-                <li><Link to="/#services">About fictional project</Link></li>
-                <li><Link to="/lc">Contact Us</Link></li>
+                <li><Link to="/about">About fictional project</Link></li>
+                <li><Link to="/faq">Contact Us</Link></li>
                 <li><Link to="/#services">Accessibility</Link></li>
-                <li><Link to="/#services">Privacy Policy</Link></li>
+                <li><Link to="/privacy">Privacy Policy</Link></li>
               </ul>
             </div>
             <div className="footer-section footer-departments">
@@ -856,8 +861,8 @@ export default function Portal() {
             <div className="footer-section">
               <h5>Help</h5>
               <ul>
-                <li><Link to="/#services">FAQs</Link></li>
-                <li><Link to="/interior">Support</Link></li>
+                <li><Link to="/faq">FAQs</Link></li>
+                <li><Link to="/faq">Support</Link></li>
                 <li><Link to="/status">System Status</Link></li>
                 <li><Link to="/payments">Make a Payment</Link></li>
               </ul>
@@ -866,9 +871,9 @@ export default function Portal() {
           <div className="footer-bottom">
             <span>&copy; 2011-2026 Republic of fictional project. All rights reserved.</span>
             <div className="footer-legal">
-              <Link to="/#services">Terms of Service</Link>
-              <Link to="/#services">Privacy</Link>
-              <Link to="/#services">Cookies</Link>
+              <Link to="/terms">Terms of Service</Link>
+              <Link to="/privacy">Privacy</Link>
+              <Link to="/cookies">Cookies</Link>
             </div>
           </div>
         </div>
