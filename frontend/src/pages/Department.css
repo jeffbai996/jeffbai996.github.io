@@ -181,10 +181,10 @@
 /* Emergency styling for Health and NPA */
 .theme-health .emergency-card,
 .theme-npa .emergency-card {
-  background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%);
+  background: linear-gradient(135deg, #991b1b 0%, #7f1d1d 100%);
   color: #ffffff;
   border: none;
-  box-shadow: 0 4px 12px rgba(220, 38, 38, 0.25);
+  box-shadow: 0 4px 12px rgba(127, 29, 29, 0.25);
 }
 
 .theme-health .emergency-card h4,
@@ -838,12 +838,12 @@ body.light .dept-header {
 }
 
 .layout-emergency .hero-emergency {
-  background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%);
+  background: linear-gradient(135deg, #991b1b 0%, #7f1d1d 100%);
   border-radius: 20px;
   padding: 32px;
   color: #ffffff;
-  box-shadow: 0 20px 40px rgba(220, 38, 38, 0.4);
-  border: 2px solid rgba(220, 38, 38, 0.5);
+  box-shadow: 0 20px 40px rgba(127, 29, 29, 0.35);
+  border: 2px solid rgba(127, 29, 29, 0.5);
 }
 
 .layout-emergency .emergency-title {

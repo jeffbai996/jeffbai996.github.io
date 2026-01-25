@@ -413,7 +413,7 @@ export default function Portal() {
         <div className="container">
           <div className="hero-content">
             <h2>Welcome to <span style={{color: '#f97316'}}>GOV.PRAYA</span></h2>
-            <p>Your central gateway to government services in the Republic of Praya. Founded in 2011 on Flower Island, our nation has grown from a small settlement to a thriving city-state of 4.2 million residents across Metropolitan and Braemar Counties—all served through one unified digital platform.</p>
+            <p>Your central gateway to government services in the Republic of Praya. Founded in 2011 on Flower Island, our nation has grown from a small settlement to a thriving city-state of 4.2 million residents across our cities and counties — all served through one unified digital platform.</p>
             <div className="hero-features">
               <div className="hero-feature">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -820,8 +820,8 @@ export default function Portal() {
           <div className="footer-grid">
             <div className="footer-brand">
               <h4>Republic of Praya</h4>
-              <p>Founded on 26 February 2011, the Republic of Praya has grown from its original settlement on Flower Island to a thriving city-state. Today, we serve 4.2 million citizens across Metropolitan County (home to districts like Downtown, Surowski Valley, and Western District) and Braemar County (featuring the cities of Braemar and Oakville). This portal provides unified access to all government services 24/7.</p>
-              <p style={{ marginTop: '8px', fontSize: '13px', color: 'var(--text-muted)' }}><strong>Office of the Mayor:</strong> Jeff Bai &bull; <strong>Governor, Braemar County:</strong> Karson Mo</p>
+              <p>Founded on 26 February 2011, the Republic of Praya has grown from its original settlement on Flower Island to a thriving city-state. Today, we serve 4.2 million citizens across Praya (home to districts like Downtown, Surowski Valley, and Western District) and Braemar County (featuring the cities of Braemar and Oakville). This portal provides unified access to all government services 24/7.</p>
+              <p style={{ marginTop: '8px', fontSize: '13px', color: 'var(--text-muted)' }}><strong>Office of the Chief Executive:</strong> Jeff Bai &bull; <strong>Governor, Braemar County:</strong> Karson Mo</p>
             </div>
             <div className="footer-section">
               <h5>Quick Links</h5>
@@ -835,20 +835,20 @@ export default function Portal() {
             <div className="footer-section footer-departments">
               <h5>Departments</h5>
               <ul>
-                <li><a href="/npa">National Police Agency</a></li>
-                <li><a href="/bop">Bank of Praya</a></li>
-                <li><a href="/ctb">Cannabis Tax Bureau</a></li>
-                <li><a href="/doj">Justice Department</a></li>
-                <li><a href="/interior">Interior Department</a></li>
-                <li><a href="/transport">Transport Department</a></li>
-                <li><a href="/revenue">Revenue Department</a></li>
-                <li><a href="/post">Praya Post</a></li>
-                <li><a href="/health">Health Department</a></li>
-                <li><a href="/housing">Housing Authority</a></li>
-                <li><a href="/cbca">Customs & Border</a></li>
-                <li><a href="/lc">Legislative Council</a></li>
-                <li><Link to="/bd">Buildings Dept</Link></li>
-                <li><Link to="/cr">Companies Registry</Link></li>
+                <li><a href="/npa">Police</a></li>
+                <li><a href="/bop">Bank</a></li>
+                <li><a href="/ctb">Cannabis</a></li>
+                <li><a href="/doj">Justice</a></li>
+                <li><a href="/interior">Interior</a></li>
+                <li><a href="/transport">Transport</a></li>
+                <li><a href="/revenue">Revenue</a></li>
+                <li><a href="/post">Post</a></li>
+                <li><a href="/health">Health</a></li>
+                <li><a href="/housing">Housing</a></li>
+                <li><a href="/cbca">Customs</a></li>
+                <li><a href="/lc">Legislature</a></li>
+                <li><Link to="/bd">Buildings</Link></li>
+                <li><Link to="/cr">Companies</Link></li>
                 <li><Link to="/swd">Social Welfare</Link></li>
               </ul>
             </div>
