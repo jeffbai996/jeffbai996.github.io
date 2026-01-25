@@ -802,8 +802,8 @@ function CriminalCode() {
                   {[
                     { class: 'First Degree Felony', range: '10-30 years or life', examples: 'Murder, aggravated robbery, rape' },
                     { class: 'Second Degree Felony', range: '5-15 years', examples: 'Manslaughter, armed robbery, aggravated assault' },
-                    { class: 'Third Degree Felony', range: '2-10 years', examples: 'Burglary, theft over ¤10,000, drug possession' },
-                    { class: 'Class A Misdemeanor', range: 'Up to 1 year', examples: 'Simple assault, theft under ¤1,000, DUI first offense' },
+                    { class: 'Third Degree Felony', range: '2-10 years', examples: 'Burglary, theft over $10,000, drug possession' },
+                    { class: 'Class A Misdemeanor', range: 'Up to 1 year', examples: 'Simple assault, theft under $1,000, DUI first offense' },
                     { class: 'Class B Misdemeanor', range: 'Up to 6 months', examples: 'Criminal mischief, disorderly conduct, minor drug possession' },
                     { class: 'Class C Misdemeanor', range: 'Up to 30 days', examples: 'Traffic violations, minor trespass, public intoxication' }
                   ].map((offense, i) => (
@@ -1429,7 +1429,7 @@ function OnlineServices() {
                     {
                       number: 'DOJ-SC-025',
                       title: 'Small Claims Complaint',
-                      desc: 'File a small claims case (under ¤5,000)',
+                      desc: 'File a small claims case (under $5,000)',
                       category: 'Small Claims'
                     },
                     {
