@@ -23,7 +23,7 @@ export default function BOP() {
             </div>
             <div className="logo-text">
               <h1>Bank of Praya</h1>
-              <span className="tagline">Republic of Praya</span>
+              <span className="tagline">Central Bank of the Republic of Praya</span>
             </div>
           </Link>
           <nav className="nav">
@@ -31,6 +31,7 @@ export default function BOP() {
             <Link to="/bop/accounts" className="nav-link">Accounts</Link>
             <Link to="/bop/loans" className="nav-link">Loans</Link>
             <Link to="/bop/services" className="nav-link">Services</Link>
+            <Link to="/bop/my-account" className="nav-link">My Account</Link>
           </nav>
         </div>
       </header>
@@ -40,6 +41,7 @@ export default function BOP() {
         <Route path="accounts" element={<Accounts />} />
         <Route path="loans" element={<Loans />} />
         <Route path="services" element={<Services />} />
+        <Route path="my-account" element={<MyAccount />} />
       </Routes>
 
       <footer className="dept-footer">
@@ -47,11 +49,12 @@ export default function BOP() {
           <div className="footer-grid">
             <div className="footer-brand">
               <h4>Bank of Praya</h4>
-              <p>The central bank of the Republic of Praya, serving citizens and businesses with secure, reliable banking services.</p>
+              <p>The Central Bank of the Republic of Praya, serving citizens and businesses with secure, reliable banking services. Now featuring integrated Minecraft economy support through the gp-ai Paper plugin.</p>
             </div>
             <div className="footer-section">
               <h5>Services</h5>
               <ul>
+                <li><Link to="/bop/my-account">My Account</Link></li>
                 <li><Link to="/bop/accounts">Open Account</Link></li>
                 <li><Link to="/bop/loans">Apply for Loan</Link></li>
                 <li><Link to="/bop/services">Banking Services</Link></li>
@@ -94,17 +97,17 @@ function BOPHome({ navigate }) {
             Central Banking
           </div>
           <h2>Banking for <span>Everyone</span></h2>
-          <p>The Bank of Praya provides secure banking services, competitive rates, and financial stability for all citizens and businesses of the Republic. Your trusted partner in economic growth.</p>
+          <p>The Central Bank of the Republic of Praya provides secure banking services, competitive rates, and financial stability for all citizens and businesses. Your trusted partner in economic growth, now with integrated Minecraft economy support.</p>
           <div className="hero-actions">
-            <button className="btn btn-primary" onClick={() => navigate('/bop/accounts')}>
+            <button className="btn btn-primary" onClick={() => navigate('/bop/my-account')}>
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                 <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/>
                 <circle cx="12" cy="7" r="4"/>
               </svg>
-              Open an Account
+              Access My Account
             </button>
-            <button className="btn btn-secondary" onClick={() => navigate('/bop/loans')}>
-              Apply for Loan
+            <button className="btn btn-secondary" onClick={() => navigate('/bop/accounts')}>
+              Open New Account
             </button>
           </div>
         </div>
@@ -178,9 +181,38 @@ function BOPHome({ navigate }) {
                 </div>
               </div>
 
+              <div className="card" style={{ background: 'linear-gradient(135deg, rgba(5, 150, 105, 0.1) 0%, rgba(4, 120, 87, 0.05) 100%)', border: '1px solid rgba(5, 150, 105, 0.2)' }}>
+                <div className="card-header">
+                  <h3 className="card-title" style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                      <rect x="2" y="7" width="20" height="14" rx="2" ry="2"/>
+                      <path d="M16 21V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v16"/>
+                    </svg>
+                    New: Minecraft Economy Integration
+                  </h3>
+                </div>
+                <div className="content-text">
+                  <p style={{ marginBottom: '12px' }}>Connect your Bank of Praya account to Minecraft with the gp-ai Paper plugin. Manage your in-game economy seamlessly:</p>
+                  <ul style={{ marginBottom: '16px' }}>
+                    <li><strong>Real-time Synchronization:</strong> Your account balance syncs between the game and web portal</li>
+                    <li><strong>Secure Transactions:</strong> All in-game transactions are encrypted and logged</li>
+                    <li><strong>Player Transfers:</strong> Send money to other players instantly</li>
+                    <li><strong>Transaction History:</strong> View all your in-game transactions online</li>
+                  </ul>
+                  <button className="btn btn-primary" onClick={() => navigate('/bop/my-account')} style={{ fontSize: '14px', padding: '10px 20px' }}>
+                    Link Your Account
+                  </button>
+                </div>
+              </div>
+
               <div className="card">
                 <div className="card-header">
                   <h3 className="card-title">Latest Updates</h3>
+                </div>
+                <div className="news-item">
+                  <span className="news-date">Jan 25, 2026</span>
+                  <h4 className="news-title">Minecraft Integration Now Live</h4>
+                  <p className="news-excerpt">Link your BOP account to Minecraft for seamless in-game banking with the gp-ai plugin.</p>
                 </div>
                 <div className="news-item">
                   <span className="news-date">Nov 25, 2024</span>
@@ -214,6 +246,15 @@ function BOPHome({ navigate }) {
 
               <div className="card">
                 <h4 className="card-title">Quick Services</h4>
+                <div className="quick-link" onClick={() => navigate('/bop/my-account')}>
+                  <span className="icon">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                      <rect x="2" y="7" width="20" height="14" rx="2" ry="2"/>
+                      <path d="M16 21V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v16"/>
+                    </svg>
+                  </span>
+                  My Account
+                </div>
                 <div className="quick-link" onClick={() => navigate('/bop/accounts')}>
                   <span className="icon">
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -633,6 +674,386 @@ function Loans() {
       </div>
     </main>
   );
+}
+
+function MyAccount() {
+  const [isLoggedIn, setIsLoggedIn] = React.useState(false)
+  const [view, setView] = React.useState('login') // 'login', 'register', 'dashboard'
+  const [username, setUsername] = React.useState('')
+  const [password, setPassword] = React.useState('')
+  const [accountData, setAccountData] = React.useState({
+    accountNumber: 'BOP-2024-' + Math.floor(Math.random() * 100000).toString().padStart(5, '0'),
+    accountHolder: '',
+    balance: 0,
+    accountType: 'Checking',
+    openedDate: new Date().toLocaleDateString(),
+    minecraftLinked: false,
+    minecraftUsername: ''
+  })
+  const [transactions, setTransactions] = React.useState([])
+
+  const handleLogin = (e) => {
+    e.preventDefault()
+    if (username && password) {
+      // Demo login - in production, this would authenticate with backend
+      setIsLoggedIn(true)
+      setView('dashboard')
+      setAccountData({
+        ...accountData,
+        accountHolder: username,
+        balance: 10000 + Math.floor(Math.random() * 50000),
+        minecraftLinked: false
+      })
+      // Generate sample transactions
+      setTransactions([
+        { id: 1, date: new Date(Date.now() - 86400000).toLocaleDateString(), description: 'Deposit - Payroll', amount: 2500, type: 'credit' },
+        { id: 2, date: new Date(Date.now() - 172800000).toLocaleDateString(), description: 'Withdrawal - ATM', amount: -100, type: 'debit' },
+        { id: 3, date: new Date(Date.now() - 259200000).toLocaleDateString(), description: 'Transfer to Savings', amount: -1000, type: 'debit' },
+        { id: 4, date: new Date(Date.now() - 345600000).toLocaleDateString(), description: 'Deposit - Check', amount: 500, type: 'credit' },
+        { id: 5, date: new Date(Date.now() - 432000000).toLocaleDateString(), description: 'Payment - Utilities', amount: -150, type: 'debit' }
+      ])
+    }
+  }
+
+  const handleRegister = (e) => {
+    e.preventDefault()
+    if (username && password) {
+      // Demo registration
+      setIsLoggedIn(true)
+      setView('dashboard')
+      setAccountData({
+        ...accountData,
+        accountHolder: username,
+        balance: 0
+      })
+      setTransactions([])
+    }
+  }
+
+  const linkMinecraftAccount = () => {
+    const mcUsername = prompt('Enter your Minecraft username:')
+    if (mcUsername) {
+      setAccountData({
+        ...accountData,
+        minecraftLinked: true,
+        minecraftUsername: mcUsername
+      })
+      alert(`Minecraft account "${mcUsername}" linked successfully! Your in-game economy is now connected to your Bank of Praya account.`)
+    }
+  }
+
+  return (
+    <main className="main">
+      <div className="page-header">
+        <div className="container">
+          <div className="breadcrumb">
+            <Link to="/bop">Home</Link> / My Account
+          </div>
+          <h1>My Account</h1>
+          <p className="subtitle">Manage your Bank of Praya account and link to Minecraft</p>
+        </div>
+      </div>
+      <div className="container">
+        {!isLoggedIn ? (
+          <div className="content-grid">
+            <div className="main-content">
+              {view === 'login' ? (
+                <div className="card">
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '4px' }}>
+                    <h3 className="card-title" style={{ marginBottom: 0 }}>Login to Your Account</h3>
+                    <span style={{ background: 'rgba(245, 158, 11, 0.15)', color: '#f59e0b', padding: '4px 10px', borderRadius: '6px', fontSize: '12px', fontWeight: '600' }}>Demo Only</span>
+                  </div>
+                  <p style={{ color: 'var(--text-muted)', fontSize: '14px', marginBottom: '20px' }}>This is a demonstration account system. Enter any username and password to continue.</p>
+                  <form onSubmit={handleLogin} className="content-text">
+                    <div style={{ marginBottom: '20px' }}>
+                      <label htmlFor="login-username" style={{ display: 'block', marginBottom: '8px', fontWeight: '500' }}>Username</label>
+                      <input
+                        id="login-username"
+                        type="text"
+                        value={username}
+                        onChange={(e) => setUsername(e.target.value)}
+                        placeholder="Enter your username"
+                        required
+                        style={{ width: '100%', padding: '10px', borderRadius: '8px', border: '1px solid var(--border-subtle)', fontSize: '16px' }}
+                      />
+                    </div>
+                    <div style={{ marginBottom: '20px' }}>
+                      <label htmlFor="login-password" style={{ display: 'block', marginBottom: '8px', fontWeight: '500' }}>Password</label>
+                      <input
+                        id="login-password"
+                        type="password"
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                        placeholder="Enter your password"
+                        required
+                        style={{ width: '100%', padding: '10px', borderRadius: '8px', border: '1px solid var(--border-subtle)', fontSize: '16px' }}
+                      />
+                    </div>
+                    <button type="submit" className="btn btn-primary" style={{ width: '100%', padding: '14px', marginBottom: '12px' }}>
+                      Login
+                    </button>
+                    <button type="button" className="btn btn-secondary" style={{ width: '100%', padding: '14px' }} onClick={() => setView('register')}>
+                      Create New Account
+                    </button>
+                  </form>
+                </div>
+              ) : (
+                <div className="card">
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '4px' }}>
+                    <h3 className="card-title" style={{ marginBottom: 0 }}>Create New Account</h3>
+                    <span style={{ background: 'rgba(245, 158, 11, 0.15)', color: '#f59e0b', padding: '4px 10px', borderRadius: '6px', fontSize: '12px', fontWeight: '600' }}>Demo Only</span>
+                  </div>
+                  <p style={{ color: 'var(--text-muted)', fontSize: '14px', marginBottom: '20px' }}>This is a demonstration account system. Enter any username and password to continue.</p>
+                  <form onSubmit={handleRegister} className="content-text">
+                    <div style={{ marginBottom: '20px' }}>
+                      <label htmlFor="register-username" style={{ display: 'block', marginBottom: '8px', fontWeight: '500' }}>Username</label>
+                      <input
+                        id="register-username"
+                        type="text"
+                        value={username}
+                        onChange={(e) => setUsername(e.target.value)}
+                        placeholder="Choose a username"
+                        required
+                        style={{ width: '100%', padding: '10px', borderRadius: '8px', border: '1px solid var(--border-subtle)', fontSize: '16px' }}
+                      />
+                    </div>
+                    <div style={{ marginBottom: '20px' }}>
+                      <label htmlFor="register-password" style={{ display: 'block', marginBottom: '8px', fontWeight: '500' }}>Password</label>
+                      <input
+                        id="register-password"
+                        type="password"
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                        placeholder="Choose a password"
+                        required
+                        style={{ width: '100%', padding: '10px', borderRadius: '8px', border: '1px solid var(--border-subtle)', fontSize: '16px' }}
+                      />
+                    </div>
+                    <div style={{ marginBottom: '20px' }}>
+                      <label htmlFor="account-type" style={{ display: 'block', marginBottom: '8px', fontWeight: '500' }}>Account Type</label>
+                      <select
+                        id="account-type"
+                        style={{ width: '100%', padding: '10px', borderRadius: '8px', border: '1px solid var(--border-subtle)' }}
+                      >
+                        <option value="checking">Checking Account</option>
+                        <option value="savings">Savings Account</option>
+                        <option value="youth">Youth Account (13-17)</option>
+                      </select>
+                    </div>
+                    <button type="submit" className="btn btn-primary" style={{ width: '100%', padding: '14px', marginBottom: '12px' }}>
+                      Create Account
+                    </button>
+                    <button type="button" className="btn btn-secondary" style={{ width: '100%', padding: '14px' }} onClick={() => setView('login')}>
+                      Back to Login
+                    </button>
+                  </form>
+                </div>
+              )}
+            </div>
+            <aside className="sidebar">
+              <div className="info-box">
+                <h4>Account Benefits</h4>
+                <ul style={{ fontSize: '14px', marginTop: '12px' }}>
+                  <li>24/7 online banking access</li>
+                  <li>Link to Minecraft economy</li>
+                  <li>Real-time transaction tracking</li>
+                  <li>Secure encrypted storage</li>
+                  <li>Mobile banking support</li>
+                </ul>
+              </div>
+              <div className="card" style={{ background: 'linear-gradient(135deg, #059669 0%, #047857 100%)', color: 'white', border: 'none' }}>
+                <h4 style={{ color: 'white', marginBottom: '12px' }}>Minecraft Integration</h4>
+                <p style={{ opacity: 0.9, fontSize: '14px' }}>Connect your Bank of Praya account to your Minecraft player for seamless in-game economy integration with the gp-ai plugin.</p>
+              </div>
+            </aside>
+          </div>
+        ) : (
+          <div className="content-grid">
+            <div className="main-content">
+              <div className="card">
+                <div className="card-header" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                  <div>
+                    <h3 className="card-title">Account Overview</h3>
+                    <p style={{ color: 'var(--text-muted)', fontSize: '14px', marginTop: '4px' }}>Welcome back, {accountData.accountHolder}</p>
+                  </div>
+                  <button className="btn btn-secondary" onClick={() => { setIsLoggedIn(false); setView('login'); }}>
+                    Logout
+                  </button>
+                </div>
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '16px', marginTop: '20px' }}>
+                  <div style={{ padding: '20px', background: 'linear-gradient(135deg, #059669 0%, #047857 100%)', borderRadius: '12px', color: 'white' }}>
+                    <div style={{ fontSize: '14px', opacity: 0.9, marginBottom: '8px' }}>Current Balance</div>
+                    <div style={{ fontSize: '32px', fontWeight: '700' }}>${accountData.balance.toLocaleString()}</div>
+                  </div>
+                  <div style={{ padding: '20px', background: 'var(--bg-elevated)', borderRadius: '12px', border: '1px solid var(--border-subtle)' }}>
+                    <div style={{ fontSize: '14px', color: 'var(--text-muted)', marginBottom: '8px' }}>Account Number</div>
+                    <div style={{ fontSize: '18px', fontWeight: '600' }}>{accountData.accountNumber}</div>
+                  </div>
+                  <div style={{ padding: '20px', background: 'var(--bg-elevated)', borderRadius: '12px', border: '1px solid var(--border-subtle)' }}>
+                    <div style={{ fontSize: '14px', color: 'var(--text-muted)', marginBottom: '8px' }}>Account Type</div>
+                    <div style={{ fontSize: '18px', fontWeight: '600' }}>{accountData.accountType}</div>
+                  </div>
+                </div>
+              </div>
+
+              <div className="card">
+                <div className="card-header">
+                  <h3 className="card-title">Minecraft Integration</h3>
+                </div>
+                <div className="content-text">
+                  {accountData.minecraftLinked ? (
+                    <div style={{ padding: '16px', background: 'rgba(5, 150, 105, 0.1)', borderRadius: '8px', border: '1px solid rgba(5, 150, 105, 0.3)' }}>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '8px' }}>
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                          <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+                          <polyline points="22 4 12 14.01 9 11.01"/>
+                        </svg>
+                        <strong style={{ color: '#059669' }}>Minecraft Account Linked</strong>
+                      </div>
+                      <p style={{ marginBottom: '8px' }}>Connected to: <strong>{accountData.minecraftUsername}</strong></p>
+                      <p style={{ fontSize: '13px', color: 'var(--text-muted)' }}>Your in-game economy is now synchronized with your Bank of Praya account. Transactions made in Minecraft will reflect here.</p>
+                    </div>
+                  ) : (
+                    <div>
+                      <p style={{ marginBottom: '16px' }}>Link your Minecraft account to enable in-game banking with the gp-ai Paper plugin. Once linked, you can:</p>
+                      <ul style={{ marginBottom: '16px' }}>
+                        <li>View your balance in-game</li>
+                        <li>Make deposits and withdrawals</li>
+                        <li>Transfer funds to other players</li>
+                        <li>Track all transactions in real-time</li>
+                      </ul>
+                      <button className="btn btn-primary" onClick={linkMinecraftAccount}>
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ marginRight: '8px' }}>
+                          <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/>
+                          <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/>
+                        </svg>
+                        Link Minecraft Account
+                      </button>
+                    </div>
+                  )}
+                </div>
+              </div>
+
+              <div className="card">
+                <div className="card-header">
+                  <h3 className="card-title">Recent Transactions</h3>
+                </div>
+                {transactions.length > 0 ? (
+                  <div style={{ overflowX: 'auto' }}>
+                    <table style={{ width: '100%', borderCollapse: 'collapse' }}>
+                      <thead>
+                        <tr style={{ borderBottom: '1px solid var(--border-subtle)' }}>
+                          <th style={{ padding: '12px', textAlign: 'left', fontSize: '13px', color: 'var(--text-muted)', fontWeight: '600' }}>Date</th>
+                          <th style={{ padding: '12px', textAlign: 'left', fontSize: '13px', color: 'var(--text-muted)', fontWeight: '600' }}>Description</th>
+                          <th style={{ padding: '12px', textAlign: 'right', fontSize: '13px', color: 'var(--text-muted)', fontWeight: '600' }}>Amount</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {transactions.map((transaction) => (
+                          <tr key={transaction.id} style={{ borderBottom: '1px solid var(--border-subtle)' }}>
+                            <td style={{ padding: '12px', fontSize: '14px' }}>{transaction.date}</td>
+                            <td style={{ padding: '12px', fontSize: '14px' }}>{transaction.description}</td>
+                            <td style={{ padding: '12px', fontSize: '14px', textAlign: 'right', fontWeight: '600', color: transaction.type === 'credit' ? '#059669' : '#ef4444' }}>
+                              {transaction.amount > 0 ? '+' : ''}{transaction.amount < 0 ? '-' : ''}${Math.abs(transaction.amount).toLocaleString()}
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                ) : (
+                  <div style={{ padding: '40px', textAlign: 'center' }}>
+                    <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" style={{ margin: '0 auto 16px', opacity: 0.3 }}>
+                      <rect x="1" y="4" width="22" height="16" rx="2" ry="2"/>
+                      <line x1="1" y1="10" x2="23" y2="10"/>
+                    </svg>
+                    <p style={{ color: 'var(--text-muted)' }}>No transactions yet. Start using your account to see your transaction history here.</p>
+                  </div>
+                )}
+              </div>
+            </div>
+
+            <aside className="sidebar">
+              <div className="card">
+                <h4 className="card-title">Account Details</h4>
+                <div style={{ fontSize: '14px' }}>
+                  <div style={{ padding: '12px 0', borderBottom: '1px solid var(--border-subtle)' }}>
+                    <div style={{ color: 'var(--text-muted)', marginBottom: '4px' }}>Account Holder</div>
+                    <div style={{ fontWeight: '600' }}>{accountData.accountHolder}</div>
+                  </div>
+                  <div style={{ padding: '12px 0', borderBottom: '1px solid var(--border-subtle)' }}>
+                    <div style={{ color: 'var(--text-muted)', marginBottom: '4px' }}>Account Number</div>
+                    <div style={{ fontWeight: '600' }}>{accountData.accountNumber}</div>
+                  </div>
+                  <div style={{ padding: '12px 0', borderBottom: '1px solid var(--border-subtle)' }}>
+                    <div style={{ color: 'var(--text-muted)', marginBottom: '4px' }}>Account Type</div>
+                    <div style={{ fontWeight: '600' }}>{accountData.accountType}</div>
+                  </div>
+                  <div style={{ padding: '12px 0', borderBottom: '1px solid var(--border-subtle)' }}>
+                    <div style={{ color: 'var(--text-muted)', marginBottom: '4px' }}>Opened Date</div>
+                    <div style={{ fontWeight: '600' }}>{accountData.openedDate}</div>
+                  </div>
+                  <div style={{ padding: '12px 0' }}>
+                    <div style={{ color: 'var(--text-muted)', marginBottom: '4px' }}>Minecraft Status</div>
+                    <div style={{ fontWeight: '600', color: accountData.minecraftLinked ? '#059669' : '#94a3b8' }}>
+                      {accountData.minecraftLinked ? 'Linked' : 'Not Linked'}
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div className="card">
+                <h4 className="card-title">Quick Actions</h4>
+                <div className="quick-link">
+                  <span className="icon">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                      <line x1="12" y1="1" x2="12" y2="23"/>
+                      <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
+                    </svg>
+                  </span>
+                  Transfer Money
+                </div>
+                <div className="quick-link">
+                  <span className="icon">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                      <rect x="1" y="4" width="22" height="16" rx="2" ry="2"/>
+                      <line x1="1" y1="10" x2="23" y2="10"/>
+                    </svg>
+                  </span>
+                  Make a Payment
+                </div>
+                <div className="quick-link">
+                  <span className="icon">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                      <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/>
+                      <polyline points="14,2 14,8 20,8"/>
+                    </svg>
+                  </span>
+                  View Statements
+                </div>
+                <div className="quick-link">
+                  <span className="icon">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                      <circle cx="12" cy="12" r="3"/>
+                      <path d="M12 1v6m0 6v6M5.6 5.6l4.2 4.2m4.2 4.2l4.2 4.2M1 12h6m6 0h6M5.6 18.4l4.2-4.2m4.2-4.2l4.2-4.2"/>
+                    </svg>
+                  </span>
+                  Account Settings
+                </div>
+              </div>
+
+              <div className="info-box">
+                <h4>Need Help?</h4>
+                <p><strong>Customer Service</strong></p>
+                <p>1-800-BOP-HELP</p>
+                <p style={{ marginTop: '8px', fontSize: '13px', color: 'var(--text-muted)' }}>Available 24/7 for account support and Minecraft integration assistance.</p>
+              </div>
+            </aside>
+          </div>
+        )}
+      </div>
+    </main>
+  )
 }
 
 function Services() {
