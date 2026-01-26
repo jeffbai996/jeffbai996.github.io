@@ -1113,14 +1113,25 @@ body.light .portal-header {
   .dropdown-grid { grid-template-columns: 1fr; }
   .digital-grid { grid-template-columns: 1fr; }
   .announcements-grid { grid-template-columns: 1fr; }
-  .portal-logo .logo-text h1 { font-size: 15px; }
-  .portal-logo .logo-text .tagline { font-size: 10px; }
+  .portal-logo { gap: 8px; flex-shrink: 1; min-width: 0; }
+  .portal-logo .logo-emblem { width: 36px; height: 36px; flex-shrink: 0; }
+  .portal-logo .logo-emblem svg { width: 18px; height: 18px; }
+  .portal-logo .logo-text { min-width: 0; }
+  .portal-logo .logo-text h1 { font-size: 14px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .portal-logo .logo-text .tagline { font-size: 9px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
   .nav-login-btn { padding: 6px 10px 6px 8px; font-size: 12px; }
   .nav-account-btn { padding: 4px 10px 4px 4px; font-size: 12px; }
   .nav-avatar { width: 24px; height: 24px; font-size: 10px; }
 }
 
 @media (max-width: 480px) {
+  .portal-header .container { height: 60px; padding: 0 16px; }
+  .portal-logo .logo-emblem { width: 32px; height: 32px; }
+  .portal-logo .logo-emblem svg { width: 16px; height: 16px; }
+  .portal-logo .logo-text h1 { font-size: 13px; }
+  .portal-logo .logo-text .tagline { font-size: 8px; }
+  .nav-login-btn { padding: 5px 8px 5px 6px; font-size: 11px; gap: 6px; }
+  .nav-login-btn svg { width: 16px; height: 16px; }
   .portal-hero h2 { font-size: 28px; }
   .portal-hero > .container > .hero-content > p { font-size: 15px; }
   .stats-grid { grid-template-columns: 1fr 1fr; }
