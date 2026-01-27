@@ -132,21 +132,29 @@ body.light .gov-banner {
   flex-shrink: 0;
 }
 
-.theme-btn {
+.theme-toggle {
   background: rgba(255,255,255,0.08);
   border: 1px solid rgba(255,255,255,0.12);
   color: #9ca3af;
-  padding: 6px 12px;
+  padding: 8px;
   border-radius: 6px;
   cursor: pointer;
-  font-size: 12px;
-  font-weight: 500;
   font-family: inherit;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  transition: all 0.2s ease;
 }
 
-.theme-btn:hover {
+.theme-toggle:hover {
   background: rgba(255,255,255,0.12);
   color: white;
+}
+
+.theme-toggle svg {
+  flex-shrink: 0;
 }
 
 /* Dropdown */
@@ -252,9 +260,15 @@ body.light .gov-dropdown-icon {
     padding: 4px;
   }
 
-  .theme-btn {
-    padding: 5px 10px;
-    font-size: 11px;
+  .theme-toggle {
+    width: 32px;
+    height: 32px;
+    padding: 6px;
+  }
+
+  .theme-toggle svg {
+    width: 16px;
+    height: 16px;
   }
 
   .gov-dropdown-inner {
@@ -288,8 +302,14 @@ body.light .gov-dropdown-icon {
     height: 10px;
   }
 
-  .theme-btn {
-    padding: 4px 8px;
-    font-size: 10px;
+  .theme-toggle {
+    width: 30px;
+    height: 30px;
+    padding: 5px;
+  }
+
+  .theme-toggle svg {
+    width: 14px;
+    height: 14px;
   }
 }
