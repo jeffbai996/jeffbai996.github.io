@@ -944,12 +944,12 @@ body.light .dept-header {
 }
 
 .layout-financial .financial-display {
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(0, 0, 0, 0.4);
   backdrop-filter: blur(20px);
   border-radius: 24px;
   padding: 48px;
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
   color: white;
   max-width: 400px;
   width: 90%;
@@ -1010,7 +1010,8 @@ body.light .dept-header {
 .layout-financial .stat-value {
   font-size: 32px;
   font-weight: 800;
-  font-family: 'Courier New', monospace;
+  font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+  letter-spacing: -0.02em;
 }
 
 /* ==================== TEMPLATE C: CIVIC SERVICES ==================== */
