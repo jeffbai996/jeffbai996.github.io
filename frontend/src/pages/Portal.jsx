@@ -541,7 +541,7 @@ export default function Portal() {
                 </svg>
               </div>
               <h3>Housing Authority</h3>
-              <p>Apply for affordable public housing. Heavily subsidized rental units for eligible Prayan citizens across all regions.</p>
+              <p>Apply for affordable public housing. Heavily subsidized rental units for eligible Praya citizens across all regions.</p>
               <div className="featured-stat-row">
                 <div><strong>24,847</strong> active units</div>
                 <div><strong>$385</strong> avg. rent</div>

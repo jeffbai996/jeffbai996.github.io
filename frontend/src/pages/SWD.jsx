@@ -269,7 +269,7 @@ function SWDBenefits() {
       <div className="container">
         <div className="content-text">
           <h3>Benefit Programs</h3>
-          <p>Explore our range of support programs designed to help Prayan citizens:</p>
+          <p>Explore our range of support programs designed to help Praya citizens:</p>
 
           <div className="card" style={{ marginTop: '20px' }}>
             <h4 className="card-title">Comprehensive Social Assistance (CSA)</h4>
@@ -511,7 +511,7 @@ function SWDElderly() {
         <div className="content-text">
           <div className="info-box" style={{ marginBottom: '24px', background: 'rgba(236, 72, 153, 0.05)' }}>
             <h4>Supporting Our Seniors</h4>
-            <p>The Elderly Services Division helps older Prayans live independently with dignity through home care, day programs, and residential services.</p>
+            <p>The Elderly Services Division helps older Praya citizens live independently with dignity through home care, day programs, and residential services.</p>
           </div>
 
           <h3>Home Care Services</h3>
