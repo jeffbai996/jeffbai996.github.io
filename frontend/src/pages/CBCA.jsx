@@ -551,7 +551,7 @@ function TravelRequirements() {
                   <h5 style={{ fontSize: '15px', marginBottom: '8px' }}>Dual Citizens</h5>
                   <ul>
                     <li>Must use same passport for entry and exit</li>
-                    <li>Prayan citizens must enter/exit using Prayan passport</li>
+                    <li>Praya citizens must enter/exit using Praya passport</li>
                     <li>Declare dual citizenship at border control if asked</li>
                   </ul>
                 </div>
