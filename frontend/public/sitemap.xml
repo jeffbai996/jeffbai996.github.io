@@ -6,154 +6,154 @@
 
   <!-- Main Portal -->
   <url>
-    <loc>https://jeffbai996.github.io/</loc>
+    <loc>https://govpraya.org/</loc>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
 
   <!-- Information Pages -->
   <url>
-    <loc>https://jeffbai996.github.io/about</loc>
+    <loc>https://govpraya.org/about</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://jeffbai996.github.io/faq</loc>
+    <loc>https://govpraya.org/faq</loc>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
 
   <!-- Legal Pages -->
   <url>
-    <loc>https://jeffbai996.github.io/terms</loc>
+    <loc>https://govpraya.org/terms</loc>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://jeffbai996.github.io/privacy</loc>
+    <loc>https://govpraya.org/privacy</loc>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://jeffbai996.github.io/cookies</loc>
+    <loc>https://govpraya.org/cookies</loc>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
 
   <!-- System Pages -->
   <url>
-    <loc>https://jeffbai996.github.io/status</loc>
+    <loc>https://govpraya.org/status</loc>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
 
   <!-- Department Pages - High Priority -->
   <url>
-    <loc>https://jeffbai996.github.io/npa</loc>
+    <loc>https://govpraya.org/npa</loc>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://jeffbai996.github.io/bop</loc>
+    <loc>https://govpraya.org/bop</loc>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://jeffbai996.github.io/ctb</loc>
+    <loc>https://govpraya.org/ctb</loc>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://jeffbai996.github.io/doj</loc>
+    <loc>https://govpraya.org/doj</loc>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://jeffbai996.github.io/interior</loc>
+    <loc>https://govpraya.org/interior</loc>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://jeffbai996.github.io/transport</loc>
+    <loc>https://govpraya.org/transport</loc>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://jeffbai996.github.io/revenue</loc>
+    <loc>https://govpraya.org/revenue</loc>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://jeffbai996.github.io/post</loc>
+    <loc>https://govpraya.org/post</loc>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://jeffbai996.github.io/health</loc>
+    <loc>https://govpraya.org/health</loc>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://jeffbai996.github.io/housing</loc>
+    <loc>https://govpraya.org/housing</loc>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://jeffbai996.github.io/cbca</loc>
+    <loc>https://govpraya.org/cbca</loc>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://jeffbai996.github.io/lc</loc>
+    <loc>https://govpraya.org/lc</loc>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://jeffbai996.github.io/bd</loc>
+    <loc>https://govpraya.org/bd</loc>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://jeffbai996.github.io/cr</loc>
+    <loc>https://govpraya.org/cr</loc>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://jeffbai996.github.io/swd</loc>
+    <loc>https://govpraya.org/swd</loc>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
 
   <!-- Special Service Pages -->
   <url>
-    <loc>https://jeffbai996.github.io/air-quality</loc>
+    <loc>https://govpraya.org/air-quality</loc>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://jeffbai996.github.io/national-security</loc>
+    <loc>https://govpraya.org/national-security</loc>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://jeffbai996.github.io/weather</loc>
+    <loc>https://govpraya.org/weather</loc>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
 
   <!-- User Pages (Public) -->
   <url>
-    <loc>https://jeffbai996.github.io/login</loc>
+    <loc>https://govpraya.org/login</loc>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://jeffbai996.github.io/register</loc>
+    <loc>https://govpraya.org/register</loc>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://jeffbai996.github.io/payments</loc>
+    <loc>https://govpraya.org/payments</loc>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
