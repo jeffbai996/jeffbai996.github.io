@@ -3,7 +3,7 @@
  * Centralized metadata for all pages to improve search engine visibility
  */
 
-const baseURL = 'https://jeffbai996.github.io';
+const baseURL = 'https://govpraya.org';
 const defaultImage = `${baseURL}/icon-512.svg`;
 const siteName = 'GOV.PRAYA - Republic of Praya';
 

@@ -1,5 +1,5 @@
 # robots.txt for GOV.PRAYA - Republic of Praya Government Portal
-# https://jeffbai996.github.io/
+# https://govpraya.org/
 
 User-agent: *
 Allow: /
@@ -45,4 +45,4 @@ Allow: /cookies
 Allow: /status
 
 # Sitemap location
-Sitemap: https://jeffbai996.github.io/sitemap.xml
+Sitemap: https://govpraya.org/sitemap.xml
