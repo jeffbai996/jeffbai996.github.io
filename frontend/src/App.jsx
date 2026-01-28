@@ -1,5 +1,6 @@
 import { lazy, Suspense } from 'react'
 import { Routes, Route } from 'react-router-dom'
+import { HelmetProvider } from 'react-helmet-async'
 import { ThemeProvider } from './utils/ThemeContext'
 import { AuthProvider } from './utils/AuthContext'
 import Layout from './components/Layout'
@@ -87,11 +88,12 @@ function PageLoader() {
 
 function App() {
   return (
-    <ThemeProvider>
-      <AuthProvider>
-        <ErrorBoundary>
-          <Suspense fallback={<PageLoader />}>
-            <Routes>
+    <HelmetProvider>
+      <ThemeProvider>
+        <AuthProvider>
+          <ErrorBoundary>
+            <Suspense fallback={<PageLoader />}>
+              <Routes>
             {/* Admin Routes (protected, outside Layout for standalone UI) */}
             <Route
               path="/admin/alerts"
@@ -179,11 +181,12 @@ function App() {
 
               <Route path="*" element={<NotFound />} />
             </Route>
-            </Routes>
-          </Suspense>
-        </ErrorBoundary>
-      </AuthProvider>
-    </ThemeProvider>
+              </Routes>
+            </Suspense>
+          </ErrorBoundary>
+        </AuthProvider>
+      </ThemeProvider>
+    </HelmetProvider>
   )
 }
 

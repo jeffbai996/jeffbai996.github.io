@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react'
 import { Routes, Route, Link, useNavigate } from 'react-router-dom'
+import SEO from '../components/SEO'
 import './Department.css'
 
 export default function Revenue() {
@@ -12,6 +13,7 @@ export default function Revenue() {
 
   return (
     <>
+      <SEO path="/revenue" />
       <header className="dept-header">
         <div className="container">
           <Link to="/revenue" className="dept-logo">
