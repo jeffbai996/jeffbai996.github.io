@@ -1,10 +1,12 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+import SEO from '../components/SEO'
 import './StaticPages.css'
 
 export default function About() {
   return (
     <div className="static-page">
+      <SEO path="/about" />
       <div className="static-container">
         <h1>About the Republic of Praya</h1>
 

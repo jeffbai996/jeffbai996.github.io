@@ -4,6 +4,8 @@ import { useAuth } from '../utils/AuthContext'
 import { getCurrentAQI, getCurrentSecurityLevel } from '../utils/nationalStatus'
 import EmergencyAlert from '../components/EmergencyAlert'
 import Search, { SearchTrigger } from '../components/Search'
+import SEO from '../components/SEO'
+import StructuredData from '../components/StructuredData'
 import './Portal.css'
 
 // Department icon components
@@ -328,6 +330,8 @@ export default function Portal() {
 
   return (
     <>
+      <SEO path="/" />
+      <StructuredData type="Organization" />
       <header className="portal-header">
         <div className="container">
           <div className="portal-logo">
