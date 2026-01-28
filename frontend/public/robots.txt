@@ -1,0 +1,48 @@
+# robots.txt for GOV.PRAYA - Republic of Praya Government Portal
+# https://jeffbai996.github.io/
+
+User-agent: *
+Allow: /
+
+# Disallow authentication and account pages
+Disallow: /login
+Disallow: /register
+Disallow: /forgot-password
+Disallow: /account
+Disallow: /account/
+Disallow: /appointments
+Disallow: /admin/
+
+# Disallow payment processing pages (form submissions)
+Disallow: /payments/process
+
+# Allow all department and public service pages
+Allow: /npa
+Allow: /bop
+Allow: /ctb
+Allow: /doj
+Allow: /interior
+Allow: /transport
+Allow: /revenue
+Allow: /post
+Allow: /health
+Allow: /housing
+Allow: /cbca
+Allow: /lc
+Allow: /bd
+Allow: /cr
+Allow: /swd
+Allow: /air-quality
+Allow: /national-security
+Allow: /weather
+
+# Allow informational pages
+Allow: /about
+Allow: /faq
+Allow: /terms
+Allow: /privacy
+Allow: /cookies
+Allow: /status
+
+# Sitemap location
+Sitemap: https://jeffbai996.github.io/sitemap.xml
