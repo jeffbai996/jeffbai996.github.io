@@ -1,5 +1,5 @@
 # robots.txt for GOV.PRAYA - Republic of fictional project Government Portal
-# https://jeffbai996.github.io/
+# https://fictional-project.org/
 
 User-agent: *
 Allow: /
@@ -45,4 +45,4 @@ Allow: /cookies
 Allow: /status
 
 # Sitemap location
-Sitemap: https://jeffbai996.github.io/sitemap.xml
+Sitemap: https://fictional-project.org/sitemap.xml
