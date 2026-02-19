@@ -1,5 +1,4 @@
 import { Helmet } from 'react-helmet-async';
-import PropTypes from 'prop-types';
 import { getSEOConfig, defaultSEO } from '../config/seoConfig';
 
 /**
@@ -62,13 +61,5 @@ function SEO({ path, customTitle, customDescription, customImage, customKeywords
     </Helmet>
   );
 }
-
-SEO.propTypes = {
-  path: PropTypes.string,
-  customTitle: PropTypes.string,
-  customDescription: PropTypes.string,
-  customImage: PropTypes.string,
-  customKeywords: PropTypes.string,
-};
 
 export default SEO;
