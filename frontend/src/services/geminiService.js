@@ -452,7 +452,7 @@ The Republic of Praya is a thriving city-state nation of 4.2 million citizens wi
 - **Praya** (the main city): Home to districts including Downtown, Surowski Valley, and Western District
 - **Braemar County**: Featuring the cities of Braemar and Oakville
 
-**Leadership**: Chief Executive Jeff Bai leads the nation, with Karson Mo serving as Governor of Braemar County.
+**Leadership**: Karson Mo serves as Governor of Braemar County.
 
 The portal offers 127 online services available 24/7 across 15 major departments, committed to transparency, efficiency, and accessibility through technology.
 
