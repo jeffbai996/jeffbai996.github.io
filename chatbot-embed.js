@@ -746,6 +746,48 @@
         margin-bottom: 8px;
       }
 
+      .suggestion-chips-container {
+        padding: 8px 0;
+        border-top: 1px solid ${borderSubtle};
+        margin-top: 4px;
+        padding-top: 12px;
+      }
+
+      .suggestion-chips-label {
+        font-size: 12px;
+        color: ${textMuted};
+        margin: 0 0 8px 0;
+      }
+
+      .suggestion-chips-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+      }
+
+      .suggestion-chip {
+        display: inline-flex;
+        align-items: center;
+        padding: 8px 14px;
+        background: rgba(249, 115, 22, 0.08);
+        border: 1px solid rgba(249, 115, 22, 0.25);
+        border-radius: 20px;
+        font-size: 13px;
+        color: ${textPrimary};
+        cursor: pointer;
+        transition: all 0.2s ease;
+        font-family: inherit;
+        font-weight: 500;
+      }
+
+      .suggestion-chip:hover {
+        background: #f97316;
+        border-color: #f97316;
+        color: white;
+        transform: translateY(-1px);
+        box-shadow: 0 2px 8px rgba(249, 115, 22, 0.3);
+      }
+
       .chat-footer {
         padding: 8px 16px;
         background: ${bgCard};
@@ -1034,6 +1076,42 @@
     messagesContainer.scrollTop = messagesContainer.scrollHeight;
   }
 
+  function renderSuggestionChips(suggestions) {
+    // Remove any existing suggestion chips
+    const existing = document.getElementById('suggestion-chips');
+    if (existing) existing.remove();
+
+    const messagesContainer = document.getElementById('chat-messages');
+    const chipsDiv = document.createElement('div');
+    chipsDiv.id = 'suggestion-chips';
+    chipsDiv.className = 'suggestion-chips-container';
+
+    const label = document.createElement('p');
+    label.className = 'suggestion-chips-label';
+    label.textContent = 'Related questions:';
+    chipsDiv.appendChild(label);
+
+    const chipsRow = document.createElement('div');
+    chipsRow.className = 'suggestion-chips-row';
+
+    suggestions.forEach(text => {
+      const btn = document.createElement('button');
+      btn.className = 'suggestion-chip';
+      btn.textContent = text;
+      btn.addEventListener('click', () => {
+        chipsDiv.remove();
+        const input = document.getElementById('chat-input');
+        input.value = text;
+        sendMessage();
+      });
+      chipsRow.appendChild(btn);
+    });
+
+    chipsDiv.appendChild(chipsRow);
+    messagesContainer.appendChild(chipsDiv);
+    messagesContainer.scrollTop = messagesContainer.scrollHeight;
+  }
+
   function showTypingIndicator() {
     const messagesContainer = document.getElementById('chat-messages');
     const typingDiv = document.createElement('div');
@@ -1079,6 +1157,10 @@
     const message = input.value.trim();
 
     if (!message) return;
+
+    // Clear existing suggestion chips
+    const existingChips = document.getElementById('suggestion-chips');
+    if (existingChips) existingChips.remove();
 
     // Add user message
     addMessage(message, true);
@@ -1136,13 +1218,20 @@ The user is currently on the ${currentDepartment.name} page. Prioritize informat
 - Format important terms in bold using **term**
 - Always provide actionable next steps when possible
 - Include relevant phone numbers and links in your responses
-- For emergencies, ALWAYS prioritize directing to 911 or appropriate emergency services first`;
+- For emergencies, ALWAYS prioritize directing to 911 or appropriate emergency services first
+- When helpful, end your response with a line formatted exactly as: SUGGESTIONS: ["suggestion 1", "suggestion 2", "suggestion 3"]
+  These should be natural follow-up questions the user might ask next. Omit this line for simple greetings or final answers.`;
 
-      const response = await callGeminiAPI(message, systemPrompt);
+      const result = await callGeminiAPI(message, systemPrompt);
 
       hideTypingIndicator();
-      addMessage(response, false);
-      conversationHistory.push({ role: 'model', text: response });
+      addMessage(result.text, false);
+      conversationHistory.push({ role: 'model', text: result.text });
+
+      // Render suggestion chips if AI provided them
+      if (result.suggestions && result.suggestions.length > 0) {
+        renderSuggestionChips(result.suggestions);
+      }
 
     } catch (error) {
       hideTypingIndicator();
@@ -1154,55 +1243,6 @@ The user is currently on the ${currentDepartment.name} page. Prioritize informat
     }
   }
 
-  /**
-   * Detect if a query is complex and requires the Pro model
-   */
-  function isComplexQuery(message) {
-    const messageLower = message.toLowerCase();
-
-    // Indicators of complex queries
-    const complexIndicators = [
-      // Multi-step reasoning
-      /explain (the )?process|walk me through|step[- ]by[- ]step/i,
-      /how (do|does|can) (i|it) .*(and|then|after|before)/i,
-      // Comparisons and analysis
-      /compare|difference between|versus|vs\.|which is better/i,
-      /analyze|evaluation|assessment|pros and cons/i,
-      // Legal, financial, or technical advice
-      /legal|lawsuit|contract|regulation|compliance/i,
-      /tax|financial|investment|mortgage|loan calculation/i,
-      // Multiple topics or entities
-      /what (are|about) (all|multiple|various|different)/i,
-      // Long-form content requests
-      /write (a|an)|draft|compose|create (a|an)/i,
-      /summarize|summary of|overview of/i,
-      // Complex calculations or data
-      /calculate|compute|estimate|how much (would|will|does)/i,
-      // Policy or procedural questions
-      /policy|procedure|regulation|requirement|eligibility/i,
-      /what (documents?|forms?|papers?) (do i|should i) need/i,
-    ];
-
-    // Check for complex indicators
-    const hasComplexIndicator = complexIndicators.some(pattern => pattern.test(message));
-
-    // Check message length (longer queries often need more reasoning)
-    const isLongQuery = message.length > 150;
-
-    // Check for multiple questions
-    const hasMultipleQuestions = (message.match(/\?/g) || []).length > 1;
-
-    // Check for form-related queries (often complex)
-    const isFormQuery = /form|document|application|filing|submit/i.test(message);
-
-    // Determine complexity
-    const isComplex = hasComplexIndicator ||
-                      (isLongQuery && (hasMultipleQuestions || isFormQuery)) ||
-                      (conversationHistory.length > 4 && (hasMultipleQuestions || isFormQuery));
-
-    return isComplex;
-  }
-
   async function callGeminiAPI(userMessage, systemPrompt) {
     // API key will be injected during build from GitHub secrets
     const apiKey = 'GEMINI_API_KEY_PLACEHOLDER';
@@ -1211,12 +1251,10 @@ The user is currently on the ${currentDepartment.name} page. Prioritize informat
 
     if (isPlaceholder) {
       // Provide helpful fallback responses when API key not available
-      return getFallbackResponse(userMessage);
+      return { text: getFallbackResponse(userMessage), suggestions: [] };
     }
 
-    // Select model based on query complexity
-    const useProModel = isComplexQuery(userMessage);
-    const modelName = useProModel ? 'gemini-3-pro' : 'gemini-2.5-flash';
+    const modelName = 'gemini-3.1-flash-lite';
 
     try {
       // Build the full request with conversation history
@@ -1231,8 +1269,8 @@ The user is currently on the ${currentDepartment.name} page. Prioritize informat
         }
       ];
 
-      // Add conversation history (last 6 exchanges) - FIXED: use 'model' not 'assistant'
-      const recentHistory = conversationHistory.slice(-12);
+      // Add conversation history (last 12 turns = 24 raw entries)
+      const recentHistory = conversationHistory.slice(-24);
       recentHistory.forEach(msg => {
         contents.push({
           role: msg.role === 'user' ? 'user' : 'model',  // Ensure correct role for Gemini API
@@ -1257,8 +1295,8 @@ The user is currently on the ${currentDepartment.name} page. Prioritize informat
           body: JSON.stringify({
             contents: contents,
             generationConfig: {
-              temperature: useProModel ? 0.8 : 0.7,
-              maxOutputTokens: useProModel ? 2500 : 1500,
+              temperature: 0.7,
+              maxOutputTokens: 2500,
               topP: 0.95,
               topK: 40,
             },
@@ -1293,11 +1331,11 @@ The user is currently on the ${currentDepartment.name} page. Prioritize informat
           if (errorData.error?.message?.includes('safety')) {
             throw new Error('Response blocked due to safety filters. Please rephrase your question.');
           } else if (errorData.error?.message?.includes('API key')) {
-            return getFallbackResponse(userMessage);
+            return { text: getFallbackResponse(userMessage), suggestions: [] };
           }
           throw new Error('Request error. Please try again.');
         } else if (response.status === 403) {
-          return getFallbackResponse(userMessage);
+          return { text: getFallbackResponse(userMessage), suggestions: [] };
         } else {
           throw new Error('Failed to get response. Please try again.');
         }
@@ -1314,13 +1352,26 @@ The user is currently on the ${currentDepartment.name} page. Prioritize informat
         throw new Error('Invalid response format. Please try again.');
       }
 
-      return candidate.content.parts[0].text;
+      const rawText = candidate.content.parts[0].text;
+
+      // Extract AI-generated suggestions
+      let cleanedText = rawText;
+      let aiSuggestions = [];
+      const suggestionsMatch = rawText.match(/SUGGESTIONS:\s*\[([^\]]+)\]/);
+      if (suggestionsMatch) {
+        try {
+          aiSuggestions = JSON.parse(`[${suggestionsMatch[1]}]`);
+          cleanedText = rawText.replace(/\n?SUGGESTIONS:\s*\[([^\]]+)\]/, '').trim();
+        } catch { aiSuggestions = []; }
+      }
+
+      return { text: cleanedText, suggestions: aiSuggestions };
     } catch (error) {
       // Fall back to basic responses if API fails (except for user-facing errors)
       if (error.message.includes('quota') || error.message.includes('safety') || error.message.includes('rephras') || error.message.includes('blocked')) {
         throw error;
       }
-      return getFallbackResponse(userMessage);
+      return { text: getFallbackResponse(userMessage), suggestions: [] };
     }
   }
 
