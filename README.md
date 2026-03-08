@@ -1,3 +1,3 @@
-# Republic of fictional project - Government Portal
+# GOV.PRAYA
 
-Official government portal for the Republic of fictional project, featuring **fictional projectPass** - a secure digital identity and authentication system.
+Fictional government website for Minecraft city.
