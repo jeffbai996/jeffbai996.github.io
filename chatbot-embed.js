@@ -1254,7 +1254,7 @@ The user is currently on the ${currentDepartment.name} page. Prioritize informat
       return { text: getFallbackResponse(userMessage), suggestions: [] };
     }
 
-    const modelName = 'gemini-3.1-flash-lite';
+    const modelName = 'gemini-3.1-flash-lite-preview';
 
     try {
       // Build the full request with conversation history
