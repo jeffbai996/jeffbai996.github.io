@@ -1,3 +1,3 @@
-# Republic of Praya - Government Portal
+# GOV.PRAYA
 
-Official government portal for the Republic of Praya, featuring **PrayaPass** - a secure digital identity and authentication system.
+Fictional government website for Minecraft city.
