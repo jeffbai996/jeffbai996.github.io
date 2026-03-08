@@ -180,44 +180,33 @@ export function determineResponseStrategy(intentResult, complexityAnalysis, conf
     }
   }
 
-  if (level === ComplexityLevel.SIMPLE && intentConfidence >= 0.7) {
-    // Simple query with good intent match - use rules
+  if (level === ComplexityLevel.SIMPLE && intentConfidence >= 0.85) {
+    // Simple query with very high confidence match - use rules (greetings, tracking formats, menu picks)
     return {
       strategy: ResponseStrategy.RULE_BASED,
       confidence: intentConfidence,
-      reason: 'Clear intent match for simple query',
+      reason: 'High confidence intent match for simple query',
       useGemini: false
     }
   }
 
-  if (level === ComplexityLevel.SIMPLE && intentConfidence < 0.7) {
-    // Simple query but uncertain match - try rules with AI fallback
+  if (level === ComplexityLevel.SIMPLE && intentConfidence < 0.85) {
+    // Simple query but not a slam-dunk match - let AI handle it
     return {
-      strategy: ResponseStrategy.RULE_WITH_AI_FALLBACK,
+      strategy: ResponseStrategy.AI_PRIMARY,
       confidence: intentConfidence,
-      reason: 'Low confidence match, AI fallback ready',
-      useGemini: intentConfidence < 0.5
+      reason: 'Simple query, AI-first for better response quality',
+      useGemini: true
     }
   }
 
   if (level === ComplexityLevel.MODERATE) {
-    if (intentConfidence >= 0.6) {
-      // Moderate complexity with decent match - blend responses
-      return {
-        strategy: ResponseStrategy.RULE_WITH_AI_FALLBACK,
-        confidence: intentConfidence,
-        reason: 'Moderate query with partial match',
-        useGemini: true,
-        blendResponses: true
-      }
-    } else {
-      // Moderate complexity with weak match - prefer AI
-      return {
-        strategy: ResponseStrategy.AI_PRIMARY,
-        confidence: 0.7,
-        reason: 'Moderate complexity needs AI assistance',
-        useGemini: true
-      }
+    // All moderate queries go to AI
+    return {
+      strategy: ResponseStrategy.AI_PRIMARY,
+      confidence: 0.7,
+      reason: 'Moderate complexity, AI-first',
+      useGemini: true
     }
   }
 

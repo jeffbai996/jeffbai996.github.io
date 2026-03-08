@@ -639,6 +639,7 @@ export default function ChatWidget({ currentPath = '/' }) {
   const [isTyping, setIsTyping] = useState(false)
   const [streamingMessageId, setStreamingMessageId] = useState(null)
   const [streamingText, setStreamingText] = useState('')
+  const [suggestionChips, setSuggestionChips] = useState([])
   const messagesEndRef = useRef(null)
   const inputRef = useRef(null)
   const streamingRef = useRef(null)
@@ -763,6 +764,7 @@ export default function ChatWidget({ currentPath = '/' }) {
     setMessages(prev => [...prev, userMessage])
     setIsTyping(true)
     setShowQuickActions(false)
+    setSuggestionChips([])
 
     // Track message in conversation memory
     conversationMemory.addMessage({ sender: 'user', text: messageText })
@@ -929,7 +931,7 @@ export default function ChatWidget({ currentPath = '/' }) {
         } else if (isNewline) {
           charsToAdd = 1
         } else {
-          charsToAdd = Math.min(Math.floor(Math.random() * 4) + 2, response.length - charIndex)
+          charsToAdd = Math.min(Math.floor(Math.random() * 5) + 3, response.length - charIndex)
         }
 
         const newText = response.slice(0, charIndex + charsToAdd)
@@ -944,15 +946,15 @@ export default function ChatWidget({ currentPath = '/' }) {
 
         let delay
         if (isEndOfSentence) {
-          delay = 150 + Math.random() * 100
-        } else if (isPunctuation) {
-          delay = 80 + Math.random() * 60
-        } else if (isNewline) {
           delay = 100 + Math.random() * 80
-        } else if (Math.random() < 0.15) {
-          delay = 60 + Math.random() * 90
+        } else if (isPunctuation) {
+          delay = 50 + Math.random() * 40
+        } else if (isNewline) {
+          delay = 70 + Math.random() * 50
+        } else if (Math.random() < 0.12) {
+          delay = 40 + Math.random() * 60
         } else {
-          delay = 12 + Math.random() * 15
+          delay = 8 + Math.random() * 12
         }
 
         streamingRef.current = setTimeout(streamNextChunk, delay)
@@ -965,6 +967,11 @@ export default function ChatWidget({ currentPath = '/' }) {
             ? { ...msg, text: response, isStreaming: false }
             : msg
         ))
+        // Show AI suggestion chips if available
+        if (conversationContextRef.current.geminiSuggestions?.length > 0) {
+          setSuggestionChips(conversationContextRef.current.geminiSuggestions)
+          conversationContextRef.current.geminiSuggestions = []
+        }
         // Reset clarification count on successful response
         conversationContextRef.current.clarificationCount = 0
       }
@@ -1091,6 +1098,21 @@ export default function ChatWidget({ currentPath = '/' }) {
                   >
                     <QuickActionIcon icon={action.icon} />
                     <span>{action.label}</span>
+                  </button>
+                ))}
+              </div>
+            </div>
+          )}
+          {/* AI Suggestion Chips */}
+          {suggestionChips.length > 0 && !isTyping && !streamingMessageId && (
+            <div className="chat-quick-actions ai-suggestions">
+              <p className="quick-actions-label">Related questions:</p>
+              <div className="quick-actions-chips">
+                {suggestionChips.map((chip, i) => (
+                  <button key={i} className="quick-action-chip ai-chip"
+                    onClick={() => { setSuggestionChips([]); processMessage(chip.query || chip.text); }}
+                    type="button">
+                    <span>{chip.text}</span>
                   </button>
                 ))}
               </div>

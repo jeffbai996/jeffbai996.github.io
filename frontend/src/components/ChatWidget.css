@@ -472,6 +472,18 @@
   font-weight: 500;
 }
 
+/* AI Suggestion Chips */
+.ai-suggestions {
+  border-top: 1px solid var(--border, rgba(255,255,255,0.1));
+  margin-top: 4px;
+  padding-top: 12px;
+}
+
+.ai-chip {
+  background: rgba(249, 115, 22, 0.08);
+  border-color: rgba(249, 115, 22, 0.25);
+}
+
 /* Department-Specific Header Styling */
 .chat-widget-header.department-specific {
   background: linear-gradient(135deg, var(--primary), var(--primary-dark, #ea580c));
