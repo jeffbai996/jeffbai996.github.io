@@ -1,10 +1,10 @@
 /**
  * Gemini Live API WebSocket Service
- * Handles real-time voice communication with Gemini 2.0 Flash Live
+ * Handles real-time voice communication with Gemini 3.1 Flash Lite
  */
 
 const GEMINI_LIVE_API_KEY = import.meta.env.VITE_GEMINI_API_KEY
-const GEMINI_LIVE_MODEL = 'gemini-2.0-flash-exp'
+const GEMINI_LIVE_MODEL = 'gemini-3.1-flash-lite'
 
 // API key validation is handled at runtime when connect() is called
 
