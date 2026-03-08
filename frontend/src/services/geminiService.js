@@ -14,7 +14,7 @@ import {
 /**
  * Direct Gemini API Service for Frontend
  * Calls Google's Gemini API directly without a backend server
- * Uses gemini-3.1-flash-lite (single model) with AI-generated suggestion chips
+ * Uses gemini-3.1-flash-lite-preview (single model) with AI-generated suggestion chips
  */
 class GeminiService {
   constructor() {
@@ -29,9 +29,9 @@ class GeminiService {
     try {
       this.genAI = new GoogleGenerativeAI(apiKey);
 
-      // Single model: gemini-3.1-flash-lite (fast, capable, cheap)
+      // Single model: gemini-3.1-flash-lite-preview (fast, capable, cheap)
       this.model = this.genAI.getGenerativeModel({
-        model: 'gemini-3.1-flash-lite',
+        model: 'gemini-3.1-flash-lite-preview',
         generationConfig: {
           temperature: 0.7,
           maxOutputTokens: 2500,
@@ -514,7 +514,7 @@ ${dynamicContext}
         success: true,
         response: cleanedText,
         suggestions,
-        model: 'gemini-3.1-flash-lite',
+        model: 'gemini-3.1-flash-lite-preview',
         tokensUsed: {
           prompt: result.response.usageMetadata?.promptTokenCount || 0,
           completion: result.response.usageMetadata?.candidatesTokenCount || 0,
@@ -539,7 +539,7 @@ ${dynamicContext}
   getStatus() {
     return {
       available: this.initialized,
-      model: 'gemini-3.1-flash-lite',
+      model: 'gemini-3.1-flash-lite-preview',
     };
   }
 }

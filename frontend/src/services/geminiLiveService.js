@@ -4,7 +4,7 @@
  */
 
 const GEMINI_LIVE_API_KEY = import.meta.env.VITE_GEMINI_API_KEY
-const GEMINI_LIVE_MODEL = 'gemini-3.1-flash-lite'
+const GEMINI_LIVE_MODEL = 'gemini-3.1-flash-lite-preview'
 
 // API key validation is handled at runtime when connect() is called
 
