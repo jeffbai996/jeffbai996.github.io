@@ -1,0 +1,73 @@
+/* Financial Services — BOP, Revenue
+   Professional, data-dense, ledger-inspired. Tabular numbers and clean lines. */
+
+/* Tabular number rendering throughout */
+.layout-financial {
+  font-variant-numeric: tabular-nums;
+}
+
+/* Cards get subtle top border accent instead of full border */
+.layout-financial .card {
+  border-top: 2px solid color-mix(in srgb, var(--primary) 30%, transparent);
+  border-radius: 2px 2px 12px 12px;
+}
+
+/* Stat values use monospace-style rendering */
+.layout-financial .stat-value {
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.03em;
+}
+
+/* Stat items separated by vertical rules, no background */
+.layout-financial .stat-item {
+  border-radius: 0;
+}
+
+/* Ledger-style list items in content */
+.layout-financial .content-text li {
+  padding: 6px 0;
+  border-bottom: 1px solid color-mix(in srgb, var(--border) 50%, transparent);
+}
+
+.layout-financial .content-text li:last-child {
+  border-bottom: none;
+}
+
+/* Financial display panel — crisper */
+.layout-financial .financial-display {
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.layout-financial .display-value {
+  font-variant-numeric: tabular-nums;
+}
+
+/* Professional muted hover on cards */
+.layout-financial .card:hover {
+  border-top-color: var(--primary);
+}
+
+/* News items get date-forward treatment */
+.layout-financial .news-date {
+  font-variant-numeric: tabular-nums;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+/* Quick links more compact/professional */
+.layout-financial .quick-link {
+  border-radius: 8px;
+  padding: 10px 12px;
+}
+
+/* Info boxes get clean line treatment */
+.layout-financial .info-box {
+  border-left: 3px solid var(--primary);
+  border-radius: 0 10px 10px 0;
+}
+
+/* Footer understated */
+.layout-financial .footer-section h5 {
+  letter-spacing: 0.12em;
+}
