@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { Routes, Route, Link, useNavigate } from 'react-router-dom'
 import { TripPlanner, Timetable, TransitMap, ServiceStatus, FaresInfo } from '../components/transit'
 import './Department.css'
+import './DeptUtility.css'
 
 export default function Transport() {
   const navigate = useNavigate()

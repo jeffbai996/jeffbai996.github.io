@@ -1,0 +1,89 @@
+/* Civic & Legal Services — DOJ, LC, Interior, NationalSecurity, Weather
+   Formal, institutional, authoritative. Serif accents and heavy borders. */
+
+/* Cards get heavier borders — institutional weight */
+.layout-civic .card {
+  border-width: 2px;
+  border-radius: 8px;
+}
+
+/* Card titles use serif for formality */
+.layout-civic .card-title {
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+/* Section headings in content also serif */
+.layout-civic .content-text h4 {
+  font-family: Georgia, 'Times New Roman', serif;
+  font-weight: 700;
+}
+
+/* Badge is more formal — bordered, no fill */
+.layout-civic .hero-badge {
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: 12px;
+}
+
+/* Wider card padding — formal breathing room */
+.layout-civic .card {
+  padding: 28px;
+}
+
+.layout-civic .card .card-header {
+  padding: 0 0 16px 0;
+  margin-bottom: 16px;
+  border-bottom: 2px solid var(--border);
+}
+
+/* Stats use serif numbers — already set in Department.css but reinforce */
+.layout-civic .stat-value {
+  font-family: Georgia, 'Times New Roman', serif;
+  font-weight: 700;
+}
+
+/* Process steps get connecting line */
+.layout-civic .process-step {
+  position: relative;
+}
+
+.layout-civic .process-step::before {
+  content: '';
+  position: absolute;
+  left: 19px;
+  top: 60px;
+  bottom: -20px;
+  width: 2px;
+  background: color-mix(in srgb, var(--primary) 25%, transparent);
+}
+
+.layout-civic .process-step:last-child::before {
+  display: none;
+}
+
+/* News items get formal date badges */
+.layout-civic .news-date {
+  background: var(--primary-light);
+  padding: 2px 8px;
+  border-radius: 4px;
+  display: inline-block;
+}
+
+/* Footer gets heavy top border */
+.layout-civic .dept-footer {
+  border-top: 3px solid var(--primary);
+}
+
+/* Quick links more buttoned-up */
+.layout-civic .quick-link {
+  border-width: 2px;
+  font-weight: 600;
+}
+
+/* Info boxes get double-line top */
+.layout-civic .info-box {
+  border-top: 3px double var(--primary);
+  border-radius: 0 0 12px 12px;
+}
