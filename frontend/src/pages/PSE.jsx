@@ -440,7 +440,7 @@ export default function PSE() {
         // Set timeout to handle CDN failures
         const timeout = setTimeout(() => {
           if (!window.Chart) {
-            console.error('Chart.js load timeout')
+            if (import.meta.env.DEV) console.error('Chart.js load timeout')
             setChartError(true)
           }
         }, 10000) // 10 second timeout
@@ -452,7 +452,7 @@ export default function PSE() {
 
         script.onerror = () => {
           clearTimeout(timeout)
-          console.error('Failed to load Chart.js')
+          if (import.meta.env.DEV) console.error('Failed to load Chart.js')
           setChartError(true)
         }
 

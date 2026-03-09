@@ -396,7 +396,7 @@ export async function saveAlertAsync(alertData) {
         return { success: true, alert: parseStoredAlert(fromSupabaseFormat(data)), source: 'supabase' };
       }
     } catch (error) {
-      console.warn('Supabase save failed, falling back to localStorage:', error);
+      if (import.meta.env.DEV) console.warn('Supabase save failed, falling back to localStorage:', error);
     }
   }
 
@@ -457,7 +457,7 @@ export async function deleteAlertAsync(alertId) {
       if (error) throw error;
       return { success: true, source: 'supabase' };
     } catch (error) {
-      console.warn('Supabase delete failed, falling back to localStorage:', error);
+      if (import.meta.env.DEV) console.warn('Supabase delete failed, falling back to localStorage:', error);
     }
   }
 
@@ -506,7 +506,7 @@ export async function toggleAlertActiveAsync(alertId) {
       if (error) throw error;
       return { success: true, isActive: data.is_active, source: 'supabase' };
     } catch (error) {
-      console.warn('Supabase toggle failed, falling back to localStorage:', error);
+      if (import.meta.env.DEV) console.warn('Supabase toggle failed, falling back to localStorage:', error);
     }
   }
 
