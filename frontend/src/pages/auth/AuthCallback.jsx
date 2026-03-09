@@ -62,7 +62,7 @@ export default function AuthCallback() {
           setError('Verification link expired or invalid. Please try registering again.')
         }
       } catch (err) {
-        console.error('Auth callback error:', err)
+        if (import.meta.env.DEV) console.error('Auth callback error:', err)
         setStatus('error')
         setError(err.message || 'Verification failed. Please try again.')
       }

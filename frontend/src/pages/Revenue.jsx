@@ -62,17 +62,17 @@ export default function Revenue() {
             <div className="footer-section">
               <h5>Resources</h5>
               <ul>
-                <li><Link to="/revenue/forms">Tax Forms & Publications</Link></li>
-                <li><Link to="/revenue/calculator">Tax Calculator</Link></li>
-                <li><Link to="/revenue/assistance">Free Tax Assistance</Link></li>
+                <li><Link to="/revenue/file">Filing Guide</Link></li>
+                <li><Link to="/revenue/refunds">Refund Tracker</Link></li>
+                <li><Link to="/faq">FAQs</Link></li>
               </ul>
             </div>
             <div className="footer-section">
               <h5>Government</h5>
               <ul>
                 <li><Link to="/">Gov Portal</Link></li>
-                <li><Link to="/revenue/policy">Tax Policy</Link></li>
-                <li><Link to="/revenue/compliance">Compliance</Link></li>
+                <li><Link to="/about">About Praya</Link></li>
+                <li><Link to="/bop">Bank of Praya</Link></li>
               </ul>
             </div>
           </div>
@@ -265,7 +265,7 @@ function RevenueHome({ navigate }) {
                   </span>
                   Check Refund Status
                 </div>
-                <div className="quick-link" onClick={() => navigate('/revenue/help')}>
+                <div className="quick-link" onClick={() => navigate('/faq')}>
                   <span className="icon">
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                       <path d="M16 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/>

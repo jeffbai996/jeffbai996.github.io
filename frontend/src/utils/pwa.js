@@ -15,7 +15,7 @@ export async function registerServiceWorker() {
         scope: '/'
       })
 
-      console.log('Service Worker registered successfully:', registration.scope)
+      if (import.meta.env.DEV) console.log('Service Worker registered:', registration.scope)
 
       // Check for updates every hour
       setInterval(() => {
@@ -24,7 +24,7 @@ export async function registerServiceWorker() {
 
       return registration
     } catch (error) {
-      console.error('Service Worker registration failed:', error)
+      if (import.meta.env.DEV) console.error('Service Worker registration failed:', error)
       return null
     }
   }
@@ -70,7 +70,7 @@ export function setupInstallPrompt(callback) {
 
   // Detect when app was installed
   window.addEventListener('appinstalled', () => {
-    console.log('PWA was installed')
+    if (import.meta.env.DEV) console.log('PWA was installed')
     deferredPrompt = null
 
     if (callback) {
@@ -192,12 +192,12 @@ export function isOnline() {
  */
 export function setupOnlineStatus(onlineCallback, offlineCallback) {
   window.addEventListener('online', () => {
-    console.log('App is online')
+    if (import.meta.env.DEV) console.log('App is online')
     if (onlineCallback) onlineCallback()
   })
 
   window.addEventListener('offline', () => {
-    console.log('App is offline')
+    if (import.meta.env.DEV) console.log('App is offline')
     if (offlineCallback) offlineCallback()
   })
 
