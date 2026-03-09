@@ -78,7 +78,7 @@ export async function sendSMSOTP(phoneNumber) {
   await new Promise(resolve => setTimeout(resolve, 1000))
 
   // In production, call SMS API here
-  console.log(`SMS OTP sent to ${phoneNumber}: ${otp}`)
+  if (import.meta.env.DEV) console.log(`SMS OTP sent to ${phoneNumber}: ${otp}`)
 
   // Store in localStorage for demo (in production, store server-side)
   localStorage.setItem('sms_otp', otp)
@@ -99,7 +99,7 @@ export async function sendEmailOTP(email) {
   // Mock delay
   await new Promise(resolve => setTimeout(resolve, 1000))
 
-  console.log(`Email OTP sent to ${email}: ${otp}`)
+  if (import.meta.env.DEV) console.log(`Email OTP sent to ${email}: ${otp}`)
 
   // Store in localStorage for demo
   localStorage.setItem('email_otp', otp)
