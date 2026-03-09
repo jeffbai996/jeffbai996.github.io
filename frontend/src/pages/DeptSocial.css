@@ -1,0 +1,110 @@
+/* Social & Community Services — SWD, CR, BD, CTB
+   Warmer, approachable, community-focused. Softer shapes and friendlier tone. */
+
+/* Extra-rounded corners throughout */
+.layout-social .card {
+  border-radius: 18px;
+  border-color: color-mix(in srgb, var(--primary) 15%, var(--border-subtle));
+}
+
+/* Softer hover — glow instead of lift */
+.layout-social .card:hover {
+  transform: none;
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--primary) 12%, transparent);
+  border-color: color-mix(in srgb, var(--primary) 30%, transparent);
+}
+
+/* Card titles warmer */
+.layout-social .card-title {
+  color: var(--primary);
+  font-size: 16px;
+}
+
+/* Stat items rounded with warm background */
+.layout-social .stat-item {
+  border-radius: 18px;
+  transition: all 0.3s ease;
+}
+
+.layout-social .stat-item:hover {
+  transform: none;
+  box-shadow: 0 4px 20px color-mix(in srgb, var(--primary) 15%, transparent);
+}
+
+/* Impact cards — already defined in Department.css, enhance with softer feel */
+.layout-social .impact-card {
+  border-radius: 20px;
+  border-color: color-mix(in srgb, var(--primary) 12%, var(--border-subtle));
+}
+
+.layout-social .impact-card:hover {
+  transform: none;
+  box-shadow: 0 4px 24px color-mix(in srgb, var(--primary) 12%, transparent);
+}
+
+.layout-social .impact-card-icon {
+  border-radius: 50%;
+}
+
+/* Hero image more playful */
+.layout-social .hero-image {
+  border-radius: 28px;
+  border-width: 1px;
+}
+
+/* Quick links extra rounded */
+.layout-social .quick-link {
+  border-radius: 14px;
+  transition: all 0.3s ease;
+}
+
+.layout-social .quick-link:hover {
+  background: color-mix(in srgb, var(--primary) 6%, var(--bg-elevated));
+  border-color: color-mix(in srgb, var(--primary) 25%, transparent);
+}
+
+.layout-social .quick-link .icon {
+  border-radius: 50%;
+}
+
+/* News items softer */
+.layout-social .news-item {
+  border-radius: 14px;
+  padding: 18px;
+}
+
+/* Info boxes rounded and warm */
+.layout-social .info-box {
+  border-radius: 18px;
+  background: color-mix(in srgb, var(--primary) 4%, var(--bg-elevated));
+  border: 1px solid color-mix(in srgb, var(--primary) 15%, transparent);
+}
+
+/* Eligibility checker warmer */
+.layout-social .eligibility-checker {
+  border-radius: 24px;
+  border-color: color-mix(in srgb, var(--primary) 40%, transparent);
+}
+
+.layout-social .eligibility-option {
+  border-radius: 14px;
+}
+
+/* Footer warm */
+.layout-social .dept-footer {
+  border-top: 1px solid color-mix(in srgb, var(--primary) 20%, transparent);
+}
+
+/* Content text slightly larger for readability */
+.layout-social .content-text {
+  font-size: 15px;
+  line-height: 1.75;
+}
+
+/* Hero badge friendlier */
+.layout-social .hero-badge {
+  border-radius: 100px;
+  font-size: 13px;
+  letter-spacing: 0;
+  font-weight: 600;
+}

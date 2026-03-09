@@ -19,7 +19,7 @@ export default function About() {
         <section>
           <h2>Our History</h2>
           <p>
-            Founded on <strong>February 26, 2011</strong>, the Republic of Praya has grown from its original settlement on Flower Island to a thriving city-state. What began as a small coastal community has evolved into a modern nation of <strong>4.2 million citizens</strong>, known for its innovative approach to governance and commitment to digital transformation.
+            Founded on <strong>February 26, 2011</strong>, the Republic of Praya has grown from a small coastal settlement to a thriving city-state. What began as a modest community has evolved into a modern nation of <strong>4.2 million citizens</strong>, known for its innovative approach to governance and commitment to digital transformation.
           </p>
           <p>
             Our founding principles emphasized transparency, efficiency, and citizen-centered governance—values that continue to guide our nation today.
