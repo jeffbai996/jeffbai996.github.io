@@ -310,7 +310,7 @@ class GeminiService {
       const systemPrompt = `You are a helpful assistant for GOV.PRAYA - the official Government of fictional project web portal.
 
 ## About GOV.PRAYA
-The Republic of fictional project is a thriving city-state nation of 4.2 million citizens with a modern, digital-first government. Founded on 26 February 2011 on Flower Island, it has grown from a small settlement to a major city-state. The nation consists of:
+The Republic of fictional project is a thriving city-state nation of 4.2 million citizens with a modern, digital-first government. Founded on 26 February 2011, it has grown from a small settlement to a major city-state. The nation consists of:
 - **fictional project** (the main city): Home to districts including Downtown, Surowski Valley, and Western District
 - **Braemar County**: Featuring the cities of Braemar and Oakville
 

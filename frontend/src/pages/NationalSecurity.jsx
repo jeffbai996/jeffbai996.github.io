@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import './Department.css'
+import './DeptCivic.css'
 import { getCurrentSecurityLevel, getNationalStatus } from '../utils/nationalStatus'
 
 const securityLevels = [

@@ -1,0 +1,63 @@
+/* Emergency Services — NPA, Health
+   Urgent, high-contrast, status-driven. Alert accents and bold indicators. */
+
+/* Top accent stripe */
+.layout-emergency {
+  border-top: 3px solid #dc2626;
+}
+
+/* Cards get alert-style left accent */
+.layout-emergency .card {
+  border-left: 3px solid var(--primary);
+  border-radius: 4px 12px 12px 4px;
+}
+
+/* Stat items with colored background tint */
+.layout-emergency .stat-item {
+  background: color-mix(in srgb, var(--primary) 6%, var(--bg-elevated));
+  border-color: color-mix(in srgb, var(--primary) 20%, transparent);
+}
+
+.layout-emergency .stat-value {
+  font-weight: 800;
+  letter-spacing: -0.03em;
+}
+
+/* Urgent badge styling */
+.layout-emergency .hero-badge {
+  background: rgba(220, 38, 38, 0.12);
+  border-color: rgba(220, 38, 38, 0.3);
+  color: #dc2626;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-size: 11px;
+}
+
+/* News items get severity indicator */
+.layout-emergency .news-item {
+  border-left: 3px solid color-mix(in srgb, var(--primary) 40%, transparent);
+  border-radius: 2px 10px 10px 2px;
+}
+
+/* Info boxes get alert treatment */
+.layout-emergency .info-box {
+  border: 2px solid color-mix(in srgb, var(--primary) 30%, transparent);
+  background: color-mix(in srgb, var(--primary) 4%, var(--bg-elevated));
+}
+
+/* Quick links have stronger hover */
+.layout-emergency .quick-link:hover {
+  border-color: var(--primary);
+  background: color-mix(in srgb, var(--primary) 6%, var(--bg-elevated));
+}
+
+/* Footer accent */
+.layout-emergency .dept-footer {
+  border-top: 3px solid var(--primary);
+}
+
+/* Card titles slightly bolder */
+.layout-emergency .card-title {
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}

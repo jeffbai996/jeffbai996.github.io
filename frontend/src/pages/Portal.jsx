@@ -417,7 +417,7 @@ export default function Portal() {
         <div className="container">
           <div className="hero-content">
             <h2>Welcome to <span style={{color: '#f97316'}}>GOV.PRAYA</span></h2>
-            <p>Your central gateway to government services in the Republic of fictional project. Founded in 2011 on Flower Island, our nation has grown from a small settlement to a thriving city-state of 4.2 million residents across our cities and counties — all served through one unified digital platform.</p>
+            <p>Your central gateway to government services in the Republic of fictional project. Founded in 2011, our nation has grown from a small settlement to a thriving city-state of 4.2 million residents across our cities and counties — all served through one unified digital platform.</p>
             <div className="hero-features">
               <div className="hero-feature">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -824,7 +824,7 @@ export default function Portal() {
           <div className="footer-grid">
             <div className="footer-brand">
               <h4>Republic of fictional project</h4>
-              <p>Founded on 26 February 2011, the Republic of fictional project has grown from its original settlement on Flower Island to a thriving city-state. Today, we serve 4.2 million citizens across fictional project (home to districts like Downtown, Surowski Valley, and Western District) and Braemar County (featuring the cities of Braemar and Oakville). This portal provides unified access to all government services 24/7.</p>
+              <p>Founded on 26 February 2011, the Republic of fictional project has grown from a small settlement to a thriving city-state. Today, we serve 4.2 million citizens across fictional project (home to districts like Downtown, Surowski Valley, and Western District) and Braemar County (featuring the cities of Braemar and Oakville). This portal provides unified access to all government services 24/7.</p>
               <p style={{ marginTop: '8px', fontSize: '13px', color: 'var(--text-muted)' }}>
                 <strong>Office of the Chief Executive:</strong> Jeff Bai<br/>
                 <strong>Governor, Braemar County:</strong> Karson Mo<br/>

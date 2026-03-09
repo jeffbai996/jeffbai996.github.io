@@ -2,6 +2,7 @@ import React, { useEffect } from 'react'
 import { Routes, Route, Link, useNavigate } from 'react-router-dom'
 import SEO from '../components/SEO'
 import './Department.css'
+import './DeptEmergency.css'
 
 export default function NPA() {
   const navigate = useNavigate()

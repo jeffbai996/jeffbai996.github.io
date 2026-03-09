@@ -1,0 +1,101 @@
+/* Utility & Infrastructure — Transport, Housing, CBCA
+   Compact, functional, icon-forward. Engineering clarity. */
+
+/* Tighter overall spacing */
+.layout-utility .main {
+  padding: 32px 0;
+}
+
+/* Cards are more compact */
+.layout-utility .card {
+  padding: 20px;
+  border-radius: 10px;
+}
+
+.layout-utility .card + .card {
+  margin-top: 16px;
+}
+
+/* Card titles are smaller, functional */
+.layout-utility .card-title {
+  font-size: 14px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--primary);
+}
+
+/* Content text tighter */
+.layout-utility .content-text {
+  font-size: 14px;
+}
+
+/* Stat items icon-forward with left alignment (already set in Department.css) */
+.layout-utility .stat-label {
+  text-transform: none;
+  font-size: 13px;
+  letter-spacing: 0;
+}
+
+/* Status pill styling */
+.layout-utility .stat-change {
+  font-size: 11px;
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+/* Action cards more grid-like */
+.layout-utility .action-card {
+  border-radius: 10px;
+  padding: 20px 16px;
+}
+
+.layout-utility .action-card h4 {
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+/* Quick links compact with icon emphasis */
+.layout-utility .quick-link {
+  padding: 10px 12px;
+  margin-bottom: 6px;
+  border-radius: 8px;
+  font-size: 13px;
+}
+
+.layout-utility .quick-link .icon {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+}
+
+/* News items compact */
+.layout-utility .news-item {
+  padding: 12px;
+  margin-bottom: 8px;
+}
+
+.layout-utility .news-title {
+  font-size: 13px;
+}
+
+/* Info box functional */
+.layout-utility .info-box {
+  border-radius: 8px;
+  font-size: 13px;
+}
+
+/* Footer compact */
+.layout-utility .dept-footer {
+  padding: 36px 0 16px;
+  margin-top: 36px;
+}
+
+/* Search prominent — already styled in Department.css, add focus ring */
+.layout-utility .search-input:focus {
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--primary) 20%, transparent);
+}
