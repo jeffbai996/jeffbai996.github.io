@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { Routes, Route, Link, useNavigate } from 'react-router-dom'
 import './Department.css'
+import './DeptCivic.css'
 
 // Inline styles for weather-specific typography
 const tempStyle = {
