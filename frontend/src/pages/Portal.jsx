@@ -826,7 +826,7 @@ export default function Portal() {
               <h4>Republic of fictional project</h4>
               <p>Founded on 26 February 2011, the Republic of fictional project has grown from a small settlement to a thriving city-state. Today, we serve 4.2 million citizens across fictional project (home to districts like Downtown, Surowski Valley, and Western District) and Braemar County (featuring the cities of Braemar and Oakville). This portal provides unified access to all government services 24/7.</p>
               <p style={{ marginTop: '8px', fontSize: '13px', color: 'var(--text-muted)' }}>
-                <strong>Office of the Chief Executive:</strong> Jeff Bai<br/>
+                <strong>Office of the Chief Executive</strong><br/>
                 <strong>Governor, Braemar County:</strong> Karson Mo<br/>
                 <strong>Governor, fictional project County:</strong> Michael Tang<br/>
                 <strong>Contact:</strong> info@fictional-project.org
