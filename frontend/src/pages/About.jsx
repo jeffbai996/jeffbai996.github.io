@@ -68,7 +68,7 @@ export default function About() {
           <div className="leadership-grid">
             <div className="leader-card">
               <h4>Office of the Chief Executive</h4>
-              <p><strong>Jeff Bai</strong></p>
+              <p><strong>Chief Executive</strong></p>
               <p className="leader-role">Head of State and Government</p>
             </div>
             <div className="leader-card">

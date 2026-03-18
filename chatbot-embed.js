@@ -1410,7 +1410,7 @@ The user is currently on the ${currentDepartment.name} page. Prioritize informat
     }
 
     // Generic fallback
-    return `Thank you for your question! For comprehensive help with all government services, please visit the main portal at https://jeffbai996.github.io/ where our full AI-powered assistant can provide detailed guidance.\n\nYou can also contact specific departments directly for immediate assistance.`;
+    return `Thank you for your question! For comprehensive help with all government services, please visit the main portal at https://govpraya.org/ where our full AI-powered assistant can provide detailed guidance.\n\nYou can also contact specific departments directly for immediate assistance.`;
   }
 
   // Initialize when DOM is ready
