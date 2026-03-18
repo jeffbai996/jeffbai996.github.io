@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
  * Helps Google and other search engines understand the content and context
  */
 function StructuredData({ type = 'Organization' }) {
-  const baseURL = 'https://jeffbai996.github.io';
+  const baseURL = 'https://govpraya.org';
 
   // Organization Schema - Main government portal
   const organizationSchema = {
