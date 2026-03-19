@@ -363,7 +363,7 @@ export default function Portal() {
                 <div className="dropdown-menu">
                   <div className="dropdown-grid">
                     {departments.map(dept => (
-                      <a key={dept.id} href={dept.url} className="dropdown-item">
+                      <Link key={dept.id} to={dept.url} className="dropdown-item">
                         <div className="dropdown-item-icon" style={{background: `color-mix(in srgb, ${dept.color} 15%, transparent)`, color: dept.color}}>
                           {departmentIcons[dept.id]}
                         </div>
@@ -371,7 +371,7 @@ export default function Portal() {
                           <div className="dropdown-item-title">{dept.name}</div>
                           <div className="dropdown-item-desc">{dept.description.substring(0, 60)}...</div>
                         </div>
-                      </a>
+                      </Link>
                     ))}
                   </div>
                 </div>
@@ -485,7 +485,7 @@ export default function Portal() {
             </div>
           </div>
           <div className="featured-grid">
-            <a href="/bop" className="featured-card featured-large">
+            <Link to="/bop" className="featured-card featured-large">
               <div className="featured-badge">Central Banking</div>
               <div className="featured-icon">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -515,8 +515,8 @@ export default function Portal() {
                   <path d="M5 12h14M12 5l7 7-7 7"/>
                 </svg>
               </span>
-            </a>
-            <a href="/post" className="featured-card">
+            </Link>
+            <Link to="/post" className="featured-card">
               <div className="featured-badge">Postal Services</div>
               <div className="featured-icon featured-icon-sm">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -535,8 +535,8 @@ export default function Portal() {
                   <path d="M5 12h14M12 5l7 7-7 7"/>
                 </svg>
               </span>
-            </a>
-            <a href="/housing" className="featured-card">
+            </Link>
+            <Link to="/housing" className="featured-card">
               <div className="featured-badge">Public Housing</div>
               <div className="featured-icon featured-icon-sm">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -556,8 +556,8 @@ export default function Portal() {
                   <path d="M5 12h14M12 5l7 7-7 7"/>
                 </svg>
               </span>
-            </a>
-            <a href="/npa" className="featured-card">
+            </Link>
+            <Link to="/npa" className="featured-card">
               <div className="featured-badge">Public Safety</div>
               <div className="featured-icon featured-icon-sm">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -576,8 +576,8 @@ export default function Portal() {
                   <path d="M5 12h14M12 5l7 7-7 7"/>
                 </svg>
               </span>
-            </a>
-            <a href="/health" className="featured-card">
+            </Link>
+            <Link to="/health" className="featured-card">
               <div className="featured-badge">Public Health</div>
               <div className="featured-icon featured-icon-sm">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -596,8 +596,8 @@ export default function Portal() {
                   <path d="M5 12h14M12 5l7 7-7 7"/>
                 </svg>
               </span>
-            </a>
-            <a href="/doj" className="featured-card">
+            </Link>
+            <Link to="/doj" className="featured-card">
               <div className="featured-badge">Justice System</div>
               <div className="featured-icon featured-icon-sm">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -617,7 +617,7 @@ export default function Portal() {
                   <path d="M5 12h14M12 5l7 7-7 7"/>
                 </svg>
               </span>
-            </a>
+            </Link>
           </div>
         </div>
       </section>
@@ -710,36 +710,36 @@ export default function Portal() {
               <span className="announcement-date">December 5, 2025</span>
               <h3>New Housing Subsidy Program Expanded</h3>
               <p>The Housing Authority announces expansion of rental assistance programs to include middle-income families. Applications now open for eligible households earning up to $65,000 annually.</p>
-              <a href="/housing" className="announcement-link">
+              <Link to="/housing" className="announcement-link">
                 Read full announcement
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                   <path d="M5 12h14M12 5l7 7-7 7"/>
                 </svg>
-              </a>
+              </Link>
             </div>
             <div className="announcement-card">
               <div className="announcement-badge">Service Launch</div>
               <span className="announcement-date">December 2, 2025</span>
               <h3>Digital ID Cards Now Available</h3>
               <p>Apply for your digital government ID through the Interior Department portal. Accepted at all government facilities and participating businesses.</p>
-              <a href="/interior" className="announcement-link">
+              <Link to="/interior" className="announcement-link">
                 Learn more
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                   <path d="M5 12h14M12 5l7 7-7 7"/>
                 </svg>
-              </a>
+              </Link>
             </div>
             <div className="announcement-card">
               <div className="announcement-badge">Tax Notice</div>
               <span className="announcement-date">November 28, 2025</span>
               <h3>2026 Tax Filing Season Opens January 15</h3>
               <p>Revenue Department reminds citizens that tax returns for 2025 are due by April 15, 2026. Early filers may receive refunds within 10 business days.</p>
-              <a href="/revenue" className="announcement-link">
+              <Link to="/revenue" className="announcement-link">
                 Tax information
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                   <path d="M5 12h14M12 5l7 7-7 7"/>
                 </svg>
-              </a>
+              </Link>
             </div>
           </div>
         </div>
@@ -752,7 +752,7 @@ export default function Portal() {
 
           <div className="dept-grid">
             {departments.map(dept => (
-              <a href={dept.url} key={dept.id} className="dept-card" style={{'--dept-color': dept.color}}>
+              <Link to={dept.url} key={dept.id} className="dept-card" style={{'--dept-color': dept.color}}>
                 <div className="dept-icon">
                   {departmentIcons[dept.id]}
                 </div>
@@ -769,7 +769,7 @@ export default function Portal() {
                     <path d="M5 12h14M12 5l7 7-7 7"/>
                   </svg>
                 </span>
-              </a>
+              </Link>
             ))}
           </div>
         </div>
@@ -787,7 +787,7 @@ export default function Portal() {
           </div>
           <div className="priorities-grid">
             {priorities.map(priority => (
-              <a key={priority.title} href={priority.link} className="priority-card">
+              <Link key={priority.title} to={priority.link} className="priority-card">
                 <div className="priority-dot" />
                 <div>
                   <h4>{priority.title}</h4>
@@ -796,7 +796,7 @@ export default function Portal() {
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                   <path d="M5 12h14M12 5l7 7-7 7"/>
                 </svg>
-              </a>
+              </Link>
             ))}
           </div>
         </div>
@@ -808,12 +808,12 @@ export default function Portal() {
           <p className="section-subtitle">Jump straight into the completed department pages for the most requested services.</p>
           <div className="quicklink-grid">
             {quickLinks.map(link => (
-              <a key={link.label} href={link.href} className="quicklink-card">
+              <Link key={link.label} to={link.href} className="quicklink-card">
                 <span>{link.label}</span>
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                   <path d="M5 12h14M12 5l7 7-7 7"/>
                 </svg>
-              </a>
+              </Link>
             ))}
           </div>
         </div>
@@ -844,19 +844,19 @@ export default function Portal() {
             <div className="footer-section footer-departments">
               <h5>Departments</h5>
               <ul>
-                <li><a href="/npa">Police</a></li>
-                <li><a href="/bop">Bank</a></li>
-                <li><a href="/ctb">Cannabis</a></li>
-                <li><a href="/doj">Justice</a></li>
-                <li><a href="/interior">Interior</a></li>
-                <li><a href="/weather">Weather</a></li>
-                <li><a href="/transport">Transport</a></li>
-                <li><a href="/revenue">Revenue</a></li>
-                <li><a href="/post">Post</a></li>
-                <li><a href="/health">Health</a></li>
-                <li><a href="/housing">Housing</a></li>
-                <li><a href="/cbca">Customs</a></li>
-                <li><a href="/lc">Legislature</a></li>
+                <li><Link to="/npa">Police</Link></li>
+                <li><Link to="/bop">Bank</Link></li>
+                <li><Link to="/ctb">Cannabis</Link></li>
+                <li><Link to="/doj">Justice</Link></li>
+                <li><Link to="/interior">Interior</Link></li>
+                <li><Link to="/weather">Weather</Link></li>
+                <li><Link to="/transport">Transport</Link></li>
+                <li><Link to="/revenue">Revenue</Link></li>
+                <li><Link to="/post">Post</Link></li>
+                <li><Link to="/health">Health</Link></li>
+                <li><Link to="/housing">Housing</Link></li>
+                <li><Link to="/cbca">Customs</Link></li>
+                <li><Link to="/lc">Legislature</Link></li>
                 <li><Link to="/bd">Buildings</Link></li>
                 <li><Link to="/cr">Companies</Link></li>
                 <li><Link to="/swd">Social Welfare</Link></li>
