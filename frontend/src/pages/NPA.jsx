@@ -3,6 +3,7 @@ import { Routes, Route, Link, useNavigate } from 'react-router-dom'
 import SEO from '../components/SEO'
 import './Department.css'
 import './DeptEmergency.css'
+import './DeptNPA.css'
 
 export default function NPA() {
   const navigate = useNavigate()

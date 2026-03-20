@@ -1,0 +1,97 @@
+/* NPA Department — Police Command Theme
+   Tactical, authoritative feel layered on Emergency template.
+   Differentiator from Health: command center vs clinical. */
+
+/* ── Badge-shaped logo — hexagonal police badge silhouette ── */
+.theme-npa .logo-mark {
+  border-radius: 2px;
+  clip-path: polygon(50% 0%, 93% 25%, 93% 75%, 50% 100%, 7% 75%, 7% 25%);
+}
+
+/* ── Command center typography for data readouts ── */
+.theme-npa .stat-value,
+.theme-npa .emergency-phone,
+.theme-npa .news-date {
+  font-family: 'SF Mono', 'Fira Code', 'Cascadia Code', 'Courier New', monospace;
+}
+
+/* ── Top stripe: police blue instead of default emergency red ── */
+.theme-npa .layout-emergency {
+  border-top-color: #1d4ed8;
+}
+
+/* ── Emergency box: dark police blue instead of fire-engine red ── */
+/* This is the single biggest visual split from Health */
+.theme-npa .hero-emergency {
+  background: linear-gradient(135deg, #1e3a5f 0%, #0f2440 100%);
+  border-color: rgba(29, 78, 216, 0.4);
+  box-shadow: 0 20px 40px rgba(15, 36, 64, 0.5);
+}
+
+.theme-npa .emergency-number {
+  background: rgba(255, 255, 255, 0.12);
+  border-color: rgba(255, 255, 255, 0.18);
+}
+
+.theme-npa .emergency-number:hover {
+  background: rgba(255, 255, 255, 0.22);
+  border-color: rgba(255, 255, 255, 0.35);
+}
+
+/* ── Tactical grid texture on stats bar ── */
+.theme-npa .stats-bar {
+  background-color: var(--bg-elevated);
+  background-image:
+    linear-gradient(rgba(29, 78, 216, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(29, 78, 216, 0.04) 1px, transparent 1px);
+  background-size: 24px 24px;
+}
+
+/* ── Sharper card edges — angular = authoritative ── */
+.theme-npa .card {
+  border-radius: 2px 8px 8px 2px;
+}
+
+.theme-npa .stat-item {
+  border-radius: 4px;
+}
+
+/* ── Hero badge: dispatch active indicator ── */
+@keyframes dispatchBlink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.3; }
+}
+
+.theme-npa .hero-badge {
+  background: rgba(29, 78, 216, 0.12);
+  border-color: rgba(29, 78, 216, 0.3);
+  color: #3b82f6;
+}
+
+/* Green "system active" dot — pure CSS, no JSX change needed */
+.theme-npa .hero-badge::before {
+  content: '';
+  width: 6px;
+  height: 6px;
+  background: #22c55e;
+  border-radius: 50%;
+  animation: dispatchBlink 2s ease-in-out infinite;
+  flex-shrink: 0;
+}
+
+/* ── Chevron hero pattern — rank insignia motif ── */
+/* Replaces the default shield grid with a military chevron repeat */
+.theme-npa .hero-pattern {
+  background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M30 15 L15 28' stroke='%231d4ed8' stroke-width='1.5' fill='none' stroke-linecap='round' opacity='0.06'/%3E%3Cpath d='M30 15 L45 28' stroke='%231d4ed8' stroke-width='1.5' fill='none' stroke-linecap='round' opacity='0.06'/%3E%3Cpath d='M30 25 L20 35' stroke='%231d4ed8' stroke-width='1' fill='none' stroke-linecap='round' opacity='0.04'/%3E%3Cpath d='M30 25 L40 35' stroke='%231d4ed8' stroke-width='1' fill='none' stroke-linecap='round' opacity='0.04'/%3E%3C/svg%3E");
+  opacity: 0.7;
+}
+
+/* ── Quick link hover: blue tint instead of generic ── */
+.theme-npa .quick-link:hover {
+  background: rgba(29, 78, 216, 0.06);
+}
+
+/* ── Info box: command-style treatment ── */
+.theme-npa .info-box {
+  border-radius: 4px 12px 12px 4px;
+}
