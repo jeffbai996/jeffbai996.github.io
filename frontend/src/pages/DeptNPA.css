@@ -2,17 +2,18 @@
    Tactical, authoritative feel layered on Emergency template.
    Differentiator from Health: command center vs clinical. */
 
-/* ── Badge-shaped logo — hexagonal police badge silhouette ── */
+/* ── Squared-off logo — tactical, sharp ── */
 .theme-npa .logo-mark {
-  border-radius: 2px;
-  clip-path: polygon(50% 0%, 93% 25%, 93% 75%, 50% 100%, 7% 75%, 7% 25%);
+  border-radius: 4px;
 }
 
-/* ── Command center typography for data readouts ── */
+/* ── Command center typography for stat readouts only ── */
+/* Emergency phone numbers stay sans-serif for readability */
 .theme-npa .stat-value,
-.theme-npa .emergency-phone,
 .theme-npa .news-date {
-  font-family: 'SF Mono', 'Fira Code', 'Cascadia Code', 'Courier New', monospace;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.02em;
+  font-weight: 800;
 }
 
 /* ── Top stripe: police blue instead of default emergency red ── */
