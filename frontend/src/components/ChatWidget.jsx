@@ -273,38 +273,6 @@ function handleFollowUpResponse(lowerMessage, conversationContext) {
   return null
 }
 
-// Get helpful suggestions based on detected topic
-function getTopicSuggestions(topic) {
-  const suggestions = {
-    police: "It looks like you might need police services. I can help with:\n• **Report a Crime** - File a police report\n• **Check Case Status** - Track your report\n• **Police Clearance** - Background check certificate\n• **Emergency** - Call 911 for emergencies\n\nWhich one do you need?",
-    banking: "It seems like you need banking assistance. I can help with:\n• **Open Account** - Personal or business\n• **Loans** - Mortgage, personal, or business loans\n• **Banking Info** - General Bank of Praya services\n\nWhat would you like to know?",
-    taxes: "Looks like you have a tax-related question! I can help with:\n• **File Taxes** - Individual or business\n• **Make Payment** - Pay taxes or set up a plan\n• **Check Refund** - Track your refund status\n\nWhat do you need?",
-    identity: "It seems you need help with identity documents. Options include:\n• **National ID** - New, renew, or replace\n• **Passport** - Applications and renewals\n• **Birth Certificate** - Certified copies\n\nWhich one interests you?",
-    transport: "It looks like you need transport services. I can help with:\n• **Driver's License** - New, renew, or test scheduling\n• **Vehicle Registration** - Register or renew\n• **Title Transfer** - Change vehicle ownership\n\nWhat do you need?",
-    health: "It seems you need health-related assistance. I can help with:\n• **Health Insurance** - National insurance enrollment\n• **Vaccinations** - Schedule appointments\n• **Health Info** - General Health Department services\n\nWhat would you like to know?",
-    housing: "It looks like you need housing assistance. Options include:\n• **Public Housing** - Apply for housing\n• **Rental Assistance** - Financial help programs\n• **Tenant Rights** - Eviction, rent disputes\n\nWhat do you need help with?",
-    postal: "It seems you need postal services. I can help with:\n• **Track Package** - Check delivery status\n• **Ship Package** - Domestic or international\n• **Postal Info** - General Praya Post services\n\nWhat would you like to do?",
-    legal: "It looks like you have a legal question. I can help with:\n• **Court Cases** - Civil or criminal matters\n• **Legal Aid** - Public defender, eligibility\n• **Case Lookup** - Find case information\n\nWhat do you need?",
-    customs: "It seems you need customs/border information. I can help with:\n• **Import/Export** - Permits and duties\n• **Travel Requirements** - Visa, entry rules\n• **Customs Info** - General CBCA services\n\nWhat would you like to know?"
-  }
-
-  return suggestions[topic] || null
-}
-
-// Generate guidance based on question type
-function generateQuestionGuidance(questionType, message) {
-  const guidance = {
-    howTo: "I'd be happy to explain how to do something! Could you specify what service you're interested in? For example:\n• How to get a passport\n• How to file taxes\n• How to report a crime\n• How to track a package",
-    howMuch: "I can help with fee information! Which service are you asking about? Common fees:\n• **National ID**: $25 (new), $15 (renewal)\n• **Passport**: $80 (standard), $150 (expedited)\n• **Driver's License**: $45 (new), $30 (renewal)\n• **Police Clearance**: $20",
-    whereIs: "I can help you find locations! Are you looking for:\n• A government office location\n• Where to submit documents\n• Which department handles your request\n\nPlease specify what you're looking for.",
-    whenIs: "I can provide timing information! Most government offices are open:\n• **Mon-Fri**: 8AM-5PM\n• **Some Sat**: 9AM-1PM\n• **Online**: 24/7\n\nWhat specific service do you need hours for?",
-    canI: "I can help determine if you're eligible for something. What service or benefit are you asking about?",
-    default: "I'm here to help with Praya government services! Could you rephrase your question? For example:\n• \"How do I apply for X?\"\n• \"What documents do I need for Y?\"\n• \"Where can I find Z?\""
-  }
-
-  return guidance[questionType] || guidance.default
-}
-
 // Parse markdown-style formatting (bold, links) and return React elements
 function parseFormattedText(text) {
   const parts = []
