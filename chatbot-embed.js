@@ -943,12 +943,18 @@
     // Create widget with dark theme
     const widget = document.createElement('div');
     widget.id = 'praya-chat-widget';
+
+    const headerName = currentDepartment ? currentDepartment.name : 'GOV.PRAYA';
+    const initialGreeting = currentDepartment
+      ? `Welcome to ${currentDepartment.name} Citizen Services! I'm your AI assistant powered by GP.AI. I can help you with:\n\n${currentDepartment.services.slice(0, 4).map(s => '• ' + s).join('\n')}\n\nHow can I assist you today?`
+      : 'Welcome to GOV.PRAYA Citizen Services! I\'m your AI assistant. How can I help you today?';
+
     widget.innerHTML = `
       <div class="chat-header">
         <div class="chat-header-info">
           <div class="chat-header-text">
             <h3>Citizen Services</h3>
-            <p><span class="status-dot"></span>${currentDepartment ? currentDepartment.name : 'GOV.PRAYA'}</p>
+            <p><span class="status-dot"></span>${escapeHtml(headerName)}</p>
           </div>
         </div>
         <button class="chat-close" aria-label="Close chat">
@@ -961,10 +967,7 @@
       <div class="chat-messages" id="chat-messages">
         <div class="chat-message bot">
           <div class="message-bubble">
-            ${currentDepartment
-              ? `Welcome to ${currentDepartment.name} Citizen Services! I'm your AI assistant powered by GP.AI. I can help you with:\n\n${currentDepartment.services.slice(0, 4).map(s => '• ' + s).join('\n')}\n\nHow can I assist you today?`
-              : 'Welcome to GOV.PRAYA Citizen Services! I\'m your AI assistant. How can I help you today?'
-            }
+            ${formatMessageText(initialGreeting)}
           </div>
         </div>
       </div>
@@ -1021,9 +1024,13 @@
 
   // Escape HTML entities to prevent XSS
   function escapeHtml(text) {
-    const div = document.createElement('div');
-    div.textContent = text;
-    return div.innerHTML;
+    if (!text) return '';
+    return text
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#039;');
   }
 
   // Safely format text with markdown-like syntax (after HTML escaping)
@@ -1041,6 +1048,10 @@
     safe = safe.replace(/\[([^\]]+)\]\(([^)]+)\)/g, function(match, linkText, url) {
       // Only allow http, https, mailto, and tel protocols
       if (/^(https?:\/\/|mailto:|tel:)/i.test(url)) {
+        // Check for escaped quotes that could break out of attributes
+        if (url.includes('&quot;') || url.includes('&#039;')) {
+          return linkText;
+        }
         return '<a href="' + url + '" target="_blank" rel="noopener noreferrer" class="chat-link">' + linkText + '</a>';
       }
       return linkText; // Return just the text if URL is suspicious
@@ -1048,6 +1059,9 @@
 
     // Safely auto-link URLs - validate protocol
     safe = safe.replace(/(^|[^"'>])(https?:\/\/[^\s<>")\]]+)/g, function(match, prefix, url) {
+      if (url.includes('&quot;') || url.includes('&#039;')) {
+        return prefix + url;
+      }
       return prefix + '<a href="' + url + '" target="_blank" rel="noopener noreferrer" class="chat-link">' + url + '</a>';
     });
 
