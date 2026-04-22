@@ -50,3 +50,6 @@ prisma/*.db-journal
 
 # Source maps
 *.map
+
+# Superpowers brainstorm scratch
+.superpowers/
