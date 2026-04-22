@@ -1,56 +1,123 @@
-# CLAUDE.md - Project Recommendations
+# CLAUDE.md — govpraya.org
 
-## Priority Tasks
+**See `~/.claude/projects/-Users-jeffbai-repos/memory/project_praya_canon.md` for full Praya canon** (government structure, officials, districts, currency, legislation, design philosophy, content rules). This file is the *technical* brief for the website repo only.
 
-### Immediate Priority
-- [x] 1. Fix XSS vulnerability in `chatbot-embed.js` - Replace innerHTML with safe DOM methods
-- [x] 2. ~~Move API key from WebSocket URL to headers~~ - Added security documentation (browser WebSocket API limitation)
-- [x] 3. Remove 11 source map files from `/assets/` directory
+---
 
-### High Priority
-- [x] 4. Add Error Boundary component to `App.jsx`
-- [x] 5. Fix unhandled Promise in `AuthContext.jsx` useEffect
-- [x] 6. Add missing `theme-dark-aqi` CSS theme to `global.css`
+## What This Repo Is
 
-### Medium Priority
-- [x] 7. Remove unused components (DocumentUpload, DarkModeToggle, ProgressTracker, InteractiveMap, FeeCalculator) and their CSS files
-- [x] 8. Remove unused exports from `formKnowledge.js`
-- [x] 9. Remove unused import of `getFormById` from `geminiService.js`
-- [x] 10. Add chatbot contexts for Air Quality and National Security departments
-- [x] 11. Fix memory leak in ChatWidget streaming (clear setTimeout on unmount)
-- [x] 12. Fix broken footer links in Portal.jsx and Revenue.jsx
+The public web presence for the Republic of Praya (海旗) — a 15-year-old Minecraft creative server (founded Feb 26, 2011) operated as a functioning civilizational simulation. This repo is the **GitHub Pages SPA** at www.govpraya.org.
 
-### Low Priority
-- [x] 13. Remove console.log statements from `chatbot-embed.js`
-- [x] 14. Add ARIA labels to SVG icons throughout
-- [x] 15. Add skip-to-content link for accessibility
-- [x] 16. ~~Integrate DarkModeToggle component into GovBanner~~ - Component removed; theme toggle exists in GovBanner
-- [x] 17. Complete Revenue payment forms or clearly mark as demo
-- [x] 18. Fix incomplete dependency arrays in `useGeminiLive.js`
+**Sibling properties (not in this repo):**
+- `nmp.govpraya.org` — National Museum of Praya (standalone subdomain, distinct visual identity)
+- `govpraya.org/wiki/` — MediaWiki-style canon wiki (template: `praya-wiki-v3.html`, Vector 2022 skin)
+- Fandom wiki (`praya.fandom.com`) — migration source, eligible for deletion
+- GP.AI Paper plugin — separate repo (`jeffbai996/gp-ai`, formerly `praya-test`), game-side implementation
 
-## Build Commands
+## Stack
+
+- **Framework:** React 18 + Vite 6 (SPA)
+- **Routing:** React Router v6 with lazy-loaded department pages
+- **Auth:** Supabase (PostgreSQL + Auth)
+- **AI:** Google Gemini API (chatbot on every department page, context-aware per dept)
+- **Styling:** CSS variables + per-department theme CSS (NPA, Health, etc.)
+- **Testing:** Vitest + Testing Library
+- **Deployment:** GitHub Pages via CNAME (`www.govpraya.org`)
+
+## Structure
+
+```
+frontend/
+├── src/
+│   ├── App.jsx                # Router, lazy-loaded routes
+│   ├── pages/                 # 27 department + static pages
+│   │   ├── auth/              # Login, Register, ForgotPassword, AuthCallback
+│   │   ├── account/           # Dashboard, Security
+│   │   ├── admin/             # AlertAdmin (protected)
+│   │   └── Dept*.css          # Per-department themes
+│   ├── components/
+│   │   ├── ChatWidget.jsx     # Gemini chatbot, streaming
+│   │   ├── Layout.jsx, GovBanner.jsx
+│   │   ├── EmergencyAlert.jsx # National status broadcast
+│   │   └── auth/ProtectedRoute.jsx
+│   ├── services/
+│   │   ├── geminiService.js       # REST API
+│   │   └── geminiLiveService.js   # WebSocket live API
+│   ├── hooks/useGeminiLive.js
+│   ├── utils/
+│   │   ├── AuthContext.jsx, ThemeContext.jsx
+│   │   ├── supabaseClient.js
+│   │   ├── departmentContext.js   # Per-dept chatbot system prompts
+│   │   ├── intelligentRouter.js, intentRecognition.js
+│   │   ├── semanticClassifier.js, entityLinker.js
+│   │   ├── conversationMemory.js, predictiveSuggestions.js
+│   │   └── appointments.js, formKnowledge.js, twoFactor.js
+│   └── styles/global.css      # Root CSS vars + theme definitions
+├── scripts/validate-env.js    # Pre-build env check
+└── public/                    # PWA manifest, service worker, offline.html
+```
+
+## Build
 
 ```bash
 cd frontend
-npm install        # Install dependencies
-npm run dev        # Start dev server on port 5173
-npm run build      # Build for production
-npm run preview    # Preview production build
-npm run lint       # Run ESLint
+npm install
+npm run dev        # port 5173
+npm run build      # runs validate-env.js first
+npm run preview
+npm run lint
+npm run test       # vitest
 ```
 
-## Architecture Notes
+Root also contains `chatbot-embed.js` — standalone embeddable chatbot widget for injection into the wiki / NMP / other subdomains.
 
-- **Framework**: React 18 + Vite 5.0
-- **Routing**: React Router v6 with lazy loading
-- **Auth**: Supabase (PostgreSQL + Auth)
-- **AI**: Google Gemini API for chatbot
-- **Styling**: CSS variables with theme system
-- **Deployment**: GitHub Pages (static site)
+## Conventions Already Established
+
+- **Department codes are canonical.** Use IMMD not "Immigration Dept" in code/routes. See `project_praya_canon.md` for full list. Notably: **BoP** (Bank of Praya), never "CBP" or "Central Bank of Praya."
+- **Content must be canon-accurate and in-universe.** No Minecraft/OOC references anywhere in rendered content. The republic administers, it doesn't moralize. PSAs offer resources, not judgment.
+- **Per-department themes** live in `pages/Dept*.css` (DeptNPA, DeptHealth, DeptEmergency, etc.). Each department has its own visual identity — don't flatten to a single gov theme.
+- **Chatbot contexts** are per-department in `utils/departmentContext.js`. When adding a new dept page, add a context entry so the chatbot knows its jurisdiction and legislation.
+- **Lazy load department pages** (already set up in App.jsx). Eagerly load Portal only.
+- **Currency display:** "P$" symbol in UI, "PYD" ISO code in data/APIs. Always BigDecimal-equivalent precision on the backend side; for display, format with 2 decimals.
 
 ## Code Style
 
-- Use CSS variables for theming (defined in `global.css`)
-- Lazy load department pages for code splitting
-- Keep console statements out of production code
-- Use semantic HTML and ARIA labels for accessibility
+- CSS variables for all theming, defined in `styles/global.css`
+- Routes are thin — fetch, transform, render. Business logic in utils/ or services/
+- Use `@/` paths (check vite.config.js for aliases)
+- Jinja2-style string templating is not in play here — React components + JSX
+- Prop-types on all components (enforced by recent cleanup)
+- No console.log in production — gate with `if (import.meta.env.DEV)`
+- Adventure-style ARIA labels on all SVG icons (established pattern)
+
+## Active State (as of April 2026)
+
+- All 18 original priority tasks complete (XSS fix, error boundaries, chatbot contexts, accessibility, memory leaks, etc.)
+- 46 commits since Jan 2026; last activity ~April 14
+- No known blocking bugs
+- Test coverage exists but not comprehensive
+
+## Next-Direction Options (not decided)
+
+1. **New department page.** Strong candidates per canon: Electoral Commission (building exists, democracy not activated), Legislative Council (infrastructure ready), CBCA (Customs), Gaming & Lottery Commission.
+2. **BoP monetary policy page.** MPC statements, policy rate history, RTGS status. Leverages the Series 2026 "Pioneers of Humanity" banknote designs.
+3. **Spectrum Cannabis constitutional crisis microsite.** Federal-vs-county live plot line — Seth Rogen's CTB vs. Governor Mo's county closure.
+4. **NMP subdomain content pipeline.** Separate subdomain work, but this repo's `chatbot-embed.js` would deploy there.
+5. **Wiki build-out.** Separate pipeline — tracked in `wiki_build_plan.md` in the wiki directory. Tier 1 articles remaining: Government, Praya Dollar, BoP, Criminal Code, Immigration, MRT.
+
+## Coding Rules (Claude Code specific)
+
+**Always:**
+- Reference canon accurately — when in doubt, check `project_praya_canon.md`
+- Pull chatbot system prompts from `departmentContext.js`, never hardcode
+- Keep files under 200 lines where possible
+- Match existing per-department theme patterns when adding new depts
+- Test in dev before claiming done (`npm run dev`, verify the route renders)
+
+**Never:**
+- Add Minecraft/OOC content to rendered pages
+- Use "Prayan" in formal contexts — it's "Praya citizen"
+- Refer to the central bank as "CBP" or "Central Bank of Praya" — it is **BoP** (Bank of Praya)
+- Commit `.env` files or API keys
+- Add features not asked for; don't over-engineer chatbot logic
+- Include AI attribution (Claude/Anthropic/Claude Code) in commits, README, or rendered content
