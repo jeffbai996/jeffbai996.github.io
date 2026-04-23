@@ -1,6 +1,21 @@
 import { Component } from 'react'
 import PropTypes from 'prop-types'
 
+// Fallback hex values mirror the CSS custom properties defined in global.css.
+// These only render if CSS variables haven't loaded (e.g. very early paint).
+const COLORS = {
+  bgDark: COLORS.bgDark,
+  bgCard: COLORS.bgCard,
+  bgElevated: COLORS.bgElevated,
+  border: 'var(--border, #2a2a2a)',
+  textPrimary: COLORS.textPrimary,
+  textSecondary: COLORS.textSecondary,
+  textMuted: COLORS.textMuted,
+  primary: COLORS.primary,
+  errorBg: COLORS.errorBg,
+  errorStroke: '#ef4444',
+}
+
 /**
  * Error Boundary component to catch JavaScript errors in child components
  * and display a fallback UI instead of crashing the entire app.
@@ -40,23 +55,23 @@ class ErrorBoundary extends Component {
           justifyContent: 'center',
           minHeight: '100vh',
           padding: '24px',
-          backgroundColor: 'var(--bg-dark, #0f0f0f)',
-          color: 'var(--text-primary, #fafafa)',
+          backgroundColor: COLORS.bgDark,
+          color: COLORS.textPrimary,
           fontFamily: "'Plus Jakarta Sans', system-ui, sans-serif",
           textAlign: 'center'
         }}>
           <div style={{
             maxWidth: '500px',
             padding: '32px',
-            backgroundColor: 'var(--bg-card, #1a1a1a)',
+            backgroundColor: COLORS.bgCard,
             borderRadius: '16px',
-            border: '1px solid var(--border, #2a2a2a)'
+            border: `1px solid ${COLORS.border}`
           }}>
             <div style={{
               width: '64px',
               height: '64px',
               margin: '0 auto 24px',
-              backgroundColor: 'rgba(239, 68, 68, 0.1)',
+              backgroundColor: COLORS.errorBg,
               borderRadius: '50%',
               display: 'flex',
               alignItems: 'center',
@@ -67,7 +82,7 @@ class ErrorBoundary extends Component {
                 height="32"
                 viewBox="0 0 24 24"
                 fill="none"
-                stroke="#ef4444"
+                stroke={COLORS.errorStroke}
                 strokeWidth="2"
                 strokeLinecap="round"
                 strokeLinejoin="round"
@@ -82,14 +97,14 @@ class ErrorBoundary extends Component {
               fontSize: '24px',
               fontWeight: '700',
               marginBottom: '12px',
-              color: 'var(--text-primary, #fafafa)'
+              color: COLORS.textPrimary
             }}>
               Something went wrong
             </h1>
 
             <p style={{
               fontSize: '14px',
-              color: 'var(--text-secondary, #a8a8a8)',
+              color: COLORS.textSecondary,
               marginBottom: '24px',
               lineHeight: '1.6'
             }}>
@@ -109,7 +124,7 @@ class ErrorBoundary extends Component {
                   padding: '12px 24px',
                   fontSize: '14px',
                   fontWeight: '600',
-                  backgroundColor: 'var(--primary, #f97316)',
+                  backgroundColor: COLORS.primary,
                   color: 'white',
                   border: 'none',
                   borderRadius: '10px',
@@ -126,9 +141,9 @@ class ErrorBoundary extends Component {
                   padding: '12px 24px',
                   fontSize: '14px',
                   fontWeight: '600',
-                  backgroundColor: 'var(--bg-elevated, #252525)',
-                  color: 'var(--text-secondary, #a8a8a8)',
-                  border: '1px solid var(--border, #2a2a2a)',
+                  backgroundColor: COLORS.bgElevated,
+                  color: COLORS.textSecondary,
+                  border: `1px solid ${COLORS.border}`,
                   borderRadius: '10px',
                   cursor: 'pointer',
                   fontFamily: 'inherit',
@@ -144,14 +159,14 @@ class ErrorBoundary extends Component {
                 marginTop: '24px',
                 textAlign: 'left',
                 fontSize: '12px',
-                color: 'var(--text-muted, #737373)'
+                color: COLORS.textMuted
               }}>
                 <summary style={{ cursor: 'pointer', marginBottom: '8px' }}>
                   Error Details (Development Only)
                 </summary>
                 <pre style={{
                   padding: '12px',
-                  backgroundColor: 'var(--bg-elevated, #252525)',
+                  backgroundColor: COLORS.bgElevated,
                   borderRadius: '8px',
                   overflow: 'auto',
                   whiteSpace: 'pre-wrap',
@@ -166,7 +181,7 @@ class ErrorBoundary extends Component {
           <p style={{
             marginTop: '24px',
             fontSize: '12px',
-            color: 'var(--text-muted, #737373)'
+            color: COLORS.textMuted
           }}>
             If this problem persists, please contact support.
           </p>
