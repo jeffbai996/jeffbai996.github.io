@@ -580,6 +580,7 @@ async function callGeminiAPI(message, messages, currentDeptData = null, useEnhan
 
     return null
   } catch (error) {
+    if (error.message === 'Request cancelled') return null  // superseded by newer message
     return null
   }
 }
@@ -704,6 +705,13 @@ export default function ChatWidget({ currentPath = '/' }) {
     }
   }, [])
 
+  // Cancel any in-flight Gemini request when the widget unmounts
+  useEffect(() => {
+    return () => {
+      geminiService.cancel()
+    }
+  }, [])
+
   // Handle quick action chip clicks
   const handleQuickAction = (query) => {
     setShowQuickActions(false)
@@ -723,6 +731,9 @@ export default function ChatWidget({ currentPath = '/' }) {
 
   // Process a message (extracted for reuse) - Enhanced with intelligent routing
   const processMessage = async (messageText) => {
+    // Cancel any previous in-flight request
+    geminiService.cancel()
+
     const userMessage = {
       id: Date.now(),
       type: 'user',
