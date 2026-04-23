@@ -161,11 +161,23 @@ export async function subscribeToPushNotifications() {
       }
     }
 
+    // VAPID public key is required to subscribe — without it, pushManager.subscribe()
+    // throws. Skip cleanly until the key is provisioned and injected at build time.
+    const vapidKey = import.meta.env.VITE_VAPID_PUBLIC_KEY
+    if (!vapidKey) {
+      if (import.meta.env.DEV) {
+        console.warn('Push notifications unavailable: VITE_VAPID_PUBLIC_KEY not set')
+      }
+      return {
+        success: false,
+        error: 'Push notifications not configured'
+      }
+    }
+
     // Subscribe to push notifications
-    // Note: You'll need to generate VAPID keys for production
     const subscription = await registration.pushManager.subscribe({
       userVisibleOnly: true,
-      applicationServerKey: null // Replace with your VAPID public key
+      applicationServerKey: vapidKey
     })
 
     return {
