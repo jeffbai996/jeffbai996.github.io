@@ -15,6 +15,10 @@ export function AuthProvider({ children }) {
       setUser(userData)
       return userData
     } catch (err) {
+      // Surface in dev so silent failures don't hide auth issues during debugging
+      if (import.meta.env.DEV) {
+        console.error('Failed to fetch user data:', err)
+      }
       setUser(null)
       return null
     }
