@@ -109,6 +109,14 @@ class GeminiLiveService {
       try {
         this.ws = new WebSocket(WEBSOCKET_URL)
 
+        // Connection timeout — cleared on open/error so a valid connection
+        // isn't rejected after it's already succeeded
+        const connectionTimeoutId = setTimeout(() => {
+          if (!this.isSetupComplete) {
+            reject(new Error('Connection timeout'))
+          }
+        }, 10000)
+
         this.ws.onopen = () => {
           this.isConnected = true
           this.reconnectAttempts = 0
@@ -120,16 +128,19 @@ class GeminiLiveService {
           this.handleMessage(event)
           if (!this.isSetupComplete) {
             this.isSetupComplete = true
+            clearTimeout(connectionTimeoutId)
             resolve()
           }
         }
 
         this.ws.onerror = (error) => {
+          clearTimeout(connectionTimeoutId)
           this.emit('error', error)
           reject(error)
         }
 
         this.ws.onclose = (event) => {
+          clearTimeout(connectionTimeoutId)
           this.isConnected = false
           this.isSetupComplete = false
           this.emit('disconnected', { code: event.code, reason: event.reason })
@@ -140,13 +151,6 @@ class GeminiLiveService {
             setTimeout(() => this.connect(), 2000 * this.reconnectAttempts)
           }
         }
-
-        // Timeout for connection
-        setTimeout(() => {
-          if (!this.isSetupComplete) {
-            reject(new Error('Connection timeout'))
-          }
-        }, 10000)
 
       } catch (error) {
         reject(error)

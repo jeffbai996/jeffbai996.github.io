@@ -188,21 +188,28 @@ export function isOnline() {
 }
 
 /**
- * Setup online/offline event listeners
+ * Setup online/offline event listeners.
+ * Returns a cleanup function that removes both listeners — callers should
+ * invoke it on unmount to avoid leaks when setup is called multiple times.
  */
 export function setupOnlineStatus(onlineCallback, offlineCallback) {
-  window.addEventListener('online', () => {
+  const handleOnline = () => {
     if (import.meta.env.DEV) console.log('App is online')
     if (onlineCallback) onlineCallback()
-  })
+  }
 
-  window.addEventListener('offline', () => {
+  const handleOffline = () => {
     if (import.meta.env.DEV) console.log('App is offline')
     if (offlineCallback) offlineCallback()
-  })
+  }
 
-  // Return current status
-  return isOnline()
+  window.addEventListener('online', handleOnline)
+  window.addEventListener('offline', handleOffline)
+
+  return () => {
+    window.removeEventListener('online', handleOnline)
+    window.removeEventListener('offline', handleOffline)
+  }
 }
 
 /**
