@@ -223,8 +223,8 @@ export default function Register() {
               />
               {formData.password && (
                 <ul className="password-requirements">
-                  {passwordStrength.map((req, i) => (
-                    <li key={i} className={req.met ? 'met' : ''}>
+                  {passwordStrength.map((req) => (
+                    <li key={req.label} className={req.met ? 'met' : ''}>
                       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                         {req.met ? (
                           <path d="M20 6L9 17l-5-5" />
