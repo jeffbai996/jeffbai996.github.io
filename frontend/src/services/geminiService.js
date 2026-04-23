@@ -23,6 +23,7 @@ class GeminiService {
 
     if (!apiKey || apiKey === 'your_api_key_here') {
       this.initialized = false;
+      this._abortController = null;
       return;
     }
 
@@ -58,6 +59,7 @@ class GeminiService {
         ],
       });
       this.initialized = true;
+      this._abortController = null;
     } catch (error) {
       this.initialized = false;
     }
@@ -489,11 +491,28 @@ ${dynamicContext}
         ],
       });
 
-      // Send the user's message — race against 30s timeout to prevent infinite hangs
+      // Cancel any previous in-flight request before starting a new one
+      this.cancel();
+
+      // Create a new controller for this request
+      this._abortController = new AbortController();
+      const { signal } = this._abortController;
+
+      // Race: SDK call vs 30s timeout vs explicit cancel
       const timeout = new Promise((_, reject) =>
         setTimeout(() => reject(new Error('Gemini request timed out after 30s')), 30000)
-      )
-      const result = await Promise.race([chat.sendMessage(userMessage), timeout]);
+      );
+      const aborted = new Promise((_, reject) => {
+        signal.addEventListener('abort', () => reject(new Error('Request cancelled')), { once: true });
+      });
+
+      let result;
+      try {
+        result = await Promise.race([chat.sendMessage(userMessage), timeout, aborted]);
+      } finally {
+        // Clear the controller whether we succeeded, timed out, or were cancelled
+        this._abortController = null;
+      }
       const response = result.response;
       const text = response.text();
 
@@ -525,6 +544,10 @@ ${dynamicContext}
         },
       };
     } catch (error) {
+      // Cancelled by caller sending a new message — not a user-visible error
+      if (error.message === 'Request cancelled') {
+        throw error;
+      }
       // Handle specific error types
       if (error.message?.includes('quota') || error.message?.includes('429')) {
         throw new Error('API quota exceeded. Please try again later.');
@@ -533,6 +556,17 @@ ${dynamicContext}
       } else {
         throw new Error('Failed to generate response. Please try again.');
       }
+    }
+  }
+
+  /**
+   * Cancel any in-flight generateResponse call.
+   * Safe to call even when no request is in-flight.
+   */
+  cancel() {
+    if (this._abortController) {
+      this._abortController.abort();
+      this._abortController = null;
     }
   }
 
