@@ -489,8 +489,11 @@ ${dynamicContext}
         ],
       });
 
-      // Send the user's message
-      const result = await chat.sendMessage(userMessage);
+      // Send the user's message — race against 30s timeout to prevent infinite hangs
+      const timeout = new Promise((_, reject) =>
+        setTimeout(() => reject(new Error('Gemini request timed out after 30s')), 30000)
+      )
+      const result = await Promise.race([chat.sendMessage(userMessage), timeout]);
       const response = result.response;
       const text = response.text();
 
