@@ -35,7 +35,7 @@ class GeminiService {
         model: 'gemini-3.1-flash-lite-preview',
         generationConfig: {
           temperature: 0.7,
-          maxOutputTokens: 2500,
+          maxOutputTokens: 1000,
           topP: 0.95,
           topK: 40,
         },
@@ -476,27 +476,19 @@ ${dynamicContext}
       // Format conversation history
       const history = this.formatHistory(conversationHistory.slice(-12)); // Last 12 messages for context
 
-      // Start a chat session with history using the selected model
-      const chat = this.model.startChat({
-        history: [
-          {
-            role: 'user',
-            parts: [{ text: systemPrompt }],
-          },
-          {
-            role: 'model',
-            parts: [{ text: 'I understand. I am the GOV.PRAYA assistant for the Republic of Praya government portal. I will help citizens navigate the 15 major departments and 127 online services efficiently, providing information about processes, requirements, fees, and contact details. I will keep responses concise but thorough, be professional and friendly, proactively offer helpful related information, and direct citizens to appropriate resources with direct links.' }],
-          },
-          ...history,
-        ],
-      });
-
       // Cancel any previous in-flight request before starting a new one
       this.cancel();
 
       // Create a new controller for this request
       this._abortController = new AbortController();
       const { signal } = this._abortController;
+
+      // Start a chat session — systemInstruction keeps the prompt out of
+      // conversation history (saves tokens, avoids the fake user/model ack pattern)
+      const chat = this.model.startChat({
+        systemInstruction: { parts: [{ text: systemPrompt }] },
+        history,
+      });
 
       // Race: SDK call vs 30s timeout vs explicit cancel
       const timeout = new Promise((_, reject) =>
