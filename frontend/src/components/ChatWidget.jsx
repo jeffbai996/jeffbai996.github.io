@@ -1,4 +1,5 @@
 import { useState, useRef, useEffect, useMemo } from 'react'
+import PropTypes from 'prop-types'
 import { useNavigate } from 'react-router-dom'
 import './ChatWidget.css'
 import { generateKnowledgeBase, containsProfanity, isUnintelligible, departmentData } from '../utils/departmentCrawler'
@@ -1168,4 +1169,8 @@ export default function ChatWidget({ currentPath = '/' }) {
       </div>
     </>
   )
+}
+
+ChatWidget.propTypes = {
+  currentPath: PropTypes.string.isRequired,
 }
