@@ -1,5 +1,5 @@
-import { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { useState, useEffect } from 'react'
+import { Link } from 'react-router-dom'
 import {
   getActiveAlerts,
   isAlertDismissed,
@@ -7,8 +7,8 @@ import {
   formatAlertTime,
   getAlertIconPath,
   cleanupDismissedAlerts
-} from '../utils/alertSystem';
-import './EmergencyAlert.css';
+} from '../utils/alertSystem'
+import './EmergencyAlert.css'
 
 /**
  * EmergencyAlert - Displays government alerts, warnings, and critical announcements

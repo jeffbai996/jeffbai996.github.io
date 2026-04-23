@@ -187,7 +187,7 @@ export default function Search({ isOpen, onClose }) {
 
   return (
     <div className="search-overlay" onClick={onClose}>
-      <div className="search-modal" onClick={e => e.stopPropagation()}>
+      <div className="search-modal" role="dialog" aria-modal="true" aria-label="Site search" onClick={e => e.stopPropagation()}>
         <div className="search-input-wrapper">
           <svg className="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
             <circle cx="11" cy="11" r="8" />
@@ -216,7 +216,7 @@ export default function Search({ isOpen, onClose }) {
             <div className="search-results-list">
               {results.map((item, index) => (
                 <button
-                  key={item.url + item.title}
+                  key={item.url}
                   className={`search-result-item ${index === selectedIndex ? 'selected' : ''}`}
                   onClick={() => handleSelect(item)}
                   onMouseEnter={() => setSelectedIndex(index)}
@@ -243,7 +243,7 @@ export default function Search({ isOpen, onClose }) {
               <div className="search-results-list">
                 {recentSearches.map((item, index) => (
                   <button
-                    key={item.url + index}
+                    key={item.url}
                     className="search-result-item"
                     onClick={() => handleSelect(item)}
                   >
