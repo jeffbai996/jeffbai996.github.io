@@ -247,7 +247,8 @@ class GeminiLiveService {
       }
 
     } catch (error) {
-      // Silently handle parse errors in production
+      // Emit so callers can surface or log parse failures
+      this.emit('error', error)
     }
   }
 
