@@ -1074,7 +1074,7 @@ export default function ChatWidget({ currentPath = '/' }) {
           )}
           {/* AI Suggestion Chips */}
           {suggestionChips.length > 0 && !isTyping && !streamingMessageId && (
-            <div className="chat-quick-actions ai-suggestions">
+            <div className="chat-quick-actions ai-suggestions" role="status" aria-live="polite" aria-atomic="true">
               <p className="quick-actions-label">Related questions:</p>
               <div className="quick-actions-chips">
                 {suggestionChips.map((chip, i) => (
