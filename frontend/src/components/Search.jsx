@@ -204,7 +204,7 @@ export default function Search({ isOpen, onClose }) {
           <kbd className="search-shortcut">ESC</kbd>
         </div>
 
-        <div className="search-results">
+        <div className="search-results" aria-live="polite" aria-atomic="false">
           {query && results.length === 0 && (
             <div className="search-empty">
               <p>No results found for "{query}"</p>
