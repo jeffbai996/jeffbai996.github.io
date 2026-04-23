@@ -51,6 +51,7 @@ export default function Search({ isOpen, onClose }) {
   const [selectedIndex, setSelectedIndex] = useState(0)
   const [recentSearches, setRecentSearches] = useState([])
   const inputRef = useRef(null)
+  const modalRef = useRef(null)
   const navigate = useNavigate()
 
   // Load recent searches from localStorage
@@ -84,6 +85,39 @@ export default function Search({ isOpen, onClose }) {
       document.body.style.overflow = ''
     }
   }, [isOpen, onClose])
+
+  // Trap focus inside the modal while open
+  useEffect(() => {
+    if (!isOpen || !modalRef.current) return
+
+    const FOCUSABLE = 'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+
+    const handleTab = (e) => {
+      if (e.key !== 'Tab' || !modalRef.current) return
+
+      const focusable = Array.from(modalRef.current.querySelectorAll(FOCUSABLE))
+      if (focusable.length === 0) return
+
+      const first = focusable[0]
+      const last = focusable[focusable.length - 1]
+      const isInsideModal = modalRef.current.contains(document.activeElement)
+
+      if (e.shiftKey) {
+        if (!isInsideModal || document.activeElement === first) {
+          e.preventDefault()
+          last.focus()
+        }
+      } else {
+        if (!isInsideModal || document.activeElement === last) {
+          e.preventDefault()
+          first.focus()
+        }
+      }
+    }
+
+    document.addEventListener('keydown', handleTab)
+    return () => document.removeEventListener('keydown', handleTab)
+  }, [isOpen])
 
   // Search function
   useEffect(() => {
@@ -187,7 +221,7 @@ export default function Search({ isOpen, onClose }) {
 
   return (
     <div className="search-overlay" onClick={onClose}>
-      <div className="search-modal" role="dialog" aria-modal="true" aria-label="Site search" onClick={e => e.stopPropagation()}>
+      <div ref={modalRef} className="search-modal" role="dialog" aria-modal="true" aria-label="Site search" onClick={e => e.stopPropagation()}>
         <div className="search-input-wrapper">
           <svg className="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
             <circle cx="11" cy="11" r="8" />
