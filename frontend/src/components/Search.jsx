@@ -1,4 +1,5 @@
-import React, { useState, useEffect, useRef } from 'react'
+import { useState, useEffect, useRef } from 'react'
+import PropTypes from 'prop-types'
 import { useNavigate } from 'react-router-dom'
 import './Search.css'
 
@@ -289,6 +290,11 @@ export default function Search({ isOpen, onClose }) {
   )
 }
 
+Search.propTypes = {
+  isOpen: PropTypes.bool.isRequired,
+  onClose: PropTypes.func.isRequired,
+}
+
 // Search trigger button component
 export function SearchTrigger({ onClick }) {
   // Handle keyboard shortcut
@@ -313,4 +319,8 @@ export function SearchTrigger({ onClick }) {
       <kbd>⌘K</kbd>
     </button>
   )
+}
+
+SearchTrigger.propTypes = {
+  onClick: PropTypes.func.isRequired,
 }
