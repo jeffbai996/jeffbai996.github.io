@@ -1,4 +1,4 @@
-import { createContext, useContext, useState, useEffect } from 'react'
+import { createContext, useContext, useState, useEffect, useRef } from 'react'
 
 const ThemeContext = createContext()
 
@@ -34,9 +34,19 @@ export function ThemeProvider({ children }) {
     return saved ? saved === 'dark' : prefersDarkMode()
   })
 
+  // Tracks whether the user has made an explicit choice this session. Combined
+  // with a stored value, this distinguishes "stored because user toggled" from
+  // "stored on first mount" — the OS-change listener should only override the
+  // latter.
+  const userHasChosen = useRef(readStoredTheme() !== null)
+
+  // Apply the current theme: body class always updates, storage only persists
+  // once the user has actually made a choice.
   useEffect(() => {
-    writeStoredTheme(isDark ? 'dark' : 'light')
     document.body.classList.toggle('light', !isDark)
+    if (userHasChosen.current) {
+      writeStoredTheme(isDark ? 'dark' : 'light')
+    }
   }, [isDark])
 
   // Follow OS theme changes when the user hasn't made an explicit choice
@@ -45,8 +55,7 @@ export function ThemeProvider({ children }) {
     const mql = window.matchMedia('(prefers-color-scheme: dark)')
 
     const handleChange = (e) => {
-      // Only auto-switch if there's no saved preference (user never toggled manually)
-      if (readStoredTheme() === null) {
+      if (!userHasChosen.current) {
         setIsDark(e.matches)
       }
     }
@@ -55,7 +64,10 @@ export function ThemeProvider({ children }) {
     return () => mql.removeEventListener('change', handleChange)
   }, [])
 
-  const toggleTheme = () => setIsDark(prev => !prev)
+  const toggleTheme = () => {
+    userHasChosen.current = true
+    setIsDark(prev => !prev)
+  }
 
   return (
     <ThemeContext.Provider value={{ isDark, toggleTheme }}>
