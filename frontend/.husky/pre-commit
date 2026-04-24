@@ -1,0 +1,4 @@
+#!/usr/bin/env sh
+# Git runs this hook from the repo root. The Node toolchain lives in frontend/,
+# so cd there before invoking lint-staged.
+cd frontend && npx lint-staged
