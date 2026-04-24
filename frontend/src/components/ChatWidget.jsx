@@ -1,41 +1,17 @@
-import { useState, useRef, useEffect, useMemo } from 'react'
+import { useState, useEffect, useMemo, useRef } from 'react'
 import PropTypes from 'prop-types'
 import { useNavigate } from 'react-router-dom'
 import './ChatWidget.css'
 import QuickActionIcon from './chat/QuickActionIcon'
-import {
-  classifyIntent,
-} from '../utils/intentRecognition'
-import { findResponse } from '../logic/chatRuleBased'
-import geminiService from '../services/geminiService'
 import { useGeminiLive, VoiceState, ConnectionState } from '../hooks/useGeminiLive'
+import { useConversation } from '../hooks/useConversation'
 import {
   getDepartmentContext,
   getDepartmentData,
-  findRelevantSubPage,
-  generateNavigationOffer,
-  getDepartmentPriorityBoost
 } from '../utils/departmentContext'
-import conversationMemory from '../utils/conversationMemory'
-import { callGeminiAPI, shouldUseGemini, GEMINI_ENABLED } from '../logic/chatGemini'
-import { classifyIntentHybrid } from '../utils/semanticClassifier'
-import {
-  extractAndLinkEntities,
-  generateEntityContext,
-  getServicePrerequisites,
-  generateServiceChain
-} from '../utils/entityLinker'
-import {
-  generateProactiveSuggestions,
-  generateProactiveTip,
-  detectProactiveIntervention
-} from '../utils/proactiveSuggestions'
 import { parseFormattedText } from '../utils/chatMarkdown'
 
 const VOICE_ENABLED = true // Enable voice chat feature
-
-// NOTE: conversationContext and recentMessages are now managed as refs inside the ChatWidget component
-// to prevent issues with multiple instances and proper React lifecycle management
 
 export default function ChatWidget({ currentPath = '/' }) {
   const navigate = useNavigate()
@@ -44,45 +20,29 @@ export default function ChatWidget({ currentPath = '/' }) {
   const departmentContext = useMemo(() => getDepartmentContext(currentPath), [currentPath])
   const currentDeptData = useMemo(() => getDepartmentData(departmentContext.id), [departmentContext.id])
 
+  const {
+    messages,
+    isTyping,
+    streamingMessageId,
+    streamingText,
+    suggestionChips,
+    sendMessage,
+    addGreeting,
+    clearSuggestionChips,
+  } = useConversation({
+    departmentContext,
+    currentDeptData,
+    initialGreeting: departmentContext.greeting,
+  })
+
   // Track if greeting has been updated for current department
   const [lastDeptId, setLastDeptId] = useState(null)
   const [showQuickActions, setShowQuickActions] = useState(true)
 
   const [isOpen, setIsOpen] = useState(false)
-  const [messages, setMessages] = useState([
-    {
-      id: 1,
-      type: 'bot',
-      text: departmentContext.greeting,
-      time: new Date()
-    }
-  ])
   const [inputValue, setInputValue] = useState('')
-  const [isTyping, setIsTyping] = useState(false)
-  const [streamingMessageId, setStreamingMessageId] = useState(null)
-  const [streamingText, setStreamingText] = useState('')
-  const [suggestionChips, setSuggestionChips] = useState([])
   const messagesEndRef = useRef(null)
   const inputRef = useRef(null)
-  const streamingRef = useRef(null)
-
-  // Track conversation context for follow-ups with enhanced memory
-  // Using useRef to persist across renders without triggering re-renders
-  const conversationContextRef = useRef({
-    lastIntent: null,
-    awaitingFollowUp: false,
-    entities: {},
-    conversationHistory: [],
-    currentTopics: [],
-    userPreferences: {},
-    clarificationCount: 0,
-    lastResponseTime: null,
-    lastStrategy: null,
-    offeredRelated: false
-  })
-
-  // Track recent messages to detect spam/repetition
-  const recentMessagesRef = useRef([])
 
   // Voice chat integration
   const {
@@ -113,16 +73,10 @@ export default function ChatWidget({ currentPath = '/' }) {
       setShowQuickActions(true)
       // Add new greeting for the department (only if chat has been opened before)
       if (lastDeptId !== null) {
-        const greetingMessage = {
-          id: Date.now(),
-          type: 'bot',
-          text: `${departmentContext.greeting}\n\nI noticed you're now on the ${departmentContext.name} page. How can I assist you?`,
-          time: new Date()
-        }
-        setMessages(prev => [...prev, greetingMessage])
+        addGreeting(`${departmentContext.greeting}\n\nI noticed you're now on the ${departmentContext.name} page. How can I assist you?`)
       }
     }
-  }, [departmentContext, lastDeptId])
+  }, [departmentContext, lastDeptId, addGreeting])
 
   // Scroll to bottom when new messages arrive or streaming updates
   useEffect(() => {
@@ -147,32 +101,14 @@ export default function ChatWidget({ currentPath = '/' }) {
     }
   }, [isOpen])
 
-  // Cleanup streaming timeout on unmount to prevent memory leaks
-  useEffect(() => {
-    return () => {
-      if (streamingRef.current) {
-        clearTimeout(streamingRef.current)
-        streamingRef.current = null
-      }
-    }
-  }, [])
-
-  // Cancel any in-flight Gemini request when the widget unmounts
-  useEffect(() => {
-    return () => {
-      geminiService.cancel()
-    }
-  }, [])
-
   // Handle quick action chip clicks
   const handleQuickAction = (query) => {
     setShowQuickActions(false)
     setInputValue(query)
     // Trigger send after a brief delay to show the input
     setTimeout(() => {
-      const syntheticEvent = { target: { value: query } }
       setInputValue('')
-      processMessage(query)
+      sendMessage(query)
     }, 100)
   }
 
@@ -181,242 +117,12 @@ export default function ChatWidget({ currentPath = '/' }) {
     navigate(url)
   }
 
-  // Process a message (extracted for reuse) - Enhanced with intelligent routing
-  const processMessage = async (messageText) => {
-    // Cancel any previous in-flight request
-    geminiService.cancel()
-
-    const userMessage = {
-      id: Date.now(),
-      type: 'user',
-      text: messageText,
-      time: new Date()
-    }
-
-    setMessages(prev => [...prev, userMessage])
-    setIsTyping(true)
-    setShowQuickActions(false)
-    setSuggestionChips([])
-
-    // Track message in conversation memory
-    conversationMemory.addMessage({ sender: 'user', text: messageText })
-
-    // Check for linked entities (case numbers, tracking numbers, etc.)
-    const linkedEntities = extractAndLinkEntities(messageText)
-    if (linkedEntities.length > 0) {
-      // Merge entities into context
-      linkedEntities.forEach(entity => {
-        conversationContextRef.current.entities[entity.type] = entity.value
-      })
-    }
-
-    // Check for relevant sub-page to offer navigation
-    const relevantSubPage = findRelevantSubPage(messageText, departmentContext.id)
-
-    // Use hybrid intent classification (semantic + regex)
-    const hybridResult = classifyIntentHybrid(messageText, {
-      lastIntent: conversationContextRef.current.lastIntent,
-      topics: conversationMemory.getSummary().activeTopics
-    })
-
-    // Also get standard intent result for compatibility
-    const intentResult = hybridResult.intent ? {
-      intent: hybridResult.intent,
-      ...hybridResult.details,
-      confidence: hybridResult.confidence
-    } : classifyIntent(messageText)
-
-    // Get department priority boost
-    const priorityBoost = getDepartmentPriorityBoost(messageText, departmentContext.id)
-
-    // Check if we should use Gemini AI using intelligent routing
-    const routingDecision = shouldUseGemini(messageText, intentResult, messages, conversationContextRef.current)
-
-    // Check for proactive intervention needs
-    const intervention = detectProactiveIntervention(messageText, {
-      topics: conversationMemory.getSummary().activeTopics,
-      messageCount: conversationMemory.getSummary().messageCount,
-      offeredRelated: conversationContextRef.current.offeredRelated
-    })
-
-    if (routingDecision.useGemini) {
-      // Try calling Gemini API with enhanced context
-      const geminiResponse = await callGeminiAPI(
-        messageText,
-        messages,
-        currentDeptData,
-        routingDecision.enhancedContext,
-        conversationContextRef.current
-      )
-
-      if (geminiResponse) {
-        // Build final response with enhancements
-        let finalResponse = geminiResponse
-
-        // Add entity context if we found linked entities
-        if (linkedEntities.length > 0) {
-          const entityInfo = generateEntityContext(linkedEntities)
-          if (entityInfo && !finalResponse.includes(entityInfo)) {
-            finalResponse = entityInfo + '\n\n' + finalResponse
-          }
-        }
-
-        // Append navigation offer if relevant
-        if (relevantSubPage) {
-          finalResponse += generateNavigationOffer(relevantSubPage)
-        }
-
-        // Add proactive tip if relevant
-        const memorySummary = conversationMemory.getSummary()
-        if (memorySummary.activeTopics.length > 0) {
-          const tip = generateProactiveTip(memorySummary.activeTopics[0])
-          if (tip && !finalResponse.includes(tip)) {
-            finalResponse += `\n\n💡 ${tip}`
-          }
-        }
-
-        // Track bot response in memory
-        conversationMemory.addMessage({ sender: 'bot', text: finalResponse })
-
-        // Use Gemini response
-        const botMessageId = Date.now() + 1
-        const botMessage = {
-          id: botMessageId,
-          type: 'bot',
-          text: '',
-          time: new Date(),
-          isStreaming: true
-        }
-
-        setMessages(prev => [...prev, botMessage])
-        setIsTyping(false)
-        setStreamingMessageId(botMessageId)
-        setStreamingText('')
-
-        // Stream the Gemini response
-        streamResponse(finalResponse, botMessageId)
-        return
-      }
-      // If Gemini fails, fall back to rule-based system
-    }
-
-    // Use rule-based system with semantic enhancement
-    setTimeout(() => {
-      let response = findResponse(messageText, conversationContextRef.current, recentMessagesRef.current)
-
-      // Add entity context if we found linked entities
-      if (linkedEntities.length > 0) {
-        const entityInfo = generateEntityContext(linkedEntities)
-        if (entityInfo && !response.includes(entityInfo)) {
-          response = entityInfo + '\n\n' + response
-        }
-      }
-
-      // Append navigation offer if relevant
-      if (relevantSubPage) {
-        response += generateNavigationOffer(relevantSubPage)
-      }
-
-      // Add intervention response if needed
-      if (intervention && intervention.type === 'assistance') {
-        response = intervention.message + '\n\n' + response
-      }
-
-      // Track bot response in memory
-      conversationMemory.addMessage({ sender: 'bot', text: response })
-
-      const botMessageId = Date.now() + 1
-      const botMessage = {
-        id: botMessageId,
-        type: 'bot',
-        text: '',
-        time: new Date(),
-        isStreaming: true
-      }
-
-      setMessages(prev => [...prev, botMessage])
-      setIsTyping(false)
-      setStreamingMessageId(botMessageId)
-      setStreamingText('')
-
-      streamResponse(response, botMessageId)
-    }, 400 + Math.random() * 200)
-  }
-
-  // Stream response with typing effect
-  const streamResponse = (response, botMessageId) => {
-    let charIndex = 0
-    if (streamingRef.current) {
-      clearTimeout(streamingRef.current)
-    }
-
-    const streamNextChunk = () => {
-      if (charIndex < response.length) {
-        const char = response[charIndex]
-        const isPunctuation = /[.,!?;:]/.test(char)
-        const isEndOfSentence = /[.!?]/.test(char)
-        const isNewline = char === '\n'
-
-        let charsToAdd
-        if (isPunctuation) {
-          charsToAdd = 1
-        } else if (isNewline) {
-          charsToAdd = 1
-        } else {
-          charsToAdd = Math.min(Math.floor(Math.random() * 5) + 3, response.length - charIndex)
-        }
-
-        const newText = response.slice(0, charIndex + charsToAdd)
-        charIndex += charsToAdd
-
-        setStreamingText(newText)
-        setMessages(prev => prev.map(msg =>
-          msg.id === botMessageId
-            ? { ...msg, text: newText }
-            : msg
-        ))
-
-        let delay
-        if (isEndOfSentence) {
-          delay = 100 + Math.random() * 80
-        } else if (isPunctuation) {
-          delay = 50 + Math.random() * 40
-        } else if (isNewline) {
-          delay = 70 + Math.random() * 50
-        } else if (Math.random() < 0.12) {
-          delay = 40 + Math.random() * 60
-        } else {
-          delay = 8 + Math.random() * 12
-        }
-
-        streamingRef.current = setTimeout(streamNextChunk, delay)
-      } else {
-        streamingRef.current = null
-        setStreamingMessageId(null)
-        setStreamingText('')
-        setMessages(prev => prev.map(msg =>
-          msg.id === botMessageId
-            ? { ...msg, text: response, isStreaming: false }
-            : msg
-        ))
-        // Show AI suggestion chips if available
-        if (conversationContextRef.current.geminiSuggestions?.length > 0) {
-          setSuggestionChips(conversationContextRef.current.geminiSuggestions)
-          conversationContextRef.current.geminiSuggestions = []
-        }
-        // Reset clarification count on successful response
-        conversationContextRef.current.clarificationCount = 0
-      }
-    }
-
-    streamNextChunk()
-  }
-
   const handleSend = async () => {
     if (!inputValue.trim()) return
     const messageText = inputValue.trim()
     setInputValue('')
-    await processMessage(messageText)
+    setShowQuickActions(false)
+    await sendMessage(messageText)
   }
 
   const handleKeyPress = (e) => {
@@ -542,7 +248,7 @@ export default function ChatWidget({ currentPath = '/' }) {
               <div className="quick-actions-chips">
                 {suggestionChips.map((chip, i) => (
                   <button key={i} className="quick-action-chip ai-chip"
-                    onClick={() => { setSuggestionChips([]); processMessage(chip.query || chip.text); }}
+                    onClick={() => { clearSuggestionChips(); sendMessage(chip.query || chip.text); }}
                     type="button">
                     <span>{chip.text}</span>
                   </button>
