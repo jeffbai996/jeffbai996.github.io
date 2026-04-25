@@ -22,11 +22,20 @@ Object.defineProperty(window, 'matchMedia', {
   }),
 })
 
-// Mock localStorage
-const localStorageMock = {
-  getItem: (key) => null,
-  setItem: (key, value) => {},
-  removeItem: (key) => {},
-  clear: () => {},
+// In-memory localStorage mock (jsdom's built-in has quirks across test isolation)
+const createStorageMock = () => {
+  let store = {}
+  return {
+    getItem: (key) => (key in store ? store[key] : null),
+    setItem: (key, value) => { store[key] = String(value) },
+    removeItem: (key) => { delete store[key] },
+    clear: () => { store = {} },
+    key: (i) => Object.keys(store)[i] ?? null,
+    get length() { return Object.keys(store).length },
+  }
 }
-global.localStorage = localStorageMock
+Object.defineProperty(globalThis, 'localStorage', {
+  value: createStorageMock(),
+  writable: true,
+  configurable: true,
+})
