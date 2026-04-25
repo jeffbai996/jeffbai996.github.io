@@ -137,12 +137,12 @@ export function stemWord(word) {
     { suffix: 'ings', replacement: '' },
     { suffix: 'ed', replacement: '' },
     { suffix: 'es', replacement: '' },
-    { suffix: 's', replacement: '' },
     { suffix: 'ly', replacement: '' },
     { suffix: 'ful', replacement: '' },
     { suffix: 'less', replacement: '' },
     { suffix: 'able', replacement: '' },
     { suffix: 'ible', replacement: '' },
+    { suffix: 's', replacement: '' },
     { suffix: 'er', replacement: '' },
     { suffix: 'or', replacement: '' },
     { suffix: 'ist', replacement: '' }
