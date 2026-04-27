@@ -39,7 +39,7 @@ export default function FAQ() {
         },
         {
           q: 'What documents do I need for a passport?',
-          a: 'You need: (1) Completed application form, (2) National ID, (3) Birth certificate, (4) Two passport photos, (5) Payment ($80 standard or $150 expedited). Apply through Interior Department (/interior/passport). Standard processing: 10-14 days. Expedited: 3-5 days.'
+          a: 'You need: (1) Completed application form (Form PP-1 for new, PP-R for renewal), (2) National ID, (3) Birth certificate, (4) Two passport photos, (5) Payment (P$120 new, P$200 expedited, P$80 renewal). Apply in person at IMMD Central (/immd). Standard processing: 4 weeks. Expedited: 5 business days.'
         },
         {
           q: 'How do I renew my driver\'s license?',
@@ -186,7 +186,7 @@ export default function FAQ() {
         },
         {
           q: 'How do I apply for a work visa?',
-          a: 'Visit Customs & Border Control (/cbca). Requirements vary by visa type. Generally need: (1) Job offer from Praya employer, (2) Passport, (3) Proof of qualifications, (4) Background check, (5) Health examination. Processing: 60-90 days. Some visas require employer sponsorship.'
+          a: 'Visit the Immigration Department (/immd). Requirements vary by visa type. Generally need: (1) Job offer from a Praya employer, (2) Passport, (3) Proof of qualifications, (4) Background check, (5) Health examination. Processing: 60-90 days. Some visas require employer sponsorship.'
         },
         {
           q: 'What items are prohibited from import?',
