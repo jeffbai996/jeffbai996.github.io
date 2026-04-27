@@ -4,15 +4,15 @@ import PropTypes from 'prop-types'
 // Fallback hex values mirror the CSS custom properties defined in global.css.
 // These only render if CSS variables haven't loaded (e.g. very early paint).
 const COLORS = {
-  bgDark: COLORS.bgDark,
-  bgCard: COLORS.bgCard,
-  bgElevated: COLORS.bgElevated,
+  bgDark: 'var(--bg-dark, #0f0f0f)',
+  bgCard: 'var(--bg-card, #1a1a1a)',
+  bgElevated: 'var(--bg-elevated, #252525)',
   border: 'var(--border, #2a2a2a)',
-  textPrimary: COLORS.textPrimary,
-  textSecondary: COLORS.textSecondary,
-  textMuted: COLORS.textMuted,
-  primary: COLORS.primary,
-  errorBg: COLORS.errorBg,
+  textPrimary: 'var(--text-primary, #fafafa)',
+  textSecondary: 'var(--text-secondary, #a8a8a8)',
+  textMuted: 'var(--text-muted, #737373)',
+  primary: 'var(--primary, #f97316)',
+  errorBg: 'rgba(239, 68, 68, 0.1)',
   errorStroke: '#ef4444',
 }
 
