@@ -1,7 +1,9 @@
 import { describe, it, expect } from 'vitest'
 import {
   getVisaByCode,
-  calculateOverstay
+  calculateOverstay,
+  lookupStatus,
+  recommendVisa
 } from '../immdLogic'
 
 describe('getVisaByCode', () => {
@@ -64,5 +66,57 @@ describe('calculateOverstay', () => {
   it('honors upper boundary: 30 days is tier 2, 31 days is tier 3', () => {
     expect(calculateOverstay(30).tier).toBe('8–30 days')
     expect(calculateOverstay(31).tier).toBe('31+ days')
+  })
+})
+
+describe('lookupStatus', () => {
+  it('returns record for a known reference (case-insensitive)', () => {
+    const r = lookupStatus('v2-2026-04387')
+    expect(r).toBeDefined()
+    expect(r.ref).toBe('V2-2026-04387')
+    expect(r.status).toBe('Approved')
+  })
+
+  it('returns notFound object for unknown reference', () => {
+    const r = lookupStatus('V9-9999-99999')
+    expect(r.notFound).toBe(true)
+    expect(r.reference).toBe('V9-9999-99999')
+  })
+
+  it('returns null for empty input', () => {
+    expect(lookupStatus('')).toBeNull()
+    expect(lookupStatus(null)).toBeNull()
+  })
+})
+
+describe('recommendVisa', () => {
+  it('recommends S2 for multi-year degree study', () => {
+    const r = recommendVisa({ duration: 'years', purpose: 'study', hasEnrollment: true })
+    expect(r.class).toBe('S2')
+  })
+
+  it('recommends S1 for short-term study', () => {
+    const r = recommendVisa({ duration: 'months', purpose: 'study', hasEnrollment: true })
+    expect(r.class).toBe('S1')
+  })
+
+  it('recommends E for work with job offer', () => {
+    const r = recommendVisa({ duration: 'year', purpose: 'work', hasJobOffer: true })
+    expect(r.class).toBe('E')
+  })
+
+  it('recommends F3 for family / long-term purposes', () => {
+    const r = recommendVisa({ duration: 'years', purpose: 'family' })
+    expect(r.class).toBe('F3')
+  })
+
+  it('recommends V3 for weeks-long visit', () => {
+    const r = recommendVisa({ duration: 'weeks', purpose: 'tourism' })
+    expect(r.class).toBe('V3')
+  })
+
+  it('returns null for nullish input', () => {
+    expect(recommendVisa(null)).toBeNull()
+    expect(recommendVisa(undefined)).toBeNull()
   })
 })
