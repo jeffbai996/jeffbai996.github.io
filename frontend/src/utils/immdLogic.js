@@ -2,6 +2,8 @@
 
 import { VISA_CLASSES, MOCK_STATUS_RECORDS, OVERSTAY_TIERS } from '../data/immdData'
 
+// Public API utility: lookup visa class by code. Used by tests today; available
+// for future callers (chatbot service, deep-link handlers, etc.).
 export function getVisaByCode(code) {
   if (!code || typeof code !== 'string') return null
   const match = VISA_CLASSES.find(v => v.code.toLowerCase() === code.toLowerCase())
