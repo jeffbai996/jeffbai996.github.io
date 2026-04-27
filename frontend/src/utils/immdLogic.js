@@ -28,7 +28,9 @@ export function calculateOverstay(days) {
   }
 
   // Parse per-day fine from data: 'P$50 per day' → 50
-  const perDay = parseInt(tier.fine.match(/P\$(\d+)/)[1], 10)
+  const fineMatch = tier.fine.match(/P\$(\d+)/)
+  if (!fineMatch) return null  // fine string format changed unexpectedly — fail safe
+  const perDay = parseInt(fineMatch[1], 10)
   return {
     tier: tier.range,
     fineTotal: days * perDay,
@@ -46,8 +48,12 @@ export function lookupStatus(reference) {
 }
 
 // Eligibility wizard — basic v1. Improvements parked for later pass.
+// Known v1 limitation: study + (day|weeks) durations fall through to V0/V3
+// instead of S1; expand the study branch when wizard v2 is built.
 // Inputs: { duration: 'day'|'weeks'|'months'|'year'|'years', purpose: 'tourism'|'work'|'study'|'family', hasJobOffer: boolean, hasEnrollment: boolean }
-// Output: { recommendation: string, rationale: string, class: string }
+// Output: { class: string, recommendation: string, rationale: string }
+//   Note: 'class' is a reserved word in JS. To destructure, alias it:
+//     const { class: visaClass } = recommendVisa(input)
 export function recommendVisa(input) {
   if (!input || typeof input !== 'object') return null
   const { duration, purpose, hasJobOffer, hasEnrollment } = input

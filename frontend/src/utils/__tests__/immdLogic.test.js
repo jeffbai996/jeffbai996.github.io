@@ -55,4 +55,14 @@ describe('calculateOverstay', () => {
     expect(calculateOverstay(-3)).toBeNull()
     expect(calculateOverstay(null)).toBeNull()
   })
+
+  it('honors lower boundary: 7 days is tier 1, 8 days is tier 2', () => {
+    expect(calculateOverstay(7).tier).toBe('1–7 days')
+    expect(calculateOverstay(8).tier).toBe('8–30 days')
+  })
+
+  it('honors upper boundary: 30 days is tier 2, 31 days is tier 3', () => {
+    expect(calculateOverstay(30).tier).toBe('8–30 days')
+    expect(calculateOverstay(31).tier).toBe('31+ days')
+  })
 })
