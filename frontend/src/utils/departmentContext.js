@@ -155,11 +155,26 @@ export const departmentContextConfig = {
     contextKeywords: ['housing', 'rent', 'apartment', 'tenant', 'landlord', 'eviction', 'affordable']
   },
 
+  // Immigration Department
+  immd: {
+    id: 'immd',
+    name: 'Immigration Department',
+    greeting: "Hello! I'm the IMMD Assistant. I can help you with visa applications, residency, citizenship, PPIC, passports, and work or student permits.",
+    quickActions: [
+      { label: 'Which visa do I need?', query: 'Which visa class should I apply for?', icon: 'help' },
+      { label: 'Citizenship pathway', query: 'How long until I can apply for citizenship?', icon: 'shield' },
+      { label: 'Lost PPIC', query: 'I lost my PPIC. What do I do?', icon: 'alert' },
+      { label: 'Work permit', query: 'How do I get an E-class employment visa?', icon: 'briefcase' }
+    ],
+    suggestedTopics: ['visa', 'residency', 'citizenship', 'ppic', 'passport', 'work permit', 'student permit', 'overstay'],
+    contextKeywords: ['visa', 'immigration', 'immd', 'citizenship', 'residency', 'passport', 'ppic', 'naturalization', 'work permit', 'student permit', 'overstay', 'deportation']
+  },
+
   // Customs and Border Control Agency
   cbca: {
     id: 'cbca',
     name: 'Customs and Border Control',
-    greeting: "Hello! I'm the CBCA Assistant. I can help you with import/export permits, travel requirements, customs declarations, and border services.",
+    greeting: "Hello! I'm the CBCA Assistant. I can help you with import/export permits, customs declarations, travel requirements at the border, and traveler information. For visa applications, residency, or citizenship, please see the Immigration Department (IMMD).",
     quickActions: [
       { label: 'Import/Export', query: 'How do I get an import permit?', icon: 'document' },
       { label: 'Travel Requirements', query: 'What are the entry requirements?', icon: 'plane' },
