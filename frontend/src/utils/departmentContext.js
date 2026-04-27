@@ -181,8 +181,8 @@ export const departmentContextConfig = {
       { label: 'Customs Duties', query: 'What are the customs duty rates?', icon: 'money' },
       { label: 'Prohibited Items', query: 'What items are prohibited?', icon: 'alert' }
     ],
-    suggestedTopics: ['import', 'export', 'customs', 'travel', 'visa', 'duty-free'],
-    contextKeywords: ['customs', 'border', 'import', 'export', 'travel', 'visa', 'duty']
+    suggestedTopics: ['import', 'export', 'customs', 'travel', 'duty-free', 'declarations'],
+    contextKeywords: ['customs', 'border', 'import', 'export', 'travel', 'duty', 'declaration']
   },
 
   // Legislative Council
