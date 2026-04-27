@@ -1,0 +1,246 @@
+/* Immigration — IMMD. Passport-book palette: navy primary, gold accent, teal interactive.
+   Formal, international, document-inspired. */
+
+:root {
+  --immd-navy: #0e2a47;
+  --immd-navy-deep: #081b2e;
+  --immd-gold: #c9a449;
+  --immd-gold-soft: #e6c97a;
+  --immd-teal: #0f766e;
+  --immd-paper: #f7f3e9;
+  --immd-ink: #1a1a1a;
+}
+
+.layout-immigration {
+  --primary-color: var(--immd-navy);
+  --accent-color: var(--immd-gold);
+  --interactive-color: var(--immd-teal);
+}
+
+.layout-immigration .dept-hero {
+  background: linear-gradient(135deg, var(--immd-navy) 0%, var(--immd-navy-deep) 100%);
+  color: #fff;
+  padding: 3rem 2rem;
+  border-bottom: 4px solid var(--immd-gold);
+}
+
+.layout-immigration .dept-hero h1 {
+  color: #fff;
+  font-family: Georgia, 'Times New Roman', serif;
+  letter-spacing: 0.02em;
+}
+
+.layout-immigration .dept-hero .director-byline {
+  color: var(--immd-gold-soft);
+  font-style: italic;
+  margin-top: 0.5rem;
+}
+
+.layout-immigration .dept-hero .director-quote {
+  border-left: 3px solid var(--immd-gold);
+  padding-left: 1rem;
+  margin-top: 1.5rem;
+  max-width: 60ch;
+  font-size: 1.05rem;
+  line-height: 1.6;
+}
+
+.layout-immigration .card {
+  border: 1px solid rgba(14, 42, 71, 0.15);
+  border-top: 3px solid var(--immd-navy);
+  background: #fff;
+  padding: 1.5rem;
+  border-radius: 2px;
+}
+
+.layout-immigration .quick-action-card {
+  transition: border-color 0.2s, transform 0.2s;
+}
+
+.layout-immigration .quick-action-card:hover {
+  border-top-color: var(--immd-gold);
+  transform: translateY(-2px);
+}
+
+.layout-immigration .visa-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1rem;
+}
+
+.layout-immigration .visa-table th {
+  background: var(--immd-navy);
+  color: #fff;
+  padding: 0.75rem;
+  text-align: left;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  font-size: 0.85rem;
+}
+
+.layout-immigration .visa-table td {
+  padding: 0.75rem;
+  border-bottom: 1px solid rgba(14, 42, 71, 0.1);
+}
+
+.layout-immigration .visa-table tr:nth-child(even) td {
+  background: var(--immd-paper);
+}
+
+.layout-immigration .visa-category-visitor { border-left: 4px solid #3b82f6; }
+.layout-immigration .visa-category-residency { border-left: 4px solid var(--immd-navy); }
+.layout-immigration .visa-category-employment { border-left: 4px solid var(--immd-teal); }
+.layout-immigration .visa-category-student { border-left: 4px solid #a855f7; }
+.layout-immigration .visa-category-express { border-left: 4px solid var(--immd-gold); }
+
+.layout-immigration .citizenship-ladder {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  margin: 2rem 0;
+}
+
+.layout-immigration .citizenship-ladder .step {
+  display: flex;
+  align-items: flex-start;
+  padding: 1rem 0;
+  border-bottom: 1px dashed rgba(14, 42, 71, 0.3);
+}
+
+.layout-immigration .citizenship-ladder .step-number {
+  flex: 0 0 2.5rem;
+  width: 2.5rem;
+  height: 2.5rem;
+  background: var(--immd-navy);
+  color: var(--immd-gold);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-family: Georgia, serif;
+  margin-right: 1rem;
+}
+
+.layout-immigration .form-badge {
+  display: inline-block;
+  padding: 0.2rem 0.5rem;
+  background: var(--immd-paper);
+  border: 1px solid var(--immd-gold);
+  color: var(--immd-navy);
+  font-family: 'Courier New', monospace;
+  font-size: 0.85rem;
+  border-radius: 2px;
+  margin-left: 0.5rem;
+}
+
+.layout-immigration .office-card {
+  background: #fff;
+  border-left: 4px solid var(--immd-navy);
+  padding: 1.25rem;
+}
+
+.layout-immigration .office-card h3 {
+  color: var(--immd-navy);
+  margin-top: 0;
+}
+
+.layout-immigration .office-card .office-hours {
+  color: var(--immd-teal);
+  font-weight: 600;
+}
+
+.layout-immigration .status-result {
+  margin-top: 1rem;
+  padding: 1rem;
+  border-left: 4px solid var(--immd-teal);
+  background: var(--immd-paper);
+}
+
+.layout-immigration .status-result.status-denied { border-left-color: #991b1b; }
+.layout-immigration .status-result.status-approved { border-left-color: #0d9488; }
+.layout-immigration .status-result.status-notfound { border-left-color: #6b7280; }
+
+.layout-immigration button.primary {
+  background: var(--immd-navy);
+  color: #fff;
+  border: 1px solid var(--immd-navy);
+  padding: 0.6rem 1.25rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.layout-immigration button.primary:hover {
+  background: var(--immd-teal);
+  border-color: var(--immd-teal);
+}
+
+.layout-immigration button.secondary {
+  background: #fff;
+  color: var(--immd-navy);
+  border: 1px solid var(--immd-navy);
+  padding: 0.6rem 1.25rem;
+  cursor: pointer;
+}
+
+.layout-immigration button.secondary:hover {
+  background: var(--immd-paper);
+}
+
+.layout-immigration .overstay-tier {
+  padding: 0.75rem;
+  border-bottom: 1px solid rgba(14, 42, 71, 0.1);
+}
+
+.layout-immigration .overstay-tier.tier-severe {
+  background: rgba(153, 27, 27, 0.05);
+  border-left: 3px solid #991b1b;
+}
+
+.layout-immigration .legislation-card {
+  background: var(--immd-paper);
+  border: 1px solid rgba(14, 42, 71, 0.15);
+  padding: 1.25rem;
+  margin-bottom: 1rem;
+}
+
+.layout-immigration .legislation-card h3 {
+  color: var(--immd-navy);
+  margin-top: 0;
+  font-family: Georgia, serif;
+}
+
+.layout-immigration .modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(8, 27, 46, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.layout-immigration .modal-content {
+  background: #fff;
+  padding: 2rem;
+  max-width: 500px;
+  width: 90%;
+  border-top: 4px solid var(--immd-gold);
+}
+
+/* Dark-mode compatibility — defer to global ThemeContext variables where possible */
+[data-theme='dark'] .layout-immigration {
+  --primary-color: var(--immd-gold-soft);
+}
+
+[data-theme='dark'] .layout-immigration .card {
+  background: #1a1f2e;
+  color: #e5e7eb;
+  border-top-color: var(--immd-gold);
+}
+
+[data-theme='dark'] .layout-immigration .visa-table tr:nth-child(even) td {
+  background: #1a1f2e;
+}
