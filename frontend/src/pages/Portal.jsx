@@ -81,6 +81,13 @@ const departmentIcons = {
       <path d="M9 4v-2a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"></path>
     </svg>
   ),
+  immd: (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+      <rect x="4" y="3" width="16" height="18" rx="1"></rect>
+      <path d="M8 7h8M8 11h8M8 15h5"></path>
+      <circle cx="16" cy="17" r="2"></circle>
+    </svg>
+  ),
   legislative: (
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
       <path d="M3 21h18"></path>
@@ -205,9 +212,18 @@ const departments = [
     name: 'Customs & Border Control',
     abbrev: 'CBCA',
     url: '/cbca',
-    description: 'Border security, customs duties, immigration services, and trade facilitation for the Republic.',
+    description: 'Border security, customs duties, and trade facilitation for the Republic. Immigration services are handled by IMMD.',
     color: '#0891b2',
-    services: ['Customs Declarations', 'Immigration & Visas', 'Border Enforcement', 'Traveler Information']
+    services: ['Customs Declarations', 'Prohibited Goods', 'Border Enforcement', 'Traveler Information']
+  },
+  {
+    id: 'immd',
+    name: 'Immigration Department',
+    abbrev: 'IMMD',
+    url: '/immd',
+    description: 'Visas, residency, citizenship, PPIC, passports, and work/student permits for the Republic of Praya.',
+    color: '#0e2a47',
+    services: ['Visa Applications', 'Residency & Citizenship', 'PPIC & Passports', 'Work & Student Permits']
   },
   {
     id: 'legislative',
@@ -280,8 +296,13 @@ const priorities = [
   },
   {
     title: 'Customs & Border',
-    detail: 'Import duties, immigration visas, and border control for travelers and traders.',
+    detail: 'Import duties and border control for travelers and traders.',
     link: '/cbca'
+  },
+  {
+    title: 'Immigration & Citizenship',
+    detail: 'Visas, residency, citizenship, PPIC, and passports from the Immigration Department.',
+    link: '/immd'
   },
   {
     title: 'Postal Services',
@@ -856,6 +877,7 @@ export default function Portal() {
                 <li><Link to="/health">Health</Link></li>
                 <li><Link to="/housing">Housing</Link></li>
                 <li><Link to="/cbca">Customs</Link></li>
+                <li><Link to="/immd">Immigration</Link></li>
                 <li><Link to="/lc">Legislature</Link></li>
                 <li><Link to="/bd">Buildings</Link></li>
                 <li><Link to="/cr">Companies</Link></li>
