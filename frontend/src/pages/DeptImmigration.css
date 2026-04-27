@@ -199,6 +199,10 @@
   border-left: 3px solid #991b1b;
 }
 
+.layout-immigration .deportation-warning {
+  color: #991b1b;
+}
+
 .layout-immigration .legislation-card {
   background: var(--immd-paper);
   border: 1px solid rgba(14, 42, 71, 0.15);

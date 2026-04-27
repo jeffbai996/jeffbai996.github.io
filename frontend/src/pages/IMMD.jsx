@@ -1,7 +1,6 @@
 import { useState, useEffect, useRef } from 'react'
 import PropTypes from 'prop-types'
 import SEO from '../components/SEO'
-import ChatWidget from '../components/ChatWidget'
 import {
   DIRECTOR_GENERAL,
   VISA_CLASSES,
@@ -52,17 +51,41 @@ Toast.propTypes = {
 
 function Modal({ isOpen, onClose, title, children }) {
   const closeRef = useRef(null)
+  const modalRef = useRef(null)
+
   useEffect(() => {
     if (!isOpen) return
-    const onKey = (e) => { if (e.key === 'Escape') onClose() }
+    const FOCUSABLE = 'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+
+    const onKey = (e) => {
+      if (e.key === 'Escape') {
+        onClose()
+        return
+      }
+      if (e.key !== 'Tab' || !modalRef.current) return
+      const focusable = Array.from(modalRef.current.querySelectorAll(FOCUSABLE))
+      if (focusable.length === 0) return
+      const first = focusable[0]
+      const last = focusable[focusable.length - 1]
+      if (e.shiftKey && document.activeElement === first) {
+        e.preventDefault()
+        last.focus()
+      } else if (!e.shiftKey && document.activeElement === last) {
+        e.preventDefault()
+        first.focus()
+      }
+    }
+
     document.addEventListener('keydown', onKey)
     closeRef.current?.focus()
     return () => document.removeEventListener('keydown', onKey)
   }, [isOpen, onClose])
+
   if (!isOpen) return null
   return (
     <div className="modal-backdrop" onClick={onClose}>
       <div
+        ref={modalRef}
         role="dialog"
         aria-modal="true"
         aria-label={title}
@@ -216,6 +239,7 @@ function OverstayCalculator() {
           <input
             type="number"
             min="1"
+            required
             value={days}
             onChange={e => setDays(e.target.value)}
             style={{ width: '100%', padding: '0.5rem' }}
@@ -229,7 +253,7 @@ function OverstayCalculator() {
             <p><strong>Tier:</strong> {result.tier}</p>
             <p><strong>Fine:</strong> {result.fineDisplay}</p>
             <p><strong>Re-entry ban:</strong> {result.ban}</p>
-            {result.deportation && <p style={{ color: '#991b1b' }}><strong>Deportation applies.</strong> Right to counsel and appeal via the 3rd District Court.</p>}
+            {result.deportation && <p className="deportation-warning"><strong>Deportation applies.</strong> Right to counsel and appeal via the 3rd District Court.</p>}
           </div>
         )}
       </div>
@@ -342,7 +366,7 @@ export default function IMMD() {
         </section>
 
         {/* 4. RESIDENCY PATHWAY + ELIGIBILITY WIZARD */}
-        <section aria-labelledby="residency-heading" style={{ marginTop: '3rem' }}>
+        <section aria-labelledby="residency-heading" id="renew" style={{ marginTop: '3rem' }}>
           <h2 id="residency-heading">Residency Pathway</h2>
           <p>The F-series is the primary residency ladder. F0 covers short stays; F1 permits property and vehicle ownership; F2 and F3 count toward citizenship eligibility. The E-class (employment) and S-class (student) are parallel tracks that also qualify for citizenship advancement.</p>
           <div className="card" style={{ marginTop: '1rem' }}>
@@ -399,7 +423,7 @@ export default function IMMD() {
         </section>
 
         {/* 8. WORK & STUDY */}
-        <section aria-labelledby="work-study-heading" id="renew" style={{ marginTop: '3rem' }}>
+        <section aria-labelledby="work-study-heading" style={{ marginTop: '3rem' }}>
           <h2 id="work-study-heading">Work & Study Permits</h2>
           <p>Employment and student pathways are separate from the F-series residency track, but both qualify for citizenship advancement under the six-month continuous-residency rule.</p>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '1rem', marginTop: '1rem' }}>
@@ -462,7 +486,7 @@ export default function IMMD() {
           <table className="visa-table">
             <caption className="sr-only">All IMMD forms and their fees</caption>
             <thead>
-              <tr><th scope="col">Form</th><th scope="col">Name</th><th scope="col">Fee</th><th scope="col"></th></tr>
+              <tr><th scope="col">Form</th><th scope="col">Name</th><th scope="col">Fee</th><th scope="col"><span className="sr-only">Actions</span></th></tr>
             </thead>
             <tbody>
               {FORMS_INDEX.map(f => (
@@ -540,9 +564,6 @@ export default function IMMD() {
 
       {/* Toast notifications */}
       <Toast message={toast} onDismiss={() => setToast('')} />
-
-      {/* Chatbot widget */}
-      <ChatWidget />
     </div>
   )
 }
