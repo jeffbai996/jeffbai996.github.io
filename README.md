@@ -1,6 +1,6 @@
 # GOV.PRAYA
 
-Public web portal for the Republic of Praya (海旗) — a fictional city-state and 15-year-old Minecraft creative server (founded Feb 26, 2011). The site presents Praya as a functioning government with 15 departments, civic services, and a conversational AI guide.
+Public web portal for the Republic of Praya — a Minecraft creative city server founded in 2011. The site presents Praya as a functioning government with 15 departments, civic services, and a conversational AI guide.
 
 Deployed at **[www.govpraya.org](https://www.govpraya.org)** via GitHub Pages.
 
