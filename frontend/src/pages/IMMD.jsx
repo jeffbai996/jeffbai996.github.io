@@ -214,6 +214,16 @@ function EligibilityWizard() {
           <div className="status-result" style={{ marginTop: '1rem' }}>
             <p><strong>Recommended:</strong> {result.recommendation}</p>
             <p>{result.rationale}</p>
+            {result.caveats && result.caveats.length > 0 && (
+              <div style={{ marginTop: '0.75rem' }}>
+                <strong>Conditions and caveats:</strong>
+                <ul style={{ marginTop: '0.25rem', paddingLeft: '1.25rem' }}>
+                  {result.caveats.map((caveat, i) => (
+                    <li key={i}>{caveat}</li>
+                  ))}
+                </ul>
+              </div>
+            )}
           </div>
         )}
       </div>

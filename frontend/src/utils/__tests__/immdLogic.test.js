@@ -119,4 +119,135 @@ describe('recommendVisa', () => {
     expect(recommendVisa(null)).toBeNull()
     expect(recommendVisa(undefined)).toBeNull()
   })
+
+  // v2 — full study coverage. v1 fell through to V0/V3 for day/weeks.
+  describe('v2 study coverage', () => {
+    it('recommends S1 for a single-day enrolled program (was V0 in v1)', () => {
+      const r = recommendVisa({ duration: 'day', purpose: 'study', hasEnrollment: true })
+      expect(r.class).toBe('S1')
+    })
+
+    it('recommends S1 for a few weeks of enrolled study (was V3 in v1)', () => {
+      const r = recommendVisa({ duration: 'weeks', purpose: 'study', hasEnrollment: true })
+      expect(r.class).toBe('S1')
+    })
+
+    it('recommends S1 for ~1 year of enrolled study', () => {
+      const r = recommendVisa({ duration: 'year', purpose: 'study', hasEnrollment: true })
+      expect(r.class).toBe('S1')
+    })
+
+    it('routes study without enrollment to a visitor pathway and warns', () => {
+      const r = recommendVisa({ duration: 'weeks', purpose: 'study', hasEnrollment: false })
+      // Visitor fallback (V-class, since weeks is short) — never an S-class
+      expect(r.class).not.toMatch(/^S/)
+      expect(r.caveats.some(c => /enrollment/i.test(c))).toBe(true)
+    })
+
+    it('routes study + day without enrollment to V0 with a warning', () => {
+      const r = recommendVisa({ duration: 'day', purpose: 'study', hasEnrollment: false })
+      expect(r.class).toBe('V0')
+      expect(r.caveats.some(c => /enrollment/i.test(c))).toBe(true)
+    })
+
+    it('routes study + months without enrollment to F1 with a warning', () => {
+      const r = recommendVisa({ duration: 'months', purpose: 'study', hasEnrollment: false })
+      expect(r.class).toBe('F1')
+      expect(r.caveats.some(c => /enrollment/i.test(c))).toBe(true)
+    })
+
+    it('routes study + years without enrollment to F3 with a warning', () => {
+      const r = recommendVisa({ duration: 'years', purpose: 'study', hasEnrollment: false })
+      expect(r.class).toBe('F3')
+      expect(r.caveats.some(c => /enrollment/i.test(c))).toBe(true)
+    })
+
+    it('routes every study × duration combination without falling back to a default', () => {
+      const durations = ['day', 'weeks', 'months', 'year', 'years']
+      for (const duration of durations) {
+        for (const hasEnrollment of [true, false]) {
+          const r = recommendVisa({ duration, purpose: 'study', hasEnrollment })
+          expect(r).not.toBeNull()
+          expect(r.class).toBeDefined()
+          expect(Array.isArray(r.caveats)).toBe(true)
+          if (hasEnrollment) {
+            expect(r.class).toMatch(/^S/)
+          } else {
+            // No-enrollment cases must surface the enrollment caveat
+            expect(r.caveats.some(c => /enrollment/i.test(c))).toBe(true)
+          }
+        }
+      }
+    })
+  })
+
+  // v2 — caveats array populated for every recommendation
+  describe('v2 caveats', () => {
+    it('returns a caveats array on every recommendation', () => {
+      const inputs = [
+        { duration: 'day', purpose: 'tourism' },
+        { duration: 'weeks', purpose: 'tourism' },
+        { duration: 'months', purpose: 'tourism' },
+        { duration: 'year', purpose: 'work', hasJobOffer: true },
+        { duration: 'years', purpose: 'family' },
+        { duration: 'years', purpose: 'study', hasEnrollment: true }
+      ]
+      for (const input of inputs) {
+        const r = recommendVisa(input)
+        expect(Array.isArray(r.caveats)).toBe(true)
+        expect(r.caveats.length).toBeGreaterThan(0)
+      }
+    })
+
+    it('S2 caveats mention accredited institution enrollment', () => {
+      const r = recommendVisa({ duration: 'years', purpose: 'study', hasEnrollment: true })
+      expect(r.caveats.some(c => /accredited/i.test(c))).toBe(true)
+    })
+
+    it('E caveats mention employer sponsorship (Form E-APP)', () => {
+      const r = recommendVisa({ duration: 'year', purpose: 'work', hasJobOffer: true })
+      expect(r.caveats.some(c => /E-APP/.test(c))).toBe(true)
+    })
+  })
+
+  // v2 — family branch refinement
+  describe('v2 family routing', () => {
+    it('routes family + months to F2 (6–12 mo extended residency)', () => {
+      const r = recommendVisa({ duration: 'months', purpose: 'family' })
+      expect(r.class).toBe('F2')
+    })
+
+    it('routes family + weeks to a short-stay residency (F1)', () => {
+      const r = recommendVisa({ duration: 'weeks', purpose: 'family' })
+      expect(r.class).toBe('F1')
+    })
+
+    it('prefers E-class when a family applicant also has a job offer (spouse work pathway)', () => {
+      const r = recommendVisa({ duration: 'year', purpose: 'family', hasJobOffer: true })
+      expect(r.class).toBe('E')
+    })
+  })
+
+  // v2 — tourism duration differentiation
+  describe('v2 tourism differentiation', () => {
+    it('tourism + day → V0', () => {
+      const r = recommendVisa({ duration: 'day', purpose: 'tourism' })
+      expect(r.class).toBe('V0')
+    })
+
+    it('tourism + months → F1 residency (not a visitor visa)', () => {
+      const r = recommendVisa({ duration: 'months', purpose: 'tourism' })
+      expect(r.class).toBe('F1')
+    })
+
+    it('tourism + year → F2', () => {
+      const r = recommendVisa({ duration: 'year', purpose: 'tourism' })
+      expect(r.class).toBe('F2')
+    })
+
+    it('weeks-long tourism caveat suggests cheaper V1/V2 alternatives', () => {
+      const r = recommendVisa({ duration: 'weeks', purpose: 'tourism' })
+      expect(r.caveats.some(c => /V2|V1/.test(c))).toBe(true)
+    })
+  })
 })
