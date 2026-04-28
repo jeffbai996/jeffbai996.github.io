@@ -6,7 +6,7 @@
 
 ## What This Repo Is
 
-The public web presence for the Republic of Praya (海旗) — a 15-year-old Minecraft creative server (founded Feb 26, 2011) operated as a functioning civilizational simulation. This repo is the **GitHub Pages SPA** at www.govpraya.org.
+The public web presence for the Republic of Praya — a Minecraft creative city server founded in 2011, operated as a functioning civilizational simulation. This repo is the **GitHub Pages SPA** at www.govpraya.org.
 
 **Sibling properties (not in this repo):**
 - `nmp.govpraya.org` — National Museum of Praya (standalone subdomain, distinct visual identity)
