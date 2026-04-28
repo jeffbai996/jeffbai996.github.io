@@ -97,11 +97,11 @@ export const formDatabase = {
   'passport-application': {
     id: 'passport-application',
     name: 'Passport Application Form (PP-1)',
-    department: 'interior',
+    department: 'immd',
     category: FormCategory.IDENTITY,
-    url: '/interior/passport',
-    fee: { standard: '$80', expedited: '$150', childUnder16: '$60' },
-    processingTime: { standard: '10-14 business days', expedited: '3-5 business days' },
+    url: '/immd',
+    fee: { standard: 'P$120', expedited: 'P$200', renewal: 'P$80' },
+    processingTime: { standard: '4 weeks', expedited: '5 business days', renewal: '2 weeks' },
     validFor: { adult: '10 years', minor: '5 years' },
 
     description: 'Application for a new Praya passport or passport renewal.',
