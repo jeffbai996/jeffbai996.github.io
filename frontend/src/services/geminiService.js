@@ -369,9 +369,10 @@ The portal offers 127 online services available 24/7 across 15 major departments
 
 5. **[Interior Department (ID)](/interior)**
    • National IDs ($25 new, $15 renewal, 5-7 day processing)
-   • Passports ($80 standard/$150 expedited, 10-14 days)
    • Birth Certificates ($10, 3-5 days)
-   • Quick Links: [National ID](/interior/id) | [Passport](/interior/passport) | [Birth Certificates](/interior/birth) | [Civil Records](/interior/records)
+   • Land registry, building permits, civil records, parks management
+   • Passports are issued by the Immigration Department (IMMD), not Interior — see entry 16
+   • Quick Links: [National ID](/interior/id) | [Birth Certificates](/interior/birth) | [Civil Records](/interior/records)
    • Hours: Mon-Fri 8AM-5PM, PrayaPass required for online services
 
 6. **[Transport Department (TD)](/transport)**
@@ -414,9 +415,10 @@ The portal offers 127 online services available 24/7 across 15 major departments
     • Hours: Mon-Fri 8AM-5PM, Online applications 24/7
 
 11. **[Customs & Border Control Agency (CBCA)](/cbca)**
-    • Travel Requirements: Visa types (tourist/business/student/work), passport requirements, entry/exit procedures, travel advisories
+    • Travel Requirements: entry/exit procedures, customs declarations at the border, travel advisories
     • Import/Export: Import permits, export licenses, trade compliance, tariffs & duties, prohibited items
     • Customs declarations, duty-free allowances ($800 per person)
+    • Visa types, passport requirements, residency, and citizenship are handled by the Immigration Department (IMMD) — see entry 16
     • Quick Links: [Border Crossings](/cbca/crossings) | [Travel Requirements](/cbca/travel) | [Import/Export](/cbca/import-export)
     • Hours: Border crossings 24/7, Office Mon-Fri 8AM-5PM
 
@@ -444,6 +446,16 @@ The portal offers 127 online services available 24/7 across 15 major departments
     • Elderly care, disability support
     • Quick Links: [Apply for Benefits](/swd/benefits) | [Family Services](/swd/family) | [Elderly Care](/swd/elderly) | [Disability Support](/swd/disability)
     • Hours: Mon-Fri 8AM-5PM, Emergency services 24/7
+
+16. **[Immigration Department (IMMD)](/immd)**
+    • Visa applications: visitor, work, student, family classes
+    • Residency Pathway (F-series) and Permanent Residence
+    • Citizenship and Naturalization
+    • PPIC (Praya Permanent Identity Card)
+    • Passports — Form PP-1 (new) P$120 / 4 weeks, expedited P$200 / 5 business days, PP-R (renewal) P$80 / 2 weeks
+    • Work and Student Permits
+    • Quick Links: [Visa Categories](/immd#apply) | [Residency](/immd#renew) | [Citizenship](/immd#citizenship) | [PPIC](/immd#lost-ppic)
+    • Hours: Mon-Fri 8AM-5PM, in-person at IMMD Central required for biometrics
 
 ${generateNationalStatusContext()}
 

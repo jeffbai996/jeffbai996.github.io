@@ -111,11 +111,10 @@ export const departmentData = [
     name: 'Interior Department',
     abbrev: 'ID',
     url: '/interior',
-    keywords: ['id', 'identification', 'passport', 'driver license', 'drivers license', 'birth certificate', 'documents', 'national id', 'interior', 'civil records', 'land registry', 'building permit'],
+    keywords: ['id', 'identification', 'driver license', 'drivers license', 'birth certificate', 'documents', 'national id', 'interior', 'civil records', 'land registry', 'building permit'],
     description: 'Land registry, building permits, civil records, and parks management.',
     services: [
       'National IDs - apply or renew online or in-person, 5-7 day processing',
-      'Passports - 10-14 day processing time',
       'Birth Certificates - 3-5 day processing',
       'Driver Licensing - handled by Transport Department',
       'Land Registry Services',
@@ -125,13 +124,11 @@ export const departmentData = [
     ],
     subPages: [
       { name: 'National ID', url: '/interior/id', description: 'Apply for or renew your National ID card. Fee: $25 new, $15 renewal. Processing: 5-7 days.' },
-      { name: 'Passport Services', url: '/interior/passport', description: 'Apply for passport. Standard: $80, 10-14 days. Expedited: $150, 3-5 days.' },
       { name: 'Birth Certificates', url: '/interior/birth', description: 'Request certified copies or register a birth. Fee: $10. Processing: 3-5 days.' },
       { name: 'Civil Records', url: '/interior/records', description: 'Marriage licenses, death certificates, and other civil documents' }
     ],
     fees: {
       nationalId: { new: '$25', renewal: '$15', processing: '5-7 business days' },
-      passport: { standard: '$80', expedited: '$150', standardProcessing: '10-14 days', expeditedProcessing: '3-5 days' },
       birthCertificate: { fee: '$10', processing: '3-5 business days' }
     },
     hours: 'Mon-Fri 8AM-5PM. PrayaPass account required for online services',
@@ -292,11 +289,11 @@ export const departmentData = [
     name: 'Customs and Border Control Agency',
     abbrev: 'CBCA',
     url: '/cbca',
-    keywords: ['customs', 'border', 'import', 'export', 'cbca', 'shipping', 'travel', 'duty', 'tariff', 'international shipping', 'visa'],
-    description: 'Import/export regulations, border control, and customs enforcement.',
+    keywords: ['customs', 'border', 'import', 'export', 'cbca', 'shipping', 'travel', 'duty', 'tariff', 'international shipping'],
+    description: 'Import/export regulations, border control, and customs enforcement. Visa, residency, and citizenship are handled by the Immigration Department (IMMD).',
     services: [
       'Import/Export Permits - apply online through CBCA portal',
-      'Border Control and Immigration',
+      'Border Control and Customs Inspections',
       'Customs Declarations and Duties',
       'Duty-Free Allowances Information',
       'Prohibited and Restricted Items Lists',
@@ -306,11 +303,41 @@ export const departmentData = [
     ],
     subPages: [
       { name: 'Import/Export', url: '/cbca/permits', description: 'Apply for import or export permits, view tariff information' },
-      { name: 'Travel Requirements', url: '/cbca/travel', description: 'Entry requirements, visa information, and what to declare' },
+      { name: 'Travel Requirements', url: '/cbca/travel', description: 'Entry requirements and what to declare. For visa and immigration matters, see /immd.' },
       { name: 'Prohibited Items', url: '/cbca/prohibited', description: 'List of items prohibited or restricted from import/export' }
     ],
     hours: 'Border crossings: 24/7. Office hours: Mon-Fri 8AM-5PM',
     contact: 'Review entry requirements before travel. Apply for permits online'
+  },
+  {
+    id: 'immd',
+    name: 'Immigration Department',
+    abbrev: 'IMMD',
+    url: '/immd',
+    keywords: ['immigration', 'immd', 'visa', 'visas', 'passport', 'passports', 'residency', 'citizenship', 'naturalization', 'ppic', 'work permit', 'student permit', 'overstay', 'deportation'],
+    description: 'Visa applications, residency, citizenship, PPIC, passports, and work or student permits.',
+    services: [
+      'Visa Applications - all classes (visitor, work, student, family)',
+      'Residency Pathway and Permanent Residence',
+      'Citizenship and Naturalization',
+      'PPIC (Praya Permanent Identity Card)',
+      'Passports - issuance, renewal, replacement (Form PP-1, PP-R)',
+      'Work and Student Permits',
+      'Express Pathways for Eligible Applicants',
+      'Immigration Enforcement and Appeals'
+    ],
+    subPages: [
+      { name: 'Visa Categories', url: '/immd#apply', description: 'Apply for a visa. Class depends on purpose of stay.' },
+      { name: 'Residency', url: '/immd#renew', description: 'F-series residency pathway and renewals.' },
+      { name: 'Citizenship', url: '/immd#citizenship', description: 'Naturalization and citizenship application.' },
+      { name: 'PPIC', url: '/immd#lost-ppic', description: 'Praya Permanent Identity Card — apply, renew, or replace.' },
+      { name: 'Passports', url: '/immd', description: 'New passport (PP-1) P$120/4 weeks, expedited P$200/5 days, renewal (PP-R) P$80/2 weeks.' }
+    ],
+    fees: {
+      passport: { new: 'P$120', expedited: 'P$200', renewal: 'P$80', standardProcessing: '4 weeks', expeditedProcessing: '5 business days', renewalProcessing: '2 weeks' }
+    },
+    hours: 'Mon-Fri 8AM-5PM. Apply in person at IMMD Central for biometrics.',
+    contact: 'Visit IMMD Central or apply online through PrayaPass'
   },
   {
     id: 'lc',
@@ -779,7 +806,7 @@ export function generateKnowledgeBase() {
     },
     {
       keywords: ['appointment', 'schedule', 'book', 'reservation', 'meet', 'visit', 'walk-in'],
-      response: "**Appointments** can be scheduled for most government services:\n\n• **Online booking**: Available through PrayaPass for most departments\n• **Phone booking**: Call the department directly\n• **Walk-ins**: Accepted at most locations but may have longer wait times\n\nPopular services that benefit from appointments:\n• Driver's license testing (Transport Dept)\n• Passport applications (Interior Dept)\n• Business consultations (Revenue Dept)\n\nWhich service would you like to book?"
+      response: "**Appointments** can be scheduled for most government services:\n\n• **Online booking**: Available through PrayaPass for most departments\n• **Phone booking**: Call the department directly\n• **Walk-ins**: Accepted at most locations but may have longer wait times\n\nPopular services that benefit from appointments:\n• Driver's license testing (Transport Dept)\n• Passport applications (Immigration Dept)\n• Business consultations (Revenue Dept)\n\nWhich service would you like to book?"
     },
     {
       keywords: ['disabled', 'disability', 'accessibility', 'wheelchair', 'accessible', 'accommodation', 'special needs'],

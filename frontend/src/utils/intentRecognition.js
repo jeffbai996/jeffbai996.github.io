@@ -239,7 +239,8 @@ export function extractTopics(message) {
     housing: /housing|rent|apartment|landlord|tenant|eviction/,
     postal: /mail|package|shipping|tracking|post office/,
     cannabis: /cannabis|marijuana|dispensary|cultivation/,
-    customs: /customs|border|import|export|travel|visa/,
+    customs: /customs|border|import|export|travel/,
+    immigration: /visa|immigration|passport|residency|citizenship|ppic|naturalization|work permit|student permit/,
     legal: /court|legal|lawsuit|attorney|lawyer|case/,
     legislative: /representative|bill|legislation|council|vote/
   };
@@ -620,8 +621,8 @@ export const intentPatterns = {
       /passport.*travel/i,
       /international.*travel.*document/i
     ],
-    response: "I can help you with passport services through the Interior Department.",
-    action: 'routeToInterior',
+    response: "I can help you with passport services through the Immigration Department (IMMD).",
+    action: 'routeToImmd',
     followUp: {
       question: "What do you need?",
       options: [
@@ -632,8 +633,8 @@ export const intentPatterns = {
         { label: "Expedited Service", value: "passport_expedited" }
       ]
     },
-    details: "**Passport Services**\n- Standard: $80, 10-14 days\n- Expedited: $150, 3-5 days\n- Required: National ID, photo, application form",
-    department: 'interior'
+    details: "**Passport Services (IMMD)**\n- New (PP-1): P$120, 4 weeks\n- Expedited: P$200, 5 business days\n- Renewal (PP-R): P$80, 2 weeks\n- Required: National ID, photo, application form",
+    department: 'immd'
   },
 
   birthCertificate: {
@@ -1069,9 +1070,18 @@ export const departmentRoutes = {
     portal: '/interior',
     subPages: {
       id: '/interior/id',
-      passport: '/interior/passport',
       birth: '/interior/birth',
       records: '/interior/records'
+    }
+  },
+  immd: {
+    name: 'Immigration Department',
+    phone: 'Visit IMMD Central',
+    portal: '/immd',
+    subPages: {
+      visas: '/immd#apply',
+      citizenship: '/immd#citizenship',
+      ppic: '/immd#lost-ppic'
     }
   },
   transport: {
@@ -1340,8 +1350,8 @@ export function handleFollowUp(intentName, selection) {
     id_renew: "To renew your National ID:\n\n**Requirements:**\n• Current/expired ID\n• Updated photo\n• Fee: $15\n\nYou can renew online through PrayaPass if your address hasn't changed.",
 
     // Passport follow-ups
-    passport_new: "To apply for a new passport:\n\n**Requirements:**\n• National ID\n• Passport photo (2x2 inches)\n• Completed application\n• Fee: $80 (standard) or $150 (expedited)\n\n**Processing:**\n• Standard: 10-14 business days\n• Expedited: 3-5 business days\n\nAppointment required at Interior Department.",
-    passport_expedited: "For expedited passport service:\n\n**Additional fee:** $70 (total $150)\n**Processing:** 3-5 business days\n\nMust apply in person. Bring proof of urgent travel if requesting same-week processing.",
+    passport_new: "To apply for a new passport:\n\n**Requirements:**\n• National ID\n• Passport photo (2x2 inches)\n• Completed Form PP-1\n• Fee: P$120 (standard) or P$200 (expedited)\n\n**Processing:**\n• Standard: 4 weeks\n• Expedited: 5 business days\n\nApply in person at IMMD Central (Immigration Department).",
+    passport_expedited: "For expedited passport service:\n\n**Total fee:** P$200\n**Processing:** 5 business days\n\nMust apply in person at IMMD Central. Bring proof of urgent travel if requesting same-week processing.",
 
     // Driver's license follow-ups
     license_new: "To get a new driver's license:\n\n**Requirements:**\n• Valid National ID\n• Proof of address\n• Vision test (at TD office)\n• Written test\n• Road test\n• Fee: $45\n\n**Steps:**\n1. Schedule appointment online\n2. Pass vision and written tests\n3. Schedule road test\n4. Receive license in 5-7 days",
