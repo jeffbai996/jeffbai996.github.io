@@ -1,6 +1,6 @@
 # GOV.PRAYA
 
-Public web portal for the Republic of fictional project (海旗) — a fictional city-state and 15-year-old Minecraft creative server (founded Feb 26, 2011). The site presents fictional project as a functioning government with 15 departments, civic services, and a conversational AI guide.
+Public web portal for the Republic of fictional project — a Minecraft creative city server founded in 2011. The site presents fictional project as a functioning government with 15 departments, civic services, and a conversational AI guide.
 
 Deployed at **[www.fictional-project.org](https://www.fictional-project.org)** via GitHub Pages.
 

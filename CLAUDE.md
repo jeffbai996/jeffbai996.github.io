@@ -6,7 +6,7 @@
 
 ## What This Repo Is
 
-The public web presence for the Republic of fictional project (海旗) — a 15-year-old Minecraft creative server (founded Feb 26, 2011) operated as a functioning civilizational simulation. This repo is the **GitHub Pages SPA** at www.fictional-project.org.
+The public web presence for the Republic of fictional project — a Minecraft creative city server founded in 2011, operated as a functioning civilizational simulation. This repo is the **GitHub Pages SPA** at www.fictional-project.org.
 
 **Sibling properties (not in this repo):**
 - `nmp.fictional-project.org` — National Museum of fictional project (standalone subdomain, distinct visual identity)
