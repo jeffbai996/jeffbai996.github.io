@@ -61,19 +61,19 @@ const entityActions = {
 const servicePrerequisites = {
   passport_new: {
     name: 'New Passport Application',
-    department: 'interior',
+    department: 'immd',
     requires: ['national_id', 'birth_certificate', 'passport_photo'],
-    fee: '$80 (standard) / $150 (expedited)',
-    processing: '10-14 business days',
-    url: '/interior/passport'
+    fee: 'P$120 (standard) / P$200 (expedited)',
+    processing: '4 weeks (standard) / 5 business days (expedited)',
+    url: '/immd'
   },
   passport_renew: {
     name: 'Passport Renewal',
-    department: 'interior',
+    department: 'immd',
     requires: ['current_passport', 'passport_photo'],
-    fee: '$60',
-    processing: '7-10 business days',
-    url: '/interior/passport'
+    fee: 'P$80',
+    processing: '2 weeks',
+    url: '/immd'
   },
   national_id_new: {
     name: 'New National ID',
@@ -155,7 +155,7 @@ const servicePrerequisites = {
 const documentDepartments = {
   birth_certificate: { department: 'interior', url: '/interior/birth' },
   national_id: { department: 'interior', url: '/interior/id' },
-  passport: { department: 'interior', url: '/interior/passport' },
+  passport: { department: 'immd', url: '/immd' },
   driver_license: { department: 'transport', url: '/transport/license' },
   vehicle_registration: { department: 'transport', url: '/transport/registration' },
   police_clearance: { department: 'npa', url: '/npa/services' },
