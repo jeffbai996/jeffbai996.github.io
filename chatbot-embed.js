@@ -48,8 +48,8 @@
       name: 'Interior Department',
       abbrev: 'ID',
       color: '#78716c',
-      focus: 'You are helping users with Interior Department services including national IDs, passports, birth certificates, land registry, and building permits.',
-      services: ['National ID Cards', 'Passports', 'Birth Certificates', 'Marriage Certificates', 'Land Registry', 'Building Permits'],
+      focus: 'You are helping users with Interior Department services including national IDs, birth certificates, civil records, land registry, and building permits. Passports are issued by the Immigration Department (IMMD) — direct passport queries to /immd.',
+      services: ['National ID Cards', 'Birth Certificates', 'Marriage Certificates', 'Land Registry', 'Building Permits'],
       hours: 'Mon-Fri 8AM-5PM | Sat 9AM-1PM',
       contact: '+854 600 0000'
     },
@@ -192,10 +192,19 @@
       name: 'Customs & Border Control Agency',
       abbrev: 'CBCA',
       color: '#0891b2',
-      focus: 'You are helping users with Customs & Border Control services including import/export permits, customs declarations, and immigration.',
-      services: ['Import/Export Permits', 'Customs Declarations', 'Immigration Services', 'Visa Processing', 'Border Crossing Info'],
+      focus: 'You are helping users with Customs & Border Control services including import/export permits, customs declarations, and border-crossing requirements. Visas, residency, and citizenship are handled by the Immigration Department (IMMD) — direct those queries to /immd.',
+      services: ['Import/Export Permits', 'Customs Declarations', 'Border Crossing Info', 'Travel Entry Requirements'],
       hours: 'Border: 24/7 | Office: Mon-Fri 8AM-5PM',
       contact: '+854 120 0000'
+    },
+    'immd': {
+      name: 'Immigration Department',
+      abbrev: 'IMMD',
+      color: '#1e40af',
+      focus: 'You are helping users with Immigration Department services including visa applications, residency, citizenship, PPIC, passports, and work or student permits.',
+      services: ['Visa Applications', 'Residency Pathway', 'Citizenship & Naturalization', 'PPIC', 'Passports (PP-1 / PP-R)', 'Work & Student Permits'],
+      hours: 'Mon-Fri 8AM-5PM | IMMD Central in-person for biometrics',
+      contact: '+854 700 0000'
     },
     'lc': {
       name: 'Legislative Council',

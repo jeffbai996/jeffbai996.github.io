@@ -99,15 +99,15 @@ export const departmentContextConfig = {
   interior: {
     id: 'interior',
     name: 'Interior Department',
-    greeting: "Hello! I'm the Interior Department Assistant. I can help you with National IDs, passports, birth certificates, and civil records.",
+    greeting: "Hello! I'm the Interior Department Assistant. I can help you with National IDs, birth certificates, civil records, land registry, and building permits. For passport applications, please see the Immigration Department (IMMD).",
     quickActions: [
       { label: 'National ID', query: 'How do I get a National ID?', icon: 'id-card' },
-      { label: 'Passport', query: 'How do I apply for a passport?', icon: 'document' },
+      { label: 'Land Registry', query: 'How do I search the land registry?', icon: 'document' },
       { label: 'Birth Certificate', query: 'How do I get a birth certificate?', icon: 'document' },
       { label: 'Civil Records', query: 'How do I access civil records?', icon: 'folder' }
     ],
-    suggestedTopics: ['national ID', 'passport', 'birth certificate', 'civil records', 'marriage license'],
-    contextKeywords: ['id', 'passport', 'birth certificate', 'documents', 'civil records', 'interior']
+    suggestedTopics: ['national ID', 'birth certificate', 'civil records', 'land registry', 'building permits', 'marriage license'],
+    contextKeywords: ['id', 'birth certificate', 'documents', 'civil records', 'land registry', 'building permit', 'parks', 'interior']
   },
 
   // Transport Department
