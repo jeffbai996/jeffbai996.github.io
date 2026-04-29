@@ -29,6 +29,7 @@ const DEPARTMENTS = [
   'National Emergency Management',
   'Bank of fictional project',
   'Interior Department',
+  'Immigration Department',
   'Justice Department',
   'Other'
 ];
