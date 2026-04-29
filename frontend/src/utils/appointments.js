@@ -12,8 +12,17 @@ export const DEPARTMENTS = [
     name: 'National Police Agency',
     services: [
       { id: 'police-clearance', name: 'Police Clearance Certificate', duration: 30 },
-      { id: 'passport', name: 'Passport Application', duration: 45 },
       { id: 'report', name: 'File Report', duration: 20 }
+    ]
+  },
+  {
+    id: 'immd',
+    name: 'Immigration Department',
+    services: [
+      { id: 'passport', name: 'Passport Application', duration: 45 },
+      { id: 'visa', name: 'Visa Application', duration: 60 },
+      { id: 'ppic', name: 'PPIC Application', duration: 45 },
+      { id: 'citizenship', name: 'Citizenship Interview', duration: 60 }
     ]
   },
   {
