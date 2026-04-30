@@ -31,14 +31,14 @@ describe('getVisaByCode', () => {
 })
 
 describe('calculateOverstay', () => {
-  it('tier 1 — 1 to 7 days: P$50/day, no ban', () => {
+  it('tier 1 — 1 to 7 days: $50/day, no ban', () => {
     const r = calculateOverstay(5)
     expect(r.tier).toBe('1–7 days')
     expect(r.fineTotal).toBe(250) // 5 * 50
     expect(r.ban).toBe('None')
   })
 
-  it('tier 2 — 8 to 30 days: P$100/day, 1-year ban', () => {
+  it('tier 2 — 8 to 30 days: $100/day, 1-year ban', () => {
     const r = calculateOverstay(20)
     expect(r.tier).toBe('8–30 days')
     expect(r.fineTotal).toBe(2000) // 20 * 100

@@ -349,7 +349,7 @@ export default function IMMD() {
         {/* 3. VISA CATEGORIES */}
         <section aria-labelledby="visa-heading" id="apply" style={{ marginTop: '3rem' }}>
           <h2 id="visa-heading">Visa Categories</h2>
-          <p>All fees in P$ (Praya Dollars). Fees are per-applicant; dependants require separate applications.</p>
+          <p>All fees in $ (Praya Dollars). Fees are per-applicant; dependants require separate applications.</p>
           <table className="visa-table">
             <caption className="sr-only">Full list of IMMD visa and permit classes</caption>
             <thead>
@@ -357,7 +357,7 @@ export default function IMMD() {
                 <th scope="col">Class</th>
                 <th scope="col">Name</th>
                 <th scope="col">Duration</th>
-                <th scope="col">Fee (P$)</th>
+                <th scope="col">Fee ($)</th>
                 <th scope="col">Notes</th>
               </tr>
             </thead>
@@ -367,7 +367,7 @@ export default function IMMD() {
                   <th scope="row"><strong>{v.code}</strong></th>
                   <td>{v.name}</td>
                   <td>{v.duration}</td>
-                  <td>{v.fee === 0 ? 'Free' : `P$${v.fee}`}</td>
+                  <td>{v.fee === 0 ? 'Free' : `$${v.fee}`}</td>
                   <td>{v.notes}</td>
                 </tr>
               ))}
@@ -413,8 +413,8 @@ export default function IMMD() {
           <h2 id="ppic-heading">PPIC (Praya Permanent Identity Card)</h2>
           <p>The PPIC is the permanent identity document issued to naturalized citizens under Form C-2. It is required for voting, certain banking services, and property ownership beyond F1 scope.</p>
           <ul>
-            <li><strong>Issuance:</strong> Form C-2 — P$75</li>
-            <li><strong>Replacement (lost/stolen):</strong> Form C-3 — P$50</li>
+            <li><strong>Issuance:</strong> Form C-2 — $75</li>
+            <li><strong>Replacement (lost/stolen):</strong> Form C-3 — $50</li>
             <li><strong>Renewal:</strong> 10-year cycle; biometrics re-capture required</li>
             <li><strong>Biometrics:</strong> Fingerprint + facial capture at IMMD Central or Braemar County</li>
           </ul>
@@ -425,9 +425,9 @@ export default function IMMD() {
           <h2 id="passport-heading">Passports</h2>
           <p>Praya passports are issued under Form PP-1 (new) or PP-R (renewal). Passports are machine-readable and include an embedded biometric chip per the Digital Immigration Regulations 2023.</p>
           <ul>
-            <li><strong>New passport (PP-1):</strong> P$120 — standard 4-week processing</li>
-            <li><strong>Expedited (PP-1):</strong> P$200 — 5 business days</li>
-            <li><strong>Renewal (PP-R):</strong> P$80 — standard 2-week processing</li>
+            <li><strong>New passport (PP-1):</strong> $120 — standard 4-week processing</li>
+            <li><strong>Expedited (PP-1):</strong> $200 — 5 business days</li>
+            <li><strong>Renewal (PP-R):</strong> $80 — standard 2-week processing</li>
           </ul>
           <p style={{ fontSize: '0.9rem', opacity: 0.8 }}>Passport validity: 10 years for adults; 5 years for minors. Apply in person at IMMD Central.</p>
         </section>
@@ -439,16 +439,16 @@ export default function IMMD() {
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '1rem', marginTop: '1rem' }}>
             <div className="card">
               <h3 style={{ marginTop: 0 }}>E-class Employment Visa</h3>
-              <p>Sponsored by a Praya employer. 12 months renewable. P$150.</p>
+              <p>Sponsored by a Praya employer. 12 months renewable. $150.</p>
               <p>Submit Form E-APP with employer verification letter and background check.</p>
             </div>
             <div className="card">
               <h3 style={{ marginTop: 0 }}>S1 Short-term Student Permit</h3>
-              <p>Up to 6 months. P$80. For language programs, exchange, workshops.</p>
+              <p>Up to 6 months. $80. For language programs, exchange, workshops.</p>
             </div>
             <div className="card">
               <h3 style={{ marginTop: 0 }}>S2 Degree-program Student Permit</h3>
-              <p>Up to 4 years. P$250. Full-time enrollment at an accredited institution such as the Praya School of Design.</p>
+              <p>Up to 4 years. $250. Full-time enrollment at an accredited institution such as the Praya School of Design.</p>
             </div>
           </div>
         </section>
@@ -458,8 +458,8 @@ export default function IMMD() {
           <h2 id="express-heading">Express Pathways</h2>
           <p>Express processing is available for applicants with exceptional circumstances, documented employer sponsorship, or construction-project sponsorship.</p>
           <ul>
-            <li><strong>I-6 Express Immigration:</strong> P$500. 5-business-day processing. Requires documented exceptional circumstances and sponsorship from a Praya resident or employer.</li>
-            <li><strong>I-12 Express Construction:</strong> P$400. Tied to a specific construction project; requires project sponsorship and trade certification.</li>
+            <li><strong>I-6 Express Immigration:</strong> $500. 5-business-day processing. Requires documented exceptional circumstances and sponsorship from a Praya resident or employer.</li>
+            <li><strong>I-12 Express Construction:</strong> $400. Tied to a specific construction project; requires project sponsorship and trade certification.</li>
           </ul>
         </section>
 
@@ -503,7 +503,7 @@ export default function IMMD() {
                 <tr key={f.code}>
                   <th scope="row"><span className="form-badge">{f.code}</span></th>
                   <td>{f.name}</td>
-                  <td>{f.fee === null ? (f.feeNote || '—') : `P$${f.fee}${f.feeNote ? ' (' + f.feeNote + ')' : ''}`}</td>
+                  <td>{f.fee === null ? (f.feeNote || '—') : `$${f.fee}${f.feeNote ? ' (' + f.feeNote + ')' : ''}`}</td>
                   <td>
                     <button type="button" className="secondary" onClick={() => setFormModal(f)}>View / Download</button>
                   </td>
@@ -565,7 +565,7 @@ export default function IMMD() {
         {formModal && (
           <div>
             <p><strong>Category:</strong> {formModal.category}</p>
-            <p><strong>Fee:</strong> {formModal.fee === null ? (formModal.feeNote || '—') : `P$${formModal.fee}`}</p>
+            <p><strong>Fee:</strong> {formModal.fee === null ? (formModal.feeNote || '—') : `$${formModal.fee}`}</p>
             <p style={{ fontSize: '0.9rem', opacity: 0.8 }}>This is a preview. The printable PDF is available via the Download button.</p>
             <button type="button" className="primary" onClick={() => handleFormDownload(formModal.code)}>Download PDF</button>
           </div>
