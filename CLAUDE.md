@@ -78,7 +78,7 @@ Root also contains `chatbot-embed.js` — standalone embeddable chatbot widget f
 - **Per-department themes** live in `pages/Dept*.css` (DeptNPA, DeptHealth, DeptEmergency, etc.). Each department has its own visual identity — don't flatten to a single gov theme.
 - **Chatbot contexts** are per-department in `utils/departmentContext.js`. When adding a new dept page, add a context entry so the chatbot knows its jurisdiction and legislation.
 - **Lazy load department pages** (already set up in App.jsx). Eagerly load Portal only.
-- **Currency display:** "P$" symbol in UI, "PYD" ISO code in data/APIs. Always BigDecimal-equivalent precision on the backend side; for display, format with 2 decimals.
+- **Currency display:** "$" symbol in UI, "PYD" ISO code in data/APIs. Always BigDecimal-equivalent precision on the backend side; for display, format with 2 decimals.
 
 ## Code Style
 

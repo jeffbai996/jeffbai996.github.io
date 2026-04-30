@@ -452,7 +452,7 @@ The portal offers 127 online services available 24/7 across 15 major departments
     • Residency Pathway (F-series) and Permanent Residence
     • Citizenship and Naturalization
     • PPIC (Praya Permanent Identity Card)
-    • Passports — Form PP-1 (new) P$120 / 4 weeks, expedited P$200 / 5 business days, PP-R (renewal) P$80 / 2 weeks
+    • Passports — Form PP-1 (new) $120 / 4 weeks, expedited $200 / 5 business days, PP-R (renewal) $80 / 2 weeks
     • Work and Student Permits
     • Quick Links: [Visa Categories](/immd#apply) | [Residency](/immd#renew) | [Citizenship](/immd#citizenship) | [PPIC](/immd#lost-ppic)
     • Hours: Mon-Fri 8AM-5PM, in-person at IMMD Central required for biometrics
