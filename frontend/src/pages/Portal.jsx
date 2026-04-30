@@ -235,6 +235,15 @@ const departments = [
     services: ['View Legislation', 'Council Members', 'Session Calendar', 'Public Comment']
   },
   {
+    id: 'ec',
+    name: 'Electoral Commission',
+    abbrev: 'EC',
+    url: '/ec',
+    description: 'Voter pre-registration, electoral districts, campaign finance, and election observer accreditation.',
+    color: '#6b1422',
+    services: ['Voter Pre-Registration', 'District Lookup', 'Campaign Finance', 'Observer Accreditation']
+  },
+  {
     id: 'bd',
     name: 'Buildings Department',
     abbrev: 'BD',
@@ -313,6 +322,11 @@ const priorities = [
     title: 'Legislative Oversight',
     detail: 'View bills, contact council members, and participate in the democratic process.',
     link: '/lc'
+  },
+  {
+    title: 'Elections & Voter Registration',
+    detail: 'Pre-register to vote, find your electoral district, and access campaign finance disclosures.',
+    link: '/ec'
   },
   {
     title: 'Building Permits',
