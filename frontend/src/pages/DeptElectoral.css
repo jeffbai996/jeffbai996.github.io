@@ -1,0 +1,193 @@
+/* Electoral Commission — EC. Civic palette: deep burgundy primary,
+   ivory paper, gold accent. Ballot-and-ledger inspired. */
+
+:root {
+  --ec-burgundy: #6b1422;
+  --ec-burgundy-deep: #4a0d18;
+  --ec-gold: #b08a3a;
+  --ec-gold-soft: #d4b76a;
+  --ec-ivory: #faf6ec;
+  --ec-ink: #2a1a18;
+  --ec-rule: rgba(107, 20, 34, 0.18);
+}
+
+.layout-electoral {
+  --primary-color: var(--ec-burgundy);
+  --accent-color: var(--ec-gold);
+  --paper-color: var(--ec-ivory);
+}
+
+.layout-electoral .dept-hero {
+  background: linear-gradient(135deg, var(--ec-burgundy) 0%, var(--ec-burgundy-deep) 100%);
+  color: #fff;
+  padding: 3rem 2rem;
+  border-bottom: 4px solid var(--ec-gold);
+}
+
+.layout-electoral .dept-hero h1 {
+  color: #fff;
+  font-family: Georgia, 'Times New Roman', serif;
+  letter-spacing: 0.02em;
+}
+
+.layout-electoral .director-byline {
+  color: var(--ec-gold-soft);
+  font-style: italic;
+  margin-top: 0.5rem;
+}
+
+.layout-electoral .director-quote {
+  border-left: 3px solid var(--ec-gold);
+  padding-left: 1rem;
+  margin-top: 1.5rem;
+  max-width: 60ch;
+  font-size: 1.05rem;
+  line-height: 1.6;
+}
+
+.layout-electoral .ec-status-banner {
+  margin: 1.5rem 0;
+  padding: 1rem 1.25rem;
+  border: 1px solid var(--ec-rule);
+  border-left: 4px solid var(--ec-gold);
+  background: var(--ec-ivory);
+  color: var(--ec-ink);
+}
+
+.layout-electoral .ec-status-banner.activated {
+  border-left-color: #166534;
+}
+
+.layout-electoral .ec-status-banner h3 {
+  margin: 0 0 0.5rem 0;
+  font-family: Georgia, 'Times New Roman', serif;
+}
+
+.layout-electoral .card {
+  border: 1px solid var(--ec-rule);
+  border-top: 3px solid var(--ec-burgundy);
+  background: #fff;
+  padding: 1.5rem;
+  border-radius: 2px;
+}
+
+.layout-electoral .quick-action-card {
+  transition: border-color 0.2s, transform 0.2s;
+}
+
+.layout-electoral .quick-action-card:hover {
+  border-color: var(--ec-gold);
+  transform: translateY(-2px);
+}
+
+.layout-electoral .quick-action-card h3 {
+  color: var(--ec-burgundy);
+  font-family: Georgia, 'Times New Roman', serif;
+}
+
+.layout-electoral h2 {
+  color: var(--ec-burgundy);
+  font-family: Georgia, 'Times New Roman', serif;
+  border-bottom: 1px solid var(--ec-rule);
+  padding-bottom: 0.5rem;
+}
+
+.layout-electoral .ec-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1rem;
+  background: #fff;
+}
+
+.layout-electoral .ec-table th,
+.layout-electoral .ec-table td {
+  border: 1px solid var(--ec-rule);
+  padding: 0.6rem 0.8rem;
+  text-align: left;
+  font-size: 0.95rem;
+}
+
+.layout-electoral .ec-table thead {
+  background: var(--ec-ivory);
+}
+
+.layout-electoral .ec-table th {
+  color: var(--ec-burgundy);
+  font-weight: 600;
+}
+
+.layout-electoral .ec-table tbody tr:nth-child(even) {
+  background: rgba(176, 138, 58, 0.04);
+}
+
+.layout-electoral .form-badge {
+  display: inline-block;
+  margin-left: 0.5rem;
+  padding: 0.15rem 0.5rem;
+  background: var(--ec-burgundy);
+  color: #fff;
+  font-size: 0.75rem;
+  border-radius: 2px;
+  font-family: 'Courier New', Courier, monospace;
+}
+
+.layout-electoral button.primary,
+.layout-electoral .btn.primary {
+  background: var(--ec-burgundy);
+  color: #fff;
+  border: none;
+  padding: 0.6rem 1.2rem;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.layout-electoral button.primary:hover,
+.layout-electoral .btn.primary:hover {
+  background: var(--ec-burgundy-deep);
+}
+
+.layout-electoral .ec-result {
+  margin-top: 1rem;
+  padding: 0.75rem 1rem;
+  background: var(--ec-ivory);
+  border-left: 3px solid var(--ec-gold);
+}
+
+.layout-electoral .ec-result.error {
+  border-left-color: #b91c1c;
+  background: rgba(185, 28, 28, 0.08);
+}
+
+.layout-electoral .modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.layout-electoral .modal-content {
+  background: #fff;
+  padding: 2rem;
+  border-top: 4px solid var(--ec-burgundy);
+  max-width: 600px;
+  width: 90%;
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+.layout-electoral .ec-pill {
+  display: inline-block;
+  padding: 0.2rem 0.6rem;
+  background: var(--ec-ivory);
+  color: var(--ec-burgundy);
+  border: 1px solid var(--ec-rule);
+  border-radius: 999px;
+  font-size: 0.8rem;
+  margin-right: 0.4rem;
+}

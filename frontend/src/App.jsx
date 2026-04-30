@@ -21,6 +21,7 @@ const SWD = lazy(() => import('./pages/SWD'))
 const Post = lazy(() => import('./pages/Post'))
 const CBCA = lazy(() => import('./pages/CBCA'))
 const IMMD = lazy(() => import('./pages/IMMD'))
+const EC = lazy(() => import('./pages/EC'))
 const Health = lazy(() => import('./pages/Health'))
 const Housing = lazy(() => import('./pages/Housing'))
 const Revenue = lazy(() => import('./pages/Revenue'))
@@ -124,6 +125,7 @@ function App() {
               <Route path="post/*" element={<Post />} />
               <Route path="cbca/*" element={<CBCA />} />
               <Route path="immd/*" element={<IMMD />} />
+              <Route path="ec/*" element={<EC />} />
               <Route path="health/*" element={<Health />} />
               <Route path="housing/*" element={<Housing />} />
               <Route path="revenue/*" element={<Revenue />} />
