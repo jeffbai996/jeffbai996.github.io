@@ -14,8 +14,12 @@ export default function SpectrumLogo({ size = 'md', wordmark = true }) {
         aria-hidden="true"
         preserveAspectRatio="none"
       >
+        {/* 14 blocks: 7 wide × 2 tall — each block 20×20 in viewBox units */}
         {COLORS.map((c, i) => (
-          <rect key={c} x={i * 20} y="0" width="20" height="40" fill={c} />
+          <g key={c}>
+            <rect x={i * 20} y="0" width="20" height="20" fill={c} />
+            <rect x={i * 20} y="20" width="20" height="20" fill={c} />
+          </g>
         ))}
       </svg>
       {wordmark && <span className="sp-logo-wordmark">spectrum cannabis</span>}
