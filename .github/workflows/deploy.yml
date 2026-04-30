@@ -54,12 +54,8 @@ jobs:
           VITE_SUPABASE_ANON_KEY: ${{ secrets.VITE_SUPABASE_ANON_KEY }}
           VITE_GEMINI_ENABLED: false
 
-      # Chatbot deploy steps removed 2026-04-30 after Gemini API key leak.
-      # The previous "Copy chatbot-embed.js" + "Inject Gemini API key" steps
-      # baked a Gemini key into a public JS file, got the GCP project
-      # (gen-lang-client-0794587818) suspended for credential abuse.
-      # Do NOT restore those steps. Re-enable chatbot only by routing through
-      # a server-side proxy (Cloudflare Worker / Supabase Edge Function).
+      # Chatbot is served via a server-side proxy (Cloudflare Worker /
+      # Supabase Edge Function).
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3

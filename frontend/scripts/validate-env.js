@@ -9,7 +9,7 @@
 const requiredEnvVars = {
   VITE_GEMINI_API_KEY: {
     required: false,
-    description: 'Google Gemini API Key (disabled — chatbot proxied server-side after 2026-04-30 key leak)',
+    description: 'Google Gemini API Key (unused in client build — chatbot is proxied server-side)',
     invalidValues: ['your_api_key_here', 'undefined', '']
   },
   VITE_SUPABASE_URL: {
