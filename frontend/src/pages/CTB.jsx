@@ -3,6 +3,16 @@ import { Routes, Route, Link, useNavigate } from 'react-router-dom'
 import './Department.css'
 import './DeptFinancial.css'
 
+const LICENSED_OPERATORS = [
+  { id: 'spectrum', name: 'Spectrum Cannabis', license: 'CTB-2019-0042', type: 'Retail', locations: 6, status: 'Active', website: '/spectrum-cannabis', featured: true },
+  { id: 'greenleaf', name: 'Greenleaf Cannabis Co.', license: 'CTB-2020-0118', type: 'Retail', locations: 3, status: 'Active', website: null },
+  { id: 'highland-bloom', name: 'Highland Bloom Apothecary', license: 'CTB-2021-0234', type: 'Retail', locations: 1, status: 'Active', website: null },
+  { id: 'praya-cannabis-co', name: 'Praya Cannabis Co.', license: 'CTB-2019-0017', type: 'Cultivation', locations: 1, status: 'Active', website: null },
+  { id: 'oak-and-leaf', name: 'Oak & Leaf Distribution', license: 'CTB-2022-0401', type: 'Distribution', locations: 2, status: 'Active', website: null },
+  { id: 'craft-buds', name: 'Craft Buds Manufacturing', license: 'CTB-2020-0089', type: 'Manufacturing', locations: 1, status: 'Active', website: null },
+  { id: 'cascadia-cannabis', name: 'Cascadia Cannabis Group', license: 'CTB-2021-0156', type: 'Retail', locations: 4, status: 'Active', website: null }
+]
+
 // CTB-specific subpages would be imported here
 // import Licensing from './ctb/Licensing'
 
@@ -216,6 +226,50 @@ function CTBHome({ navigate }) {
                   <span className="news-date">Nov 10, 2024</span>
                   <h4 className="news-title">New Compliance Guidelines Released</h4>
                   <p className="news-excerpt">Updated packaging and labeling requirements effective January 2025.</p>
+                </div>
+              </div>
+
+              <div className="content-card" style={{ marginTop: '24px' }}>
+                <div className="card-header">
+                  <h2>Licensed Operators</h2>
+                  <span className="card-subtitle">Active cannabis businesses operating under CTB license</span>
+                </div>
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', gap: '16px', padding: '16px 0' }}>
+                  {LICENSED_OPERATORS.map(op => (
+                    <div
+                      key={op.id}
+                      style={{
+                        padding: '16px',
+                        border: op.featured ? '2px solid var(--primary-color)' : '1px solid var(--border-color)',
+                        background: 'var(--card-bg, #fff)',
+                        position: 'relative'
+                      }}
+                    >
+                      {op.featured && (
+                        <div style={{ display: 'flex', gap: '2px', marginBottom: '8px', height: '8px' }}>
+                          {['#8932B8','#3C44AA','#3AB3DA','#5E7C16','#FED83D','#F9801D','#B02E26'].map(c => (
+                            <div key={c} style={{ flex: 1, background: c }} />
+                          ))}
+                        </div>
+                      )}
+                      <h3 style={{ margin: '0 0 4px', fontSize: '1.05rem' }}>{op.name}</h3>
+                      <p style={{ margin: 0, fontSize: '0.85rem', color: 'var(--text-muted)' }}>License #{op.license}</p>
+                      <p style={{ margin: '4px 0', fontSize: '0.9rem' }}>{op.type} · {op.locations} location{op.locations !== 1 ? 's' : ''}</p>
+                      <p style={{ margin: '4px 0', fontSize: '0.85rem', color: '#0d9488', fontWeight: 500 }}>{op.status}</p>
+                      {op.website ? (
+                        <Link
+                          to={op.website}
+                          style={{ display: 'inline-block', marginTop: '8px', fontSize: '0.9rem', fontWeight: 500 }}
+                        >
+                          View website →
+                        </Link>
+                      ) : (
+                        <span style={{ display: 'inline-block', marginTop: '8px', fontSize: '0.85rem', color: 'var(--text-muted)' }}>
+                          Site not provided
+                        </span>
+                      )}
+                    </div>
+                  ))}
                 </div>
               </div>
             </div>
