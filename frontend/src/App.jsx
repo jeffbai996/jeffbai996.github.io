@@ -21,6 +21,13 @@ const SWD = lazy(() => import('./pages/SWD'))
 const Post = lazy(() => import('./pages/Post'))
 const CBCA = lazy(() => import('./pages/CBCA'))
 const IMMD = lazy(() => import('./pages/IMMD'))
+const SpectrumLayout = lazy(() => import('./pages/spectrum/SpectrumLayout'))
+const SpectrumHome = lazy(() => import('./pages/spectrum/SpectrumHome'))
+const SpectrumShop = lazy(() => import('./pages/spectrum/SpectrumShop'))
+const SpectrumProduct = lazy(() => import('./pages/spectrum/SpectrumProduct'))
+const SpectrumLocations = lazy(() => import('./pages/spectrum/SpectrumLocations'))
+const SpectrumAbout = lazy(() => import('./pages/spectrum/SpectrumAbout'))
+const SpectrumContact = lazy(() => import('./pages/spectrum/SpectrumContact'))
 const Health = lazy(() => import('./pages/Health'))
 const Housing = lazy(() => import('./pages/Housing'))
 const Revenue = lazy(() => import('./pages/Revenue'))
@@ -108,6 +115,16 @@ function App() {
             {/* Standalone pages (outside Layout for custom headers) */}
             <Route path="/status" element={<Status />} />
             <Route path="/payments" element={<Payments />} />
+
+            {/* Spectrum Cannabis — private storefront, no gov chrome */}
+            <Route path="/spectrum-cannabis" element={<SpectrumLayout />}>
+              <Route index element={<SpectrumHome />} />
+              <Route path="shop" element={<SpectrumShop />} />
+              <Route path="shop/:productId" element={<SpectrumProduct />} />
+              <Route path="locations" element={<SpectrumLocations />} />
+              <Route path="about" element={<SpectrumAbout />} />
+              <Route path="contact" element={<SpectrumContact />} />
+            </Route>
 
             <Route path="/" element={<Layout />}>
               <Route index element={<Portal />} />
