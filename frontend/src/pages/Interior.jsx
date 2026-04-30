@@ -186,7 +186,7 @@ function InteriorHome({ navigate }) {
                       </svg>
                     </div>
                     <h4>Identity Documents</h4>
-                    <p>National ID cards, passports, and renewals</p>
+                    <p>National ID cards, Digital IDs, and renewals</p>
                   </div>
                   <div className="service-card" onClick={() => navigate('/interior/civil')}>
                     <div className="service-icon">
@@ -455,7 +455,7 @@ function LandRegistry() {
               transition: 'all 0.2s'
             }}>
               <div style={{ fontWeight: '600', marginBottom: '6px', color: 'var(--text-primary)' }}>Identity Documents</div>
-              <div style={{ fontSize: '13px', color: 'var(--text-muted)' }}>Apply for National ID or passport</div>
+              <div style={{ fontSize: '13px', color: 'var(--text-muted)' }}>Apply for National ID or Digital ID</div>
             </Link>
             <Link to="/interior/civil" style={{
               padding: '16px',
@@ -552,11 +552,16 @@ function IdentityDocuments() {
             <Link to="/interior">Home</Link> / Identity Documents
           </div>
           <h1>Identity Documents</h1>
-          <p className="subtitle">Apply for National ID cards and passports</p>
+          <p className="subtitle">Apply for National ID cards and Digital IDs</p>
         </div>
       </div>
       <div className="container">
-        <div className="content-text">
+        <div className="info-box">
+          <h4>Looking for a passport?</h4>
+          <p>Passports are issued by the <Link to="/immd">Immigration Department (IMMD)</Link>, not Interior. Apply in person at IMMD Central.</p>
+        </div>
+
+        <div className="content-text" style={{ marginTop: '24px' }}>
           <h3>Document Types</h3>
           <p>The Interior Department issues the following identity documents:</p>
         </div>
@@ -568,14 +573,6 @@ function IdentityDocuments() {
             <p>Official government-issued identification for citizens</p>
             <div style={{ fontSize: '13px', color: 'var(--text-muted)', marginTop: '12px' }}>
               Valid for 10 years
-            </div>
-          </div>
-          <div className="license-card">
-            <h4>Passport</h4>
-            <span className="code">ID-PASS</span>
-            <p>International travel document for Praya citizens</p>
-            <div style={{ fontSize: '13px', color: 'var(--text-muted)', marginTop: '12px' }}>
-              Valid for 5 years
             </div>
           </div>
           <div className="license-card">
@@ -600,7 +597,6 @@ function IdentityDocuments() {
                 onChange={(e) => setDocumentType(e.target.value)}
               >
                 <option value="national-id">National ID Card</option>
-                <option value="passport">Passport</option>
                 <option value="digital-id">Digital ID</option>
               </select>
             </div>
@@ -720,7 +716,7 @@ function IdentityDocuments() {
 
         <div className="info-box" style={{ marginTop: '24px' }}>
           <h4>Processing Times</h4>
-          <p>National ID: 3-5 business days | Passport: 7-10 business days | Rush service available for additional fee.</p>
+          <p>National ID: 3-5 business days | Digital ID: 5-7 business days | Rush service available for additional fee.</p>
         </div>
 
         <div className="content-text" style={{ marginTop: '32px' }}>
@@ -1072,7 +1068,7 @@ function CivilRegistry() {
               transition: 'all 0.2s'
             }}>
               <div style={{ fontWeight: '600', marginBottom: '6px', color: 'var(--text-primary)' }}>Identity Documents</div>
-              <div style={{ fontSize: '13px', color: 'var(--text-muted)' }}>Apply for National ID or passport</div>
+              <div style={{ fontSize: '13px', color: 'var(--text-muted)' }}>Apply for National ID or Digital ID</div>
             </Link>
             <Link to="/interior/land" style={{
               padding: '16px',
@@ -1379,7 +1375,7 @@ function ParksAndReserves() {
               transition: 'all 0.2s'
             }}>
               <div style={{ fontWeight: '600', marginBottom: '6px', color: 'var(--text-primary)' }}>Identity Documents</div>
-              <div style={{ fontSize: '13px', color: 'var(--text-muted)' }}>National ID and passports</div>
+              <div style={{ fontSize: '13px', color: 'var(--text-muted)' }}>National ID and Digital IDs</div>
             </Link>
           </div>
         </div>
