@@ -43,8 +43,7 @@ jobs:
         env:
           VITE_SUPABASE_URL: ${{ secrets.VITE_SUPABASE_URL }}
           VITE_SUPABASE_ANON_KEY: ${{ secrets.VITE_SUPABASE_ANON_KEY }}
-          VITE_GEMINI_ENABLED: true
-          VITE_GEMINI_API_KEY: ${{ secrets.VITE_GEMINI_API_KEY }}
+          VITE_GEMINI_ENABLED: false
 
       - name: Build frontend
         working-directory: ./frontend
@@ -53,34 +52,14 @@ jobs:
           NODE_ENV: production
           VITE_SUPABASE_URL: ${{ secrets.VITE_SUPABASE_URL }}
           VITE_SUPABASE_ANON_KEY: ${{ secrets.VITE_SUPABASE_ANON_KEY }}
-          VITE_GEMINI_ENABLED: true
-          VITE_GEMINI_API_KEY: ${{ secrets.VITE_GEMINI_API_KEY }}
+          VITE_GEMINI_ENABLED: false
 
-      - name: Copy chatbot-embed.js to dist
-        run: cp chatbot-embed.js frontend/dist/
-
-      - name: Inject Gemini API key into chatbot-embed.js
-        run: |
-          # Use perl for safer substitution (handles special characters in API key)
-          # IMPORTANT: Use single quotes so bash doesn't expand $ENV before perl runs
-          perl -i -pe 's|GEMINI_API_KEY_PLACEHOLDER|$ENV{GEMINI_KEY}|g' frontend/dist/chatbot-embed.js
-
-          # Verify injection was successful
-          if grep -q "GEMINI_API_KEY_PLACEHOLDER" frontend/dist/chatbot-embed.js; then
-            echo "ERROR: API key placeholder still present - injection failed"
-            exit 1
-          fi
-
-          # Verify a valid API key was actually injected (Gemini keys start with AIza)
-          if grep -q "apiKey = 'AIza" frontend/dist/chatbot-embed.js; then
-            echo "API key injected successfully"
-          else
-            echo "ERROR: API key injection produced invalid result"
-            echo "Check that VITE_GEMINI_API_KEY secret is set correctly"
-            exit 1
-          fi
-        env:
-          GEMINI_KEY: ${{ secrets.VITE_GEMINI_API_KEY }}
+      # Chatbot deploy steps removed 2026-04-30 after Gemini API key leak.
+      # The previous "Copy chatbot-embed.js" + "Inject Gemini API key" steps
+      # baked a Gemini key into a public JS file, got the GCP project
+      # (gen-lang-client-0794587818) suspended for credential abuse.
+      # Do NOT restore those steps. Re-enable chatbot only by routing through
+      # a server-side proxy (Cloudflare Worker / Supabase Edge Function).
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
