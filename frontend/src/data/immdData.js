@@ -1,5 +1,5 @@
 // IMMD canon data — single source of truth for the Immigration Department page.
-// All fees in P$ (Praya Dollars). Visa class structure per project_praya_canon.md.
+// All fees in $ (Praya Dollars). Visa class structure per project_praya_canon.md.
 
 export const DIRECTOR_GENERAL = {
   name: 'The Hon. David A. Ingram, MP',
@@ -42,7 +42,7 @@ export const FORMS_INDEX = [
   { code: 'V-APP', name: 'Visa Application (V/F classes)', fee: null, feeNote: 'Fee equals the visa class fee', category: 'visa' },
   { code: 'E-APP', name: 'Employment Visa Application', fee: 150, feeNote: null, category: 'visa' },
   { code: 'S-APP', name: 'Student Permit Application', fee: null, feeNote: 'Fee equals the student permit class fee', category: 'permit' },
-  { code: 'PP-1', name: 'Passport Application (new or expedited)', fee: 120, feeNote: 'Expedited: P$200', category: 'passport' },
+  { code: 'PP-1', name: 'Passport Application (new or expedited)', fee: 120, feeNote: 'Expedited: $200', category: 'passport' },
   { code: 'PP-R', name: 'Passport Renewal', fee: 80, feeNote: null, category: 'passport' }
 ]
 
@@ -113,8 +113,8 @@ export const LEGISLATION = [
 ]
 
 export const OVERSTAY_TIERS = [
-  { minDays: 1, maxDays: 7, range: '1–7 days', fine: 'P$50 per day', ban: 'None', note: 'First-time overstays of 3 days or fewer may receive a written warning instead of a fine.' },
-  { minDays: 8, maxDays: 30, range: '8–30 days', fine: 'P$100 per day', ban: '1-year re-entry ban', note: 'Appealable to 3rd District Court.' },
+  { minDays: 1, maxDays: 7, range: '1–7 days', fine: '$50 per day', ban: 'None', note: 'First-time overstays of 3 days or fewer may receive a written warning instead of a fine.' },
+  { minDays: 8, maxDays: 30, range: '8–30 days', fine: '$100 per day', ban: '1-year re-entry ban', note: 'Appealable to 3rd District Court.' },
   { minDays: 31, maxDays: Infinity, range: '31+ days', fine: 'Deportation + full fine owed', ban: '5-year re-entry ban', note: 'Right to counsel; appeal to 3rd District Court, then 3rd Circuit.' }
 ]
 

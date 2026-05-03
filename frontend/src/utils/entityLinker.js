@@ -63,7 +63,7 @@ const servicePrerequisites = {
     name: 'New Passport Application',
     department: 'immd',
     requires: ['national_id', 'birth_certificate', 'passport_photo'],
-    fee: 'P$120 (standard) / P$200 (expedited)',
+    fee: '$120 (standard) / $200 (expedited)',
     processing: '4 weeks (standard) / 5 business days (expedited)',
     url: '/immd'
   },
@@ -71,7 +71,7 @@ const servicePrerequisites = {
     name: 'Passport Renewal',
     department: 'immd',
     requires: ['current_passport', 'passport_photo'],
-    fee: 'P$80',
+    fee: '$80',
     processing: '2 weeks',
     url: '/immd'
   },

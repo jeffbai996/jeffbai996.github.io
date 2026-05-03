@@ -633,7 +633,7 @@ export const intentPatterns = {
         { label: "Expedited Service", value: "passport_expedited" }
       ]
     },
-    details: "**Passport Services (IMMD)**\n- New (PP-1): P$120, 4 weeks\n- Expedited: P$200, 5 business days\n- Renewal (PP-R): P$80, 2 weeks\n- Required: National ID, photo, application form",
+    details: "**Passport Services (IMMD)**\n- New (PP-1): $120, 4 weeks\n- Expedited: $200, 5 business days\n- Renewal (PP-R): $80, 2 weeks\n- Required: National ID, photo, application form",
     department: 'immd'
   },
 
@@ -1350,8 +1350,8 @@ export function handleFollowUp(intentName, selection) {
     id_renew: "To renew your National ID:\n\n**Requirements:**\n• Current/expired ID\n• Updated photo\n• Fee: $15\n\nYou can renew online through PrayaPass if your address hasn't changed.",
 
     // Passport follow-ups
-    passport_new: "To apply for a new passport:\n\n**Requirements:**\n• National ID\n• Passport photo (2x2 inches)\n• Completed Form PP-1\n• Fee: P$120 (standard) or P$200 (expedited)\n\n**Processing:**\n• Standard: 4 weeks\n• Expedited: 5 business days\n\nApply in person at IMMD Central (Immigration Department).",
-    passport_expedited: "For expedited passport service:\n\n**Total fee:** P$200\n**Processing:** 5 business days\n\nMust apply in person at IMMD Central. Bring proof of urgent travel if requesting same-week processing.",
+    passport_new: "To apply for a new passport:\n\n**Requirements:**\n• National ID\n• Passport photo (2x2 inches)\n• Completed Form PP-1\n• Fee: $120 (standard) or $200 (expedited)\n\n**Processing:**\n• Standard: 4 weeks\n• Expedited: 5 business days\n\nApply in person at IMMD Central (Immigration Department).",
+    passport_expedited: "For expedited passport service:\n\n**Total fee:** $200\n**Processing:** 5 business days\n\nMust apply in person at IMMD Central. Bring proof of urgent travel if requesting same-week processing.",
 
     // Driver's license follow-ups
     license_new: "To get a new driver's license:\n\n**Requirements:**\n• Valid National ID\n• Proof of address\n• Vision test (at TD office)\n• Written test\n• Road test\n• Fee: $45\n\n**Steps:**\n1. Schedule appointment online\n2. Pass vision and written tests\n3. Schedule road test\n4. Receive license in 5-7 days",

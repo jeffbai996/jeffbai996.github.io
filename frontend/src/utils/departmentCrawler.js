@@ -331,10 +331,10 @@ export const departmentData = [
       { name: 'Residency', url: '/immd#renew', description: 'F-series residency pathway and renewals.' },
       { name: 'Citizenship', url: '/immd#citizenship', description: 'Naturalization and citizenship application.' },
       { name: 'PPIC', url: '/immd#lost-ppic', description: 'Praya Permanent Identity Card — apply, renew, or replace.' },
-      { name: 'Passports', url: '/immd', description: 'New passport (PP-1) P$120/4 weeks, expedited P$200/5 days, renewal (PP-R) P$80/2 weeks.' }
+      { name: 'Passports', url: '/immd', description: 'New passport (PP-1) $120/4 weeks, expedited $200/5 days, renewal (PP-R) $80/2 weeks.' }
     ],
     fees: {
-      passport: { new: 'P$120', expedited: 'P$200', renewal: 'P$80', standardProcessing: '4 weeks', expeditedProcessing: '5 business days', renewalProcessing: '2 weeks' }
+      passport: { new: '$120', expedited: '$200', renewal: '$80', standardProcessing: '4 weeks', expeditedProcessing: '5 business days', renewalProcessing: '2 weeks' }
     },
     hours: 'Mon-Fri 8AM-5PM. Apply in person at IMMD Central for biometrics.',
     contact: 'Visit IMMD Central or apply online through PrayaPass'
