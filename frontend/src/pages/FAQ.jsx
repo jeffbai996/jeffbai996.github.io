@@ -39,7 +39,7 @@ export default function FAQ() {
         },
         {
           q: 'What documents do I need for a passport?',
-          a: 'You need: (1) Completed application form (Form PP-1 for new, PP-R for renewal), (2) National ID, (3) Birth certificate, (4) Two passport photos, (5) Payment (P$120 new, P$200 expedited, P$80 renewal). Apply in person at IMMD Central (/immd). Standard processing: 4 weeks. Expedited: 5 business days.'
+          a: 'You need: (1) Completed application form (Form PP-1 for new, PP-R for renewal), (2) National ID, (3) Birth certificate, (4) Two passport photos, (5) Payment ($120 new, $200 expedited, $80 renewal). Apply in person at IMMD Central (/immd). Standard processing: 4 weeks. Expedited: 5 business days.'
         },
         {
           q: 'How do I renew my driver\'s license?',

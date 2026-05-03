@@ -65,8 +65,8 @@ describe('IMMD page', () => {
     const input = screen.getByLabelText(/days overstayed/i)
     fireEvent.change(input, { target: { value: '5' } })
     fireEvent.click(screen.getByRole('button', { name: /^calculate$/i }))
-    // Multiple P$250 elements exist on the page (S2 fee); assert the result fine appears
-    expect(screen.getAllByText(/P\$250/).length).toBeGreaterThan(0)
+    // Multiple $250 elements exist on the page (S2 fee); assert the result fine appears
+    expect(screen.getAllByText(/\$250/).length).toBeGreaterThan(0)
     // Tier label: en-dash (U+2013) matches the OVERSTAY_TIERS range string
     expect(screen.getAllByText(/1–7 days/).length).toBeGreaterThan(0)
   })
