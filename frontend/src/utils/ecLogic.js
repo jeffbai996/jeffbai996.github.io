@@ -57,15 +57,25 @@ export function validatePreRegistration(input) {
   }
 
   // Voter eligibility: 18+ on the day of registration.
-  if (!dateOfBirth || !/^\d{4}-\d{2}-\d{2}$/.test(dateOfBirth)) {
+  if (!dateOfBirth || !/^(\d{4})-(\d{2})-(\d{2})$/.test(dateOfBirth)) {
     errors.push('Date of birth is required in YYYY-MM-DD format.')
   } else {
-    const dob = new Date(dateOfBirth)
-    if (Number.isNaN(dob.getTime())) {
+    // Strict calendar-date check: parse the components, build a Date, then
+    // round-trip year/month/day to reject normalized impossible dates such
+    // as 1990-02-31 (which some Date parsers silently shift to March).
+    const [y, m, d] = dateOfBirth.split('-').map(Number)
+    const dob = new Date(y, m - 1, d)
+    const isRealCalendarDate =
+      dob.getFullYear() === y && dob.getMonth() === m - 1 && dob.getDate() === d
+    if (!isRealCalendarDate) {
       errors.push('Date of birth is not a valid date.')
     } else {
-      const ageYears = (Date.now() - dob.getTime()) / (365.25 * 24 * 60 * 60 * 1000)
-      if (ageYears < 18) {
+      // Calendar-based age check: compare against today minus 18 years using
+      // calendar fields, not fractional-year math, so the exact 18th birthday
+      // qualifies regardless of leap years.
+      const today = new Date()
+      const eighteenthBirthday = new Date(y + 18, m - 1, d)
+      if (eighteenthBirthday > today) {
         errors.push('Voters must be at least 18 years old.')
       }
     }

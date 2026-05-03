@@ -134,6 +134,39 @@ describe('validatePreRegistration', () => {
     expect(r.errors.some(e => /YYYY-MM-DD/.test(e))).toBe(true)
   })
 
+  it('rejects an impossible calendar date that survives format check (e.g. Feb 31)', () => {
+    const r = validatePreRegistration({ ...validInput, dateOfBirth: '1990-02-31' })
+    expect(r.ok).toBe(false)
+    expect(r.errors.some(e => /not a valid date/i.test(e))).toBe(true)
+  })
+
+  it('accepts an applicant on their exact 18th birthday', () => {
+    // Build a DOB that is exactly 18 years before today using calendar
+    // arithmetic. The validator must use calendar comparison, not
+    // fractional-year math, or this case slips below 18.
+    const today = new Date()
+    const y = today.getFullYear() - 18
+    const m = String(today.getMonth() + 1).padStart(2, '0')
+    const d = String(today.getDate()).padStart(2, '0')
+    const dob = `${y}-${m}-${d}`
+    const r = validatePreRegistration({ ...validInput, dateOfBirth: dob })
+    expect(r.ok).toBe(true)
+    expect(r.errors).toEqual([])
+  })
+
+  it('rejects an applicant one day shy of their 18th birthday', () => {
+    // DOB = today + 1 day, 18 years ago — i.e. they turn 18 tomorrow.
+    const today = new Date()
+    const tomorrow = new Date(today.getFullYear(), today.getMonth(), today.getDate() + 1)
+    const y = tomorrow.getFullYear() - 18
+    const m = String(tomorrow.getMonth() + 1).padStart(2, '0')
+    const d = String(tomorrow.getDate()).padStart(2, '0')
+    const dob = `${y}-${m}-${d}`
+    const r = validatePreRegistration({ ...validInput, dateOfBirth: dob })
+    expect(r.ok).toBe(false)
+    expect(r.errors.some(e => /18/.test(e))).toBe(true)
+  })
+
   it('rejects a missing or short national ID', () => {
     const r = validatePreRegistration({ ...validInput, nationalId: 'AB' })
     expect(r.ok).toBe(false)
