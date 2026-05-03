@@ -424,6 +424,11 @@ function TravelRequirements() {
 
           {section === 'visa' && (
             <>
+              <div className="info-box">
+                <h4>Who issues visas?</h4>
+                <p>Praya visas are issued under the authority of the <Link to="/immd">Immigration Department (IMMD)</Link>. Pre-arrival visa applications are handled by IMMD; visas-on-arrival at qualifying ports are processed by CBCA officers acting under IMMD authority. CBCA enforces visa requirements at the border.</p>
+              </div>
+
               <div className="card">
                 <h3 className="card-title">Visa Requirements</h3>
                 <p style={{ color: 'var(--text-muted)', marginBottom: '16px' }}>
@@ -444,7 +449,7 @@ function TravelRequirements() {
 
                 <h4 style={{ marginTop: '20px' }}>Visa Required</h4>
                 <p style={{ fontSize: '14px', color: 'var(--text-muted)', marginBottom: '12px' }}>
-                  All other nationalities must obtain a visa before travel. Visa types:
+                  All other nationalities must obtain a visa before travel. Visas are issued by IMMD; the categories below are summarized here so travelers know what CBCA officers will check at the border. For full details, fees, and authoritative requirements, see the <Link to="/immd#apply">IMMD visa categories</Link>.
                 </p>
 
                 <div style={{ marginBottom: '20px' }}>
@@ -490,19 +495,29 @@ function TravelRequirements() {
 
               <div className="card">
                 <h4 className="card-title">How to Apply</h4>
+
+                <h5 style={{ fontSize: '15px', marginTop: '8px', marginBottom: '8px' }}>Pre-arrival applications</h5>
+                <p style={{ fontSize: '14px', color: 'var(--text-muted)', marginBottom: '12px' }}>
+                  Pre-arrival visas are issued by IMMD. Apply online at <Link to="/immd#apply">/immd</Link> or visit a Praya embassy or consulate. Standard steps:
+                </p>
                 <ol>
-                  <li><strong>Complete Application:</strong> Fill out online visa form at visa.cbca.gov.py</li>
+                  <li><strong>Complete Application:</strong> Fill out the visa form on the IMMD portal</li>
                   <li><strong>Gather Documents:</strong> Passport, photo, proof of funds, travel itinerary</li>
                   <li><strong>Pay Fee:</strong> Online payment or at embassy/consulate</li>
                   <li><strong>Submit:</strong> Upload documents online or visit embassy in person</li>
                   <li><strong>Interview:</strong> May be required for certain visa types</li>
                   <li><strong>Receive Visa:</strong> Via email (e-visa) or passport stamp</li>
                 </ol>
+
+                <h5 style={{ fontSize: '15px', marginTop: '20px', marginBottom: '8px' }}>Visa on arrival</h5>
+                <p style={{ fontSize: '14px', color: 'var(--text-muted)' }}>
+                  Travelers from eligible countries may obtain a visa on arrival at qualifying ports of entry. CBCA officers process VOA at the border under IMMD authority. Bring a valid passport, return ticket, proof of accommodation, and the VOA fee in cash. VOA is not available for Work or Student categories — those require pre-arrival application through IMMD.
+                </p>
               </div>
 
               <div className="info-box">
                 <h4>Visa Support</h4>
-                <p>For visa inquiries and application assistance, contact CBCA Visa Services at visa@cbca.gov.py or call 1-800-CBCA-PY. Appointments available at all Prayan embassies and consulates worldwide.</p>
+                <p>For visa applications, status checks, and policy questions, contact IMMD at <Link to="/immd">/immd</Link>. For questions about presenting a visa at the border or visa-on-arrival eligibility, contact CBCA Travel Information at travel@cbca.gov.py or call 1-800-CBCA-PY.</p>
               </div>
             </>
           )}
@@ -637,7 +652,7 @@ function TravelRequirements() {
 
               <div className="info-box">
                 <h4>Need to Extend Your Stay?</h4>
-                <p>If you need to stay longer than your visa or permitted period allows, you must apply for an extension at least 7 days before expiration. Visit CBCA Extension Office in Praya City or apply online at cbca.gov.py/extension. Extension fee: $100 for up to 30 days.</p>
+                <p>Visa extensions are issued by IMMD, not CBCA. Apply at least 7 days before your visa or permitted period expires. Visit IMMD Central in Praya City or apply online at <Link to="/immd">/immd</Link>. Extension fee: $100 for up to 30 days.</p>
               </div>
             </>
           )}

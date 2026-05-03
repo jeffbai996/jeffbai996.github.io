@@ -100,7 +100,7 @@ export const formDatabase = {
     department: 'immd',
     category: FormCategory.IDENTITY,
     url: '/immd',
-    fee: { standard: 'P$120', expedited: 'P$200', renewal: 'P$80' },
+    fee: { standard: '$120', expedited: '$200', renewal: '$80' },
     processingTime: { standard: '4 weeks', expedited: '5 business days', renewal: '2 weeks' },
     validFor: { adult: '10 years', minor: '5 years' },
 
