@@ -69,7 +69,7 @@ npm run lint
 npm run test       # vitest
 ```
 
-Root also contains `chatbot-embed.js` — standalone embeddable chatbot widget for injection into the wiki / NMP / other subdomains.
+Root contains `chatbot-embed.js` — a legacy standalone chatbot widget. Dead code as of 2026-05-18 cutover; not deployed and not referenced by the SPA. Kept on disk for historical reference; delete when no other repo is found to depend on it.
 
 ## Conventions Already Established
 
@@ -102,7 +102,7 @@ Root also contains `chatbot-embed.js` — standalone embeddable chatbot widget f
 1. **New department page.** Strong candidates per canon: Electoral Commission (building exists, democracy not activated), Legislative Council (infrastructure ready), CBCA (Customs), Gaming & Lottery Commission.
 2. **BoP monetary policy page.** MPC statements, policy rate history, RTGS status. Leverages the Series 2026 "Pioneers of Humanity" banknote designs.
 3. **Spectrum Cannabis constitutional crisis microsite.** Federal-vs-county live plot line — Seth Rogen's CTB vs. Governor Mo's county closure.
-4. **NMP subdomain content pipeline.** Separate subdomain work, but this repo's `chatbot-embed.js` would deploy there.
+4. **NMP subdomain content pipeline.** Separate subdomain work. If NMP ever wants chat, point its frontend at the same gp-llm Worker (add the NMP origin to `ALLOWED_ORIGINS` in `~/repos/gp-llm/worker/wrangler.toml`).
 5. **Wiki build-out.** Separate pipeline — tracked in `wiki_build_plan.md` in the wiki directory. Tier 1 articles remaining: Government, Praya Dollar, BoP, Criminal Code, Immigration, MRT.
 
 ## Coding Rules (Claude Code specific)
