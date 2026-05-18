@@ -1,9 +1,7 @@
-import { GoogleGenerativeAI } from '@google/generative-ai';
 import { generateNationalStatusContext } from '../utils/nationalStatus';
 import {
   generatePredictiveSuggestions,
   getTimeSensitiveAlerts,
-  analyzeForPredictions
 } from '../utils/predictiveSuggestions';
 import {
   searchForms,
@@ -12,57 +10,19 @@ import {
 } from '../utils/formKnowledge';
 
 /**
- * Direct Gemini API Service for Frontend
- * Calls Google's Gemini API directly without a backend server
- * Uses gemini-3.1-flash-lite-preview (single model) with AI-generated suggestion chips
+ * Gemini Chat Service (proxied via gp-llm Cloudflare Worker)
+ * Sends chat to the Worker; the Worker holds the Gemini API key and
+ * enforces origin allowlist + per-IP rate limits + daily budget cap.
+ * See `~/repos/gp-llm/` and squad-store #115 for the architectural rule.
  */
 class GeminiService {
   constructor() {
-    // API key is injected at build time via GitHub Actions
-    const apiKey = import.meta.env.VITE_GEMINI_API_KEY;
-
-    if (!apiKey || apiKey === 'your_api_key_here') {
-      this.initialized = false;
-      this._abortController = null;
-      return;
-    }
-
-    try {
-      this.genAI = new GoogleGenerativeAI(apiKey);
-
-      // Single model: gemini-3.1-flash-lite-preview (fast, capable, cheap)
-      this.model = this.genAI.getGenerativeModel({
-        model: 'gemini-3.1-flash-lite-preview',
-        generationConfig: {
-          temperature: 0.7,
-          maxOutputTokens: 1000,
-          topP: 0.95,
-          topK: 40,
-        },
-        safetySettings: [
-          {
-            category: 'HARM_CATEGORY_HARASSMENT',
-            threshold: 'BLOCK_MEDIUM_AND_ABOVE',
-          },
-          {
-            category: 'HARM_CATEGORY_HATE_SPEECH',
-            threshold: 'BLOCK_MEDIUM_AND_ABOVE',
-          },
-          {
-            category: 'HARM_CATEGORY_SEXUALLY_EXPLICIT',
-            threshold: 'BLOCK_MEDIUM_AND_ABOVE',
-          },
-          {
-            category: 'HARM_CATEGORY_DANGEROUS_CONTENT',
-            threshold: 'BLOCK_MEDIUM_AND_ABOVE',
-          },
-        ],
-      });
-      this.initialized = true;
-      this._abortController = null;
-    } catch (error) {
-      this.initialized = false;
-    }
+    // Worker URL is injected at build time (deploy.yml) with a sane default.
+    // The browser never sees a Gemini API key — the Worker holds the secret.
+    this.workerUrl = (import.meta.env.VITE_GP_LLM_URL || 'https://gp-llm.2phakhvpgh.workers.dev').replace(/\/$/, '');
+    this.model = 'gemini-3.1-flash-lite-preview';
+    this.initialized = Boolean(this.workerUrl);
+    this._abortController = null;
   }
 
   /**
@@ -257,13 +217,11 @@ class GeminiService {
    * Format conversation history for Gemini
    */
   formatHistory(history) {
-    if (!history || history.length === 0) {
-      return [];
-    }
-
+    if (!history || history.length === 0) return [];
+    // Worker contract: { role: 'user' | 'model', content: string }
     return history.map(msg => ({
       role: msg.sender === 'user' ? 'user' : 'model',
-      parts: [{ text: msg.text }],
+      content: msg.text,
     }));
   }
 
@@ -485,40 +443,53 @@ ${dynamicContext}
 - When helpful, end your response with a line formatted exactly as: SUGGESTIONS: ["suggestion 1", "suggestion 2", "suggestion 3"]
   These should be natural follow-up questions the user might ask next. Omit this line for simple greetings or final answers.`;
 
-      // Format conversation history
-      const history = this.formatHistory(conversationHistory.slice(-12)); // Last 12 messages for context
+      // Format conversation history (Worker shape: {role, content})
+      const history = this.formatHistory(conversationHistory.slice(-12));
+      // Worker requires the LAST message in `messages` to be the new user turn.
+      const messages = [...history, { role: 'user', content: userMessage }];
 
       // Cancel any previous in-flight request before starting a new one
       this.cancel();
-
-      // Create a new controller for this request
       this._abortController = new AbortController();
       const { signal } = this._abortController;
 
-      // Start a chat session — systemInstruction keeps the prompt out of
-      // conversation history (saves tokens, avoids the fake user/model ack pattern)
-      const chat = this.model.startChat({
-        systemInstruction: { parts: [{ text: systemPrompt }] },
-        history,
-      });
+      // Race: fetch vs 30s timeout. AbortController also handles explicit cancel.
+      const timeoutId = setTimeout(() => this._abortController?.abort(), 30000);
 
-      // Race: SDK call vs 30s timeout vs explicit cancel
-      const timeout = new Promise((_, reject) =>
-        setTimeout(() => reject(new Error('Gemini request timed out after 30s')), 30000)
-      );
-      const aborted = new Promise((_, reject) => {
-        signal.addEventListener('abort', () => reject(new Error('Request cancelled')), { once: true });
-      });
-
-      let result;
+      let workerResp;
       try {
-        result = await Promise.race([chat.sendMessage(userMessage), timeout, aborted]);
-      } finally {
-        // Clear the controller whether we succeeded, timed out, or were cancelled
+        workerResp = await fetch(`${this.workerUrl}/chat`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            model: this.model,
+            systemPrompt,
+            messages,
+            temperature: 0.7,
+            maxTokens: 1000,
+          }),
+          signal,
+        });
+      } catch (err) {
+        clearTimeout(timeoutId);
         this._abortController = null;
+        if (err.name === 'AbortError') {
+          // Distinguish timeout-abort from caller-cancel via the timer state.
+          throw new Error(signal.aborted ? 'Request cancelled' : 'Gemini request timed out after 30s');
+        }
+        throw err;
+      } finally {
+        clearTimeout(timeoutId);
       }
-      const response = result.response;
-      const text = response.text();
+      this._abortController = null;
+
+      if (!workerResp.ok) {
+        const body = await workerResp.text().catch(() => '');
+        const snippet = body.slice(0, 200);
+        throw new Error(`Worker returned ${workerResp.status}: ${snippet}`);
+      }
+      const result = await workerResp.json();
+      const text = result.text || '';
 
       // Extract AI-generated suggestions from response
       let cleanedText = text;
@@ -542,9 +513,9 @@ ${dynamicContext}
         suggestions,
         model: 'gemini-3.1-flash-lite-preview',
         tokensUsed: {
-          prompt: result.response.usageMetadata?.promptTokenCount || 0,
-          completion: result.response.usageMetadata?.candidatesTokenCount || 0,
-          total: result.response.usageMetadata?.totalTokenCount || 0,
+          prompt: result.usage?.promptTokenCount || 0,
+          completion: result.usage?.candidatesTokenCount || 0,
+          total: result.usage?.totalTokenCount || 0,
         },
       };
     } catch (error) {
