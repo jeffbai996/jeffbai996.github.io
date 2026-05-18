@@ -7,11 +7,6 @@
  */
 
 const requiredEnvVars = {
-  VITE_GEMINI_API_KEY: {
-    required: false,
-    description: 'Google Gemini API Key (unused in client build — chatbot is proxied server-side)',
-    invalidValues: ['your_api_key_here', 'undefined', '']
-  },
   VITE_SUPABASE_URL: {
     required: true,
     description: 'Supabase Project URL',
@@ -22,6 +17,12 @@ const requiredEnvVars = {
     required: true,
     description: 'Supabase Anonymous Key',
     invalidValues: ['your_anon_key_here', 'undefined', '']
+  },
+  VITE_GP_LLM_URL: {
+    required: false,
+    description: 'gp-llm Cloudflare Worker URL (chatbot proxy). Defaults to production Worker if unset.',
+    invalidValues: ['', 'undefined'],
+    pattern: /^https?:\/\/[^\s]+$/
   },
   VITE_GEMINI_ENABLED: {
     required: false,
