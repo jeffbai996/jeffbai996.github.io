@@ -101,7 +101,8 @@ Browser (govpraya.org) ──POST /chat──▶ gp-llm Worker ──REST──�
                                   (Cloudflare secret only)
 ```
 
-- **`frontend/src/services/geminiService.js`** — sends `{systemPrompt, messages, temperature, maxTokens}` to the Worker. The Worker URL is read from `VITE_GP_LLM_URL` with a sensible default.
+- **`frontend/src/services/geminiService.js`** — sends `{systemPrompt, messages, temperature, maxTokens}` to the Worker. The Worker URL is read from `VITE_GP_LLM_URL` with a sensible default. Department context is capped at 2 KB per request so multi-dept matches don't bloat the system prompt.
+- **`frontend/src/utils/clientRateLimit.js`** — defense-in-depth token-bucket throttle (5 burst, 5/min refill) that guards against a runaway useEffect or stuck input handler spamming the Worker from a single tab. The Worker remains the authoritative rate-limit boundary.
 - **`gp-llm` Worker** — a separate repo ([github.com/jeffbai996/gp-llm](https://github.com/jeffbai996/gp-llm)) that holds the API key and enforces an origin allowlist, per-IP rate limits (5/min, 50/day), and a daily budget cap (~$5/day) backed by Cloudflare KV.
 - **Voice (Gemini Live API)** — `geminiLiveService.js` is hard-disabled. The browser-WebSocket transport requires the API key in a URL query parameter, which is the exact pattern that got the original GCP project suspended in April 2026. Re-enabling voice requires a WebSocket-capable proxy (Cloudflare Durable Object + WS upgrade, or a dedicated voice proxy).
 
