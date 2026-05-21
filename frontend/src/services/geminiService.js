@@ -8,6 +8,7 @@ import {
   generateFormSummary,
   generateFormHelp
 } from '../utils/formKnowledge';
+import { tryAcquireChatToken } from '../utils/clientRateLimit';
 
 /**
  * Gemini Chat Service (proxied via gp-llm Cloudflare Worker)
@@ -447,6 +448,14 @@ ${dynamicContext}
       const history = this.formatHistory(conversationHistory.slice(-12));
       // Worker requires the LAST message in `messages` to be the new user turn.
       const messages = [...history, { role: 'user', content: userMessage }];
+
+      // Defense-in-depth: a token-bucket throttle here guards against a
+      // stuck input handler or runaway useEffect spamming the Worker even
+      // before the real per-IP rate limit kicks in. The Worker remains
+      // authoritative — see clientRateLimit.js for the why.
+      if (!tryAcquireChatToken()) {
+        throw new Error("You're sending messages too fast. Take a breath and try again in a moment.");
+      }
 
       // Cancel any previous in-flight request before starting a new one
       this.cancel();
