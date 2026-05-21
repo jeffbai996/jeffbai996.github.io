@@ -193,23 +193,41 @@ class GeminiService {
       return '';
     }
 
+    // Per-call context cap. The router can match multiple departments
+    // ("citizenship + immigration + customs"), and each contributes a
+    // chunk of description + services + sublinks. Without a cap, a
+    // multi-match query inflates the system prompt by 2-3KB on every
+    // turn — quiet recurring cost on a public, per-IP-billed endpoint.
+    // 2000 chars is enough for ~3 departments worth of useful context;
+    // beyond that the model is just being given navigation it doesn't
+    // need to deeply reason about.
+    const MAX_CONTEXT_CHARS = 2000;
+
     let context = '\n\nRelevant Department Information:\n';
-    relevantDepartments.forEach(dept => {
-      context += `\n**[${dept.name}](${dept.url || '/' + dept.id})**:\n`;
-      context += `Description: ${dept.description}\n`;
+    for (const dept of relevantDepartments) {
+      let entry = `\n**[${dept.name}](${dept.url || '/' + dept.id})**:\n`;
+      entry += `Description: ${dept.description}\n`;
       if (dept.url) {
-        context += `Portal URL: ${dept.url}\n`;
+        entry += `Portal URL: ${dept.url}\n`;
       }
       if (dept.subPages && dept.subPages.length > 0) {
-        context += `Quick Links: ${dept.subPages.map(p => `[${p.name}](${p.url})`).join(' | ')}\n`;
+        entry += `Quick Links: ${dept.subPages.map(p => `[${p.name}](${p.url})`).join(' | ')}\n`;
       }
       if (dept.services && dept.services.length > 0) {
-        context += `Services: ${dept.services.slice(0, 5).join(', ')}\n`;
+        entry += `Services: ${dept.services.slice(0, 5).join(', ')}\n`;
       }
       if (dept.contact) {
-        context += `Contact: ${dept.contact}\n`;
+        entry += `Contact: ${dept.contact}\n`;
       }
-    });
+      // Stop adding entries once we'd blow past the cap. We truncate at
+      // the *entry* boundary rather than mid-entry — a half-rendered dept
+      // is worse than just omitting it.
+      if (context.length + entry.length > MAX_CONTEXT_CHARS) {
+        context += `\n*(${relevantDepartments.length - (relevantDepartments.indexOf(dept))} more departments omitted for brevity — ask about a specific one for details.)*\n`;
+        break;
+      }
+      context += entry;
+    }
 
     return context;
   }
