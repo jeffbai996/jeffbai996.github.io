@@ -268,7 +268,6 @@ export function calculateSimilarity(message, keywords) {
 
   for (const keyword of keywords) {
     const keywordLower = keyword.toLowerCase();
-    const keywordWords = keywordLower.split(/\s+/);
 
     // Exact phrase match (highest priority)
     if (message.toLowerCase().includes(keywordLower)) {

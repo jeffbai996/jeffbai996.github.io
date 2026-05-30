@@ -35,7 +35,7 @@ export function useGeminiLive() {
   // Voice state
   const [voiceState, setVoiceState] = useState(VoiceState.IDLE)
   const [isVoiceModeActive, setIsVoiceModeActive] = useState(false)
-  const [volume, setVolume] = useState(0) // Current mic volume (0-1)
+  const [volume] = useState(0) // Current mic volume (0-1)
 
   // Transcripts for display
   const [transcripts, setTranscripts] = useState([])
@@ -205,7 +205,7 @@ export function useGeminiLive() {
     }
 
     // Handle errors
-    const handleError = (err) => {
+    const handleError = () => {
       setError('Connection error occurred')
     }
 

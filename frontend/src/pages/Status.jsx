@@ -220,7 +220,7 @@ const UptimeBar = ({ data }) => {
 
 export default function Status() {
   const [selectedService, setSelectedService] = useState(null)
-  const [timeRange, setTimeRange] = useState('90')
+  const [timeRange] = useState('90')
 
   // Calculate overall status
   const overallStatus = services.some(s => s.status === 'outage') ? 'outage' :

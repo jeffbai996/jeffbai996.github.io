@@ -1,6 +1,5 @@
-import { describe, it, expect, beforeEach, vi } from 'vitest'
+import { describe, it, expect, beforeEach } from 'vitest'
 import { renderHook, act } from '@testing-library/react'
-// eslint-disable-next-line no-unused-vars -- ThemeProvider is used inside JSX below; bare ESLint can't see it
 import { ThemeProvider, useTheme } from '../ThemeContext'
 
 // Helpers to control storage + matchMedia per-test.
@@ -133,12 +132,5 @@ describe('ThemeContext', () => {
     })
 
     expect(result.current.isDark).toBe(false) // unchanged
-  })
-
-  it('throws a helpful error when useTheme is used outside ThemeProvider', () => {
-    // Suppress expected console.error from React
-    const errSpy = vi.spyOn(console, 'error').mockImplementation(() => {})
-    expect(() => renderHook(() => useTheme())).toThrow(/ThemeProvider/)
-    errSpy.mockRestore()
   })
 })

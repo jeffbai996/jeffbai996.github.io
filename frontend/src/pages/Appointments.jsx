@@ -104,7 +104,7 @@ export default function Appointments() {
         setStep(4) // Confirmation step
         loadAppointments()
       }
-    } catch (err) {
+    } catch {
       setError('Failed to book appointment. Please try again.')
     }
 

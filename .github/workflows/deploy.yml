@@ -29,7 +29,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '18'
+          node-version: '22'
           cache: 'npm'
           cache-dependency-path: frontend/package-lock.json
 
@@ -46,9 +46,17 @@ jobs:
           VITE_GEMINI_ENABLED: true
           VITE_GP_LLM_URL: https://gp-llm.2phakhvpgh.workers.dev
 
+      - name: Lint frontend
+        working-directory: ./frontend
+        run: npm run lint
+
+      - name: Test frontend
+        working-directory: ./frontend
+        run: npm test -- --run
+
       - name: Build frontend
         working-directory: ./frontend
-        run: npm run build:skip-validation
+        run: npm run build
         env:
           NODE_ENV: production
           VITE_SUPABASE_URL: ${{ secrets.VITE_SUPABASE_URL }}

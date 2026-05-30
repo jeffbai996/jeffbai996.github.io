@@ -13,7 +13,10 @@ function renderRoute(path, extra = []) {
   window.localStorage.setItem('spectrum-age-verified', 'true')
   return render(
     <HelmetProvider>
-      <MemoryRouter initialEntries={[path]}>
+      <MemoryRouter
+        initialEntries={[path]}
+        future={{ v7_startTransition: true, v7_relativeSplatPath: true }}
+      >
         <Routes>
           <Route path="/spectrum-cannabis" element={<SpectrumLayout />}>
             <Route index element={<SpectrumHome />} />
@@ -110,7 +113,10 @@ describe('AgeGate', () => {
     window.localStorage.removeItem('spectrum-age-verified')
     render(
       <HelmetProvider>
-        <MemoryRouter initialEntries={['/spectrum-cannabis']}>
+        <MemoryRouter
+          initialEntries={['/spectrum-cannabis']}
+          future={{ v7_startTransition: true, v7_relativeSplatPath: true }}
+        >
           <Routes>
             <Route path="/spectrum-cannabis" element={<SpectrumLayout />}>
               <Route index element={<SpectrumHome />} />
