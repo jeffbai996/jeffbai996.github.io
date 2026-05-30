@@ -205,7 +205,7 @@ export default function Register() {
                 placeholder="+65 9123 4567"
                 disabled={loading || success}
               />
-              <p className="form-hint">For SMS verification and 2FA</p>
+              <p className="form-hint">For account recovery and service notifications</p>
             </div>
 
             <div className="form-group">
