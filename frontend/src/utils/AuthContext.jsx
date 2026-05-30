@@ -52,7 +52,7 @@ export function AuthProvider({ children }) {
     // Listen for auth changes
     const {
       data: { subscription },
-    } = supabase.auth.onAuthStateChange(async (event, session) => {
+    } = supabase.auth.onAuthStateChange(async (event) => {
       if (event === 'SIGNED_IN' || event === 'TOKEN_REFRESHED') {
         await fetchUser()
       } else if (event === 'SIGNED_OUT') {
@@ -319,46 +319,6 @@ export function AuthProvider({ children }) {
     }
   }
 
-  // Placeholder 2FA settings (feature not implemented)
-  const get2FASettings = async () => {
-    return {
-      enabled: false,
-      method: null,
-      phoneVerified: false,
-      availableMethods: [],
-    }
-  }
-
-  // Placeholder functions for features coming soon
-  const enable2FA = async () => {
-    throw new Error('Two-factor authentication coming soon')
-  }
-
-  const confirm2FA = async () => {
-    throw new Error('Two-factor authentication coming soon')
-  }
-
-  const disable2FA = async () => {
-    throw new Error('Two-factor authentication coming soon')
-  }
-
-  const requestPhoneVerification = async () => {
-    throw new Error('Phone verification coming soon')
-  }
-
-  const confirmPhoneVerification = async () => {
-    throw new Error('Phone verification coming soon')
-  }
-
-  // Placeholder session management
-  const getSessions = async () => {
-    return []
-  }
-
-  const revokeSession = async () => {
-    throw new Error('Session management coming soon')
-  }
-
   // Context value
   const value = {
     user,
@@ -374,14 +334,6 @@ export function AuthProvider({ children }) {
     resetPassword,
     changePassword,
     updateProfile,
-    get2FASettings,
-    enable2FA,
-    confirm2FA,
-    disable2FA,
-    requestPhoneVerification,
-    confirmPhoneVerification,
-    getSessions,
-    revokeSession,
     fetchUser,
     clearError: () => setError(null),
     supabase,

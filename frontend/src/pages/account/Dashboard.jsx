@@ -8,7 +8,7 @@ export default function Dashboard() {
   const quickActions = [
     {
       title: 'Security Settings',
-      description: 'Manage 2FA, passwords, and sessions',
+      description: 'Manage password and account security',
       icon: (
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
           <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
@@ -86,18 +86,15 @@ export default function Dashboard() {
             </div>
           </div>
           <div className="status-card">
-            <div className={`status-icon ${user?.twoFactorEnabled ? 'verified' : 'warning'}`}>
+            <div className="status-icon neutral">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                 <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
               </svg>
             </div>
             <div className="status-content">
               <h3>Two-Factor Auth</h3>
-              <p>{user?.twoFactorEnabled ? 'Enabled' : 'Not enabled'}</p>
+              <p>Coming soon</p>
             </div>
-            {!user?.twoFactorEnabled && (
-              <Link to="/account/security" className="status-action">Enable</Link>
-            )}
           </div>
           <div className="status-card">
             <div className={`status-icon ${user?.phoneVerified ? 'verified' : 'neutral'}`}>
