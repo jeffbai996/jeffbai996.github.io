@@ -28,6 +28,15 @@ describe('parseFormattedText', () => {
     expect(anchor.textContent).toBe('Praya Gov')
   })
 
+  it('does not create links for unsafe markdown URL protocols', () => {
+    const container = renderParts('See [bad](javascript:alert(1)) and [ok](/npa)')
+    const anchors = container.querySelectorAll('a.chat-link')
+
+    expect(anchors).toHaveLength(1)
+    expect(anchors[0].getAttribute('href')).toBe('/npa')
+    expect(container.textContent).toContain('bad')
+  })
+
   it('creates <a> with rel="noopener noreferrer" and target="_blank" for plain URLs', () => {
     const container = renderParts('Visit https://govpraya.org for info')
     const anchor = container.querySelector('a.chat-link')
