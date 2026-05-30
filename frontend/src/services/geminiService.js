@@ -8,6 +8,7 @@ import {
   generateFormSummary,
   generateFormHelp
 } from '../utils/formKnowledge';
+import { redactSensitiveText } from '../utils/privacy';
 
 /**
  * Gemini Chat Service (proxied via gp-llm Cloudflare Worker)
@@ -20,7 +21,7 @@ class GeminiService {
     // Worker URL is injected at build time (deploy.yml) with a sane default.
     // The browser never sees a Gemini API key — the Worker holds the secret.
     this.workerUrl = (import.meta.env.VITE_GP_LLM_URL || 'https://gp-llm.2phakhvpgh.workers.dev').replace(/\/$/, '');
-    this.model = 'gemini-3.1-flash-lite-preview';
+    this.model = 'gemini-2.5-flash-lite';
     this.initialized = Boolean(this.workerUrl);
     this._abortController = null;
   }
@@ -35,7 +36,7 @@ class GeminiService {
 
     // Add conversation summary if available
     if (enhancedContext.conversationSummary) {
-      dynamicContext += `\n\n## Current Conversation Context\n${enhancedContext.conversationSummary}`;
+      dynamicContext += `\n\n## Current Conversation Context\n${redactSensitiveText(enhancedContext.conversationSummary)}`;
     }
 
     // Adapt response style based on user expertise
@@ -47,14 +48,14 @@ class GeminiService {
 
     // Add apparent goal context
     if (enhancedContext.apparentGoal) {
-      dynamicContext += `\n\n## User's Apparent Goal\nThe user appears to be: ${enhancedContext.apparentGoal}. Focus your response on helping them achieve this goal.`;
+      dynamicContext += `\n\n## User's Apparent Goal\nThe user appears to be: ${redactSensitiveText(enhancedContext.apparentGoal)}. Focus your response on helping them achieve this goal.`;
     }
 
     // Add entity references for continuity
     if (enhancedContext.entities && Object.keys(enhancedContext.entities).length > 0) {
       dynamicContext += `\n\n## Referenced Information\nThe user has mentioned these specific references: `;
       dynamicContext += Object.entries(enhancedContext.entities)
-        .map(([key, value]) => `${key}: ${value}`)
+        .map(([key, value]) => `${key}: ${redactSensitiveText(value)}`)
         .join(', ');
       dynamicContext += `. Reference these naturally in your response if relevant.`;
     }
@@ -71,7 +72,7 @@ class GeminiService {
 
     // Add related topics for comprehensive response
     if (enhancedContext.topics && enhancedContext.topics.length > 0) {
-      dynamicContext += `\n\n## Related Topics in Conversation\nTopics discussed: ${enhancedContext.topics.join(', ')}. Consider mentioning related services if relevant.`;
+      dynamicContext += `\n\n## Related Topics in Conversation\nTopics discussed: ${redactSensitiveText(enhancedContext.topics.join(', '))}. Consider mentioning related services if relevant.`;
     }
 
     return dynamicContext;
@@ -221,7 +222,7 @@ class GeminiService {
     // Worker contract: { role: 'user' | 'model', content: string }
     return history.map(msg => ({
       role: msg.sender === 'user' ? 'user' : 'model',
-      content: msg.text,
+      content: redactSensitiveText(msg.text),
     }));
   }
 
@@ -276,15 +277,15 @@ The Republic of Praya is a thriving city-state nation of 4.2 million citizens wi
 
 **Leadership**: Karson Mo serves as Governor of Braemar County.
 
-The portal offers 127 online services available 24/7 across 15 major departments, committed to transparency, efficiency, and accessibility through technology.
+The portal offers 127 online services available 24/7 across 16 major departments, committed to transparency, efficiency, and accessibility through technology.
 
 ## Key Features
 - **PrayaPass**: Secure digital identity and authentication system (single sign-on across all services)
 - **Online Services**: 127 services available 24/7
-- **15 Major Departments**: NPA, Bank of Praya, CTB, DOJ, Interior, Transport, Revenue, Praya Post, Health, Housing Authority, CBCA, Legislative Council, Buildings Department, Companies Registry, Social Welfare
+- **16 Major Departments**: NPA, Bank of Praya, CTB, DOJ, Interior, Transport, Revenue, Praya Post, Health, Housing Authority, CBCA, Legislative Council, Buildings Department, Companies Registry, Social Welfare, Immigration
 - **Digital-First**: Modern, responsive interface with unified citizen dashboard
 
-## The 15 Departments (Detailed Information with URLs)
+## The 16 Departments (Detailed Information with URLs)
 
 **IMPORTANT: When mentioning departments, always include a hyperlink to the relevant page using markdown format: [Department Name](/url)**
 
@@ -433,9 +434,13 @@ ${dynamicContext}
 ## Guidelines
 - Keep responses under 200 words (increased from 150 for more detailed answers)
 - **ALWAYS include hyperlinks** to relevant department pages using markdown format: [Department Name](/url) or [Service Name](/department/service)
+- Use only internal GOV.PRAYA links, phone links, or email links. Do not invent external URLs.
 - When directing users to a department, provide the direct link (e.g., "Visit the [National Police Agency](/npa) to file a report")
 - Use the Quick Links provided above to direct users to specific services (e.g., [File Report](/npa/report), [File Taxes](/revenue/file))
 - Reference PrayaPass for online services requiring authentication
+- Never ask users to provide passwords, full payment card numbers, full national IDs, full dates of birth, one-time codes, or other sensitive personal identifiers in chat
+- If users provide sensitive personal information, do not repeat it back. Explain that chat cannot process private account data and route them to the relevant secure portal page
+- Do not claim to access live account, tax, health, immigration, police, or application records. Explain where users can check status securely
 - Emergency situations: Always direct to 911 for life-threatening emergencies
 - Currency: Use Praya Dollar symbol ($) when mentioning fees
 - Include processing times and fees when relevant to the query
@@ -444,9 +449,10 @@ ${dynamicContext}
   These should be natural follow-up questions the user might ask next. Omit this line for simple greetings or final answers.`;
 
       // Format conversation history (Worker shape: {role, content})
+      const sanitizedUserMessage = redactSensitiveText(userMessage);
       const history = this.formatHistory(conversationHistory.slice(-12));
       // Worker requires the LAST message in `messages` to be the new user turn.
-      const messages = [...history, { role: 'user', content: userMessage }];
+      const messages = [...history, { role: 'user', content: sanitizedUserMessage }];
 
       // Cancel any previous in-flight request before starting a new one
       this.cancel();
@@ -511,7 +517,7 @@ ${dynamicContext}
         success: true,
         response: cleanedText,
         suggestions,
-        model: 'gemini-3.1-flash-lite-preview',
+        model: this.model,
         tokensUsed: {
           prompt: result.usage?.promptTokenCount || 0,
           completion: result.usage?.candidatesTokenCount || 0,
@@ -551,7 +557,7 @@ ${dynamicContext}
   getStatus() {
     return {
       available: this.initialized,
-      model: 'gemini-3.1-flash-lite-preview',
+      model: this.model,
     };
   }
 }

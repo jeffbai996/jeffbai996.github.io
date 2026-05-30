@@ -7,6 +7,10 @@
  * @param {string} text - Raw message text, possibly containing **bold**, [text](url), or plain URLs.
  * @returns {Array<string | React.ReactElement>} - Parts ready to render inline.
  */
+function isSafeUrl(url) {
+  return /^(https?:\/\/|mailto:|tel:|\/(?!\/)|#)/i.test(url)
+}
+
 export function parseFormattedText(text) {
   const parts = []
   // Combined regex for bold (**text**), markdown links [text](url), and plain URLs
@@ -26,17 +30,21 @@ export function parseFormattedText(text) {
       parts.push(<strong key={`bold-${keyIndex++}`}>{match[2]}</strong>)
     } else if (match[3]) {
       // Markdown link: [text](url)
-      parts.push(
-        <a
-          key={`link-${keyIndex++}`}
-          href={match[5]}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="chat-link"
-        >
-          {match[4]}
-        </a>
-      )
+      if (isSafeUrl(match[5])) {
+        parts.push(
+          <a
+            key={`link-${keyIndex++}`}
+            href={match[5]}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="chat-link"
+          >
+            {match[4]}
+          </a>
+        )
+      } else {
+        parts.push(match[4])
+      }
     } else if (match[6]) {
       // Plain URL
       parts.push(

@@ -1,6 +1,6 @@
 /**
  * Gemini Live API WebSocket Service
- * Handles real-time voice communication with Gemini 3.1 Flash Lite
+ * Handles real-time voice communication with Gemini Live
  */
 
 // DISABLED 2026-05-18: Gemini Live (WebSocket bidi) cannot be proxied through
@@ -9,7 +9,7 @@
 // suspension. Until a WebSocket-capable proxy ships (DO + WS upgrade, or a
 // dedicated voice proxy), this service is hard-disabled. See squad-store #117.
 const GEMINI_LIVE_DISABLED = true
-const GEMINI_LIVE_MODEL = 'gemini-3.1-flash-lite-preview'
+const GEMINI_LIVE_MODEL = 'gemini-2.5-flash-live'
 // Kept for backwards compat with any caller that imports it as a sentinel.
 const WEBSOCKET_URL = ''
 
@@ -17,7 +17,7 @@ const WEBSOCKET_URL = ''
 const SYSTEM_INSTRUCTION = `You are a helpful voice assistant for GOV.PRAYA, the official government portal of the Republic of Praya.
 
 Your role:
-- Help citizens navigate government services across 15 departments
+- Help citizens navigate government services across 16 departments
 - Provide concise, spoken responses (keep answers brief for voice)
 - Be friendly, professional, and helpful
 - For emergencies, always direct to call 911
@@ -71,7 +71,7 @@ class GeminiLiveService {
       this.listeners.get(event).forEach(callback => {
         try {
           callback(data)
-        } catch (error) {
+        } catch {
           // Silently handle listener errors in production
         }
       })
