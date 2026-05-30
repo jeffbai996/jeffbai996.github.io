@@ -56,7 +56,7 @@ export default function AlertAdmin() {
     try {
       const allAlerts = await getAllAlertsAsync();
       setAlerts(allAlerts);
-    } catch (error) {
+    } catch {
       showNotification('Failed to load alerts', 'error');
     } finally {
       setIsLoading(false);
@@ -139,7 +139,7 @@ export default function AlertAdmin() {
       } else {
         showNotification('Failed to save alert: ' + result.error, 'error');
       }
-    } catch (error) {
+    } catch {
       showNotification('Failed to save alert', 'error');
     }
   };
@@ -154,7 +154,7 @@ export default function AlertAdmin() {
       } else {
         showNotification('Failed to delete alert', 'error');
       }
-    } catch (error) {
+    } catch {
       showNotification('Failed to delete alert', 'error');
     }
   };
@@ -166,7 +166,7 @@ export default function AlertAdmin() {
         showNotification(result.isActive ? 'Alert activated' : 'Alert deactivated');
         await loadAlerts();
       }
-    } catch (error) {
+    } catch {
       showNotification('Failed to toggle alert', 'error');
     }
   };

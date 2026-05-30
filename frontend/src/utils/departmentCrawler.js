@@ -732,7 +732,7 @@ export function generateKnowledgeBase() {
     // About Praya
     {
       keywords: ['what is praya', 'where is praya', 'praya country', 'republic of praya', 'about praya', 'praya location', 'praya population', 'tell me about praya'],
-      response: "The Republic of Praya is a nation of 2.4 million citizens with a modern, digital-first government. We offer 127 online services available 24/7 across 12 major departments. Our government is committed to transparency, efficiency, and accessibility through technology. How can I help you access our services?"
+      response: "The Republic of Praya is a nation of 4.2 million citizens with a modern, digital-first government. We offer 127 online services available 24/7 across 16 major departments. Our government is committed to transparency, efficiency, and accessibility through technology. How can I help you access our services?"
     },
     // President/Leader/Government
     {
@@ -752,7 +752,7 @@ export function generateKnowledgeBase() {
     // Bored/Entertainment
     {
       keywords: ['bored', 'entertain', 'fun', 'play', 'game'],
-      response: "While I'm designed for government service information rather than entertainment, I'm happy to help you discover interesting services! Did you know Praya has 12 major departments offering everything from cannabis licensing to national park information? What would you like to explore?"
+      response: "While I'm designed for government service information rather than entertainment, I'm happy to help you discover interesting services! Did you know Praya has 16 major departments offering everything from cannabis licensing to immigration services? What would you like to explore?"
     },
     // Smart/Intelligent
     {

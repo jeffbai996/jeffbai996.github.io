@@ -7,7 +7,10 @@ import IMMD from '../IMMD'
 function renderPage() {
   return render(
     <HelmetProvider>
-      <MemoryRouter initialEntries={['/immd']}>
+      <MemoryRouter
+        initialEntries={['/immd']}
+        future={{ v7_startTransition: true, v7_relativeSplatPath: true }}
+      >
         <IMMD />
       </MemoryRouter>
     </HelmetProvider>

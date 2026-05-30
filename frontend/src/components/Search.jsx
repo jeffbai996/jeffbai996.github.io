@@ -280,7 +280,7 @@ export default function Search({ isOpen, onClose }) {
                 <button onClick={clearRecentSearches}>Clear</button>
               </div>
               <div className="search-results-list">
-                {recentSearches.map((item, index) => (
+                {recentSearches.map((item) => (
                   <button
                     key={item.url}
                     className="search-result-item"

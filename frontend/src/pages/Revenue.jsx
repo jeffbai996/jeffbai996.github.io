@@ -434,7 +434,6 @@ function FileTaxes() {
 }
 
 function MakePayment() {
-  const navigate = useNavigate();
   const [paymentType, setPaymentType] = React.useState('current');
   const [amount, setAmount] = React.useState('');
   const [taxYear, setTaxYear] = React.useState('2024');
