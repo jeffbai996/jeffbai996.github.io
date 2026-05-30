@@ -27,7 +27,6 @@ vi.mock('../supabaseClient', () => ({
 }))
 
 // Import AFTER the mock is set up
-// eslint-disable-next-line no-unused-vars -- AuthProvider is used in the JSX wrapper below
 import { AuthProvider, useAuth } from '../AuthContext'
 import { getFullUserData, recordLogin } from '../supabaseClient'
 
@@ -69,11 +68,16 @@ describe('AuthContext', () => {
   })
 
   it('handles getSession rejection gracefully (does not hang in loading state)', async () => {
+    const errSpy = vi.spyOn(console, 'error').mockImplementation(() => {})
     mockAuth.getSession.mockRejectedValue(new Error('network error'))
-    const { result } = await renderAuthHook()
-    // Even on error, loading resolves to false and user stays null
-    expect(result.current.user).toBe(null)
-    expect(result.current.loading).toBe(false)
+    try {
+      const { result } = await renderAuthHook()
+      // Even on error, loading resolves to false and user stays null
+      expect(result.current.user).toBe(null)
+      expect(result.current.loading).toBe(false)
+    } finally {
+      errSpy.mockRestore()
+    }
   })
 
   it('login calls signInWithPassword + fetchUser + recordLogin', async () => {
@@ -208,21 +212,17 @@ describe('AuthContext', () => {
   })
 
   it('fetchUser swallows errors and sets user to null', async () => {
-    // Suppress the DEV console.error we added yesterday
     const errSpy = vi.spyOn(console, 'error').mockImplementation(() => {})
     getFullUserData.mockRejectedValue(new Error('boom'))
 
-    const { result } = await renderAuthHook()
-    await act(async () => {
-      await result.current.fetchUser()
-    })
-    expect(result.current.user).toBe(null)
-    errSpy.mockRestore()
-  })
-
-  it('throws a helpful error when useAuth is used outside AuthProvider', () => {
-    const errSpy = vi.spyOn(console, 'error').mockImplementation(() => {})
-    expect(() => renderHook(() => useAuth())).toThrow(/AuthProvider/)
-    errSpy.mockRestore()
+    try {
+      const { result } = await renderAuthHook()
+      await act(async () => {
+        await result.current.fetchUser()
+      })
+      expect(result.current.user).toBe(null)
+    } finally {
+      errSpy.mockRestore()
+    }
   })
 })

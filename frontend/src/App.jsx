@@ -40,6 +40,7 @@ const Weather = lazy(() => import('./pages/Weather'))
 const Status = lazy(() => import('./pages/Status'))
 const Payments = lazy(() => import('./pages/Payments'))
 const NotFound = lazy(() => import('./pages/NotFound'))
+const Unauthorized = lazy(() => import('./pages/Unauthorized'))
 const Terms = lazy(() => import('./pages/Terms'))
 const Privacy = lazy(() => import('./pages/Privacy'))
 const Cookies = lazy(() => import('./pages/Cookies'))
@@ -106,7 +107,7 @@ function App() {
             <Route
               path="/admin/alerts"
               element={
-                <ProtectedRoute>
+                <ProtectedRoute requireAdmin>
                   <AlertAdmin />
                 </ProtectedRoute>
               }
@@ -157,6 +158,7 @@ function App() {
               <Route path="cookies" element={<Cookies />} />
               <Route path="faq" element={<FAQ />} />
               <Route path="about" element={<About />} />
+              <Route path="unauthorized" element={<Unauthorized />} />
 
               {/* Auth Routes */}
               <Route path="login" element={<Login />} />
