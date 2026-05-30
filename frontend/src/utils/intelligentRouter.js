@@ -37,7 +37,6 @@ export const ResponseStrategy = {
  * @returns {object} - Complexity analysis
  */
 export function analyzeQueryComplexity(message, context = {}) {
-  const lower = message.toLowerCase()
   const wordCount = message.split(/\s+/).length
   const sentiment = detectSentiment(message)
   const urgency = detectUrgency(message)
@@ -140,7 +139,7 @@ export function analyzeQueryComplexity(message, context = {}) {
  */
 export function determineResponseStrategy(intentResult, complexityAnalysis, config = {}) {
   const { geminiEnabled = true } = config
-  const { level, sentiment, urgency, factors } = complexityAnalysis
+  const { level, factors } = complexityAnalysis
 
   // Emergency handling always takes priority
   if (level === ComplexityLevel.CRITICAL) {
@@ -333,7 +332,7 @@ export function calculateResponseQuality(response, strategy, userFeedback = {}) 
   }
 
   // Check for structured content (lists, headers)
-  if (/^[\d•\-\*]\s/m.test(response) || /^\*\*.+\*\*/m.test(response)) {
+  if (/^[\d•*-]\s/m.test(response) || /^\*\*.+\*\*/m.test(response)) {
     qualityScore += 10
     factors.push('well structured')
   }

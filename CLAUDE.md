@@ -69,7 +69,7 @@ npm run lint
 npm run test       # vitest
 ```
 
-Root contains `chatbot-embed.js` — a legacy standalone chatbot widget. Dead code as of 2026-05-18 cutover; not deployed and not referenced by the SPA. Kept on disk for historical reference; delete when no other repo is found to depend on it.
+Legacy standalone chatbot embed was removed after the Worker proxy cutover. The SPA chatbot must use `frontend/src/services/geminiService.js` and the gp-llm proxy; do not restore direct browser-to-Gemini calls.
 
 ## Conventions Already Established
 

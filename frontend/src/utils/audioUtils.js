@@ -32,76 +32,72 @@ export class AudioCapture {
 
     this.onAudioData = onAudioData
 
-    try {
-      // Request microphone access
-      this.mediaStream = await navigator.mediaDevices.getUserMedia({
-        audio: {
-          sampleRate: INPUT_SAMPLE_RATE,
-          channelCount: 1,
-          echoCancellation: true,
-          noiseSuppression: true,
-          autoGainControl: true
-        }
-      })
+    // Request microphone access
+    this.mediaStream = await navigator.mediaDevices.getUserMedia({
+      audio: {
+        sampleRate: INPUT_SAMPLE_RATE,
+        channelCount: 1,
+        echoCancellation: true,
+        noiseSuppression: true,
+        autoGainControl: true
+      }
+    })
 
-      // Create audio context with target sample rate
-      this.audioContext = new (window.AudioContext || window.webkitAudioContext)({
-        sampleRate: INPUT_SAMPLE_RATE
-      })
+    // Create audio context with target sample rate
+    this.audioContext = new (window.AudioContext || window.webkitAudioContext)({
+      sampleRate: INPUT_SAMPLE_RATE
+    })
 
-      // If browser doesn't support the sample rate, we'll need to resample
-      const actualSampleRate = this.audioContext.sampleRate
+    // If browser doesn't support the sample rate, we'll need to resample
+    const actualSampleRate = this.audioContext.sampleRate
 
-      // Create source from microphone
-      this.sourceNode = this.audioContext.createMediaStreamSource(this.mediaStream)
+    // Create source from microphone
+    this.sourceNode = this.audioContext.createMediaStreamSource(this.mediaStream)
 
-      // Create script processor for audio data extraction
-      // Using ScriptProcessorNode as AudioWorklet requires HTTPS and more setup
-      const bufferSize = 4096
-      this.processorNode = this.audioContext.createScriptProcessor(bufferSize, 1, 1)
+    // Create script processor for audio data extraction
+    // Using ScriptProcessorNode as AudioWorklet requires HTTPS and more setup
+    const bufferSize = 4096
+    this.processorNode = this.audioContext.createScriptProcessor(bufferSize, 1, 1)
 
-      // Buffer to accumulate samples for chunking
-      let sampleBuffer = []
-      const samplesPerChunk = Math.floor(INPUT_SAMPLE_RATE * CHUNK_DURATION_MS / 1000)
+    // Buffer to accumulate samples for chunking
+    let sampleBuffer = []
+    const samplesPerChunk = Math.floor(INPUT_SAMPLE_RATE * CHUNK_DURATION_MS / 1000)
 
-      this.processorNode.onaudioprocess = (event) => {
-        if (!this.isCapturing) return
+    this.processorNode.onaudioprocess = (event) => {
+      if (!this.isCapturing) return
 
-        const inputData = event.inputBuffer.getChannelData(0)
+      const inputData = event.inputBuffer.getChannelData(0)
 
-        // Resample if necessary
-        let samples
-        if (actualSampleRate !== INPUT_SAMPLE_RATE) {
-          samples = this.resample(inputData, actualSampleRate, INPUT_SAMPLE_RATE)
-        } else {
-          samples = inputData
-        }
-
-        // Add to buffer
-        for (let i = 0; i < samples.length; i++) {
-          sampleBuffer.push(samples[i])
-        }
-
-        // Send chunks when we have enough samples
-        while (sampleBuffer.length >= samplesPerChunk) {
-          const chunk = sampleBuffer.splice(0, samplesPerChunk)
-          const pcmData = this.floatTo16BitPCM(chunk)
-          const base64 = this.arrayBufferToBase64(pcmData)
-
-          if (this.onAudioData) {
-            this.onAudioData(base64)
-          }
-        }
+      // Resample if necessary
+      let samples
+      if (actualSampleRate !== INPUT_SAMPLE_RATE) {
+        samples = this.resample(inputData, actualSampleRate, INPUT_SAMPLE_RATE)
+      } else {
+        samples = inputData
       }
 
-      // Connect nodes
-      this.sourceNode.connect(this.processorNode)
-      this.processorNode.connect(this.audioContext.destination)
+      // Add to buffer
+      for (let i = 0; i < samples.length; i++) {
+        sampleBuffer.push(samples[i])
+      }
 
-      this.isCapturing = true
-    } catch (error) {
-      throw error
+      // Send chunks when we have enough samples
+      while (sampleBuffer.length >= samplesPerChunk) {
+        const chunk = sampleBuffer.splice(0, samplesPerChunk)
+        const pcmData = this.floatTo16BitPCM(chunk)
+        const base64 = this.arrayBufferToBase64(pcmData)
+
+        if (this.onAudioData) {
+          this.onAudioData(base64)
+        }
+      }
     }
+
+    // Connect nodes
+    this.sourceNode.connect(this.processorNode)
+    this.processorNode.connect(this.audioContext.destination)
+
+    this.isCapturing = true
   }
 
   /**
@@ -285,7 +281,7 @@ export class AudioPlayback {
     if (this.currentSource) {
       try {
         this.currentSource.stop()
-      } catch (e) {
+      } catch {
         // Ignore if already stopped
       }
       this.currentSource = null

@@ -11,6 +11,7 @@ export default [
       globals: {
         ...globals.browser,
         ...globals.es2021,
+        React: 'readonly',
       },
       parserOptions: {
         ecmaFeatures: {
@@ -19,8 +20,11 @@ export default [
       },
     },
     rules: {
-      'no-unused-vars': ['warn', { argsIgnorePattern: '^_' }],
-      'no-console': 'warn',
+      'no-unused-vars': ['warn', {
+        argsIgnorePattern: '^_',
+        varsIgnorePattern: '^(React|[A-Z][A-Za-z0-9]*)$',
+      }],
+      'no-console': ['warn', { allow: ['warn', 'error', 'debug'] }],
     },
   },
   {

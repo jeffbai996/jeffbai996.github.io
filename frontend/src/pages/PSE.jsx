@@ -140,10 +140,10 @@ export default function PSE() {
       gradient.addColorStop(0, 'rgba(59, 130, 246, 0.3)')
       gradient.addColorStop(1, 'rgba(59, 130, 246, 0)')
 
-      window.mainChart = new Chart(ctx, {
+      window.mainChart = new window.Chart(ctx, {
         type: 'line',
         data: {
-          labels: marketData.map((d, i) => {
+          labels: marketData.map((d) => {
             const date = new Date(d.timestamp)
             return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' })
           }),
@@ -233,7 +233,7 @@ export default function PSE() {
 
       const rsiData = calculateRSI(marketData)
 
-      window.rsiChart = new Chart(ctx, {
+      window.rsiChart = new window.Chart(ctx, {
         type: 'line',
         data: {
           labels: marketData.map((d, i) => i),
@@ -337,7 +337,7 @@ export default function PSE() {
 
       const { macdLine, signalLine, histogram } = calculateMACD(marketData)
 
-      window.macdChart = new Chart(ctx, {
+      window.macdChart = new window.Chart(ctx, {
         type: 'bar',
         data: {
           labels: marketData.map((d, i) => i),
@@ -652,7 +652,11 @@ export default function PSE() {
               </div>
               <div className="pse-watchlist">
                 {watchlist.map((stock, i) => (
-                  <div key={i} className="pse-watchlist-item" onClick={() => setSelectedStock(stock.symbol)}>
+                  <div
+                    key={i}
+                    className={`pse-watchlist-item ${selectedStock === stock.symbol ? 'active' : ''}`}
+                    onClick={() => setSelectedStock(stock.symbol)}
+                  >
                     <div>
                       <div className="pse-watchlist-symbol">{stock.symbol}</div>
                       <div className="pse-watchlist-name">{stock.name}</div>

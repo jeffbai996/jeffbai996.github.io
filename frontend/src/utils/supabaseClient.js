@@ -88,7 +88,7 @@ export const recordLogin = async (userId, metadata = {}) => {
         ip_address: metadata.ip_address || null,
         user_agent: metadata.user_agent || navigator.userAgent,
       })
-  } catch (error) {
+  } catch {
     // Non-critical error - silently ignore
   }
 }

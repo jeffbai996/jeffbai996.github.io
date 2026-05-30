@@ -2,8 +2,7 @@ import React from 'react';
 import {
   FARE_ZONES,
   FARE_TYPES,
-  PASSES,
-  HSR_FARES
+  PASSES
 } from '../../data/transitData';
 import './Transit.css';
 

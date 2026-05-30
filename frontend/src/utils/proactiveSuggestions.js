@@ -10,7 +10,6 @@
  */
 
 import { extractTopics } from './intentRecognition'
-import { suggestRelatedServices, getServicePrerequisites } from './entityLinker'
 
 /**
  * Follow-up suggestions based on intent

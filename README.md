@@ -1,6 +1,6 @@
 # GOV.PRAYA
 
-Public web portal for the Republic of Praya — a Minecraft creative city server founded in 2011. The site presents Praya as a functioning government with 15 departments, civic services, and a conversational AI guide.
+Public web portal for the Republic of Praya — a Minecraft creative city server founded in 2011. The site presents Praya as a functioning government with 16 departments, civic services, and a conversational AI guide.
 
 Deployed at **[www.govpraya.org](https://www.govpraya.org)** via GitHub Pages.
 
@@ -23,7 +23,7 @@ Sibling properties (not in this repo): `nmp.govpraya.org` (museum), `govpraya.or
 - **Framework:** React 18, Vite 6
 - **Routing:** React Router v6 (lazy-loaded pages)
 - **Auth:** Supabase (Postgres + Auth)
-- **AI:** Google Gemini (`gemini-3.1-flash-lite-preview`) — proxied via the [`gp-llm` Cloudflare Worker](https://github.com/jeffbai996/gp-llm), no API key in the browser bundle
+- **AI:** Google Gemini (`gemini-2.5-flash-lite`) — proxied via the [`gp-llm` Cloudflare Worker](https://github.com/jeffbai996/gp-llm), no API key in the browser bundle
 - **Styling:** CSS custom properties + per-department theme files
 - **Testing:** Vitest + React Testing Library
 - **Deploy:** GitHub Pages with CNAME
@@ -65,17 +65,18 @@ npm run test:coverage           # Coverage report
 
 ## Pre-commit hook
 
-Husky + lint-staged run ESLint (`--fix`) on staged `.js`/`.jsx` files in `frontend/src/`. The hook is installed automatically on first `npm install` via the `prepare` script. To skip it in an emergency, use `git commit --no-verify` — but don't make a habit of it.
+Husky + lint-staged can run ESLint (`--fix`) on staged `.js`/`.jsx` files in `frontend/src/`. To enable the local hook, run `git config core.hooksPath frontend/.husky` from the repo root. It is not installed automatically during `npm install`.
 
 ## Deployment
 
 Every push to `main` triggers `.github/workflows/deploy.yml`:
 
-1. Checkout + Node 18 + `npm ci`
+1. Checkout + Node 22 + `npm ci`
 2. Validate env vars are set (GitHub Secrets: `VITE_SUPABASE_URL`, `VITE_SUPABASE_ANON_KEY`). `VITE_GP_LLM_URL` is set as a workflow env value pointing at the production Worker.
-3. `npm run build:skip-validation` (validation already happened in step 2)
-4. Upload `frontend/dist/` as the Pages artifact
-5. Deploy
+3. Run `npm run lint` and `npm test -- --run`
+4. Run `npm run build`
+5. Upload `frontend/dist/` as the Pages artifact
+6. Deploy
 
 **No API keys live in this repo or in the deploy pipeline.** The Gemini secret is held only by Cloudflare as a Worker binding. To rotate it: `wrangler secret put GEMINI_API_KEY` in `~/repos/gp-llm/worker/`, no redeploy here required.
 
@@ -92,7 +93,7 @@ For deeper context on government structure, officials, canon rules, and design p
 
 ## Chatbot architecture
 
-The site embeds an AI chat widget (powered by Gemini Flash Lite) that helps citizens navigate the 15 departments. The architecture is intentionally simple:
+The site embeds an AI chat widget (powered by Gemini Flash Lite) that helps citizens navigate the 16 departments. The architecture is intentionally simple:
 
 ```
 Browser (govpraya.org) ──POST /chat──▶ gp-llm Worker ──REST──▶ Gemini
@@ -103,7 +104,7 @@ Browser (govpraya.org) ──POST /chat──▶ gp-llm Worker ──REST──�
 
 - **`frontend/src/services/geminiService.js`** — sends `{systemPrompt, messages, temperature, maxTokens}` to the Worker. The Worker URL is read from `VITE_GP_LLM_URL` with a sensible default.
 - **`gp-llm` Worker** — a separate repo ([github.com/jeffbai996/gp-llm](https://github.com/jeffbai996/gp-llm)) that holds the API key and enforces an origin allowlist, per-IP rate limits (5/min, 50/day), and a daily budget cap (~$5/day) backed by Cloudflare KV.
-- **Voice (Gemini Live API)** — `geminiLiveService.js` is hard-disabled. The browser-WebSocket transport requires the API key in a URL query parameter, which is the exact pattern that got the original GCP project suspended in April 2026. Re-enabling voice requires a WebSocket-capable proxy (Cloudflare Durable Object + WS upgrade, or a dedicated voice proxy).
+- **Voice (Gemini Live API)** — `geminiLiveService.js` is hard-disabled. Re-enabling voice requires a WebSocket-capable server-side proxy; the browser must never receive a Gemini credential.
 
 To verify the bundle is clean: `grep -r "AIza\|generativelanguage.googleapis.com" frontend/dist/assets/` should return nothing after `npm run build`.
 

@@ -36,8 +36,6 @@ export default defineConfig({
         manualChunks: {
           // Vendor chunks - separate heavy dependencies
           'vendor-react': ['react', 'react-dom', 'react-router-dom'],
-          'vendor-google': ['@google/generative-ai'],
-          'vendor-supabase': ['@supabase/supabase-js'],
           // Utils chunk - chatbot utilities
           'chatbot-utils': [
             './src/utils/departmentContext.js',

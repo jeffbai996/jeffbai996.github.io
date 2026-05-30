@@ -8,8 +8,6 @@
  * - Creates relationship chains for multi-step processes
  */
 
-import { departmentRoutes } from './intentRecognition'
-
 /**
  * Entity types and their action mappings
  */
@@ -254,10 +252,6 @@ export function generateServiceChain(goalService) {
   let stepNumber = 2
   for (const req of service.requires) {
     const docDept = documentDepartments[req]
-    const prereqService = Object.entries(servicePrerequisites).find(
-      ([id, svc]) => id.includes(req.replace('_', '_'))
-    )
-
     if (docDept) {
       chain.unshift({
         step: stepNumber++,

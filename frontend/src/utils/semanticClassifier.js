@@ -10,7 +10,6 @@
 
 import {
   intentPatterns,
-  departmentRoutes,
   expandWithSynonyms,
   stemWord,
   isSimilar,
@@ -488,7 +487,7 @@ function getIntentLabel(intentName) {
  * @param {object} context - Conversation context
  * @returns {object} - Best classification result
  */
-export function classifyIntentHybrid(message, context = {}) {
+export function classifyIntentHybrid(message, _context = {}) {
   // Get semantic classification
   const semanticResult = classifyIntentSemantic(message, { minConfidence: 0.25 })
 
