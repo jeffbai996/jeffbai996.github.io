@@ -29,14 +29,14 @@ export function calculateOverstay(days) {
     }
   }
 
-  // Parse per-day fine from data: 'P$50 per day' → 50
-  const fineMatch = tier.fine.match(/P\$(\d+)/)
+  // Parse per-day fine from data: '$50 per day' → 50
+  const fineMatch = tier.fine.match(/\$(\d+)/)
   if (!fineMatch) return null  // fine string format changed unexpectedly — fail safe
   const perDay = parseInt(fineMatch[1], 10)
   return {
     tier: tier.range,
     fineTotal: days * perDay,
-    fineDisplay: `P$${days * perDay}`,
+    fineDisplay: `$${days * perDay}`,
     ban: tier.ban,
     deportation: false
   }
@@ -216,7 +216,7 @@ export function recommendVisa(input) {
         'Detailed itinerary required',
         'Passport must be valid 12+ months',
         'Proof of funds required',
-        'For 14 days or fewer, V2 (P$40) is cheaper; for 3 days or fewer, V1 (P$25)'
+        'For 14 days or fewer, V2 ($40) is cheaper; for 3 days or fewer, V1 ($25)'
       ]
     }
   }
@@ -228,7 +228,7 @@ export function recommendVisa(input) {
       caveats: [
         'Bilateral agreement (signatory) nations only',
         'Return ticket required',
-        'For stays beyond 24 hours but under 3 days, V1 (P$25) is the next step up'
+        'For stays beyond 24 hours but under 3 days, V1 ($25) is the next step up'
       ]
     }
   }

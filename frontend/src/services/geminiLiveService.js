@@ -3,25 +3,15 @@
  * Handles real-time voice communication with Gemini 3.1 Flash Lite
  */
 
-const GEMINI_LIVE_API_KEY = import.meta.env.VITE_GEMINI_API_KEY
+// DISABLED 2026-05-18: Gemini Live (WebSocket bidi) cannot be proxied through
+// the gp-llm Cloudflare Worker (REST + SSE only). Sending the API key via
+// browser WebSocket query param is the bug that caused the 2026-04-30 GCP
+// suspension. Until a WebSocket-capable proxy ships (DO + WS upgrade, or a
+// dedicated voice proxy), this service is hard-disabled. See squad-store #117.
+const GEMINI_LIVE_DISABLED = true
 const GEMINI_LIVE_MODEL = 'gemini-3.1-flash-lite-preview'
-
-// API key validation is handled at runtime when connect() is called
-
-/**
- * SECURITY NOTE: The API key is passed as a URL query parameter because
- * browser WebSocket API does not support custom headers during the handshake.
- * This is the documented authentication method for Gemini Live API.
- *
- * For production environments with higher security requirements, consider:
- * 1. Using a server-side WebSocket proxy that handles authentication
- * 2. Implementing token-based auth with short-lived API keys
- * 3. Rate limiting and monitoring API usage
- *
- * The key is loaded from environment variables and injected at build time,
- * so it's not exposed in source control.
- */
-const WEBSOCKET_URL = `wss://generativelanguage.googleapis.com/ws/google.ai.generativelanguage.v1alpha.GenerativeService.BidiGenerateContent?key=${GEMINI_LIVE_API_KEY}`
+// Kept for backwards compat with any caller that imports it as a sentinel.
+const WEBSOCKET_URL = ''
 
 // System instruction for the voice assistant
 const SYSTEM_INSTRUCTION = `You are a helpful voice assistant for GOV.PRAYA, the official government portal of the Republic of Praya.
@@ -93,9 +83,11 @@ class GeminiLiveService {
    */
   async connect() {
     return new Promise((resolve, reject) => {
-      // Validate API key is configured
-      if (!GEMINI_LIVE_API_KEY) {
-        const error = new Error('Gemini API key not configured. Please set VITE_GEMINI_API_KEY in your environment or GitHub secrets.')
+      // Hard-disabled — Gemini Live cannot proxy through the REST/SSE Worker.
+      // Until a WebSocket-capable proxy ships, voice is off. Text chat still
+      // works via geminiService → gp-llm Worker.
+      if (GEMINI_LIVE_DISABLED) {
+        const error = new Error('Gemini Live voice is temporarily disabled (no WebSocket proxy yet). Text chat still works via gp-llm Worker.')
         this.emit('error', error)
         reject(error)
         return
